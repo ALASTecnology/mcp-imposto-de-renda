@@ -171,7 +171,7 @@ export const grupoDeclaracao: GrupoFerramentas = {
         descricao:
           "Converte um DBK/DEC da pasta autorizada no modelo JSON do MCP Imposto de Renda (identificação, " +
           "dependentes, rendimentos de PJ, pagamentos, bens e dívidas). Valores em centavos " +
-          "(número inteiro). O resultado pode ser editado e gravado com converter_modelo_para_dbk.",
+          "(número inteiro). O resultado pode ser editado e convertido de volta em DBK pela ferramenta de conversão do modelo para DBK.",
         entrada: { arquivo: zNomeArquivo("Arquivo .DBK ou .DEC.") },
         saida: {
           arquivo: z.string(),

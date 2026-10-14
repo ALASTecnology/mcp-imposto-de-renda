@@ -7,7 +7,14 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { FICHAS_LISTA } from "../src/ferramentas/edicao-fichas.js";
-import { catalogoFerramentas, GRUPOS, NOMES_PERFIS, PERFIS } from "../src/index.js";
+import {
+  catalogoFerramentas,
+  createServer,
+  ferramentasRegistradas,
+  GRUPOS,
+  NOMES_PERFIS,
+  PERFIS,
+} from "../src/index.js";
 import { conectar } from "./apoio.js";
 
 const pasta = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-perfis-"));
@@ -95,6 +102,42 @@ describe("perfis de ferramentas", () => {
       expect(lista).toEqual(nomes(perfil));
     } finally {
       await c.fechar();
+    }
+  });
+
+  it.each(NOMES_PERFIS)(
+    "no perfil %s, nenhuma descrição cita ferramenta ausente",
+    async (perfil) => {
+      const todas = nomes("completo");
+      const c = await conectar({ diretorioAutorizado: pasta, perfil });
+      try {
+        const lista = (await c.client.listTools()).tools;
+        const presentes = new Set(lista.map((t) => t.name));
+        const ausentes = todas.filter((n) => !presentes.has(n));
+        const citacoes: string[] = [];
+        for (const t of lista) {
+          const texto = `${t.description ?? ""} ${JSON.stringify(t.inputSchema)}`;
+          for (const n of ausentes) {
+            if (new RegExp(`\\b${n}\\b`).test(texto)) citacoes.push(`${t.name} cita ${n}`);
+          }
+        }
+        expect(citacoes).toEqual([]);
+      } finally {
+        await c.fechar();
+      }
+    },
+  );
+
+  it("rejeita perfil desconhecido com mensagem em pt-BR", () => {
+    const msg = 'perfil desconhecido "tudo"; use completo, essencial ou consulta';
+    expect(() => catalogoFerramentas({ perfil: "tudo" as never })).toThrow(msg);
+    expect(() => createServer({ perfil: "tudo" as never })).toThrow(msg);
+  });
+
+  it("o servidor informa quantas ferramentas registrou", () => {
+    for (const perfil of NOMES_PERFIS) {
+      const s = createServer({ diretorioAutorizado: pasta, perfil });
+      expect(ferramentasRegistradas(s)).toEqual(nomes(perfil));
     }
   });
 });

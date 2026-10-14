@@ -5,10 +5,12 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult, ToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
 import type { z } from "zod";
 import { mensagemDeErro } from "../erros.js";
+import { deveRegistrar, infoFerramenta, PERFIS, type Perfil } from "./perfis.js";
 import type {
   ContextoFerramentas,
   DefinicaoFerramenta,
   Executor,
+  NomeGrupo,
   RegistroFerramentas,
 } from "./tipos.js";
 
@@ -36,9 +38,9 @@ export function criarRegistroFerramentas(
   server: McpServer,
   ctx: ContextoFerramentas,
   nomesRegistrados: string[],
-  /** Decide, além do modo somente leitura, se a ferramenta entra (perfis, ver `perfis.ts`). */
-  incluir: (nome: string, def: DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>) => boolean = () =>
-    true,
+  grupo: NomeGrupo,
+  /** Recorte do catálogo (ver `perfis.ts`). Padrão: `completo`. */
+  perfil: Perfil = PERFIS.completo,
 ): RegistroFerramentas {
   return {
     ctx,
@@ -47,9 +49,7 @@ export function criarRegistroFerramentas(
       def: DefinicaoFerramenta<I, O>,
       executar: Executor<I>,
     ): void {
-      if (def.escreve && ctx.somenteLeitura) return;
-      if (!incluir(nome, def as unknown as DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>))
-        return;
+      if (!deveRegistrar(perfil, ctx.somenteLeitura, infoFerramenta(nome, grupo, def))) return;
       const anotacoes: ToolAnnotations = {
         ...(def.escreve ? ANOTACOES_ESCRITA : ANOTACOES_LEITURA),
         ...def.anotacoes,

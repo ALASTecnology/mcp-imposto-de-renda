@@ -9,12 +9,17 @@ import {
   type OpcoesPasta,
   type PastaAutorizada,
 } from "./arquivos/index.js";
-import { type InfoFerramenta, type NomePerfil, PERFIS } from "./ferramentas/perfis.js";
+import {
+  deveRegistrar,
+  type InfoFerramenta,
+  infoFerramenta,
+  type NomePerfil,
+  perfilPorNome,
+} from "./ferramentas/perfis.js";
 import { criarRegistroFerramentas } from "./ferramentas/registrador.js";
 import { GRUPOS } from "./ferramentas/registro.js";
 import type {
   ContextoFerramentas,
-  DefinicaoFerramenta,
   GrupoFerramentas,
   RegistroFerramentas,
 } from "./ferramentas/tipos.js";
@@ -84,6 +89,7 @@ const INSTRUCOES =
  * Não abre transporte: quem chama decide (stdio no CLI, memória nos testes).
  */
 export function createServer(opcoes: OpcoesServidor = {}): McpServer {
+  const perfil = perfilPorNome(opcoes.perfil);
   const server = new McpServer(
     { name: NOME_SERVIDOR, version: VERSAO_SERVIDOR },
     { instructions: INSTRUCOES, maxToolInputElements: MAX_ELEMENTOS_ENTRADA },
@@ -104,26 +110,21 @@ export function createServer(opcoes: OpcoesServidor = {}): McpServer {
     ...(opcoes.registrarErro ? { registrarErro: opcoes.registrarErro } : {}),
   };
   const nomes: string[] = [];
-  const perfil = PERFIS[opcoes.perfil ?? "completo"];
   for (const grupo of opcoes.grupos ?? GRUPOS) {
     if (grupo.exigePasta && !pasta) continue;
-    grupo.registrar(
-      criarRegistroFerramentas(server, ctx, nomes, (nome, def) =>
-        perfil.inclui(info(nome, grupo, def)),
-      ),
-    );
+    grupo.registrar(criarRegistroFerramentas(server, ctx, nomes, grupo.nome, perfil));
   }
   registrarPrompts(server);
   registrarRecursos(server);
+  REGISTRADAS.set(server, Object.freeze([...nomes]));
   return server;
 }
 
-function info(
-  nome: string,
-  grupo: GrupoFerramentas,
-  def: DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>,
-): InfoFerramenta {
-  return { nome, grupo: grupo.nome, escreve: def.escreve ?? false, atalho: def.atalho ?? false };
+const REGISTRADAS = new WeakMap<McpServer, readonly string[]>();
+
+/** Nomes das ferramentas que `createServer` registrou neste servidor, na ordem de `tools/list`. */
+export function ferramentasRegistradas(server: McpServer): readonly string[] {
+  return REGISTRADAS.get(server) ?? [];
 }
 
 /** Opções que definem quais ferramentas o servidor registra. */
@@ -140,7 +141,7 @@ export interface OpcoesCatalogo {
  * criar servidor nem tocar no disco. Usado no `--ajuda` do CLI para mostrar a conta de cada perfil.
  */
 export function catalogoFerramentas(opcoes: OpcoesCatalogo = {}): InfoFerramenta[] {
-  const perfil = PERFIS[opcoes.perfil ?? "completo"];
+  const perfil = perfilPorNome(opcoes.perfil);
   const somenteLeitura = opcoes.somenteLeitura ?? false;
   const comPasta = opcoes.comPasta ?? true;
   const ctx: ContextoFerramentas = {
@@ -155,13 +156,8 @@ export function catalogoFerramentas(opcoes: OpcoesCatalogo = {}): InfoFerramenta
     const registro: RegistroFerramentas = {
       ctx,
       ferramenta(nome, def) {
-        const i = info(
-          nome,
-          grupo,
-          def as unknown as DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>,
-        );
-        if (i.escreve && somenteLeitura) return;
-        if (perfil.inclui(i)) saida.push(i);
+        const i = infoFerramenta(nome, grupo.nome, def);
+        if (deveRegistrar(perfil, somenteLeitura, i)) saida.push(i);
       },
     };
     grupo.registrar(registro);

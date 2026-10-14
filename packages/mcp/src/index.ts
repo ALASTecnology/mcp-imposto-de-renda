@@ -37,6 +37,7 @@ export {
   type NomePerfil,
   PERFIS,
   type Perfil,
+  perfilPorNome,
 } from "./ferramentas/perfis.js";
 export { ANOTACOES_ESCRITA, ANOTACOES_LEITURA } from "./ferramentas/registrador.js";
 export { GRUPOS } from "./ferramentas/registro.js";
@@ -54,6 +55,7 @@ export { type Json, objetoJson, paraJson } from "./serializacao.js";
 export {
   catalogoFerramentas,
   createServer,
+  ferramentasRegistradas,
   MAX_ELEMENTOS_ENTRADA,
   NOME_SERVIDOR,
   type OpcoesCatalogo,

@@ -7,6 +7,7 @@
  * por ficha, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`).
  * Assim, uma ficha nova entra nos perfis certos sem mexer aqui.
  */
+import { EntradaInvalidaError } from "../erros.js";
 import type { NomeGrupo } from "./tipos.js";
 
 export const NOMES_PERFIS = ["completo", "essencial", "consulta"] as const;
@@ -50,4 +51,35 @@ export const PERFIS: Readonly<Record<NomePerfil, Perfil>> = Object.freeze({
 
 export function ehNomePerfil(nome: string): nome is NomePerfil {
   return (NOMES_PERFIS as readonly string[]).includes(nome);
+}
+
+/** Perfil pelo nome; padrão `completo`. Nome desconhecido lança erro com os nomes válidos. */
+export function perfilPorNome(nome: string | undefined): Perfil {
+  const n = nome ?? "completo";
+  if (ehNomePerfil(n)) return PERFIS[n];
+  throw new EntradaInvalidaError(
+    `perfil desconhecido "${n}"; use ${NOMES_PERFIS.slice(0, -1).join(", ")} ou ${NOMES_PERFIS[NOMES_PERFIS.length - 1]}`,
+  );
+}
+
+/**
+ * Regra única de registro, usada pelo servidor e pelo catálogo: o modo somente leitura tira o que
+ * grava e o perfil decide o resto.
+ */
+export function deveRegistrar(
+  perfil: Perfil,
+  somenteLeitura: boolean,
+  info: InfoFerramenta,
+): boolean {
+  if (info.escreve && somenteLeitura) return false;
+  return perfil.inclui(info);
+}
+
+/** Monta a `InfoFerramenta` a partir das marcas da definição. */
+export function infoFerramenta(
+  nome: string,
+  grupo: NomeGrupo,
+  def: { readonly escreve?: boolean; readonly atalho?: boolean },
+): InfoFerramenta {
+  return { nome, grupo, escreve: def.escreve ?? false, atalho: def.atalho ?? false };
 }

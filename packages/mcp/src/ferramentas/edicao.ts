@@ -313,7 +313,7 @@ function registrarGenericas(r: RegistroFerramentas): void {
     {
       titulo: "Listar as fichas da declaração",
       descricao:
-        "Mostra todas as fichas do modelo com a quantidade de itens preenchidos em um DBK/DEC, e quais são editáveis por listar_lancamentos, editar_lancamento e remover_lancamento.",
+        "Mostra todas as fichas do modelo com a quantidade de itens preenchidos em um DBK/DEC, e quais estão em lista, consultáveis por listar_lancamentos e editáveis pelas ferramentas genéricas de lançamento.",
       entrada: { arquivo: zNomeArquivo("Arquivo .DBK ou .DEC.") },
       saida: {
         arquivo: z.string(),
@@ -791,7 +791,7 @@ function registrarDefinir(r: RegistroFerramentas): void {
     r,
     "definir_partilha_bem",
     "Definir a partilha de um bem",
-    "Na Declaração Final de Espólio, define para um bem (posição em listar_bens) se ainda está a inventariar, a situação na data da partilha, o valor de transferência e os percentuais por herdeiro (centésimos: 100,00% = 10000; herdeiros cadastrados em adicionar_herdeiro).",
+    "Na Declaração Final de Espólio, define para um bem (posição em listar_lancamentos com ficha 'bens') se ainda está a inventariar, a situação na data da partilha, o valor de transferência e os percentuais por herdeiro (centésimos: 100,00% = 10000; herdeiros cadastrados em adicionar_herdeiro).",
     {
       indice: zIndice,
       bem_a_inventariar: z.boolean().optional(),
@@ -839,7 +839,7 @@ function registrarDefinir(r: RegistroFerramentas): void {
     r,
     "aplicar_caso_especial_bem",
     "Aplicar caso especial a um bem",
-    "Aplica a um bem (posição em listar_bens) um caso especial: usufruto (com os CPF/CNPJ dos proprietários ou usufrutuários), bem a inventariar, atualização pela Lei 14.973/2024 ou criptoativo em custodiante; 'desfazer': true desmarca.",
+    "Aplica a um bem (posição em listar_lancamentos com ficha 'bens') um caso especial: usufruto (com os CPF/CNPJ dos proprietários ou usufrutuários), bem a inventariar, atualização pela Lei 14.973/2024 ou criptoativo em custodiante; 'desfazer': true desmarca.",
     {
       indice: zIndice,
       caso: z.enum(["usufruto", "bemAInventariar", "atualizacaoLei14973", "custodiante"]),

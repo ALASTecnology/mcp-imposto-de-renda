@@ -666,7 +666,7 @@ export const grupoCiclo: GrupoFerramentas = {
       r,
       "repetir_valores_bens",
       "Repetir a situação dos bens",
-      "Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens ou de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor.",
+      "Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor.",
       {
         indices: z.array(z.number().int().min(1)).max(1000).optional(),
         forcar: z.boolean().optional(),
@@ -793,7 +793,7 @@ export const grupoCiclo: GrupoFerramentas = {
       {
         titulo: "Ler um informe de rendimentos",
         descricao:
-          "Lê o comprovante de rendimentos de PJ colado em 'texto' ou num arquivo .txt da pasta autorizada e devolve os campos extraídos por regras fixas (fonte e CNPJ, rendimentos, previdência oficial, IRRF, 13º e IRRF do 13º, isentos e exclusivos), sem gravar nada, sem OCR e sem rede. Linhas não reconhecidas e campos repetidos voltam em 'avisos'. Para lançar, use importar_informe_rendimentos.",
+          "Lê o comprovante de rendimentos de PJ colado em 'texto' ou num arquivo .txt da pasta autorizada e devolve os campos extraídos por regras fixas (fonte e CNPJ, rendimentos, previdência oficial, IRRF, 13º e IRRF do 13º, isentos e exclusivos), sem gravar nada, sem OCR e sem rede. Linhas não reconhecidas e campos repetidos voltam em 'avisos'. Para lançar, use a ferramenta de importação do informe de rendimentos.",
         entrada: {
           texto: z.string().max(50_000).optional().describe("Informe colado como texto."),
           arquivo: zNomeArquivo("Arquivo .txt com o informe.").optional(),

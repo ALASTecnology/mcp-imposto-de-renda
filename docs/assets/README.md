@@ -20,14 +20,14 @@ Logo com troca automática de tema:
 ```html
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-wordmark-dark.svg">
-  <img alt="AutoIR" src="docs/assets/logo-wordmark.svg" height="48">
+  <img alt="MCP Imposto de Renda" src="docs/assets/logo-wordmark.svg" height="48">
 </picture>
 ```
 
 Diagramas:
 
 ```markdown
-![Arquitetura do AutoIR](docs/assets/arquitetura.svg)
+![Arquitetura do MCP Imposto de Renda](docs/assets/arquitetura.svg)
 ```
 
 ## Regenerar os PNGs
@@ -39,4 +39,4 @@ exiftool -all= -overwrite_original docs/assets/*.png
 xattr -c docs/assets/*
 ```
 
-Nenhuma imagem usa marca, brasão ou identidade visual da Receita Federal ou do governo federal. O AutoIR não é um serviço oficial.
+Nenhuma imagem usa marca, brasão ou identidade visual da Receita Federal ou do governo federal. O MCP Imposto de Renda não é um serviço oficial.

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="t d">
-  <title id="t">Fluxo da declaração com o AutoIR</title>
-  <desc id="d">Você conversa com o cliente MCP, que chama o autoir-mcp por stdio. O autoir-mcp lê e grava o arquivo .DBK na sua máquina. Você abre o arquivo no programa oficial, confere e transmite pela via oficial. Nenhum dado vai para servidor do projeto.</desc>
+  <title id="t">Fluxo da declaração com o MCP Imposto de Renda</title>
+  <desc id="d">Você conversa com o cliente MCP, que chama o mcp-imposto-de-renda por stdio. O mcp-imposto-de-renda lê e grava o arquivo .DBK na sua máquina. Você abre o arquivo no programa oficial, confere e transmite pela via oficial. Nenhum dado vai para servidor do projeto.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M0 0L10 5L0 10z" fill="#475569"/>
@@ -35,8 +35,9 @@
   <text x="345" y="216" class="xs" text-anchor="middle">assistente ou editor</text>
 
   <rect x="500" y="150" width="170" height="90" rx="12" class="acc"/>
-  <text x="585" y="192" class="b m" text-anchor="middle">autoir-mcp</text>
-  <text x="585" y="216" class="xs" text-anchor="middle">calcula e valida</text>
+  <text x="585" y="184" class="b" text-anchor="middle">Servidor MCP</text>
+  <text x="585" y="206" class="m" text-anchor="middle" style="font-size:12px;fill:#5B21B6">mcp-imposto-de-renda</text>
+  <text x="585" y="226" class="xs" text-anchor="middle">calcula e valida</text>
 
   <rect x="740" y="150" width="170" height="90" rx="12" class="box"/>
   <text x="825" y="192" class="b" text-anchor="middle">Arquivo .DBK</text>
@@ -47,7 +48,7 @@
   <text x="780" y="350" class="xs" text-anchor="middle">você abre, confere e corrige</text>
 
   <text x="60" y="320" class="s">A área tracejada roda inteira na sua máquina.</text>
-  <text x="60" y="344" class="s">O autoir-mcp não abre conexão de rede.</text>
+  <text x="60" y="344" class="s">O mcp-imposto-de-renda não abre conexão de rede.</text>
 
   <path d="M190 195H254" class="ln" marker-end="url(#a)"/>
   <text x="225" y="185" class="xs" text-anchor="middle">conversa</text>

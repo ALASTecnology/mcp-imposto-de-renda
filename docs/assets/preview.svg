@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="t d">
-  <title id="t">AutoIR</title>
+  <title id="t">MCP Imposto de Renda</title>
   <desc id="d">Servidor MCP local para a declaração do Imposto de Renda. 100% local, código aberto AGPL-3.0, calculado ao centavo.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -34,7 +34,7 @@
     <circle cx="26" cy="26" r="6" fill="#475569"/>
     <circle cx="46" cy="26" r="6" fill="#475569"/>
     <circle cx="66" cy="26" r="6" fill="#475569"/>
-    <text x="26" y="78" class="m" font-size="20" fill="#C4B5FD">$ <tspan fill="#F1F5F9">npx autoir-mcp</tspan></text>
+    <text x="26" y="78" class="m" font-size="20" fill="#C4B5FD">$ <tspan fill="#F1F5F9">npx mcp-imposto-de-renda</tspan></text>
     <g class="m" font-size="18" fill="#CBD5E1">
       <path d="M28 108l5 5 9-10" fill="none" stroke="#86EFAC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="54" y="114">pasta autorizada</text>
@@ -45,26 +45,26 @@
     </g>
   </g>
 
-  <text x="92" y="370" class="f" font-size="128" font-weight="800" letter-spacing="-3" fill="#F8FAFC">Auto<tspan fill="#C4B5FD">IR</tspan></text>
-  <text x="96" y="428" class="f" font-size="34" font-weight="500" fill="#CBD5E1">Servidor MCP local para a declaração do Imposto de Renda</text>
+  <text x="92" y="384" class="f" font-size="88" font-weight="800" letter-spacing="-2" fill="#F8FAFC"><tspan fill="#C4B5FD">MCP</tspan> Imposto de Renda</text>
+  <text x="96" y="440" class="f" font-size="34" font-weight="500" fill="#CBD5E1">Servidor MCP local para a declaração do Imposto de Renda</text>
 
   <g class="f" font-size="25" font-weight="600" fill="#F1F5F9">
-    <g transform="translate(96 476)">
+    <g transform="translate(96 486)">
       <rect width="196" height="56" rx="28" fill="#1E1B3A" stroke="#6D28D9" stroke-width="2"/>
       <circle cx="30" cy="28" r="7" fill="#A78BFA"/>
       <text x="48" y="37">100% local</text>
     </g>
-    <g transform="translate(312 476)">
+    <g transform="translate(312 486)">
       <rect width="346" height="56" rx="28" fill="#1E1B3A" stroke="#6D28D9" stroke-width="2"/>
       <circle cx="30" cy="28" r="7" fill="#A78BFA"/>
       <text x="48" y="37">Código aberto AGPL-3.0</text>
     </g>
-    <g transform="translate(678 476)">
+    <g transform="translate(678 486)">
       <rect width="306" height="56" rx="28" fill="#1E1B3A" stroke="#6D28D9" stroke-width="2"/>
       <circle cx="30" cy="28" r="7" fill="#A78BFA"/>
       <text x="48" y="37">Calculado ao centavo</text>
     </g>
   </g>
 
-  <text x="96" y="590" class="f" font-size="22" fill="#94A3B8">Seus dados ficam no seu computador. Você revisa e transmite pelo programa oficial.</text>
+  <text x="96" y="596" class="f" font-size="22" fill="#94A3B8">Seus dados ficam no seu computador. Você revisa e transmite pelo programa oficial.</text>
 </svg>

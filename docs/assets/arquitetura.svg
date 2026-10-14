@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="t d">
-  <title id="t">Arquitetura do AutoIR</title>
+  <title id="t">Arquitetura do MCP Imposto de Renda</title>
   <desc id="d">O cliente MCP conversa por stdio com apps/cli, que usa packages/mcp, que usa packages/core. O core reúne leiautes por ano, codec .DBK, modelo das fichas, motor de cálculo 2026 e validações.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
@@ -18,7 +18,7 @@
     .ln{stroke:#475569;stroke-width:2;fill:none}
   </style>
   <rect x="1" y="1" width="1198" height="638" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
-  <text x="40" y="52" class="h">Arquitetura do AutoIR</text>
+  <text x="40" y="52" class="h">Arquitetura do MCP Imposto de Renda</text>
   <text x="40" y="78" class="sub">Monorepo em três camadas. Cada seta aponta para a dependência.</text>
 
   
@@ -36,7 +36,7 @@
   
   <rect x="340" y="100" width="820" height="130" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
   <text x="364" y="136" class="b m">apps/cli</text>
-  <text x="480" y="136" class="s">binário <tspan class="m">autoir-mcp</tspan>, transporte stdio</text>
+  <text x="480" y="136" class="s">binário <tspan class="m">mcp-imposto-de-renda</tspan>, transporte stdio</text>
   <g>
     <rect x="364" y="158" width="200" height="48" rx="10" fill="#EDE9FE" stroke="#C4B5FD"/>
     <text x="464" y="188" class="c" text-anchor="middle">Pasta autorizada</text>

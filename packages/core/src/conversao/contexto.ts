@@ -169,8 +169,9 @@ export class GravacaoRegistros implements ContextoGravacao {
       throw new Error(`Tipo de registro ${tipo} não existe no leiaute ${this.leiaute.exercicio}.`);
     const indice = new Map(t.campos.map((c) => [c.chave, c]));
     const proprios: Record<string, ValorCampo> = {};
-    if (indice.has("NR_CPF") && !("NR_CPF" in valores)) {
-      proprios.NR_CPF = this.cpfTitular;
+    const campoCpf = indice.get("NR_CPF");
+    if (campoCpf && !("NR_CPF" in valores)) {
+      proprios.NR_CPF = valorDoCampo(campoCpf, this.cpfTitular);
     }
     for (const [chave, v] of Object.entries(valores)) {
       const campo = indice.get(chave);

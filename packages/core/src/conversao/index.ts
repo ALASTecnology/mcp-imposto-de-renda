@@ -14,11 +14,11 @@
 import type { Registro } from "../dbk/codec.js";
 import { leiauteDosRegistros } from "../dbk/codec.js";
 import { type OpcoesRecalculo, recalcularControles, TIPOS_RECIBO } from "../dbk/controle.js";
-import type { Leiaute } from "../dbk/leiaute.js";
+import { type Leiaute, tipoDoLeiaute } from "../dbk/leiaute.js";
 import { obterLeiaute } from "../dbk/leiautes/index.js";
 import type { Declaracao } from "../model/declaracao.js";
 import { CODIGO_RECEITANET } from "../model/identificacao.js";
-import { aaaammddDeIso, ddmmaaaaDeIso, type Objeto, type Valores } from "./campos.js";
+import { aaaammddDeIso, ddmmaaaaDeIso, type Objeto, type Valores, valorDoCampo } from "./campos.js";
 import { GravacaoRegistros, LeituraRegistros, type Mapeador } from "./contexto.js";
 import { mapeadorAtividadeRural } from "./mapeadores/atividade-rural.js";
 import { mapeadorBensDividas } from "./mapeadores/bens-dividas.js";
@@ -262,8 +262,9 @@ export function modeloParaRegistros(
   const preservados = (base ?? [])
     .filter((r) => !tratados.has(r.tipo) && !(semRecibo && TIPOS_RECIBO.has(r.tipo)))
     .map((r) => {
-      if (TIPOS_RECIBO.has(r.tipo) || !Object.hasOwn(r.campos, "NR_CPF")) return r;
-      return { tipo: r.tipo, campos: { ...r.campos, NR_CPF: cpf } };
+      const campo = tipoDoLeiaute(leiaute, r.tipo)?.campos.find((c) => c.chave === "NR_CPF");
+      if (TIPOS_RECIBO.has(r.tipo) || !campo) return r;
+      return { tipo: r.tipo, campos: { ...r.campos, NR_CPF: valorDoCampo(campo, cpf) } };
     });
   ctx.adicionar("T9", {});
 
@@ -287,4 +288,76 @@ export function modeloParaRegistros(
     totaisRecalculados: recalcular,
     avisos,
   };
+}
+
+/** Situação de um tipo de registro na conversão. */
+export type SituacaoRegistro = "mapeado" | "totais" | "controle" | "recibo" | "preservado";
+
+export interface CoberturaRegistro {
+  readonly tipo: string;
+  readonly descricao: string;
+  readonly situacao: SituacaoRegistro;
+  /** Mapeador responsável (fichas) ou motivo da preservação. */
+  readonly detalhe: string;
+}
+
+/** Por que cada tipo sem correspondência no modelo é preservado do arquivo base. */
+const MOTIVOS_PRESERVACAO: Readonly<Record<string, string>> = {
+  "31": "detalhe de isento de leiaute anterior; o programa 2026 não o grava (o T9 não o conta)",
+  "33": "detalhe de isento de leiaute anterior; o programa 2026 não o grava (o T9 não o conta)",
+  "37": "demonstrativo calculado da Lei 14.754/2023 por bem; refeito pelo programa",
+  "64": "alienação no exterior do GCAP: detalhe sem lugar no modelo",
+  "67": "reforma no exterior do GCAP: detalhe sem lugar no modelo",
+  "70": "apuração em ambas as moedas do GCAP: detalhe sem lugar no modelo",
+  "71": "parcelas de imóvel alienado a prazo (GCAP)",
+  "72": "parcelas de móvel alienado a prazo (GCAP)",
+  "73": "apuração do custo médio de participações (GCAP)",
+  "75": "faixas de tributação do GCAP",
+  "76": "totalização mensal de moedas alienadas (GCAP)",
+  "77": "totais por moeda do GCAP (leiaute de dados)",
+  "78": "totais de bens e espécie do GCAP (leiaute de dados)",
+  "82": "detalhe de isento de leiaute anterior; o programa 2026 não o grava",
+  "93": "detalhe de isento de leiaute anterior; o programa 2026 não o grava",
+  "94": "detalhe de isento de leiaute anterior; o programa 2026 não o grava",
+  "95": "detalhe de exclusivo de leiaute anterior; o programa 2026 não o grava",
+  "96": "detalhe de exclusivo de leiaute anterior; o programa 2026 não o grava",
+  "97": "detalhe de isento ou exclusivo de leiaute anterior; o programa 2026 não o grava",
+  "98": "detalhe de isento de leiaute anterior; o programa 2026 não o grava",
+  "99": "detalhe de exclusivo de leiaute anterior; o programa 2026 não o grava",
+  FR: "dados de entrega, não aparece nos arquivos DEC e DBK",
+  SR: "header de salvar e recuperar online",
+  IP: "imposto pago avulso; a ficha Imposto Pago fica nos registros 17 e 19",
+};
+
+/** Cobertura da conversão por tipo de registro do leiaute. */
+export function coberturaRegistros(leiaute: Leiaute = obterLeiaute(2026)): CoberturaRegistro[] {
+  const porTipo = new Map<string, string>();
+  for (const m of MAPEADORES) for (const t of m.tipos) porTipo.set(t, m.nome);
+  return leiaute.tipos.map((t) => {
+    const base = { tipo: t.id, descricao: t.descricao.trim() };
+    const mapeador = porTipo.get(t.id);
+    if (mapeador) return { ...base, situacao: "mapeado", detalhe: mapeador };
+    if ((TIPOS_TOTAIS as readonly string[]).includes(t.id)) {
+      return {
+        ...base,
+        situacao: "totais",
+        detalhe: "Imposto Pago e totais do Resumo, recalculados",
+      };
+    }
+    if (TIPOS_CONTROLE.has(t.id)) {
+      return {
+        ...base,
+        situacao: "controle",
+        detalhe: "header e fechamento, com controles recalculados",
+      };
+    }
+    if (TIPOS_RECIBO.has(t.id)) {
+      return { ...base, situacao: "recibo", detalhe: "recibo da Receita Federal, nunca alterado" };
+    }
+    return {
+      ...base,
+      situacao: "preservado",
+      detalhe: MOTIVOS_PRESERVACAO[t.id] ?? "sem ficha no modelo",
+    };
+  });
 }

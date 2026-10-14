@@ -55,7 +55,13 @@ function entrada(): DeclaracaoEntrada {
       nitPisPasep: "12345678901",
     },
     dependentes: [
-      { codigo: "21", nome: "FILHO FICTICIO", cpf: DEP, dataNascimento: "2015-06-01", racaCor: "2" },
+      {
+        codigo: "21",
+        nome: "FILHO FICTICIO",
+        cpf: DEP,
+        dataNascimento: "2015-06-01",
+        racaCor: "2",
+      },
     ],
     alimentandos: [
       {
@@ -121,8 +127,20 @@ function entrada(): DeclaracaoEntrada {
       },
     ],
     rendimentosIsentos: [
-      { codigo: "09", beneficiario: { tipo: "titular" }, fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" }, valor: 500_000, chaveBem: 2 },
-      { codigo: "10", beneficiario: { tipo: "titular" }, fonte: { ni: FONTE, nome: "INSTITUTO FICTICIO" }, valor: 2_284_776, decimoTerceiro: 190_398 },
+      {
+        codigo: "09",
+        beneficiario: { tipo: "titular" },
+        fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" },
+        valor: 500_000,
+        chaveBem: 2,
+      },
+      {
+        codigo: "10",
+        beneficiario: { tipo: "titular" },
+        fonte: { ni: FONTE, nome: "INSTITUTO FICTICIO" },
+        valor: 2_284_776,
+        decimoTerceiro: 190_398,
+      },
       {
         codigo: "11",
         beneficiario: { tipo: "titular" },
@@ -133,23 +151,70 @@ function entrada(): DeclaracaoEntrada {
         impostoRetidoDecimoTerceiro: 0,
         contribuicaoPrevidenciaria: 40_000,
       },
-      { codigo: "14", beneficiario: { tipo: "dependente", cpf: DEP }, doador: { ni: HERDEIRO, nome: "DOADOR FICTICIO" }, valor: 700_000 },
+      {
+        codigo: "14",
+        beneficiario: { tipo: "dependente", cpf: DEP },
+        doador: { ni: HERDEIRO, nome: "DOADOR FICTICIO" },
+        valor: 700_000,
+      },
       { codigo: "20", beneficiario: { tipo: "titular" }, valor: 150_000 },
-      { codigo: "28", beneficiario: { tipo: "dependente", cpf: DEP }, cpfAlimentante: HERDEIRO, valor: 120_000 },
-      { codigo: "99", beneficiario: { tipo: "titular" }, fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" }, descricao: "OUTRO ISENTO FICTICIO", valor: 30_000 },
+      {
+        codigo: "28",
+        beneficiario: { tipo: "dependente", cpf: DEP },
+        cpfAlimentante: HERDEIRO,
+        valor: 120_000,
+      },
+      {
+        codigo: "99",
+        beneficiario: { tipo: "titular" },
+        fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" },
+        descricao: "OUTRO ISENTO FICTICIO",
+        valor: 30_000,
+      },
       { codigo: "05", valorInformado: 10_000, valorTransportado: 0 },
       { codigo: "15", valor: 45_000 },
     ],
     rendimentosExclusivos: [
       { codigo: "01", valor: 600_000 },
-      { codigo: "06", beneficiario: { tipo: "titular" }, fonte: { ni: FONTE, nome: "BANCO FICTICIO" }, valor: 350_000, chaveBem: 2 },
-      { codigo: "10", beneficiario: { tipo: "dependente", cpf: DEP }, fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" }, valor: 120_000 },
-      { codigo: "13", beneficiario: { tipo: "titular" }, descricao: "PREMIO FICTICIO", valor: 10_000 },
-      { codigo: "99", beneficiario: { tipo: "titular" }, fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" }, descricao: "OUTRO EXCLUSIVO", valor: 20_000 },
+      {
+        codigo: "06",
+        beneficiario: { tipo: "titular" },
+        fonte: { ni: FONTE, nome: "BANCO FICTICIO" },
+        valor: 350_000,
+        chaveBem: 2,
+      },
+      {
+        codigo: "10",
+        beneficiario: { tipo: "dependente", cpf: DEP },
+        fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" },
+        valor: 120_000,
+      },
+      {
+        codigo: "13",
+        beneficiario: { tipo: "titular" },
+        descricao: "PREMIO FICTICIO",
+        valor: 10_000,
+      },
+      {
+        codigo: "99",
+        beneficiario: { tipo: "titular" },
+        fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" },
+        descricao: "OUTRO EXCLUSIVO",
+        valor: 20_000,
+      },
     ],
     rendimentosExigibilidadeSuspensa: [
-      { beneficiario: { tipo: "titular" }, fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" }, rendimentos: 200_000, depositosJudiciais: 30_000 },
-      { beneficiario: { tipo: "dependente", cpf: DEP }, fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" }, rendimentos: 50_000 },
+      {
+        beneficiario: { tipo: "titular" },
+        fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" },
+        rendimentos: 200_000,
+        depositosJudiciais: 30_000,
+      },
+      {
+        beneficiario: { tipo: "dependente", cpf: DEP },
+        fonte: { ni: FONTE, nome: "EMPRESA FICTICIA" },
+        rendimentos: 50_000,
+      },
     ],
     rendimentosAcumulados: [
       {
@@ -174,17 +239,52 @@ function entrada(): DeclaracaoEntrada {
         numeroMeses: 4,
       },
     ],
-    impostoPago: { impostoComplementar: 10_000, impostoPagoExterior: 5_000, impostoRetidoLei11033: 1_000 },
+    impostoPago: {
+      impostoComplementar: 10_000,
+      impostoPagoExterior: 5_000,
+      impostoRetidoLei11033: 1_000,
+    },
     pagamentos: [
-      { codigo: "10", realizadoCom: { tipo: "dependente", cpf: DEP }, niBeneficiario: FONTE, nomeBeneficiario: "CLINICA FICTICIA", valorPago: 250_000, parcelaNaoDedutivel: 50_000 },
-      { codigo: "30", realizadoCom: { tipo: "alimentando", cpf: ALIM }, niBeneficiario: ALIM, nomeBeneficiario: "ALIMENTANDO FICTICIO", valorPago: 1_200_000 },
-      { codigo: "36", niBeneficiario: FONTE, nomeBeneficiario: "PREVIDENCIA FICTICIA", valorPago: 500_000 },
+      {
+        codigo: "10",
+        realizadoCom: { tipo: "dependente", cpf: DEP },
+        niBeneficiario: FONTE,
+        nomeBeneficiario: "CLINICA FICTICIA",
+        valorPago: 250_000,
+        parcelaNaoDedutivel: 50_000,
+      },
+      {
+        codigo: "30",
+        realizadoCom: { tipo: "alimentando", cpf: ALIM },
+        niBeneficiario: ALIM,
+        nomeBeneficiario: "ALIMENTANDO FICTICIO",
+        valorPago: 1_200_000,
+      },
+      {
+        codigo: "36",
+        niBeneficiario: FONTE,
+        nomeBeneficiario: "PREVIDENCIA FICTICIA",
+        valorPago: 500_000,
+      },
     ],
     doacoesEfetuadas: [
-      { codigo: "41", niBeneficiario: FONTE, nomeBeneficiario: "PROJETO CULTURAL FICTICIO", valor: 30_000 },
+      {
+        codigo: "41",
+        niBeneficiario: FONTE,
+        nomeBeneficiario: "PROJETO CULTURAL FICTICIO",
+        valor: 30_000,
+      },
     ],
     doacoesDiretamenteNaDeclaracao: {
-      eca: [{ tipoFundo: "municipal", uf: "DF", municipio: "BRASILIA", cnpjFundo: FONTE, valor: 10_000 }],
+      eca: [
+        {
+          tipoFundo: "municipal",
+          uf: "DF",
+          municipio: "BRASILIA",
+          cnpjFundo: FONTE,
+          valor: 10_000,
+        },
+      ],
       idoso: [{ tipoFundo: "nacional", cnpjFundo: FONTE, valor: 10_000 }],
     },
     bens: [
@@ -241,9 +341,18 @@ function entrada(): DeclaracaoEntrada {
       },
     ],
     dividas: [
-      { codigo: "11", discriminacao: "EMPRESTIMO FICTICIO", situacaoAnterior: 500_000, situacaoAtual: 200_000, valorPago: 300_000 },
+      {
+        codigo: "11",
+        discriminacao: "EMPRESTIMO FICTICIO",
+        situacaoAnterior: 500_000,
+        situacaoAtual: 200_000,
+        valorPago: 300_000,
+      },
     ],
-    espolio: { sobrepartilha: false, inventariante: { cpf: HERDEIRO, nome: "INVENTARIANTE FICTICIO" } },
+    espolio: {
+      sobrepartilha: false,
+      inventariante: { cpf: HERDEIRO, nome: "INVENTARIANTE FICTICIO" },
+    },
     herdeiros: [{ ni: HERDEIRO, nome: "HERDEIRO FICTICIO" }],
     saidaDefinitiva: {
       procurador: { cpf: HERDEIRO, nome: "PROCURADOR FICTICIO", endereco: "RUA FICTICIA 1" },
@@ -322,7 +431,9 @@ describe("ida e volta de uma declaração sintética completa", () => {
     const base = idaEVolta(dec).lido.registros;
     const estranho = criarRegistro(LEIAUTE_2026, "37", { NR_CHAVE_BEM: 2n, TIPO: 1n });
     expect(tiposMapeados().has("37")).toBe(false);
-    const g = modeloParaRegistros(dec, { base: [...base.slice(0, -1), estranho, ...base.slice(-1)] });
+    const g = modeloParaRegistros(dec, {
+      base: [...base.slice(0, -1), estranho, ...base.slice(-1)],
+    });
     expect(g.tiposPreservados).toContain("37");
     expect(g.registros.filter((r) => r.tipo === "37")).toHaveLength(1);
     expect(verificarControles(g.registros).valido).toBe(true);
@@ -341,5 +452,16 @@ describe("ida e volta de uma declaração sintética completa", () => {
     const { volta } = idaEVolta(dec, base);
     expect(volta.dependentes.map((d) => d.cpf)).toEqual([DEP]);
     expect(volta.pagamentos[0]?.realizadoCom).toEqual({ tipo: "dependente", cpf: DEP });
+  });
+});
+
+describe("cobertura por tipo de registro", () => {
+  it("classifica os 96 tipos do leiaute 2026", async () => {
+    const { coberturaRegistros } = await import("../../src/conversao/index.js");
+    const c = coberturaRegistros();
+    expect(c).toHaveLength(96);
+    const conta = (s: string) => c.filter((x) => x.situacao === s).length;
+    expect(conta("mapeado") + conta("totais") + conta("controle")).toBe(63);
+    expect(c.filter((x) => x.situacao === "preservado").every((x) => x.detalhe !== "")).toBe(true);
   });
 });

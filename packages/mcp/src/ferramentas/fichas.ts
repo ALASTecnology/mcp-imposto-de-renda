@@ -6,7 +6,7 @@ import { FICHAS } from "@autoir/core";
 import { z } from "zod";
 import { FICHAS_CONVERTIDAS } from "../conversao/dbk-modelo.js";
 import { objetoJson } from "../serializacao.js";
-import { carregarDeclaracao, zNomeArquivo } from "./comum.js";
+import { blocoDeDados, carregarDeclaracao, zNomeArquivo } from "./comum.js";
 import type { GrupoFerramentas } from "./tipos.js";
 
 export const grupoFichas: GrupoFerramentas = {
@@ -37,7 +37,7 @@ export const grupoFichas: GrupoFerramentas = {
         const conteudo = objetoJson({ v: declaracao[ficha] }).v ?? null;
         const itens = Array.isArray(conteudo) ? conteudo.length : 1;
         return {
-          texto: `${FICHAS[ficha]} (${itens} item(ns)):\n${JSON.stringify(conteudo, null, 2)}`,
+          texto: `${FICHAS[ficha]} (${itens} item(ns)):\n${blocoDeDados(arquivo, JSON.stringify(conteudo, null, 2))}`,
           dados: { ficha, nome: FICHAS[ficha], itens, conteudo },
         };
       },

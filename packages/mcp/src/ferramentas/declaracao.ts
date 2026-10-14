@@ -21,6 +21,7 @@ import {
 import { EntradaInvalidaError, ErroFerramenta } from "../erros.js";
 import { objetoJson } from "../serializacao.js";
 import {
+  blocoDeDados,
   EXT_GRAVACAO,
   exigirPasta,
   lerDeclaracaoArquivo,
@@ -132,7 +133,8 @@ export const grupoDeclaracao: GrupoFerramentas = {
         };
         const fichas = dec ? resumirFichas(dec) : [];
         const texto = [
-          `${arquivo}: exercício ${exercicio}, ${id.nome ?? "?"} (CPF ${id.cpf ?? "?"}).`,
+          `${arquivo}: exercício ${exercicio}, CPF ${id.cpf ?? "?"}.`,
+          blocoDeDados(arquivo, `Contribuinte: ${id.nome ?? "?"}`),
           `Tipo: ${id.tipoDeclaracao?.tipo ?? "?"}${id.tipoDeclaracao?.retificadora ? " retificadora" : " original"}.`,
           ...fichas.map(
             (f) =>
@@ -197,7 +199,7 @@ export const grupoDeclaracao: GrupoFerramentas = {
         return {
           texto:
             `Modelo de ${arquivo} (${valido ? "válido" : "com campos a corrigir"}):\n` +
-            `${JSON.stringify(json, null, 2)}${avisos.length ? `\n${avisos.map((a) => `Aviso: ${a}`).join("\n")}` : ""}`,
+            `${blocoDeDados(arquivo, JSON.stringify(json, null, 2))}${avisos.length ? `\n${avisos.map((a) => `Aviso: ${a}`).join("\n")}` : ""}`,
           dados: {
             arquivo,
             exercicio,

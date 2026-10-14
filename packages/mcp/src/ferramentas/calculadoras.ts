@@ -367,6 +367,107 @@ export const grupoCalculadoras: GrupoFerramentas = {
     );
 
     r.ferramenta(
+      "atualizar_custo_bem",
+      {
+        titulo: "Atualizar o custo de um bem",
+        descricao:
+          "Orientação e cálculo da atualização do custo de bem ou direito com os valores informados pelo usuário: 'ufir' (bens adquiridos até 31/12/1995, quantidade de UFIR vezes R$ 0,8287, Lei 9.249/1995, art. 17), 'fator' (valor vezes um coeficiente informado) ou 'lei14973' (atualização de imóvel a valor de mercado com imposto de 4% sobre a diferença, Lei 14.973/2024). Não grava: para registrar, use editar_bem ou aplicar_caso_especial_bem.",
+        entrada: {
+          metodo: z.enum(["ufir", "fator", "lei14973"]),
+          valor_original: zVOpc("Custo de aquisição (métodos fator e lei14973)."),
+          quantidade_ufir: z
+            .string()
+            .max(24)
+            .optional()
+            .describe('Quantidade de UFIR do custo (método ufir), com vírgula ("12345,6789").'),
+          fator: z
+            .string()
+            .max(24)
+            .optional()
+            .describe(
+              'Coeficiente de atualização informado pelo usuário (método fator), "1,234567".',
+            ),
+          valor_mercado: zVOpc("Valor de mercado do imóvel (método lei14973)."),
+        },
+        saida: {
+          metodo: z.string(),
+          valorOriginal: zTexto.nullable(),
+          valorAtualizado: zTexto,
+          diferenca: zTexto,
+          imposto: zTexto,
+          baseLegal: z.string(),
+          orientacao: z.array(z.string()),
+        },
+      },
+      (a) => {
+        const exigir = <T>(v: T | undefined, campo: string): T => {
+          if (v === undefined)
+            throw new EntradaInvalidaError(`Informe '${campo}' para o método ${a.metodo}.`);
+          return v;
+        };
+        let original: bigint | null = null;
+        let atualizado: bigint;
+        let imposto = 0n;
+        let baseLegal: string;
+        const orientacao: string[] = [];
+        if (a.metodo === "ufir") {
+          const qtd = decimal(exigir(a.quantidade_ufir, "quantidade_ufir"), 4, "quantidade_ufir");
+          // UFIR de 1º/1/1996: R$ 0,8287. qtd em 1/10000 de UFIR, resultado em centavos.
+          atualizado = (qtd * 8287n) / 1_000_000n;
+          baseLegal =
+            "Lei 9.249/1995, art. 17: custo em UFIR convertido por R$ 0,8287 (UFIR de 1º/1/1996); após 1995 não há atualização.";
+          orientacao.push(
+            "Informe o valor atualizado na situação de cada ano do bem; a discriminação deve citar o custo em UFIR.",
+          );
+        } else if (a.metodo === "fator") {
+          original = BigInt(exigir(a.valor_original, "valor_original"));
+          const f = decimal(exigir(a.fator, "fator"), 6, "fator");
+          atualizado = (original * f) / 1_000_000n;
+          baseLegal = "Coeficiente informado pelo usuário; o AutoIR não tem tabela de índices.";
+          orientacao.push(
+            "A legislação veda atualizar o custo de bens depois de 1995, salvo as opções legais (Lei 14.973/2024); confira a base do coeficiente.",
+          );
+        } else {
+          original = BigInt(exigir(a.valor_original, "valor_original"));
+          atualizado = BigInt(exigir(a.valor_mercado, "valor_mercado"));
+          if (atualizado < original) {
+            throw new EntradaInvalidaError(
+              "O valor de mercado deve ser maior que o custo para haver atualização.",
+            );
+          }
+          imposto = ((atualizado - original) * 4n) / 100n;
+          baseLegal =
+            "Lei 14.973/2024, art. 6º: imóvel no Brasil atualizado a valor de mercado, diferença tributada definitivamente a 4%.";
+          orientacao.push(
+            "A opção teve prazo próprio, encerrado em dezembro de 2024; confirme que ela foi feita e o imposto (Darf) pago.",
+            "Na ficha Bens e Direitos, marque a atualização pela Lei 14.973/2024 (aplicar_caso_especial_bem) e informe o número do processo na Identificação.",
+          );
+        }
+        const diferenca = original === null ? 0n : atualizado - original;
+        return {
+          texto: [
+            `Valor atualizado: ${brl(atualizado)}${original === null ? "" : ` (custo ${brl(original)}, diferença ${brl(diferenca)})`}.`,
+            imposto > 0n ? `Imposto sobre a diferença: ${brl(imposto)}.` : "",
+            `Base: ${baseLegal}`,
+            ...orientacao,
+            AVISO,
+          ]
+            .filter(Boolean)
+            .join("\n"),
+          dados: objetoJson({
+            metodo: a.metodo,
+            valorOriginal: original,
+            valorAtualizado: atualizado,
+            diferenca,
+            imposto,
+            baseLegal,
+            orientacao,
+          }),
+        };
+      },
+    );
+
+    r.ferramenta(
       "calcular_acrescimos_moratorios",
       {
         titulo: "Calcular multa e juros de mora",

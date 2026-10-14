@@ -151,3 +151,34 @@ describe("quotas, multa e parâmetros", () => {
     expect(Object.values(s.fontes).every((u) => u.startsWith("https://"))).toBe(true);
   });
 });
+
+describe("atualizar_custo_bem", () => {
+  it("converte UFIR pelo valor de 1º/1/1996 (R$ 0,8287)", async () => {
+    // 10.000 UFIR x 0,8287 = R$ 8.287,00.
+    const r = await c.chamar("atualizar_custo_bem", { metodo: "ufir", quantidade_ufir: "10000" });
+    expect(r.isError, textoDe(r)).toBeFalsy();
+    expect(r.structuredContent).toMatchObject({ valorAtualizado: 828_700, imposto: 0 });
+  });
+
+  it("aplica o coeficiente informado, truncando a fração de centavo", async () => {
+    // R$ 1.000,00 x 1,234567 = R$ 1.234,567 -> R$ 1.234,56.
+    const r = await c.chamar("atualizar_custo_bem", {
+      metodo: "fator",
+      valor_original: "1.000,00",
+      fator: "1,234567",
+    });
+    expect(r.structuredContent).toMatchObject({ valorAtualizado: 123_456, diferenca: 23_456 });
+  });
+
+  it("Lei 14.973/2024: 4% sobre a diferença e orientação sobre o prazo", async () => {
+    // (R$ 500.000,00 - R$ 200.000,00) x 4% = R$ 12.000,00.
+    const r = await c.chamar("atualizar_custo_bem", {
+      metodo: "lei14973",
+      valor_original: "200.000,00",
+      valor_mercado: "500.000,00",
+    });
+    expect(r.structuredContent).toMatchObject({ imposto: 1_200_000, diferenca: 30_000_000 });
+    expect(textoDe(r)).toMatch(/prazo/);
+    expect((await c.chamar("atualizar_custo_bem", { metodo: "fator" })).isError).toBe(true);
+  });
+});

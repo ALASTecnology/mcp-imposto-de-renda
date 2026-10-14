@@ -107,6 +107,25 @@ describe("decodificarRegistro e codificarRegistro", () => {
     expect(decodificarRegistro(codificarRegistro(r, MINI), MINI).campos.NM_NOME).toBe("  X");
   });
 
+  it("lê e regrava valor monetário negativo com o sinal na primeira posição", () => {
+    // O programa oficial grava, por exemplo, a base mensal negativa do carnê-leão
+    // (receita menor que o livro-caixa) como "-000000300000" (fixture livro-caixa-excesso-01).
+    const linha = DETALHE_MINI.slice(0, 12) + "-0123" + DETALHE_MINI.slice(17);
+    const r = decodificarRegistro(linha, MINI);
+    expect(r.campos.VR_VALOR).toBe(-123n);
+    expect(codificarRegistro(r, MINI)).toBe(linha);
+    expect(centavosDoCampo(r, "VR_VALOR", MINI)).toBe(-123n);
+  });
+
+  it("rejeita sinal fora da primeira posição ou em campo sem casas decimais", () => {
+    const meio = DETALHE_MINI.slice(0, 12) + "0-123" + DETALHE_MINI.slice(17);
+    expect(() => decodificarRegistro(meio, MINI)).toThrow(CampoInvalidoError);
+    const so = DETALHE_MINI.slice(0, 12) + "-    " + DETALHE_MINI.slice(17);
+    expect(() => decodificarRegistro(so, MINI)).toThrow(CampoInvalidoError);
+    const controle = `${DETALHE_MINI.slice(0, -10)}-000000001`;
+    expect(() => decodificarRegistro(controle, MINI)).toThrow(CampoInvalidoError);
+  });
+
   it("expõe valores de 2 casas como Centavos", () => {
     const r = decodificarRegistro(DETALHE_MINI, MINI);
     expect(centavosDoCampo(r, "VR_VALOR", MINI)).toBe(123n);
@@ -193,7 +212,7 @@ describe("erros de leitura", () => {
 
   it("número com caractere não numérico, sinal ou data impossível", () => {
     expect(ler(HEADER_MINI, DETALHE_MINI.replace("00123", "0012A"))).toThrow(CampoInvalidoError);
-    expect(ler(HEADER_MINI, DETALHE_MINI.replace("00123", "-0123"))).toThrow(CampoInvalidoError);
+    expect(ler(HEADER_MINI, DETALHE_MINI.replace("00123", "0-123"))).toThrow(CampoInvalidoError);
     expect(ler(HEADER_MINI, DETALHE_MINI.replace("15061980", "31021980"))).toThrow(
       CampoInvalidoError,
     );
@@ -226,8 +245,14 @@ describe("erros de gravação", () => {
     expect(gravar(com({ NM_NOME: "A\r\nB" }))).toThrow(CaractereInvalidoError);
   });
 
-  it("valor negativo em campo numérico", () => {
-    expect(gravar(com({ VR_VALOR: -1n }))).toThrow(ValorNegativoError);
+  it("valor negativo em campo numérico sem casas decimais", () => {
+    expect(gravar(com({ NR_REG: -1n }))).toThrow(ValorNegativoError);
+  });
+
+  it("valor negativo que não cabe no campo com o sinal", () => {
+    // VR_VALOR tem 5 posições: o sinal ocupa uma e sobram 4 dígitos.
+    expect(gravar(com({ VR_VALOR: -9999n }))).not.toThrow();
+    expect(gravar(com({ VR_VALOR: -10000n }))).toThrow(ValorExcedeTamanhoError);
   });
 
   it("valor ou texto maior que o campo", () => {
@@ -250,7 +275,7 @@ describe("erros de gravação", () => {
   });
 
   it("aponta a linha do registro com erro", () => {
-    const registros = [base(), com({ VR_VALOR: -5n })];
+    const registros = [base(), com({ VR_VALOR: 100000n })];
     try {
       gravarArquivo(registros, { leiaute: MINI });
       expect.unreachable();

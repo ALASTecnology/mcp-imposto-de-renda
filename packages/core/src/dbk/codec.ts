@@ -138,7 +138,11 @@ function decodificarCampo(bruto: string, campo: CampoLeiaute, ctx: ContextoErroA
     }
     return bruto;
   }
-  if (!/^\d+$/.test(bruto)) {
+  // Valores monetários (campos com casas decimais) podem vir negativos, com o sinal na
+  // primeira posição e zeros à esquerda depois dele ("-000000300000"), como o programa
+  // oficial grava a base mensal negativa do carnê-leão. Ver docs/formato-dbk.md.
+  const padrao = campo.decimais !== undefined ? /^-?\d+$/ : /^\d+$/;
+  if (!padrao.test(bruto)) {
     throw new CampoInvalidoError(`numérico com conteúdo inválido ${JSON.stringify(bruto)}`, ctx);
   }
   return BigInt(bruto);
@@ -205,17 +209,19 @@ function codificarCampo(valor: ValorCampo, campo: CampoLeiaute, ctx: ContextoErr
   if (typeof valor !== "bigint") {
     throw new CampoInvalidoError(`esperado bigint, recebido ${typeof valor}`, ctx);
   }
-  if (valor < 0n) {
+  if (valor < 0n && campo.decimais === undefined) {
     throw new ValorNegativoError(`valor negativo ${valor} em campo numérico sem sinal`, ctx);
   }
-  const digitos = valor.toString();
-  if (digitos.length > campo.tamanho) {
+  const negativo = valor < 0n;
+  const digitos = (negativo ? -valor : valor).toString();
+  const espaco = negativo ? campo.tamanho - 1 : campo.tamanho;
+  if (digitos.length > espaco) {
     throw new ValorExcedeTamanhoError(
-      `valor ${digitos} tem ${digitos.length} dígitos, o campo tem ${campo.tamanho}`,
+      `valor ${valor} tem ${digitos.length} dígitos, o campo comporta ${espaco}`,
       ctx,
     );
   }
-  return digitos.padStart(campo.tamanho, "0");
+  return (negativo ? "-" : "") + digitos.padStart(espaco, "0");
 }
 
 /** Codifica um `Registro` na linha de largura fixa (sem o terminador). */

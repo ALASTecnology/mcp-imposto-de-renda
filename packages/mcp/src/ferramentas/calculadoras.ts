@@ -4,6 +4,7 @@
  */
 import {
   type Centavos,
+  cotacaoDolar2025,
   formatCentavos,
   impostoTabelaAnual,
   centavos as paraCentavos,
@@ -688,7 +689,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
       {
         titulo: "Converter valor em moeda estrangeira",
         descricao:
-          "Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o MCP Imposto de Renda não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023).",
+          "Converte para reais um valor em moeda estrangeira e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, atividade rural, bem ou aplicação financeira (Lei 14.754/2023). Sem `cotacao`, usa a tabela oficial \"Conversão para Reais do Dólar dos Estados Unidos da América em 2025\" (Ajuda do PGD, pág. 356): compra do mês para rendimento e imposto pago, venda do mês para dedução e compra de 31/12/2025 para atividade rural; nesse caso o valor deve estar em dólares. Bens e aplicações exigem a cotação da data, informada pelo usuário.",
         entrada: {
           valor: z
             .string()
@@ -696,14 +697,56 @@ export const grupoCalculadoras: GrupoFerramentas = {
             .describe(
               'Valor na moeda estrangeira: "1.234,56" (vírgula decimal) ou "1234.56" (ponto decimal, sem separador de milhar). "1.234" é recusado por ser ambíguo.',
             ),
-          cotacao: z.string().max(16).describe('Cotação em reais por unidade ("5,1234").'),
-          finalidade: z.enum(["rendimento", "imposto_exterior", "deducao", "bem", "aplicacao"]),
+          cotacao: z
+            .string()
+            .max(16)
+            .optional()
+            .describe('Cotação em reais por unidade ("5,1234"); omita para usar a tabela do dólar de 2025.'),
+          mes: z
+            .number()
+            .int()
+            .min(1)
+            .max(12)
+            .optional()
+            .describe("Mês de 2025 do recebimento ou do pagamento, para usar a tabela do dólar."),
+          finalidade: z.enum([
+            "rendimento",
+            "imposto_exterior",
+            "deducao",
+            "atividade_rural",
+            "bem",
+            "aplicacao",
+          ]),
         },
-        saida: { reais: zTexto, regra: z.string() },
+        saida: { reais: zTexto, cotacao: z.string(), fonte: z.string(), regra: z.string() },
       },
       (a) => {
         const valor = valorEstrangeiro(a.valor);
-        const cot = decimal(a.cotacao, 4, "cotacao");
+        const FONTE_TABELA =
+          "tabela \"Conversão para Reais do Dólar dos Estados Unidos da América em 2025\" (Ajuda do PGD IRPF 2026, pág. 356)";
+        let cot: bigint;
+        let fonte: string;
+        if (a.cotacao !== undefined) {
+          cot = decimal(a.cotacao, 4, "cotacao");
+          fonte = "cotação informada pelo usuário";
+        } else if (a.finalidade === "atividade_rural") {
+          cot = cotacaoDolar2025("AR", "compra");
+          fonte = `${FONTE_TABELA}, compra de 31/12/2025`;
+        } else if (a.finalidade === "bem" || a.finalidade === "aplicacao") {
+          throw new EntradaInvalidaError(
+            "Para bem ou aplicação no exterior informe `cotacao`: a regra usa a cotação do dólar na data, fora da tabela mensal.",
+          );
+        } else {
+          if (a.mes === undefined) {
+            throw new EntradaInvalidaError(
+              "Informe `cotacao` ou o `mes` de 2025 do recebimento ou do pagamento para usar a tabela do dólar.",
+            );
+          }
+          const tipo = a.finalidade === "deducao" ? "venda" : "compra";
+          cot = cotacaoDolar2025(a.mes, tipo);
+          fonte = `${FONTE_TABELA}, ${tipo} de ${String(a.mes).padStart(2, "0")}/2025`;
+        }
+        const cotTexto = `${cot / 10_000n},${String(cot % 10_000n).padStart(4, "0")}`;
         const reais = (valor * cot) / 10_000n;
         const REGRAS = {
           rendimento:
@@ -711,14 +754,16 @@ export const grupoCalculadoras: GrupoFerramentas = {
           imposto_exterior:
             "Imposto pago no exterior: mesma regra dos rendimentos, com a cotação do último dia útil da 1ª quinzena do mês anterior ao do pagamento.",
           deducao:
-            "Despesas pagas no exterior (dedutíveis): cotação de venda do dólar do Banco Central na data do pagamento.",
+            "Despesas pagas no exterior (dedutíveis): cotação de venda do dólar do Banco Central do último dia útil da 1ª quinzena do mês anterior ao do pagamento.",
+          atividade_rural:
+            "Atividade rural no exterior: resultado convertido pela cotação de compra do dólar de 31/12/2025.",
           bem: "Bens adquiridos no exterior: custo em reais pela cotação de venda do dólar na data da aquisição (bens com rendimentos de origem em moeda estrangeira seguem regras próprias do GCAP).",
           aplicacao:
             "Aplicações financeiras e entidades controladas no exterior (Lei 14.754/2023): rendimentos convertidos pela cotação de venda do dólar do Banco Central na data do recebimento ou da apuração.",
         } as const;
         return {
-          texto: `${a.valor} x ${a.cotacao} = ${brl(reais)}. ${REGRAS[a.finalidade]}`,
-          dados: objetoJson({ reais, regra: REGRAS[a.finalidade] }),
+          texto: `${a.valor} x ${cotTexto} = ${brl(reais)} (${fonte}). ${REGRAS[a.finalidade]}`,
+          dados: objetoJson({ reais, cotacao: cotTexto, fonte, regra: REGRAS[a.finalidade] }),
         };
       },
     );

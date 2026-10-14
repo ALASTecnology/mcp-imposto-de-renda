@@ -14,212 +14,130 @@
   <img alt="Node.js 22 ou superior" src="https://img.shields.io/badge/node-%3E%3D22-339933">
   <img alt="Transporte MCP stdio" src="https://img.shields.io/badge/MCP-stdio-5a4fcf">
   <img alt="Exercício 2026" src="https://img.shields.io/badge/exerc%C3%ADcio-2026-informational">
+  <a href="docs/testes.md"><img alt="1.140 testes" src="https://img.shields.io/badge/testes-1.140-brightgreen"></a>
 </p>
 
 <p align="center">
   <img alt="Prévia do MCP Imposto de Renda" src="docs/assets/preview.png" width="760">
 </p>
 
-O MCP Imposto de Renda é um servidor [MCP](https://modelcontextprotocol.io) (Model Context Protocol) que roda
-na sua máquina e conversa com o seu cliente MCP via stdio. Ele lê e grava o arquivo de cópia de
-segurança da declaração (`.DBK`) do programa oficial, calcula o imposto nos modelos completo e
-simplificado, explica cada conta, aponta pendências e consulta as tabelas de códigos do exercício.
-No fim, você restaura o arquivo no programa oficial, confere e transmite por lá.
+O MCP Imposto de Renda é um servidor [MCP](https://modelcontextprotocol.io) (Model Context
+Protocol) que roda na sua máquina e conversa com o seu cliente MCP via stdio. Ele lê e grava o
+arquivo de cópia de segurança da declaração (`.DBK`) do programa oficial, calcula o imposto nos
+modelos completo e simplificado, explica cada conta, aponta pendências e consulta as tabelas de
+códigos do exercício. No fim, você restaura o arquivo no programa oficial, confere e transmite por
+lá.
 
 > [!WARNING]
 > **Leia antes de usar.**
 >
-> - O MCP Imposto de Renda **não é serviço oficial da Receita Federal** e não tem vínculo com ela nem com
->   qualquer órgão público.
-> - O MCP Imposto de Renda **não transmite** declarações e não acessa sistemas do governo. A entrega é sempre
->   feita pelo programa oficial (PGD).
-> - O MCP Imposto de Renda não envia nada pela rede. Porém, tudo o que as ferramentas devolvem ao seu cliente MCP
+> - O MCP Imposto de Renda **não é serviço oficial da Receita Federal** e não tem vínculo com ela
+>   nem com qualquer órgão público.
+> - Ele **não transmite** declarações e não acessa sistemas do governo. A entrega é sempre feita
+>   pelo programa oficial (PGD).
+> - Ele não envia nada pela rede. Porém, tudo o que as ferramentas devolvem ao seu cliente MCP
 >   (nomes, CPFs, rendimentos, bens) **chega ao provedor de LLM que você escolheu** nesse cliente.
 >   Leia a política de privacidade desse provedor e decida o que compartilhar.
 > - Não há garantia de exatidão. A responsabilidade pela declaração é sempre do contribuinte.
 
 ## Sumário
 
-- [O que é e o que não é](#o-que-é-e-o-que-não-é)
+- [Por que usar](#por-que-usar)
+- [Como é na prática](#como-é-na-prática)
+- [Início rápido](#início-rápido)
+- [Clientes compatíveis](#clientes-compatíveis)
 - [Destaques](#destaques)
-- [Instalação](#instalação)
-- [Configuração no cliente MCP](#configuração-no-cliente-mcp)
-- [Uso passo a passo](#uso-passo-a-passo)
-- [Catálogo de ferramentas](#catálogo-de-ferramentas)
-- [Prompts e recursos](#prompts-e-recursos)
-- [Segurança e privacidade](#segurança-e-privacidade)
-- [Como funciona a precisão](#como-funciona-a-precisão)
+- [Ferramentas](#ferramentas)
+- [Declarações de exemplo](#declarações-de-exemplo)
+- [Arquitetura](#arquitetura)
+- [Segurança](#segurança)
+- [Privacidade e LGPD](#privacidade-e-lgpd)
+- [Precisão](#precisão)
 - [Limitações conhecidas](#limitações-conhecidas)
+- [Perguntas frequentes](#perguntas-frequentes)
 - [Roadmap](#roadmap)
-- [Estrutura do repositório](#estrutura-do-repositório)
-- [Desenvolvimento](#desenvolvimento)
+- [Documentação](#documentação)
 - [Contribuição](#contribuição)
 - [Licença](#licença)
 - [Aviso legal](#aviso-legal)
 
-## O que é e o que não é
+## Por que usar
 
-| O MCP Imposto de Renda é | O MCP Imposto de Renda não é |
-| --- | --- |
-| Um servidor MCP local, iniciado pelo seu cliente MCP e encerrado junto com ele | Um serviço on-line, um aplicativo da Receita Federal ou um substituto do programa oficial |
-| Um leitor e gravador do `.DBK` com controles de integridade recalculados | Um transmissor: não envia a declaração, não usa certificado digital nem login gov.br |
-| Um motor de cálculo próprio, em TypeScript, auditável e explicável | Uma cópia do programa oficial: nenhum código da Receita Federal está no repositório |
-| Um conjunto de validações equivalentes às críticas do programa | Garantia de que a declaração está livre de malha fina |
-| Software livre sob AGPL-3.0-only | Um intermediário de dados: não há backend, conta nem telemetria |
+- **Você conversa, o assistente preenche.** Cole o informe de rendimentos, descreva as despesas e
+  peça para lançar. O servidor acha os códigos certos, grava cada ficha e devolve as pendências na
+  mesma resposta.
+- **Cada conta explicada.** `explicar_calculo` mostra a memória de cálculo linha a linha, com a lei
+  aplicada em cada passo: tetos, limites por dependente, truncamento de centavos, comparação entre
+  os modelos.
+- **Arquivo do programa oficial, não um formato paralelo.** O resultado é um `.DBK` que o programa
+  da Receita restaura com **Ferramentas > Cópia de Segurança > Restaurar**. Dá para começar do zero
+  ou partir de uma declaração já iniciada no programa.
+- **Conferido contra o programa oficial.** O motor reproduz ao centavo 48 casos de referência
+  gerados pelo próprio programa, e o codec regrava byte a byte os arquivos que ele grava.
+- **Seus arquivos ficam com você.** Sem servidor, conta, telemetria ou conexão de rede. O processo
+  só enxerga a pasta que você autorizar e guarda cópia de cada versão antes de gravar.
+- **Software livre e auditável.** AGPL-3.0, em TypeScript, sem nenhum código da Receita Federal.
 
-Os dados que você mostra ao assistente seguem o caminho abaixo. O MCP Imposto de Renda fica inteiramente do lado
-da sua máquina; o único dado que sai dela é o que o seu cliente MCP manda ao provedor de LLM.
+![Fluxo da declaração: usuário, cliente MCP, MCP Imposto de Renda local, pasta autorizada e programa oficial](docs/assets/fluxo-declaracao.svg)
 
-<p align="center">
-  <img alt="Fluxo da declaração: usuário, cliente MCP, MCP Imposto de Renda local, pasta autorizada e programa oficial" src="docs/assets/fluxo-declaracao.svg" width="860">
-</p>
+## Como é na prática
 
-## Destaques
+Trecho real do [exemplo 1](exemplos/01-assalariado-simples/README.md), com as respostas exatas do
+servidor. Todos os dados são fictícios; a conversa inteira está em
+[`conversa.md`](exemplos/01-assalariado-simples/conversa.md).
 
-| Indicador | Valor | Onde conferir |
-| --- | --- | --- |
-| Casos de referência (golden) reproduzidos ao centavo | **48 de 48** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md) |
-| Arquivos do programa oficial relidos e regravados byte a byte | **96** (48 `.DBK` e 48 `.DEC`); cada `.DBK` convertido em `.DEC` igual ao do programa | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
-| Funções do programa oficial inventariadas e mapeadas | **416** | [`docs/mapeamento/matriz-cobertura.md`](docs/mapeamento/matriz-cobertura.md) |
-| Ferramentas MCP registradas | **154** em 11 grupos (95 gravam; 59 com `--somente-leitura`) | [catálogo](#catálogo-de-ferramentas) |
-| Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
-| Tabelas de códigos do exercício | **31** | [`docs/mapeamento/tabelas`](docs/mapeamento/tabelas/README.md) |
-| Tipos de registro do `.DBK` convertidos para o modelo | **57** | [`docs/formato-dbk.md`](docs/formato-dbk.md) |
-| Testes automatizados | **1.126**, em Vitest | [`docs/testes.md`](docs/testes.md) |
-| Chamadas de rede | **nenhuma** (verificado por teste) | [`docs/seguranca.md`](docs/seguranca.md) |
+> **Você:** Este é o meu informe de rendimentos da empresa: rendimentos tributáveis R$ 96.000,00,
+> previdência oficial R$ 9.840,00, imposto retido R$ 11.400,00, 13º salário R$ 8.000,00 com IRRF
+> de R$ 652,30.
 
-## Instalação
+O assistente chama `adicionar_rendimento_pj` com o CNPJ da fonte e os valores, e o servidor
+responde:
 
-Requisitos: **Node.js 22 ou superior**. Para compilar a partir do código, também o pnpm (o
-`corepack enable` instala a versão fixada em `package.json`).
-
-### Pelo npm
-
-```sh
-npx mcp-imposto-de-renda --dir ~/Documentos/IR-2026
+```text
+Rendimentos Tributáveis Recebidos de Pessoa Jurídica: item 1 incluído. Gravado 10121874206-IRPF-A-2026-2025-ORIGI.DBK (6 registros).
+Cópia do conteúdo anterior: .mcp-imposto-de-renda-backups/10121874206-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak.
+Controles: conferem.
+Sem erros impeditivos; 0 aviso(s).
 ```
 
-> [!NOTE]
-> A versão 0.1.0 ainda não foi publicada no npm. Até a publicação, use a instalação a partir do
-> código abaixo; a configuração dos clientes muda apenas no comando (`node` com o caminho do
-> `dist/index.js` no lugar de `npx mcp-imposto-de-renda`).
+> **Você:** Qual modelo é melhor para mim? Me mostre a conta.
 
-### A partir do código
+`definir_opcao_tributacao` grava o modelo mais vantajoso e `explicar_calculo` devolve a memória de
+cálculo (trecho):
+
+```text
+Modelo simplificado:
+1. Rendimentos tributáveis: R$ 96.000,00 [Mesma soma do modelo completo.]
+2. Desconto simplificado: 20% de R$ 96.000,00 = R$ 19.200,00, limitado a R$ 16.754,34; desconto R$ 16.754,34 [Lei 9.250/1995, art. 10, ...]
+3. Base de cálculo: R$ 96.000,00 - R$ 16.754,34 = R$ 79.245,66
+4. Imposto pela tabela anual (alíquota de 27,50% menos parcela a deduzir de R$ 10.853,78): R$ 10.938,77
+...
+13. Imposto a restituir: R$ 11.400,00 - R$ 10.938,77, se positivo = R$ 461,23 [Lei 9.250/1995, art. 13.]
+```
+
+> **Você:** Quero receber a restituição por Pix na chave do meu CPF. Confira o arquivo e me diga
+> como entregar.
+
+O servidor grava a opção, confere os controles de integridade (`verificar_integridade_arquivo`) e
+devolve o passo a passo para restaurar e transmitir no programa oficial
+(`instruir_transmissao`).
+
+## Início rápido
+
+**Requisito:** Node.js 22 ou superior. A versão 0.1.0 ainda não foi publicada no npm; até lá,
+instale a partir do código (o pnpm vem com `corepack enable`).
+
+**1. Instale e compile.**
 
 ```sh
 git clone https://github.com/ALASTecnology/mcp-imposto-de-renda.git
 cd mcp-imposto-de-renda
-corepack enable
-pnpm install
-pnpm build
+corepack enable && pnpm install && pnpm build
 node apps/cli/dist/index.js --versao
 ```
 
-### Opções da linha de comando
-
-| Opção | Efeito |
-| --- | --- |
-| `--dir <pasta>` | Obrigatória. Única pasta que o servidor pode ler e gravar. Precisa existir. |
-| `--somente-leitura` | Remove todas as ferramentas que gravam arquivos (inclusão, alteração, remoção e gravação do `.DBK`). |
-| `--versao` | Mostra a versão e sai. |
-| `--ajuda` | Mostra a ajuda e sai. |
-
-Logs vão para stderr; stdout é exclusivo do protocolo MCP. Detalhes em
-[docs/guias/instalacao.md](docs/guias/instalacao.md).
-
-## Configuração no cliente MCP
-
-O formato muda de cliente para cliente, mas é sempre um comando com argumentos. Troque o caminho da
-pasta pelo da sua. Exemplos completos, com caminhos por sistema operacional e a variante a partir do
-código, estão em [docs/guias/clientes-mcp.md](docs/guias/clientes-mcp.md).
-
-<details>
-<summary><strong>Claude Desktop</strong> (<code>claude_desktop_config.json</code>)</summary>
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>Claude Code</strong> (linha de comando ou <code>.mcp.json</code>)</summary>
-
-```sh
-claude mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026
-```
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>Cursor</strong> (<code>~/.cursor/mcp.json</code> ou <code>.cursor/mcp.json</code>)</summary>
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>VS Code</strong> (<code>.vscode/mcp.json</code>)</summary>
-
-```json
-{
-  "servers": {
-    "mcp-imposto-de-renda": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>Windsurf</strong> (<code>~/.codeium/windsurf/mcp_config.json</code>)</summary>
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>A partir do código</strong> (qualquer cliente)</summary>
+**2. Crie uma pasta só para a declaração e registre o servidor no seu cliente.** No Claude
+Desktop, por exemplo, em `claude_desktop_config.json`:
 
 ```json
 {
@@ -236,57 +154,90 @@ claude mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/
 }
 ```
 
-</details>
+Depois da publicação no npm, o comando vira `npx -y mcp-imposto-de-renda --dir <pasta>`. Use
+`--somente-leitura` para só consultar, sem nenhuma ferramenta que grave.
 
-Mantenha o cliente pedindo confirmação antes de ferramentas que gravam: todas elas são anunciadas
-com `destructiveHint: true` para isso.
+**3. Converse.** Peça "Vamos preparar a minha declaração do IRPF 2026" ou acione o prompt
+`preparar_declaracao`. Para partir do que você já tem, grave a cópia de segurança no programa
+oficial dentro da pasta e peça para abrir o `.DBK`.
 
-## Uso passo a passo
+Mais detalhes em [instalação](docs/guias/instalacao.md), no
+[tutorial da primeira declaração](docs/guias/primeira-declaracao.md) e em
+[solução de problemas](docs/guias/solucao-de-problemas.md).
 
-O tutorial completo, com uma declaração fictícia do início ao fim, está em
-[docs/guias/primeira-declaracao.md](docs/guias/primeira-declaracao.md). O resumo:
+## Clientes compatíveis
 
-1. **Prepare a pasta.** Crie uma pasta só para a declaração (por exemplo `~/Documentos/IR-2026`) e
-   aponte `--dir` para ela. Não use a pasta pessoal inteira.
-2. **Abra uma declaração existente ou comece do zero.**
-   - Existente: no programa oficial, grave a cópia de segurança (menu **Ferramentas > Cópia de
-     Segurança > Gravar**) dentro da pasta. Peça ao assistente para listar os arquivos
-     (`listar_arquivos`) e abrir o `.DBK` (`abrir_declaracao`, `listar_fichas`).
-   - Nova: `criar_declaracao` grava um `.DBK` novo com o nome padrão do programa a partir da
-     identificação; `criar_retificadora` parte de uma declaração já entregue. O prompt
-     `preparar_declaracao` conduz a coleta ficha por ficha.
-3. **Preencha as fichas.** Entregue ao assistente os informes de rendimentos, recibos e extratos.
-   Ele acha os códigos com `buscar_codigo` e `listar_tabela` e lança cada item com as ferramentas
-   do grupo `edicao` (`definir_identificacao`, `adicionar_dependente`, `adicionar_rendimento_pj`,
-   `adicionar_pagamento`, `adicionar_bem` e outras). Cada lançamento valida a declaração e grava o
-   `.DBK` com cópia de segurança. O mapa ficha por ficha está em
-   [docs/guias/fichas.md](docs/guias/fichas.md). Informes de rendimentos e de plano de saúde
-   colados em texto entram por `importar_informe_rendimentos` e `importar_informe_plano_saude`.
-4. **Valide.** `validar_declaracao` lista as pendências: `erro` impede a entrega, `aviso` indica
-   risco de malha fina. `validar_documento` confere CPF e CNPJ.
-5. **Calcule.** `simular_imposto` e `comparar_modelos` mostram o resultado nos dois modelos;
-   `explicar_calculo` devolve a memória de cálculo linha a linha. `definir_opcao_tributacao` grava
-   o modelo escolhido e `definir_informacoes_bancarias` a conta de restituição ou débito e as
-   quotas.
-6. **Confira o `.DBK`.** As edições gravam no próprio arquivo (ou em `arquivo_destino`), guardando
-   o conteúdo anterior em `.mcp-imposto-de-renda-backups` (`listar_copias_seguranca` e
-   `restaurar_copia_seguranca` desfazem uma gravação). `verificar_integridade_arquivo` confere os
-   controles e `gerar_relatorio_declaracao` monta um relatório para conferência.
-7. **Restaure no programa oficial.** No PGD IRPF 2026, use **Ferramentas > Cópia de Segurança >
-   Restaurar** (Ctrl+T) e escolha o arquivo gravado. `instruir_transmissao` gera o passo a passo
-   com as pendências e o saldo. Se precisar do arquivo de entrega (`.DEC`) para conferência,
-   `gerar_arquivo_entrega` o grava a partir do `.DBK`; a transmissão continua sendo pelo programa.
-8. **Confira e transmita.** Revise cada ficha no programa, rode **Verificar Pendências** (F5) e
-   transmita pelo próprio programa. Guarde o recibo e registre o número com `registrar_recibo`, para
-   uma eventual retificadora. `gerar_darf` calcula os dados do Darf (código,
-   vencimentos, quotas e acréscimos); o documento com código de barras é emitido pelo programa
-   oficial.
+O servidor funciona em qualquer cliente que inicie servidores MCP locais por stdio. O
+[índice de clientes](docs/guias/clientes-mcp.md) traz o nível de suporte e um guia de configuração
+para cada um, inclusive os que exigem ponte local ou não são suportados.
 
-## Catálogo de ferramentas
+| Cliente | Suporte | Guia |
+| --- | --- | --- |
+| Claude Desktop | Completo | [claude-desktop.md](docs/guias/clientes/claude-desktop.md) |
+| Claude Code | Completo | [claude-code.md](docs/guias/clientes/claude-code.md) |
+| ChatGPT (aplicativo de desktop) e OpenAI Codex | Completo | [chatgpt.md](docs/guias/clientes/chatgpt.md), [codex.md](docs/guias/clientes/codex.md) |
+| Gemini CLI e Antigravity | Completo | [gemini-cli.md](docs/guias/clientes/gemini-cli.md) |
+| GitHub Copilot no VS Code | Completo, com limite de ferramentas do cliente | [vscode-copilot.md](docs/guias/clientes/vscode-copilot.md) |
+| Cursor | Completo | [cursor.md](docs/guias/clientes/cursor.md) |
+| Windsurf | Completo, com limite de ferramentas do cliente | [windsurf.md](docs/guias/clientes/windsurf.md) |
+| Zed, JetBrains, Cline, Continue, goose, Kiro | Completo | [índice](docs/guias/clientes-mcp.md#clientes) |
+| LM Studio e Ollama (modelo local) | Completo | [lm-studio.md](docs/guias/clientes/lm-studio.md), [ollama.md](docs/guias/clientes/ollama.md) |
+| Open WebUI | Com ponte local | [open-webui.md](docs/guias/clientes/open-webui.md) |
 
-Todas as ferramentas são locais (`openWorldHint: false`). As que gravam são anunciadas com
-`destructiveHint: true`, para o cliente pedir confirmação. O que falta para cada função do programa
-oficial está na [matriz de cobertura](docs/mapeamento/matriz-cobertura.md).
+Com um modelo rodando na sua máquina (LM Studio, Ollama), nada da declaração sai do computador.
+
+## Destaques
+
+Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`).
+
+| Indicador | Valor | Onde conferir |
+| --- | --- | --- |
+| Ferramentas MCP | **154** em 11 grupos; 95 gravam, 59 com `--somente-leitura` | [referência das ferramentas](docs/ferramentas/README.md) |
+| Casos de referência (golden) reproduzidos ao centavo | **48 de 48** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [regras do IRPF 2026](docs/regras/irpf-2026.md) |
+| Arquivos do programa oficial relidos e regravados byte a byte | **96** (48 `.DBK` e 48 `.DEC`) | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
+| Tipos de registro do `.DBK` convertidos para o modelo | **57**, em 26 fichas | [formato do DBK](docs/formato-dbk.md) |
+| Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
+| Tabelas de códigos do exercício | **31** | [tabelas](docs/mapeamento/tabelas/README.md) |
+| Funções do programa oficial mapeadas | **416**: 328 atendidas, 76 parciais, 12 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
+| Testes automatizados | **1.140**, em Vitest | [estratégia de testes](docs/testes.md) |
+| Declarações de exemplo regeneradas a cada teste | **4** | [exemplos](exemplos/README.md) |
+| Chamadas de rede | **nenhuma** (verificado por teste) | [segurança](docs/seguranca.md) |
+
+## Ferramentas
+
+![Mapa dos 11 grupos de ferramentas](docs/assets/grupos-ferramentas.svg)
+
+| Grupo | Ferramentas | O que cobre |
+| --- | --- | --- |
+| [`ciclo`](docs/ferramentas/ciclo.md) | 15 | Criar, retificar, copiar, restaurar e excluir; opção de tributação, conta e quotas; importação de informes colados |
+| [`declaracao`](docs/ferramentas/declaracao.md) | 4 | Abrir o `.DBK`/`.DEC`, converter para o modelo JSON e de volta, gerar o `.DEC` de conferência |
+| [`arquivos`](docs/ferramentas/arquivos.md) | 2 | Listar a pasta e conferir os controles de integridade |
+| [`fichas`](docs/ferramentas/fichas.md) | 1 | Ler uma ficha isolada |
+| [`edicao`](docs/ferramentas/edicao.md) | 105 | Incluir, alterar, remover e listar em 22 fichas em lista, mais as fichas únicas |
+| [`tabelas`](docs/ferramentas/tabelas.md) | 2 | Consultar as 31 tabelas de códigos |
+| [`validacao`](docs/ferramentas/validacao.md) | 2 | Pendências da declaração e dígitos de CPF e CNPJ |
+| [`calculo`](docs/ferramentas/calculo.md) | 6 | Simular, comparar modelos, explicar o cálculo, quotas, multa e parâmetros |
+| [`calculadoras`](docs/ferramentas/calculadoras.md) | 10 | Carnê-leão, RRA, preço médio, renda variável, ganho de capital, acréscimos, residência, obrigatoriedade, câmbio |
+| [`saidas`](docs/ferramentas/saidas.md) | 4 | Dados do Darf, relatório, comunicação de saída e passo a passo da transmissão |
+| [`orientacao`](docs/ferramentas/orientacao.md) | 3 | Ajuda do programa e serviços que só existem fora do servidor |
+
+A [referência das ferramentas](docs/ferramentas/README.md) traz, para cada uma, os parâmetros com
+tipo e obrigatoriedade, as anotações MCP, um exemplo real de chamada e resposta e as funções
+correspondentes do programa oficial. Todas são locais (`openWorldHint: false`); as que gravam são
+anunciadas com `destructiveHint: true`, para o cliente pedir confirmação.
+
+**Valores monetários na entrada:** texto é sempre em **reais** no formato brasileiro
+(`"1.234,56"`); número inteiro é sempre em **centavos** (`123456` = R$ 1.234,56). No modelo JSON da
+declaração, os valores são inteiros em centavos, as datas em `AAAA-MM-DD` e CPF/CNPJ só com dígitos.
+
+| Tipo | Nome | Para que serve |
+| --- | --- | --- |
+| Prompt | `preparar_declaracao` | Roteiro guiado de coleta dos informes e preenchimento das fichas, com simulação a cada etapa. Argumento opcional `arquivo`. |
+| Prompt | `revisar_malha_fina` | Revisão em busca de pendências e inconsistências que costumam levar à malha fina. Argumento opcional `arquivo`. |
+| Recurso | `mcp-imposto-de-renda://aviso-legal` | Limites do servidor: não é serviço oficial, dados vão ao provedor de LLM, revisar e transmitir pelo programa oficial. |
+
+<details>
+<summary><strong>Catálogo resumido das 154 ferramentas</strong> (gerado a partir do <code>tools/list</code>)</summary>
 
 <!-- catalogo:inicio -->
 Gerado a partir de `tools/list` do servidor: **154 ferramentas** em 11 grupos, 95 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 59).
@@ -392,7 +343,7 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | `definir_opcao_tributacao` | Escolhe deduções legais (completa) ou desconto simplificado, preservando as deduções informadas, e devolve a comparação dos dois modelos com a recomendação. | **sim** |
 | `definir_informacoes_bancarias` | Grava a conta para restituição ou débito (banco, agência sem DV, conta, DV, tipo e operação da Caixa), Pix pela chave CPF, número de quotas (1 a 8) e débito automático, validando banco, agência, conta e DV pela regra de cada banco. | **sim** |
 | `definir_imposto_pago` | Grava as linhas digitadas da ficha Imposto Pago/Retido: imposto complementar (Darf 0246), imposto pago no exterior e imposto retido na fonte da Lei 11.033/2004. | **sim** |
-| `repetir_valores_bens` | Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens) ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. | **sim** |
+| `repetir_valores_bens` | Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens ou de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. | **sim** |
 | `importar_informe_rendimentos` | Lança na declaração o comprovante de rendimentos de PJ colado pelo usuário, em texto ou JSON (sem OCR e sem rede): fonte e CNPJ, quadro 3 (rendimentos, previdência oficial, IRRF), quadro 4 (isentos como parcela de 65 anos, indenizações, lucros), quadro 5 (13º e IRRF do 13º, PLR, aplicações) e plano de saúde do quadro 7. | **sim** |
 | `importar_informe_plano_saude` | Lança em Pagamentos Efetuados (código 26) o informe de plano de saúde colado em texto ou JSON: operadora (CNPJ e nome), valor pago por beneficiário e reembolsos. | **sim** |
 | `ler_informe` | Lê o comprovante de rendimentos de PJ colado em 'texto' ou num arquivo .txt da pasta autorizada e devolve os campos extraídos por regras fixas (fonte e CNPJ, rendimentos, previdência oficial, IRRF, 13º e IRRF do 13º, isentos e exclusivos), sem gravar nada, sem OCR e sem rede. | não |
@@ -464,44 +415,97 @@ Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem a
 | `verificar_versao_tabelas` | Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no MCP Imposto de Renda e quantos registros cada uma tem. | não |
 <!-- catalogo:fim -->
 
-**Valores monetários na entrada:** texto é sempre em **reais** no formato brasileiro (`"1.234,56"`);
-número inteiro é sempre em **centavos** (`123456` = R$ 1.234,56). No modelo JSON da declaração, os
-valores são inteiros em centavos, as datas em `AAAA-MM-DD` e CPF/CNPJ só com dígitos.
+</details>
 
-## Prompts e recursos
+## Declarações de exemplo
 
-| Tipo | Nome | Para que serve |
+Quatro declarações fictícias completas, feitas com o próprio servidor. Cada uma traz o roteiro de
+pedidos, a conversa com as respostas reais, a saída do cálculo e o `.DBK` pronto para restaurar no
+programa oficial. A suíte de testes regenera os quatro exemplos e falha se algum byte mudar.
+
+| Exemplo | Perfil | Resultado |
 | --- | --- | --- |
-| Prompt | `preparar_declaracao` | Roteiro guiado de coleta dos informes e preenchimento das fichas, com simulação a cada etapa. Argumento opcional `arquivo` (um `.DBK` da pasta para partir dele). |
-| Prompt | `revisar_malha_fina` | Revisão em busca de pendências e inconsistências que costumam levar à malha fina. Argumento opcional `arquivo`. |
-| Recurso | `mcp-imposto-de-renda://aviso-legal` | Limites do MCP Imposto de Renda: não é serviço oficial, dados vão ao provedor de LLM, revisar e transmitir pelo programa oficial. |
+| [Assalariado simples](exemplos/01-assalariado-simples/README.md) | Um empregador, poupança e CDB | Simplificado, restituir R$ 461,23 |
+| [Família com dependentes](exemplos/02-familia-dependentes/README.md) | Companheira e dois filhos, plano de saúde, escola, faculdade, imóvel financiado | Completo, restituir R$ 9.572,98 |
+| [Aposentado com 65 anos ou mais](exemplos/03-aposentado-65-anos/README.md) | Duas fontes que informaram a parcela isenta inteira | Simplificado, pagar R$ 5.693,16 em 3 quotas |
+| [Autônoma com carnê-leão](exemplos/04-autonomo-carne-leao/README.md) | Livro-caixa, PGBL e uma clínica que retém imposto | Completo, pagar R$ 4.653,06 em 4 quotas |
 
-## Segurança e privacidade
+## Arquitetura
 
-<p align="center">
-  <img alt="Proteções do servidor local" src="docs/assets/seguranca.svg" width="860">
-</p>
+![Arquitetura do monorepo e regra de dependência](docs/assets/arquitetura.svg)
+
+```
+apps/cli        mcp-imposto-de-renda          executável stdio: argumentos, pasta, logs em stderr
+packages/mcp    @mcp-imposto-de-renda/mcp     createServer(): 154 ferramentas, prompts, recursos, PastaAutorizada
+packages/core   @mcp-imposto-de-renda/core    codec DBK, modelo, conversão, motor de cálculo, validação, tabelas (sem I/O)
+exemplos/                                     declarações fictícias geradas pelo servidor
+tools/                                        leiaute, harness de referência, mapeamento e geradores de documentação
+docs/                                         arquitetura, referência, guias, regras, mapeamento, ADRs
+```
+
+A dependência só vai de fora para dentro e o core não faz I/O. Uma chamada percorre sempre o mesmo
+caminho: bytes do `.DBK`, registros de posição fixa, modelo tipado, alteração, validação, registros
+com o Resumo e os controles recalculados, gravação atômica com backup.
+
+![Sequência de uma sessão típica](docs/assets/sessao-sequencia.svg)
+
+O detalhamento de cada camada, com diagramas de fluxo e do ciclo de vida da declaração, está em
+[docs/arquitetura.md](docs/arquitetura.md).
+
+## Segurança
+
+<a name="segurança-e-privacidade"></a>
+
+![Proteções do servidor local](docs/assets/seguranca.svg)
 
 - **Sem rede.** O código do servidor e do CLI não importa `http`, `https`, `net`, `tls`, `dns` nem
   `child_process` e não usa `fetch`; um teste automatizado confere isso. Só o transporte stdio é
   oferecido ([ADR 0001](docs/adr/0001-mcp-local-sem-servidor.md)).
 - **Pasta autorizada.** Só nomes relativos dentro de `--dir`. Caminhos absolutos, `..`, `~`, links
   simbólicos, arquivos ocultos e nomes reservados do Windows são recusados antes de tocar no disco.
-- **Gravação segura.** Escrita atômica com `fsync`, backup automático em `.mcp-imposto-de-renda-backups`
-  (10 por arquivo, permissão 0600) e `--somente-leitura` para consultar sem risco.
+- **Gravação segura.** Escrita atômica com `fsync`, cópia automática em
+  `.mcp-imposto-de-renda-backups` (10 por arquivo, permissão 0600) e `--somente-leitura` para
+  consultar sem risco.
 - **Limites.** 20 MB por arquivo e 50.000 elementos por chamada.
 - **Logs sem dados pessoais.** Só eventos do processo, nome da ferramenta e classe do erro, em
-  stderr.
+  stderr. Mensagens de erro nunca levam caminho absoluto nem conteúdo da declaração.
+- **Conteúdo marcado como dado.** O que vem de arquivo ou de texto colado volta delimitado e
+  identificado como dado da declaração, não instrução, o que reduz o risco de injeção de prompt
+  por um documento.
 
-O que o MCP Imposto de Renda **não** consegue proteger: o provedor de LLM vê tudo o que as ferramentas devolvem.
-Modelo de ameaças completo em [docs/seguranca.md](docs/seguranca.md); para relatar uma
+Modelo de ameaças completo em [docs/seguranca.md](docs/seguranca.md). Para relatar uma
 vulnerabilidade, siga o [SECURITY.md](SECURITY.md) e nunca abra issue pública com o problema.
 
-## Como funciona a precisão
+## Privacidade e LGPD
 
-<p align="center">
-  <img alt="Suíte de referência: casos sintéticos, programa oficial local, golden e fixtures" src="docs/assets/suite-referencia.svg" width="860">
-</p>
+A declaração reúne dados pessoais, financeiros e, em despesas médicas, dados de saúde, que a Lei
+Geral de Proteção de Dados (Lei 13.709/2018) trata como sensíveis. O que acontece com eles depende
+de onde cada parte roda:
+
+| Onde | O que acontece com os dados |
+| --- | --- |
+| MCP Imposto de Renda | Roda só na sua máquina. Não coleta, não guarda fora da pasta autorizada, não envia nada e não tem telemetria. O projeto não recebe nenhum dado. |
+| Pasta autorizada | Guarda o `.DBK`, as cópias de segurança e o recibo registrado. Você controla e apaga quando quiser. |
+| Cliente MCP e provedor de LLM | Recebem tudo o que você digita e tudo o que as ferramentas devolvem. O tratamento segue os termos e a política de privacidade do provedor escolhido. |
+| Programa oficial e Receita Federal | Recebem a declaração quando você a transmite, como em qualquer entrega. |
+
+Recomendações práticas:
+
+- Prefira um provedor que não use as conversas para treinar modelos, ou um modelo local
+  (LM Studio, Ollama), quando a declaração tiver dados de terceiros.
+- Compartilhe só o necessário. Dependentes, alimentandos e prestadores de serviço também são
+  titulares de dados pessoais.
+- Use uma pasta exclusiva para a declaração e `--somente-leitura` quando só quiser consultar.
+- Apague a conversa no cliente e as cópias em `.mcp-imposto-de-renda-backups` quando não precisar
+  mais delas.
+
+Esta seção é informativa e não substitui orientação jurídica.
+
+## Precisão
+
+<a name="como-funciona-a-precisão"></a>
+
+![Suíte de referência: casos sintéticos, programa oficial local, golden e fixtures](docs/assets/suite-referencia.svg)
 
 O motor de cálculo e o codec do arquivo são próprios, em TypeScript
 ([ADR 0002](docs/adr/0002-motor-de-calculo-proprio-sem-jar.md)). Para saber se estão certos, o
@@ -514,8 +518,8 @@ projeto compara o resultado com o do programa oficial:
    baixado pelo próprio desenvolvedor e nunca versionado, como biblioteca: preenche as fichas,
    executa o cálculo oficial e grava o resultado esperado (golden) e os arquivos `.DBK`/`.DEC`
    gravados pelo próprio programa (fixtures).
-3. A suíte de testes exige que o motor reproduza todos os campos de cada golden **ao centavo** e que
-   o codec releia e regrave cada fixture **byte a byte**, com os controles de integridade
+3. A suíte de testes exige que o motor reproduza todos os campos de cada golden **ao centavo** e
+   que o codec releia e regrave cada fixture **byte a byte**, com os controles de integridade
    recalculados.
 4. Quando um caso diverge, a regra é investigada e documentada em
    [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md). Foi assim que se confirmou, por exemplo,
@@ -524,12 +528,10 @@ projeto compara o resultado com o do programa oficial:
 Nenhum código, classe, binário ou recurso do programa oficial entra no repositório, e nada dele é
 descompilado. O software publicado nunca executa, embute ou baixa o programa oficial.
 
-<p align="center">
-  <img alt="Estrutura do arquivo DBK: header, fichas, T9 e controles" src="docs/assets/formato-dbk.svg" width="860">
-</p>
+![Estrutura do arquivo DBK: header, fichas, T9 e controles](docs/assets/formato-dbk.svg)
 
-O formato do arquivo, com os quatro controles de integridade (CRC-32 por registro, contagens do T9,
-hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato-dbk.md).
+O formato do arquivo, com os quatro controles de integridade (CRC-32 por registro, contagens do
+T9, hash e controle do header), está em [docs/formato-dbk.md](docs/formato-dbk.md).
 
 ## Limitações conhecidas
 
@@ -547,9 +549,32 @@ hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato
   RRA pela opção do ajuste, prejuízo rural a compensar, atividade rural no exterior e a Lei 14.754
   ficam com os valores do arquivo. Ganho de capital e renda variável são de tributação definitiva e
   não mudam o ajuste.
+- **Limite de ferramentas de alguns clientes.** Clientes que aceitam menos de 154 ferramentas
+  exigem desligar parte delas; o guia de cada cliente explica como.
 - Pendências documentadas em [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md), como a
   contribuição do ente patrocinador no código 37 e os limites de 6%, 7% e 1% das doações, ainda não
   confirmados por caso de referência.
+
+## Perguntas frequentes
+
+**Preciso do programa oficial?** Sim, para conferir e transmitir. O servidor prepara o `.DBK`; a
+entrega é sempre feita pelo programa da Receita Federal.
+
+**Funciona sem internet?** O servidor, sim. O cliente MCP precisa de rede se o modelo de linguagem
+for remoto; com um modelo local, nada sai da máquina.
+
+**Posso partir da declaração que já comecei no programa?** Sim. Grave a cópia de segurança
+(**Ferramentas > Cópia de Segurança > Gravar**) na pasta autorizada e peça para abrir o `.DBK`. O
+que o servidor não descreve no modelo é preservado byte a byte na regravação.
+
+**E se o assistente lançar algo errado?** Toda gravação guarda a versão anterior.
+`listar_copias_seguranca` e `restaurar_copia_seguranca` desfazem a alteração, e `editar_*` ou
+`remover_*` corrigem o lançamento.
+
+**O cálculo é igual ao do programa?** Nos 48 casos de referência, sim, ao centavo. Fora deles pode
+haver divergência; o programa oficial é sempre a palavra final.
+
+Mais respostas em [docs/guias/perguntas-frequentes.md](docs/guias/perguntas-frequentes.md).
 
 ## Roadmap
 
@@ -558,46 +583,24 @@ hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato
   [`docs/regras/irpf-2027.md`](docs/regras/irpf-2027.md).
 - **Exercícios anteriores**, para retificadoras e declarações em atraso.
 - **Importação de PDF local** de informes de rendimentos, lida na máquina, sem serviço externo.
-- Calculadoras auxiliares offline (renda variável, preço médio, carnê-leão, RRA, ganho de capital
-  e acréscimos) e orientação sobre serviços que só existem fora do MCP Imposto de Renda: os grupos `calculadoras`
-  e `orientacao` já estão declarados no servidor.
-- As funções do programa oficial ainda pendentes na
+- **Publicação no npm**, para instalar com `npx mcp-imposto-de-renda`.
+- As funções do programa oficial ainda parciais na
   [matriz de cobertura](docs/mapeamento/matriz-cobertura.md), como a importação do arquivo do
   Carnê-Leão Web e do demonstrativo de ganhos de capital.
 - Caso de referência de ganho de capital para confirmar os dois campos do recibo ainda sem caso.
 
-## Estrutura do repositório
+## Documentação
 
-<p align="center">
-  <img alt="Arquitetura do monorepo e regra de dependência" src="docs/assets/arquitetura.svg" width="860">
-</p>
+O [índice da documentação](docs/README.md) organiza tudo pelo que você quer fazer. Os pontos de
+partida mais comuns:
 
-```
-apps/cli            mcp-imposto-de-renda     executável stdio (argumentos, logs em stderr)
-packages/mcp        @mcp-imposto-de-renda/mcp    createServer(): ferramentas, prompts, recursos, pasta autorizada
-packages/core       @mcp-imposto-de-renda/core   modelo, codec DBK, conversão, cálculo, validação e tabelas (sem I/O)
-tools/leiaute                      gerador do leiaute a partir dos XML de dados do programa
-tools/referencia                   harness local que gera golden e fixtures com o programa oficial
-tools/mapeamento                   inventário das funções do programa
-docs/                              ADRs, formato DBK, regras por exercício, mapeamento, guias
-```
-
-A dependência só vai de fora para dentro: `apps/cli` depende de `@mcp-imposto-de-renda/mcp`, que depende de
-`@mcp-imposto-de-renda/core`. O core não faz I/O. Vocabulário do domínio em [CONTEXT.md](CONTEXT.md).
-
-## Desenvolvimento
-
-```sh
-pnpm install
-pnpm lint        # Biome
-pnpm typecheck   # tsc em todos os pacotes
-pnpm test        # Vitest (golden, fixtures, propriedades, servidor)
-pnpm build       # tsup
-pnpm format      # formata com Biome
-```
-
-Arquitetura, como adicionar um exercício novo e convenções estão em
-[docs/guias/desenvolvimento.md](docs/guias/desenvolvimento.md).
+| Para | Leia |
+| --- | --- |
+| Instalar e configurar o cliente | [Instalação](docs/guias/instalacao.md) e [clientes MCP](docs/guias/clientes-mcp.md) |
+| Fazer a primeira declaração | [Tutorial](docs/guias/primeira-declaracao.md) e [exemplos](exemplos/README.md) |
+| Saber o que cada ferramenta faz | [Referência das ferramentas](docs/ferramentas/README.md) e [mapa das fichas](docs/guias/fichas.md) |
+| Entender o código | [Arquitetura](docs/arquitetura.md) e [desenvolvimento](docs/guias/desenvolvimento.md) |
+| Conferir regras e cálculos | [Regras do IRPF 2026](docs/regras/irpf-2026.md) e [formato do DBK](docs/formato-dbk.md) |
 
 ## Contribuição
 
@@ -606,8 +609,11 @@ Contribuições são bem-vindas. Leia o [CONTRIBUTING.md](CONTRIBUTING.md) e o
 Federal** entra no repositório e **nenhum dado real** (declaração, CPF, informe) entra em issue,
 PR ou teste. Divergência de cálculo se reporta com caso sintético, pelo modelo de issue próprio.
 
-Dúvidas comuns em [docs/guias/perguntas-frequentes.md](docs/guias/perguntas-frequentes.md) e
-problemas de instalação em [docs/guias/solucao-de-problemas.md](docs/guias/solucao-de-problemas.md).
+```sh
+pnpm install
+pnpm lint && pnpm typecheck && pnpm test && pnpm build
+pnpm docs:catalogo && pnpm docs:links   # documentação gerada e links
+```
 
 ## Licença
 
@@ -617,10 +623,10 @@ precisam disponibilizar o código-fonte sob a mesma licença.
 
 ## Aviso legal
 
-O MCP Imposto de Renda é software livre fornecido "no estado em que se encontra", sem garantia de qualquer tipo,
-nos termos da AGPL-3.0. Não é serviço oficial da Receita Federal do Brasil, não tem vínculo com ela
-nem com qualquer órgão público e não usa marca, brasão ou identidade visual do governo. Cálculos,
-conversões e validações podem divergir do programa oficial. Abra o arquivo no programa da Receita
-Federal, confira cada ficha e transmita por ele. A responsabilidade pelas informações declaradas é
-sempre do contribuinte. Os dados que você compartilha com o assistente são tratados pelo provedor
-de LLM escolhido por você, segundo os termos desse provedor.
+O MCP Imposto de Renda é software livre fornecido "no estado em que se encontra", sem garantia de
+qualquer tipo, nos termos da AGPL-3.0. Não é serviço oficial da Receita Federal do Brasil, não tem
+vínculo com ela nem com qualquer órgão público e não usa marca, brasão ou identidade visual do
+governo. Cálculos, conversões e validações podem divergir do programa oficial. Abra o arquivo no
+programa da Receita Federal, confira cada ficha e transmita por ele. A responsabilidade pelas
+informações declaradas é sempre do contribuinte. Os dados que você compartilha com o assistente são
+tratados pelo provedor de LLM escolhido por você, segundo os termos desse provedor.

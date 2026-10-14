@@ -31,6 +31,7 @@ import {
   interpretarInforme,
   interpretarPlanoSaude,
 } from "./ciclo-informe.js";
+import { lerReciboRegistrado, registrarRecibo } from "./ciclo-recibo.js";
 import {
   blocoDeDados,
   EXT_DECLARACAO,
@@ -292,21 +293,100 @@ export const grupoCiclo: GrupoFerramentas = {
       },
     );
 
-    alterar(
-      r,
+    r.ferramenta(
       "criar_retificadora",
-      "Criar declaração retificadora",
-      "Marca a declaração como retificadora com o número do recibo (12 dígitos) da declaração a retificar e grava em um novo DBK (padrão: CPF-IRPF-A-2026-2025-RETIF.DBK), preservando o restante.",
       {
-        recibo: z
-          .string()
-          .regex(/^\d{12}$/, "O recibo tem 12 dígitos.")
-          .describe("Recibo da declaração a retificar."),
+        titulo: "Criar declaração retificadora",
+        descricao:
+          "Marca a declaração como retificadora com o número do recibo (12 dígitos) da declaração a retificar e grava em um novo DBK (padrão: CPF-IRPF-A-2026-2025-RETIF.DBK), preservando o restante. Sem 'recibo', usa o guardado por registrar_recibo para o arquivo. Valida a declaração e grava com cópia de segurança, devolvendo as pendências.",
+        escreve: true,
+        entrada: {
+          arquivo: zArquivoEdicao,
+          arquivo_destino: zArquivoDestino,
+          recibo: z
+            .string()
+            .regex(/^\d{12}$/, "O recibo tem 12 dígitos.")
+            .optional()
+            .describe(
+              "Recibo da declaração a retificar (padrão: o registrado com registrar_recibo).",
+            ),
+        },
+        saida: { ...SAIDA_COM_RESUMO, recibo: z.string(), origemRecibo: z.string() },
       },
-      (dec, a) => {
-        dec.identificacao.tipoDeclaracao.retificadora = true;
-        dec.identificacao.tipoDeclaracao.reciboRetificada = a.recibo as string;
-        return "Declaração marcada como retificadora.";
+      async (a) => {
+        const aberta = await abrirDeclaracao(r.ctx, a.arquivo);
+        const registrado = a.recibo
+          ? undefined
+          : await lerReciboRegistrado(r.ctx, a.arquivo, aberta.declaracao.identificacao.cpf);
+        const recibo = a.recibo ?? registrado?.recibo;
+        if (!recibo) {
+          throw new EntradaInvalidaError(
+            "Informe 'recibo' (12 dígitos) ou registre-o antes com registrar_recibo para este arquivo.",
+          );
+        }
+        const destino = a.arquivo_destino ?? nomePadrao(aberta.declaracao, true);
+        const res = await editarDeclaracao(
+          r.ctx,
+          { arquivo: a.arquivo, arquivo_destino: destino },
+          (dec) => {
+            dec.identificacao.tipoDeclaracao.retificadora = true;
+            dec.identificacao.tipoDeclaracao.reciboRetificada = recibo;
+            return dec;
+          },
+        );
+        const origemRecibo = a.recibo ? "informado" : "registrado";
+        const resumo = `Declaração marcada como retificadora (recibo ${origemRecibo}).`;
+        return {
+          texto: textoGravacao(res, resumo),
+          dados: objetoJson({ ...semDeclaracao(res), resumo, recibo, origemRecibo }),
+        };
+      },
+    );
+
+    r.ferramenta(
+      "registrar_recibo",
+      {
+        titulo: "Registrar o recibo da declaração transmitida",
+        descricao:
+          "Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). O AutoIR não transmite nem consulta a Receita Federal: o número vem do usuário.",
+        escreve: true,
+        entrada: {
+          arquivo: zNomeArquivo("DBK ou DEC da declaração transmitida."),
+          recibo: z
+            .string()
+            .max(20)
+            .describe("Número do recibo, 12 dígitos (pontos e traços são ignorados)."),
+        },
+        saida: {
+          arquivo: z.string(),
+          arquivoRecibo: z.string(),
+          recibo: z.string(),
+          backup: z.string().nullable(),
+        },
+      },
+      async ({ arquivo, recibo }) => {
+        const aberta = await abrirDeclaracao(r.ctx, arquivo);
+        const { conteudo, escrito } = await registrarRecibo(
+          r.ctx,
+          arquivo,
+          aberta.declaracao,
+          recibo,
+        );
+        return {
+          texto: [
+            `Recibo ${conteudo.recibo} registrado para ${arquivo} em ${escrito.arquivo}.`,
+            escrito.backup ? `Cópia do registro anterior: ${escrito.backup}.` : "",
+            "Para retificar depois, use criar_retificadora com este arquivo; guarde também o recibo impresso pelo programa oficial.",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+          dados: {
+            arquivo,
+            arquivoRecibo: escrito.arquivo,
+            recibo: conteudo.recibo,
+            backup: escrito.backup ?? null,
+          },
+        };
       },
     );
 

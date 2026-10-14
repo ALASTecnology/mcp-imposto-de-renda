@@ -80,6 +80,22 @@ describe("ciclo de vida", () => {
     await ok("criar_declaracao", { identificacao, sobrescrever: true });
   });
 
+  it("registra o recibo e o usa na retificadora sem informá-lo de novo", async () => {
+    const reg = await ok("registrar_recibo", { arquivo: "trib.DEC", recibo: "1234.5678.90-12" });
+    expect(reg).toMatchObject({ arquivoRecibo: "trib.recibo.json", recibo: "123456789012" });
+    const salvo = JSON.parse(readFileSync(join(pasta, "trib.recibo.json"), "utf8"));
+    expect(salvo).toMatchObject({ tipo: "recibo-autoir", recibo: "123456789012" });
+    const s = await ok("criar_retificadora", { arquivo: "trib.DEC", arquivo_destino: "r.DBK" });
+    expect(s).toMatchObject({ recibo: "123456789012", origemRecibo: "registrado" });
+    expect(modelo("r.DBK").identificacao.tipoDeclaracao.reciboRetificada).toBe("123456789012");
+    const semRecibo = await c.chamar("criar_retificadora", { arquivo: "pj.DBK" });
+    expect(semRecibo.isError).toBe(true);
+    expect(textoDe(semRecibo)).toMatch(/registrar_recibo/);
+    expect((await c.chamar("registrar_recibo", { arquivo: "pj.DBK", recibo: "123" })).isError).toBe(
+      true,
+    );
+  });
+
   it("cria a retificadora a partir de um DEC, sem o recibo", async () => {
     const s = await ok("criar_retificadora", {
       arquivo: "trib.DEC",

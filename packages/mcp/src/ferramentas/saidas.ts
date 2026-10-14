@@ -16,9 +16,11 @@ import {
 import { z } from "zod";
 import {
   AVISO_FERIADOS,
+  chaveMes,
   dataBr,
   diasEntre,
   formatarData,
+  indiceMes,
   lerData,
   vencimentoMesSeguinte,
 } from "../calculadoras/datas.js";
@@ -87,22 +89,53 @@ export interface ParcelaDarf {
   total: string | null;
 }
 
-/** Multa de mora (0,33% ao dia, limite 20%) e juros (Selic acumulada + 1%) de um débito vencido. */
+/**
+ * Multa de mora (0,33% ao dia, limite 20%) e juros de mora de um débito vencido.
+ *
+ * Juros (Lei 9.430/1996, art. 61, § 3º): Selic acumulada do mês seguinte ao vencimento até o mês
+ * anterior ao pagamento, mais 1% no mês do pagamento. Pago no mesmo mês do vencimento, não há
+ * juros (só a multa); por isso o 1% só entra quando o pagamento cai em mês posterior.
+ */
 export function acrescimosMoratorios(
   principal: bigint,
   vencimento: string,
   pagamento: string,
   selicAcumuladaCentesimos?: bigint,
 ) {
-  const dias = diasEntre(lerData(vencimento), lerData(pagamento));
+  const venc = lerData(vencimento);
+  const pag = lerData(pagamento);
+  const dias = diasEntre(venc, pag);
   if (dias <= 0) return { dias: 0, multa: 0n, juros: 0n, percentualMulta: 0n };
   const percentualMulta = BigInt(Math.min(dias * 33, 2000));
   const multa = (principal * percentualMulta) / 10_000n;
-  const juros =
-    selicAcumuladaCentesimos === undefined
+  const mesPosterior = indiceMes(pag) > indiceMes(venc);
+  const juros = !mesPosterior
+    ? 0n
+    : selicAcumuladaCentesimos === undefined
       ? undefined
       : (principal * (selicAcumuladaCentesimos + 100n)) / 10_000n;
   return { dias, multa, juros, percentualMulta };
+}
+
+/**
+ * Selic acumulada (soma simples, em centésimos de ponto) do mês seguinte ao vencimento até o mês
+ * anterior ao pagamento, a partir da Selic mensal. `undefined` se faltar algum mês.
+ */
+export function selicAcumuladaEntre(
+  selicMensal: Readonly<Record<string, bigint>>,
+  vencimento: string,
+  pagamento: string,
+): { selic: bigint | undefined; faltando: string[] } {
+  const inicio = indiceMes(lerData(vencimento)) + 1;
+  const fim = indiceMes(lerData(pagamento)) - 1;
+  let selic = 0n;
+  const faltando: string[] = [];
+  for (let i = inicio; i <= fim; i++) {
+    const v = selicMensal[chaveMes(i)];
+    if (v === undefined) faltando.push(chaveMes(i));
+    else selic += v;
+  }
+  return { selic: faltando.length ? undefined : selic, faltando };
 }
 
 async function declaracaoOpcional(
@@ -195,7 +228,9 @@ export const grupoSaidas: GrupoFerramentas = {
           selic_mensal: z
             .record(z.string().regex(/^\d{4}-\d{2}$/), zPercentual)
             .optional()
-            .describe('Selic mensal por mês "AAAA-MM" para os juros das quotas a partir da 3ª.'),
+            .describe(
+              'Selic mensal por mês "AAAA-MM": juros das quotas a partir da 3ª e, com data_pagamento, juros de mora de cada quota vencida (Selic do mês seguinte ao vencimento dela até o mês anterior ao pagamento).',
+            ),
           data_pagamento: z
             .string()
             .optional()
@@ -203,7 +238,14 @@ export const grupoSaidas: GrupoFerramentas = {
           selic_acumulada_mora: zPercentual
             .optional()
             .describe(
-              "Selic acumulada do mês seguinte ao vencimento até o mês anterior ao pagamento.",
+              "Selic acumulada do mês seguinte ao vencimento até o mês anterior ao pagamento. Só vale com uma quota vencida: cada quota vence num mês, e a Selic acumulada de cada uma é diferente. Com duas ou mais, informe selic_acumulada_mora_por_quota ou selic_mensal.",
+            ),
+          selic_acumulada_mora_por_quota: z
+            .array(zPercentual)
+            .max(8)
+            .optional()
+            .describe(
+              "Selic acumulada de cada quota (posição 1 = 1ª quota), do mês seguinte ao vencimento dela até o mês anterior ao pagamento. Alternativa a selic_mensal quando há várias quotas vencidas.",
             ),
         },
         saida: {
@@ -306,15 +348,42 @@ export const grupoSaidas: GrupoFerramentas = {
           ];
         }
         if (a.data_pagamento) {
-          const selicMora =
+          const pagamento = a.data_pagamento;
+          // Cada quota vence num mês: a Selic de mora é própria de cada uma (achado 4).
+          const vencidas = parcelas.filter(
+            (p) => diasEntre(lerData(p.vencimento), lerData(pagamento)) > 0,
+          );
+          const porQuota = a.selic_acumulada_mora_por_quota?.map((v) => percentual(v));
+          const unica =
             a.selic_acumulada_mora === undefined ? undefined : percentual(a.selic_acumulada_mora);
-          for (const p of parcelas) {
-            const m = acrescimosMoratorios(
-              BigInt(p.principal),
-              p.vencimento,
-              a.data_pagamento,
-              selicMora,
+          if (unica !== undefined && porQuota === undefined && vencidas.length > 1) {
+            throw new EntradaInvalidaError(
+              `Há ${vencidas.length} quotas vencidas em ${dataBr(pagamento)}, cada uma com a sua Selic acumulada: informe selic_acumulada_mora_por_quota (uma por quota, na ordem) ou selic_mensal, em vez de selic_acumulada_mora.`,
             );
+          }
+          if (porQuota !== undefined && porQuota.length < parcelas.length) {
+            throw new EntradaInvalidaError(
+              `selic_acumulada_mora_por_quota tem ${porQuota.length} valor(es), mas há ${parcelas.length} quota(s): informe um por quota, na ordem (0 para as que não estiverem vencidas).`,
+            );
+          }
+          const selicMensal = a.selic_mensal
+            ? Object.fromEntries(Object.entries(a.selic_mensal).map(([k, v]) => [k, percentual(v)]))
+            : undefined;
+          let semSelic = false;
+          for (const p of parcelas) {
+            let selicMora: bigint | undefined;
+            if (porQuota !== undefined) selicMora = porQuota[p.numero - 1];
+            else if (unica !== undefined) selicMora = unica;
+            else if (selicMensal) {
+              const acumulada = selicAcumuladaEntre(selicMensal, p.vencimento, pagamento);
+              selicMora = acumulada.selic;
+              if (acumulada.faltando.length) {
+                avisos.push(
+                  `Quota ${p.numero}: Selic de ${acumulada.faltando.join(", ")} não informada em selic_mensal; juros de mora não calculados.`,
+                );
+              }
+            }
+            const m = acrescimosMoratorios(BigInt(p.principal), p.vencimento, pagamento, selicMora);
             if (m.dias <= 0) continue;
             p.multaMora = m.multa.toString();
             p.jurosMora = m.juros === undefined ? null : m.juros.toString();
@@ -322,11 +391,12 @@ export const grupoSaidas: GrupoFerramentas = {
               m.juros === undefined || p.total === null
                 ? null
                 : (BigInt(p.total) + m.multa + m.juros).toString();
-            if (m.juros === undefined) {
-              avisos.push(
-                "Juros de mora não calculados: informe selic_acumulada_mora (Selic acumulada até o mês anterior ao pagamento).",
-              );
-            }
+            if (m.juros === undefined) semSelic = true;
+          }
+          if (semSelic) {
+            avisos.push(
+              "Juros de mora não calculados para alguma quota: informe selic_acumulada_mora (uma quota vencida), selic_acumulada_mora_por_quota ou selic_mensal.",
+            );
           }
         }
         const texto = [

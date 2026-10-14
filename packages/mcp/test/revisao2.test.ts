@@ -16,6 +16,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { abrirPastaAutorizada } from "../src/arquivos/index.js";
 import { blocoDeDados } from "../src/ferramentas/comum.js";
+import { acrescimosMoratorios } from "../src/ferramentas/saidas.js";
 import { objetoJson } from "../src/serializacao.js";
 import { type Conexao, conectar, declaracaoSintetica, fixture, textoDe } from "./apoio.js";
 
@@ -288,5 +289,65 @@ describe("conteúdo do arquivo delimitado (achado 2)", () => {
     expect(textoDe(rel)).toContain(MARCA);
     expect(chamadas).toBeGreaterThan(20);
     expect(comMarca).toBeGreaterThan(5);
+  });
+});
+
+describe("acréscimos moratórios (achado 4)", () => {
+  interface Parcela {
+    numero: number;
+    vencimento: string;
+    principal: string;
+    multaMora: string;
+    jurosMora: string | null;
+  }
+  const parcelas = (r: { structuredContent?: unknown }) =>
+    (r.structuredContent as { parcelas: Parcela[] }).parcelas;
+
+  it("pagamento no mesmo mês do vencimento não tem juros; no mês seguinte, só o 1%", () => {
+    const mesmoMes = acrescimosMoratorios(100_000n, "2026-05-29", "2026-05-30", 0n);
+    expect(mesmoMes.juros).toBe(0n);
+    expect(mesmoMes.multa).toBe(330n);
+    expect(acrescimosMoratorios(100_000n, "2026-05-29", "2026-05-31").juros).toBe(0n);
+    expect(acrescimosMoratorios(100_000n, "2026-05-29", "2026-06-01", 0n).juros).toBe(1_000n);
+    expect(acrescimosMoratorios(100_000n, "2026-05-29", "2026-08-10", 210n).juros).toBe(3_100n);
+    expect(acrescimosMoratorios(100_000n, "2026-05-29", "2026-08-10").juros).toBeUndefined();
+  });
+
+  it("gerar_darf sem juros de mora quando paga no mês do vencimento", async () => {
+    const r = await c.chamar("gerar_darf", { saldo: "1.000,00", data_pagamento: "2026-05-30" });
+    expect(r.isError, textoDe(r)).toBeFalsy();
+    expect(parcelas(r)[0]).toMatchObject({ multaMora: "330", jurosMora: "0" });
+  });
+
+  it("gerar_darf calcula a Selic de mora de cada quota a partir da Selic mensal", async () => {
+    const r = await c.chamar("gerar_darf", {
+      saldo: "3.000,00",
+      quotas: 3,
+      data_pagamento: "2026-09-15",
+      selic_mensal: { "2026-06": "1,00", "2026-07": "1,00", "2026-08": "1,00" },
+    });
+    expect(r.isError, textoDe(r)).toBeFalsy();
+    const p = parcelas(r);
+    expect(p.map((x) => x.vencimento)).toEqual(["2026-05-29", "2026-06-30", "2026-07-31"]);
+    // 1ª: Selic de junho a agosto (3%) + 1%; 2ª: julho e agosto (2%) + 1%; 3ª: agosto + 1%.
+    expect(p.map((x) => x.jurosMora)).toEqual(["4000", "3000", "2000"]);
+  });
+
+  it("gerar_darf aceita a Selic acumulada de cada quota e recusa uma só para várias vencidas", async () => {
+    const base = { saldo: "3.000,00", quotas: 3, data_pagamento: "2026-09-15" };
+    const porQuota = await c.chamar("gerar_darf", {
+      ...base,
+      selic_acumulada_mora_por_quota: ["3,00", "2,00", "1,00"],
+    });
+    expect(porQuota.isError, textoDe(porQuota)).toBeFalsy();
+    expect(parcelas(porQuota).map((x) => x.jurosMora)).toEqual(["4000", "3000", "2000"]);
+    const unica = await c.chamar("gerar_darf", { ...base, selic_acumulada_mora: "3,00" });
+    expect(unica.isError).toBe(true);
+    expect(textoDe(unica)).toContain("selic_acumulada_mora_por_quota");
+    const curta = await c.chamar("gerar_darf", {
+      ...base,
+      selic_acumulada_mora_por_quota: ["3,00"],
+    });
+    expect(curta.isError).toBe(true);
   });
 });

@@ -240,34 +240,99 @@ ferr("instruir_transmissao", "Gera o passo a passo e o checklist para concluir n
 ferr("orientar_servico_externo", "Explica como usar um serviço que só existe fora do AutoIR (gov.br, pré-preenchida, Carnê-Leão Web, e-CAC, débito automático, extrato, Darf oficial, GCAP, LCAR, Sicalc, Correios) e o que trazer de volta.", "servico, contexto?", "não", "tabelas")
 
 # ---------------------------------------------------------------- estado atual do servidor (packages/mcp/src/ferramentas)
-EXISTENTES = ["simular_imposto", "comparar_modelos", "explicar_calculo", "calcular_quotas", "calcular_multa_atraso",
-              "consultar_parametros", "abrir_declaracao", "converter_dbk_para_modelo", "converter_modelo_para_dbk",
-              "ler_ficha", "validar_documento", "validar_declaracao", "listar_tabela", "buscar_codigo",
-              "listar_arquivos", "verificar_integridade_arquivo"]
-FICHAS_MODELO = "identificação, dependentes, rendimentos de PJ, pagamentos, bens e dívidas"
-EDICAO_JSON = "sem ferramenta dedicada; hoje se edita o JSON do modelo (" + FICHAS_MODELO + ") obtido com `converter_dbk_para_modelo` e se grava com `converter_modelo_para_dbk`"
-STATUS = {
+EXISTENTES = [
+    # calculo
+    "simular_imposto", "comparar_modelos", "explicar_calculo", "calcular_quotas", "calcular_multa_atraso",
+    "consultar_parametros",
+    # declaracao
+    "abrir_declaracao", "converter_dbk_para_modelo", "converter_modelo_para_dbk",
+    # fichas e edição (CRUD por ficha: adicionar_*, editar_*, remover_*, listar_*)
+    "ler_ficha", "listar_fichas", "listar_lancamentos", "editar_lancamento", "remover_lancamento",
+    "adicionar_dependente", "adicionar_alimentando", "adicionar_rendimento_pj", "adicionar_rendimento_isento",
+    "adicionar_rendimento_exclusivo", "adicionar_rendimento_exigibilidade_suspensa", "adicionar_rra",
+    "adicionar_pagamento", "adicionar_doacao", "adicionar_doacao_direta_declaracao", "adicionar_bem",
+    "adicionar_divida", "adicionar_herdeiro", "adicionar_doacao_eleitoral", "adicionar_ganho_capital",
+    "listar_ganhos_capital", "adicionar_renda_variavel", "adicionar_fii_fiagro", "adicionar_imovel_rural",
+    "adicionar_receita_despesa_rural", "adicionar_rebanho", "adicionar_bem_rural", "adicionar_divida_rural",
+    "definir_identificacao", "definir_rendimentos_pf_exterior", "definir_renda_variavel", "definir_fii_fiagro",
+    "definir_espolio", "definir_saida_definitiva", "definir_informacoes_conjuge", "definir_receitas_despesas_rurais",
+    "definir_apuracao_rural", "definir_rebanho", "definir_partilha_bem", "aplicar_caso_especial_bem",
+    "buscar_nome_por_documento",
+    # ciclo
+    "criar_declaracao", "criar_retificadora", "excluir_declaracao", "gravar_copia_seguranca",
+    "listar_copias_seguranca", "restaurar_copia_seguranca", "definir_opcao_tributacao",
+    "definir_informacoes_bancarias", "definir_imposto_pago", "repetir_valores_bens",
+    "importar_informe_rendimentos", "importar_informe_plano_saude", "transferir_excedente_isencao_65",
+    # validação, tabelas e arquivos
+    "validar_documento", "validar_declaracao", "listar_tabela", "buscar_codigo", "listar_arquivos",
+    "verificar_integridade_arquivo",
+    # saídas
+    "gerar_darf", "instruir_transmissao", "gerar_relatorio_declaracao", "gerar_comunicacao_saida",
+    # calculadoras
+    "calcular_carne_leao", "calcular_rra", "calcular_preco_medio", "apurar_renda_variavel",
+    "calcular_ganho_capital", "calcular_acrescimos_moratorios", "calcular_condicao_residencia",
+    "verificar_obrigatoriedade", "converter_moeda",
+    # orientação
+    "orientar_servico_externo", "verificar_versao_tabelas",
+]
+EDICAO = "edição pelo fluxo abrir, alterar o modelo, validar e gravar o DBK com cópia de segurança"
+ONLINE = "serviço online: só orientação com `orientar_servico_externo`; o AutoIR não acessa a rede"
+_IMPL = {n: ([n], EDICAO) for n in [
+    "definir_identificacao", "adicionar_dependente", "adicionar_alimentando", "adicionar_rendimento_pj",
+    "definir_rendimentos_pf_exterior", "adicionar_rendimento_isento", "adicionar_rendimento_exclusivo",
+    "adicionar_rendimento_exigibilidade_suspensa", "adicionar_rra", "adicionar_pagamento", "adicionar_doacao",
+    "adicionar_doacao_direta_declaracao", "adicionar_bem", "aplicar_caso_especial_bem", "adicionar_divida",
+    "definir_espolio", "adicionar_herdeiro", "definir_partilha_bem", "adicionar_doacao_eleitoral",
+    "definir_saida_definitiva", "adicionar_imovel_rural", "definir_receitas_despesas_rurais",
+    "definir_apuracao_rural", "definir_rebanho", "adicionar_bem_rural", "adicionar_divida_rural",
+    "definir_renda_variavel", "definir_fii_fiagro", "definir_imposto_pago", "repetir_valores_bens",
+    "definir_informacoes_bancarias", "definir_opcao_tributacao",
+]}
+STATUS = {n: ("implementada", ex, ob) for n, (ex, ob) in _IMPL.items()}
+STATUS.update({
+    "criar_declaracao": ("implementada", ["criar_declaracao"], "cria o DBK em branco com o nome padrão; a partir de outro arquivo use `criar_retificadora` ou `gravar_copia_seguranca`"),
     "abrir_declaracao": ("implementada", ["abrir_declaracao"], "lê DBK/DEC da pasta autorizada e resume"),
-    "calcular_imposto": ("parcial", ["simular_imposto", "comparar_modelos", "explicar_calculo"], "cálculo dos dois modelos e memória; faltam RRA, atividade rural, Lei 14.754, incentivos completos, Saída e Final de Espólio a conferir"),
-    "simular_quotas": ("implementada", ["calcular_quotas"], "falta elegibilidade do débito automático pela data de entrega"),
-    "calcular_multa_atraso": ("implementada", ["calcular_multa_atraso"], ""),
-    "consultar_tabela": ("implementada", ["listar_tabela", "buscar_codigo", "consultar_parametros"], ""),
+    "excluir_declaracao": ("implementada", ["excluir_declaracao"], "exige confirmação com o nome do arquivo e guarda cópia de segurança"),
+    "criar_retificadora": ("implementada", ["criar_retificadora"], "a partir de DBK ou DEC, com o número do recibo"),
+    "gravar_copia_seguranca": ("implementada", ["gravar_copia_seguranca"], ""),
+    "restaurar_copia_seguranca": ("implementada", ["restaurar_copia_seguranca", "listar_copias_seguranca"], ""),
+    "listar_fichas": ("implementada", ["listar_fichas"], ""),
+    "listar_lancamentos": ("implementada", ["listar_lancamentos", "ler_ficha"], "também `listar_*` por ficha"),
+    "editar_lancamento": ("implementada", ["editar_lancamento"], "também `editar_*` por ficha"),
+    "remover_lancamento": ("implementada", ["remover_lancamento"], "com cascata dos vínculos de dependente e alimentando"),
+    "importar_informe_rendimentos": ("implementada", ["importar_informe_rendimentos"], "texto ou JSON colado; sem OCR"),
+    "importar_informe_plano_saude": ("implementada", ["importar_informe_plano_saude"], "texto ou JSON colado; sem OCR"),
+    "calcular_imposto": ("parcial", ["simular_imposto", "comparar_modelos", "explicar_calculo"], "cálculo dos dois modelos e memória; RRA, atividade rural, Lei 14.754 e incentivos a conferir contra o golden"),
     "listar_pendencias": ("implementada", ["validar_declaracao"], "catálogo de regras a ampliar para todas as fichas"),
-    "validar_documento": ("parcial", ["validar_documento"], "só CPF e CNPJ; faltam NIT, recibo, CEP, nome, conta com DV"),
-    "gerar_dbk": ("parcial", ["converter_modelo_para_dbk", "verificar_integridade_arquivo"], "grava DBK recalculando CRC, T9 e hash, mas só converte " + FICHAS_MODELO + " (demais registros preservados do arquivo base)"),
+    "verificar_obrigatoriedade": ("implementada", ["verificar_obrigatoriedade"], "critérios de 2026 a partir das respostas do usuário"),
+    "simular_quotas": ("implementada", ["calcular_quotas"], "falta elegibilidade do débito automático pela data de entrega"),
+    "gerar_darf": ("implementada", ["gerar_darf"], "código, vencimentos e valores das quotas; o Darf oficial é emitido no programa ou no Sicalc"),
+    "calcular_acrescimos_moratorios": ("implementada", ["calcular_acrescimos_moratorios"], "Selic acumulada informada pelo usuário"),
+    "calcular_multa_atraso": ("implementada", ["calcular_multa_atraso"], ""),
+    "calcular_rra": ("parcial", ["calcular_rra"], "simulador; a ficha RRA é preenchida com `adicionar_rra`"),
+    "transferir_excedente_isencao_65": ("implementada", ["transferir_excedente_isencao_65"], ""),
+    "converter_moeda": ("parcial", ["converter_moeda"], "só com cotação informada pelo usuário (sem download de cotações)"),
+    "calcular_condicao_residencia": ("implementada", ["calcular_condicao_residencia"], ""),
+    "calcular_ganho_capital": ("parcial", ["calcular_ganho_capital"], "simulador de orientação; o demonstrativo oficial é o GCAP"),
+    "calcular_preco_medio": ("implementada", ["calcular_preco_medio", "apurar_renda_variavel"], ""),
+    "calcular_carne_leao": ("implementada", ["calcular_carne_leao"], "tabelas mensais de 2025"),
+    "validar_documento": ("parcial", ["validar_documento"], "só CPF e CNPJ; a conta bancária é validada em `definir_informacoes_bancarias`"),
+    "consultar_tabela": ("implementada", ["listar_tabela", "buscar_codigo", "consultar_parametros"], ""),
+    "buscar_nome_por_documento": ("parcial", ["buscar_nome_por_documento"], "busca só nas declarações da pasta; a consulta à Receita é " + ONLINE),
+    "verificar_versao_tabelas": ("implementada", ["verificar_versao_tabelas"], "versão embarcada, sem consulta online"),
+    "gerar_dbk": ("implementada", ["converter_modelo_para_dbk", "verificar_integridade_arquivo"], "conversão de todas as fichas; registros sem campo no modelo são preservados do arquivo base; totais recalculados com o motor"),
+    "gerar_relatorio_declaracao": ("parcial", ["gerar_relatorio_declaracao"], "relatório em texto; sem PDF ou HTML"),
+    "gerar_comunicacao_saida": ("implementada", ["gerar_comunicacao_saida"], "só o texto"),
+    "instruir_transmissao": ("implementada", ["instruir_transmissao"], ""),
+    "orientar_servico_externo": ("implementada", ["orientar_servico_externo"], ""),
     "importar_declaracao_anterior": ("parcial", ["converter_dbk_para_modelo"], "lê DBK/DEC do exercício 2026; falta o leiaute 2025 e a regra de quais dados migrar"),
-    "listar_lancamentos": ("parcial", ["ler_ficha"], "só as fichas do modelo atual"),
     "listar_declaracoes": ("parcial", ["listar_arquivos"], "lista arquivos da pasta autorizada, sem situação em preenchimento ou transmitida"),
-    "definir_identificacao": ("parcial", [], EDICAO_JSON),
-    "adicionar_dependente": ("parcial", [], EDICAO_JSON),
-    "adicionar_rendimento_pj": ("parcial", [], EDICAO_JSON),
-    "adicionar_pagamento": ("parcial", [], EDICAO_JSON),
-    "adicionar_bem": ("parcial", [], EDICAO_JSON),
-    "adicionar_divida": ("parcial", [], EDICAO_JSON),
-    "editar_lancamento": ("parcial", [], EDICAO_JSON),
-    "remover_lancamento": ("parcial", [], EDICAO_JSON + "; sem cascata de dependente"),
-    "gravar_copia_seguranca": ("parcial", ["converter_modelo_para_dbk"], "a gravação guarda cópia em .autoir-backups antes de sobrescrever"),
-}
+    "listar_ganhos_capital": ("parcial", ["listar_ganhos_capital"], "demonstrativos 64, 67 e 70 a 78 do GCAP preservados sem campo no modelo"),
+    "importar_pre_preenchida": ("parcial", ["abrir_declaracao", "orientar_servico_externo"], ONLINE + "; o DBK gravado pelo programa é aberto normalmente"),
+    "importar_carne_leao": ("parcial", ["definir_rendimentos_pf_exterior", "orientar_servico_externo"], ONLINE + "; os totais mensais são informados na ficha"),
+    "importar_gcap": ("parcial", ["abrir_declaracao", "orientar_servico_externo"], "o DBK com o GCAP importado no programa é preservado; sem leitura do arquivo do GCAP"),
+    "importar_livro_caixa_rural": ("parcial", ["definir_receitas_despesas_rurais", "orientar_servico_externo"], "totais mensais informados na ficha; sem leitura do arquivo do LCAR"),
+})
 for _n in STATUS:
     assert _n in F, _n
 
@@ -278,7 +343,7 @@ def status_linha(fs):
     nomes = re.findall(r"`([a-z0-9_]+)`", fs)
     if not nomes:
         if fs.startswith("todas"):
-            return "parcial (persistência por `converter_modelo_para_dbk`)", "parcial"
+            return "implementada (gravação atômica com cópia de segurança em toda ferramenta de escrita)", "implementada"
         return "não se aplica", "não se aplica"
     est = [status_ferr(n) for n in nomes]
     exist = sorted({e for s in est for e in s[1]})

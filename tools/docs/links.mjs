@@ -1,4 +1,4 @@
-// Confere a documentação do repositório: links relativos (arquivo e âncora), imagens, travessões,
+// Confere a documentação do repositório: links relativos (arquivo e âncora), imagens, tabelas, travessões,
 // Unicode invisível e nomes de ferramentas citados que não existem no servidor.
 // Uso, a partir da raiz: node tools/docs/links.mjs [arquivos.md...]
 // Sem argumentos, confere todos os .md versionados ou novos (git ls-files). Sai com código 1 se
@@ -8,6 +8,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { semCodigo, tabelasDesalinhadas } from "./markdown.mjs";
 
 const RAIZ = fileURLToPath(new URL("../../", import.meta.url));
 const FERRAMENTAS = fileURLToPath(new URL("./saida/ferramentas.json", import.meta.url));
@@ -44,23 +45,6 @@ const slug = (titulo) =>
     .replace(/<[^>]+>/g, "")
     .replace(/[^\p{L}\p{N}\s_-]/gu, "")
     .replace(/\s/g, "-");
-
-/** Remove blocos de código cercados, preservando as linhas (para não achar links dentro deles). */
-function semCodigo(texto) {
-  let cerca = null;
-  return texto
-    .split("\n")
-    .map((l) => {
-      const m = l.match(/^\s*(`{3,}|~{3,})/);
-      if (m) {
-        if (!cerca) cerca = m[1];
-        else if (m[1][0] === cerca[0] && m[1].length >= cerca.length) cerca = null;
-        return "";
-      }
-      return cerca ? "" : l;
-    })
-    .join("\n");
-}
 
 const cacheAncoras = new Map();
 function ancoras(arquivo) {
@@ -106,8 +90,13 @@ for (const a of arquivos) {
   const bruto = readFileSync(abs, "utf8");
   // Citar o próprio caractere entre parênteses, como numa regra de estilo, é permitido.
   const semCitacao = bruto.replace(new RegExp(`\\(${TRAVESSOES.source}\\)`, "g"), "");
-  if (TRAVESSOES.test(semCitacao)) problemas.push(`TRAVESSAO   ${rel}`);
-  if (INVISIVEIS.test(bruto)) problemas.push(`INVISIVEL   ${rel}`);
+  if (TRAVESSOES.test(semCitacao)) problemas.push(`TRAVESSÃO   ${rel}`);
+  if (INVISIVEIS.test(bruto)) problemas.push(`INVISÍVEL   ${rel}`);
+  for (const t of tabelasDesalinhadas(bruto)) {
+    problemas.push(
+      `TABELA      ${rel}:${t.linha}: ${t.achado} colunas, cabeçalho tem ${t.esperado}`,
+    );
+  }
   const texto = semCodigo(bruto);
   const alvos = [];
   for (const m of texto.matchAll(/\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) alvos.push(m[1]);
@@ -124,7 +113,7 @@ for (const a of arquivos) {
     }
     if (anc && destino.endsWith(".md") && statSync(destino).isFile()) {
       if (!ancoras(destino).has(decodeURIComponent(anc).toLowerCase())) {
-        problemas.push(`ANCORA      ${rel} -> ${alvo}`);
+        problemas.push(`ÂNCORA      ${rel} -> ${alvo}`);
       }
     }
   }

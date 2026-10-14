@@ -2,9 +2,10 @@
  * Aritmética monetária do motor de cálculo.
  *
  * Tudo em centavos inteiros (`bigint`). A única operação que pode gerar fração
- * de centavo é a aplicação de percentual; ela passa sempre por `percentual`,
- * que arredonda para o centavo mais próximo com meio centavo para cima
- * (arredondamento comercial). Essa regra está documentada em
+ * de centavo é a aplicação de percentual. O imposto da tabela progressiva passa
+ * por `percentualTruncado` (fração descartada, confirmado nos casos de
+ * referência); os demais percentuais passam por `percentual`, que arredonda
+ * para o centavo mais próximo com meio centavo para cima. Essa regra está documentada em
  * docs/regras/irpf-2026.md e fica concentrada aqui para que uma eventual
  * correção, se os casos de referência indicarem outra, aconteça em um ponto só.
  */
@@ -33,6 +34,21 @@ export function dividirArredondando(numerador: bigint, denominador: bigint): big
  */
 export function percentual(valor: Centavos, numerador: bigint, denominador: bigint): Centavos {
   return centavos(dividirArredondando(valor * numerador, denominador));
+}
+
+/**
+ * Aplica um percentual descartando a fração de centavo (truncamento em direção
+ * ao zero). É a regra do programa oficial para o imposto da tabela progressiva:
+ * todos os casos de referência com fração de centavo na multiplicação
+ * base x alíquota conferem só com truncamento (docs/regras/irpf-2026.md).
+ */
+export function percentualTruncado(
+  valor: Centavos,
+  numerador: bigint,
+  denominador: bigint,
+): Centavos {
+  if (denominador <= 0n) throw new CalculoInvalidoError("Denominador deve ser positivo");
+  return centavos((valor * numerador) / denominador);
 }
 
 export function minimo(a: Centavos, b: Centavos): Centavos {

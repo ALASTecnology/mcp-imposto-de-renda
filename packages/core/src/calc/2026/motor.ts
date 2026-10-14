@@ -12,6 +12,7 @@ import {
   minimo,
   naoNegativo,
   percentual,
+  percentualTruncado,
   ZERO,
 } from "../aritmetica.js";
 import { idadeEm, lerData } from "../datas.js";
@@ -47,7 +48,7 @@ export function impostoTabelaAnual(base: Centavos): Centavos {
     if (faixa.ate === null || base <= faixa.ate) {
       if (faixa.aliquotaMilesimos === 0n) return ZERO;
       return naoNegativo(
-        centavos(percentual(base, faixa.aliquotaMilesimos, 1000n) - faixa.parcelaDeduzir),
+        centavos(percentualTruncado(base, faixa.aliquotaMilesimos, 1000n) - faixa.parcelaDeduzir),
       );
     }
   }

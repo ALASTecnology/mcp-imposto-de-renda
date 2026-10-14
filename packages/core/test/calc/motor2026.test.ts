@@ -2,9 +2,10 @@
  * Testes do motor de cálculo do exercício 2026 (ano-calendário 2025).
  *
  * Todos os valores esperados foram calculados à mão, em centavos, e a conta
- * está escrita no próprio teste. Regra de arredondamento adotada pelo motor:
- * percentuais sobre centavos são arredondados para o centavo mais próximo, com
- * meio centavo para cima (ver docs/regras/irpf-2026.md, seção Arredondamento).
+ * está escrita no próprio teste. O imposto da tabela progressiva é TRUNCADO no
+ * centavo (base x alíquota, sem arredondar, menos a parcela a deduzir), como
+ * mostram os casos de referência do programa oficial; ver
+ * docs/regras/irpf-2026.md, seção Arredondamento.
  */
 import { describe, expect, it } from "vitest";
 import {
@@ -41,22 +42,25 @@ describe("tabela progressiva anual 2026 (Lei 15.191/2025 aplicada ao ano-calend�
     ["2846721", 0n, "2.846.721 x 7,5% = 213.504,075 -> 213.504; menos 213.504 = 0"],
     [
       "2846727",
-      1n,
-      "2.846.727 x 7,5% = 213.504,525 -> 213.505 (meio para cima); menos 213.504 = 1",
+      0n,
+      "2.846.727 x 7,5% = 213.504,525 -> 213.504 (truncado); menos 213.504 = 0",
     ],
     ["2846734", 1n, "2.846.734 x 7,5% = 213.505,05 -> 213.505; menos 213.504 = 1"],
-    ["3391980", 40895n, "3.391.980 x 7,5% = 254.398,5 -> 254.399; menos 213.504 = 40.895"],
-    // A faixa seguinte devolve 1 centavo a menos que o teto da anterior porque
-    // as parcelas a deduzir oficiais são arredondadas. O motor mantém a fórmula
-    // oficial (base x alíquota - parcela), sem "suavizar" a transição.
+    ["3391980", 40894n, "3.391.980 x 7,5% = 254.398,5 -> 254.398 (truncado); menos 213.504 = 40.894"],
+    // Com o truncamento, o teto da faixa de 7,5% e o primeiro centavo da faixa de
+    // 15% dão o mesmo imposto; o motor mantém a fórmula oficial (base x alíquota,
+    // truncada, menos a parcela), sem suavizar a transição.
     ["3391981", 40894n, "3.391.981 x 15% = 508.797,15 -> 508.797; menos 467.903 = 40.894"],
+    // Regressão dos casos de referência (ex.: simplificado-acima-limite-01): na
+    // faixa de 27,5% a fração ,65 de centavo é descartada, não arredondada.
+    ["8324566", 1203877n, "8.324.566 x 27,5% = 2.289.255,65 -> 2.289.255; menos 1.085.378 = 1.203.877"],
   ])("base %s", (base, esperado, _conta) => {
     expect(impostoTabelaAnual(centavos(BigInt(base)))).toBe(esperado);
   });
 
   it.each([
     ["4501260", 207286n, "4.501.260 x 15% = 675.189; menos 467.903 = 207.286"],
-    ["5597616", 453967n, "5.597.616 x 22,5% = 1.259.463,6 -> 1.259.464; menos 805.497 = 453.967"],
+    ["5597616", 453966n, "5.597.616 x 22,5% = 1.259.463,6 -> 1.259.463 (truncado); menos 805.497 = 453.966"],
     ["10000000", 1664622n, "10.000.000 x 27,5% = 2.750.000; menos 1.085.378 = 1.664.622"],
   ])("faixas superiores: base %s", (base, esperado) => {
     expect(impostoTabelaAnual(centavos(BigInt(base)))).toBe(esperado);
@@ -76,11 +80,11 @@ describe("modelo simplificado", () => {
 
   it("limita o desconto a R$ 16.754,34", () => {
     // 10.000.000 x 20% = 2.000.000 > 1.675.434. Base 8.324.566:
-    // 8.324.566 x 27,5% = 2.289.255,65 -> 2.289.256; menos 1.085.378 = 1.203.878.
+    // 8.324.566 x 27,5% = 2.289.255,65 -> 2.289.255 (truncado); menos 1.085.378 = 1.203.877.
     const r = calcularSimplificado(entradaPJ("10000000"));
     expect(r.desconto).toBe(1675434n);
     expect(r.baseCalculo).toBe(8324566n);
-    expect(r.impostoDevido).toBe(1203878n);
+    expect(r.impostoDevido).toBe(1203877n);
   });
 
   it("no ponto exato do teto, 20% coincide com o limite", () => {
@@ -289,19 +293,19 @@ describe("imposto pago no exterior", () => {
 describe("comparação e resultado consolidado", () => {
   it("escolhe o modelo de menor imposto e calcula saldos e alíquota efetiva", () => {
     const r = calcular2026(CASO_COMPLETO);
-    // Simplificado: 10.000.000 -> 1.203.878 (ver teste do teto).
+    // Simplificado: 10.000.000 -> 1.203.877 (ver teste do teto).
     expect(r.rendimentosTributaveis).toBe("10000000");
     expect(r.deducoesCompleto).toBe("3811166");
     expect(r.baseCalculoCompleto).toBe("6188834");
     expect(r.impostoDevidoCompleto).toBe("616551");
     expect(r.descontoSimplificado).toBe("1675434");
     expect(r.baseCalculoSimplificado).toBe("8324566");
-    expect(r.impostoDevidoSimplificado).toBe("1203878");
+    expect(r.impostoDevidoSimplificado).toBe("1203877");
     expect(r.impostoRetidoTotal).toBe("1500000");
     expect(r.saldoPagarCompleto).toBe("0");
     expect(r.restituirCompleto).toBe("883449");
     expect(r.saldoPagarSimplificado).toBe("0");
-    expect(r.restituirSimplificado).toBe("296122");
+    expect(r.restituirSimplificado).toBe("296123");
     expect(r.modeloMaisVantajoso).toBe("completo");
     // 616.551 / 10.000.000 = 6,16551% -> truncado 6,16% -> "616" (centésimos de ponto
     // percentual). O truncamento foi confirmado no caso de referência pj-simples-01.
@@ -337,8 +341,8 @@ describe("comparação e resultado consolidado", () => {
 
   it("saldo a pagar quando o retido é menor que o devido", () => {
     const r = calcular2026(entradaPJ("10000000", { impostoPago: { complementar: "100000" } }));
-    // Simplificado 1.203.878 - 100.000 = 1.103.878.
-    expect(r.saldoPagarSimplificado).toBe("1103878");
+    // Simplificado 1.203.877 - 100.000 = 1.103.877.
+    expect(r.saldoPagarSimplificado).toBe("1103877");
     expect(r.restituirSimplificado).toBe("0");
   });
 

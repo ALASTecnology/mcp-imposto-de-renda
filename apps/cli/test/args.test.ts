@@ -135,9 +135,9 @@ describe("interpretarArgs", () => {
   });
 
   it("mostra na ajuda quantas ferramentas cada perfil expõe e os grupos", () => {
-    expect(ajuda()).toMatch(/completo\s+154 ferramentas/);
-    expect(ajuda()).toMatch(/essencial\s+78 ferramentas/);
-    expect(ajuda()).toMatch(/consulta\s+37 ferramentas/);
+    expect(ajuda()).toMatch(/completo\s+160 ferramentas/);
+    expect(ajuda()).toMatch(/essencial\s+84 ferramentas/);
+    expect(ajuda()).toMatch(/consulta\s+40 ferramentas/);
     expect(ajuda()).toContain("MCP_IMPOSTO_DE_RENDA_PERFIL");
     expect(ajuda()).toContain("--sem-grupos");
     expect(ajuda()).toContain("calculadoras (10)");

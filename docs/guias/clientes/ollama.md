@@ -49,9 +49,9 @@ Os logs de cada servidor ficam em `~/.config/ollmcp/logs/`.
 
 ## Modo somente leitura
 
-Os exemplos já usam `--perfil consulta`, que só lê e calcula e reduz a lista de 154 para 37
+Os exemplos já usam `--perfil consulta`, que só lê e calcula e reduz a lista de 160 para 40
 ferramentas, o que cabe melhor no contexto de modelos locais. Para gravar, troque por `--perfil
-essencial` (78 ferramentas, preenche e grava a declaração inteira) e aprove cada chamada. Os perfis
+essencial` (84 ferramentas, preenche e grava a declaração inteira) e aprove cada chamada. Os perfis
 estão em [clientes-mcp.md](../clientes-mcp.md#quantidade-de-ferramentas).
 
 ## Limitações

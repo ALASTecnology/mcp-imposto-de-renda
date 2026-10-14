@@ -60,21 +60,21 @@ JSON.
 
 ## Quantidade de ferramentas
 
-O servidor completo registra **154 ferramentas** (95 gravam). Alguns clientes limitam a lista: o VS
+O servidor completo registra **160 ferramentas** (98 gravam). Alguns clientes limitam a lista: o VS
 Code aceita até 128 ferramentas por pedido e o Cascade do Windsurf, 100. Modelos locais também sofrem
 com listas longas. Para isso existem os perfis, escolhidos com `--perfil <nome>` ou com a variável de
 ambiente `MCP_IMPOSTO_DE_RENDA_PERFIL` (a opção na linha de comando vale mais):
 
 | Perfil | Ferramentas | O que expõe | Quando usar |
 | --- | --- | --- | --- |
-| `completo` (padrão) | 154 | Tudo. | Clientes sem limite (Claude Code, Claude Desktop, Cursor, Codex e outros). |
-| `essencial` | 78 | O ciclo inteiro: criar, preencher qualquer ficha, validar, calcular e gravar. Ficam de fora os atalhos repetidos por ficha (`editar_*`, `remover_*` e `listar_*` de cada ficha, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as 10 calculadoras avulsas. | VS Code (128), Windsurf (100) e modelos locais que vão gravar. |
-| `consulta` | 37 | Só leitura e cálculo; nenhuma ferramenta grava. Dispensa pasta com permissão de gravação. | Simular, validar e revisar sem risco. |
+| `completo` (padrão) | 160 | Tudo. | Clientes sem limite (Claude Code, Claude Desktop, Cursor, Codex e outros). |
+| `essencial` | 84 | O ciclo inteiro: criar, preencher qualquer ficha, validar, calcular e gravar. Ficam de fora os atalhos repetidos por ficha (`editar_*`, `remover_*` e `listar_*` de cada ficha, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as 10 calculadoras avulsas. | VS Code (128), Windsurf (100) e modelos locais que vão gravar. |
+| `consulta` | 40 | Só leitura e cálculo; nenhuma ferramenta grava. Dispensa pasta com permissão de gravação. | Simular, validar e revisar sem risco. |
 
 Para ajuste fino, `--grupos calculo,validacao` expõe só os grupos citados e `--sem-grupos
 calculadoras,orientacao` tira grupos; as duas opções combinam com `--perfil` e com
 `--somente-leitura`. `mcp-imposto-de-renda --ajuda` mostra a contagem de cada perfil e de cada grupo,
-e o log de início diz quantas ferramentas ficaram (`pronto (versão 0.1.0, perfil essencial, 78
+e o log de início diz quantas ferramentas ficaram (`pronto (versão 0.1.0, perfil essencial, 84
 ferramentas)`). Nome de perfil ou de grupo inválido encerra com código 2 e uma mensagem que lista os
 nomes válidos.
 

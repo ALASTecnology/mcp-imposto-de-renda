@@ -104,7 +104,7 @@ Acrescente `"--somente-leitura"` ao fim de `args`:
 "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--somente-leitura"]
 ```
 
-As 95 ferramentas que gravam somem; ficam as 59 de consulta, simulação e validação.
+As 98 ferramentas que gravam somem; ficam as 62 de consulta, simulação e validação.
 
 ## Limitações
 

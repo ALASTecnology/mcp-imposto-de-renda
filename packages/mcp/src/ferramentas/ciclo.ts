@@ -494,7 +494,7 @@ export const grupoCiclo: GrupoFerramentas = {
       {
         titulo: "Restaurar cópia de segurança",
         descricao:
-          "Restaura uma cópia de .autoir-backups (nome de listar_copias_seguranca) sobre um arquivo da pasta (padrão: o arquivo de origem). O conteúdo atual também ganha cópia antes de ser sobrescrito.",
+          "Restaura uma cópia de .autoir-backups (nome de listar_copias_seguranca) sobre um .DBK da pasta (padrão: o arquivo de origem; cópia de um .DEC exige arquivo_destino .DBK). O conteúdo atual também ganha cópia antes de ser sobrescrito.",
         escreve: true,
         entrada: {
           copia: z.string().min(1).max(300),
@@ -508,7 +508,8 @@ export const grupoCiclo: GrupoFerramentas = {
         if (!origem)
           throw new EntradaInvalidaError("Cópia não encontrada; use listar_copias_seguranca.");
         const destino = arquivo_destino ?? origem.arquivo;
-        const e = await pasta.restaurarCopia(copia, destino, EXT_DECLARACAO);
+        // Só grava cópia de segurança (.DBK): o .DEC de entrega nunca é sobrescrito por restauração.
+        const e = await pasta.restaurarCopia(copia, destino, EXT_GRAVACAO);
         return {
           texto: `Restaurado ${e.arquivo} a partir de ${copia}.${e.backup ? ` Conteúdo anterior em ${e.backup}.` : ""}`,
           dados: { arquivo: e.arquivo, bytes: e.bytes, backup: e.backup ?? null },

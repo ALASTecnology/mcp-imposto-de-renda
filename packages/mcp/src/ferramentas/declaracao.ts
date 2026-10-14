@@ -16,7 +16,6 @@ import { z } from "zod";
 import {
   FICHAS_CONVERTIDAS,
   interpretarDeclaracao,
-  modeloParaRegistros,
   registrosParaModelo,
 } from "../conversao/dbk-modelo.js";
 import { EntradaInvalidaError, ErroFerramenta } from "../erros.js";
@@ -28,7 +27,7 @@ import {
   zDeclaracaoJson,
   zNomeArquivo,
 } from "./comum.js";
-import { pendenciasDe } from "./fluxo.js";
+import { gravarDeclaracao, pendenciasDe, SAIDA_GRAVACAO, textoGravacao } from "./fluxo.js";
 import type { GrupoFerramentas } from "./tipos.js";
 
 /** O arquivo de entrega só é gravado com a extensão .DEC. */
@@ -228,48 +227,24 @@ export const grupoDeclaracao: GrupoFerramentas = {
           arquivo_base: zNomeArquivo("DBK/DEC de partida (opcional, recomendado).").optional(),
         },
         saida: {
-          arquivo: z.string(),
-          bytes: z.number(),
-          backup: z.string().nullable(),
-          registros: z.number(),
+          ...SAIDA_GRAVACAO,
           registrosPorTipo: z.record(z.string(), z.number()),
-          controlesValidos: z.boolean(),
-          avisos: z.array(z.string()),
         },
       },
       async ({ declaracao, arquivo_destino, arquivo_base }) => {
-        const pasta = exigirPasta(r.ctx);
         const dec = interpretarDeclaracao(declaracao);
         const base = arquivo_base
           ? (await lerDeclaracaoArquivo(r.ctx, arquivo_base)).registros
           : undefined;
-        const { registros, avisos } = modeloParaRegistros(dec, base);
-        const bytes = gravarArquivo(registros);
-        // Confere o que vai ao disco relendo os bytes gerados.
-        const relido = lerArquivo(bytes);
-        const controles = verificarControles(relido.registros);
-        const escrito = await pasta.escrever(arquivo_destino, bytes, EXT_GRAVACAO);
+        // Mesmo caminho das edições: valida, tira o recibo de uma base DEC e grava como DBK
+        // (revisão M3).
+        const res = await gravarDeclaracao(r.ctx, dec, arquivo_destino, base);
+        const gravados = lerArquivo(await exigirPasta(r.ctx).ler(res.arquivo, EXT_GRAVACAO));
         const contagem: Record<string, number> = {};
-        for (const reg of registros) contagem[reg.tipo] = (contagem[reg.tipo] ?? 0) + 1;
-        const texto = [
-          `Gravado ${escrito.arquivo} (${escrito.bytes} bytes, ${registros.length} registros).`,
-          escrito.backup
-            ? `Cópia do conteúdo anterior: ${escrito.backup}.`
-            : "Arquivo novo (sem backup).",
-          `Controles: ${controles.valido ? "conferem" : "com divergências"}.`,
-          ...avisos.map((a) => `Aviso: ${a}`),
-        ].join("\n");
+        for (const reg of gravados.registros) contagem[reg.tipo] = (contagem[reg.tipo] ?? 0) + 1;
         return {
-          texto,
-          dados: {
-            arquivo: escrito.arquivo,
-            bytes: escrito.bytes,
-            backup: escrito.backup ?? null,
-            registros: registros.length,
-            registrosPorTipo: contagem,
-            controlesValidos: controles.valido,
-            avisos: [...avisos],
-          },
+          texto: textoGravacao(res, "Modelo gravado."),
+          dados: objetoJson({ ...res, registrosPorTipo: contagem }),
         };
       },
     );

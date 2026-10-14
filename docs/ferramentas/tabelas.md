@@ -27,7 +27,7 @@ Lista as entradas de uma tabela de códigos do exercício 2026, com filtro opcio
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `tabela` | um de 31 valores (`"aliquotas-parametros"`, `"altcoins"`, `"atividade-rural-bens"`, `"atividade-rural-condicoes-exploracao"`, `"atividade-rural-tipos"`, `"bancos"`, ...) | **sim** | Nome da tabela de códigos do exercício 2026. |
+| `tabela` | um de 32 valores (`"aliquotas-parametros"`, `"altcoins"`, `"atividade-rural-bens"`, `"atividade-rural-condicoes-exploracao"`, `"atividade-rural-tipos"`, `"bancos"`, ...) | **sim** | Nome da tabela de códigos do exercício 2026. |
 | `filtro` | texto | não | Trecho do código ou da descrição (ex.: 'plano de saude', 'apartamento'). (até 100 caracteres) |
 | `limite` | inteiro (1 a 500) | não | Máximo de itens (1 a 500). (padrão: `100`) |
 | `deslocamento` | inteiro (a partir de 0) | não | Itens a pular, para paginar. (padrão: `0`) |
@@ -87,17 +87,17 @@ dependentes: 10 item(ns), mostrando 4.
 
 ### Funções do programa oficial
 
-Aparece em 22 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 40 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-FERR-INFO-CALCULO` Constantes de cálculo (inferido, tela de testes) (P2, implementada)
-- `F-IDENT-END-BR` Endereço - Brasil (P0, parcial)
-- `F-IDENT-END-EXT` Endereço - Exterior (P0, parcial)
+- `S-REGRA-AUSENTE-SERVICO` Contribuinte ausente no exterior a serviço do Brasil (P2, implementada)
+- `S-REGRA-CONVERSAO` Conversão em reais de rendimentos ou pagamentos em moeda estrangeira (P1, implementada)
+- `F-IDENT-END-BR` Endereço - Brasil (P0, implementada)
+- `F-IDENT-END-EXT` Endereço - Exterior (P0, implementada)
 - `F-IDENT-OCUP` Ocupação Principal (P0, implementada)
-- `F-BENS-G01` Grupo 01, Bens imóveis (P0, implementada)
-- `F-BENS-G02` Grupo 02, Bens móveis (P0, implementada)
-- `F-BENS-G03` Grupo 03, Participações societárias (P0, implementada)
-- `F-BENS-G04` Grupo 04, Aplicações e investimentos (P0, implementada)
-- e mais 14 linhas na matriz.
+- `F-RTPF-EXT` Coluna Exterior (P1, implementada)
+- `F-ISENTO-08` Ganho de capital na alienação de moeda estrangeira em espécie com total anual até US$ 5,000.00 (P2, implementada)
+- e mais 32 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -115,7 +115,7 @@ Busca um código exato numa tabela do exercício 2026. Em bens-direitos use 'GG.
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `tabela` | um de 31 valores (`"aliquotas-parametros"`, `"altcoins"`, `"atividade-rural-bens"`, `"atividade-rural-condicoes-exploracao"`, `"atividade-rural-tipos"`, `"bancos"`, ...) | **sim** | Nome da tabela de códigos do exercício 2026. |
+| `tabela` | um de 32 valores (`"aliquotas-parametros"`, `"altcoins"`, `"atividade-rural-bens"`, `"atividade-rural-condicoes-exploracao"`, `"atividade-rural-tipos"`, `"bancos"`, ...) | **sim** | Nome da tabela de códigos do exercício 2026. |
 | `codigo` | texto | **sim** | Código a buscar. (até 30 caracteres) |
 
 ### Resposta estruturada
@@ -163,8 +163,8 @@ Código "01-11" não existe na tabela bens-direitos. Use listar_tabela com filtr
 Aparece em 22 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-FERR-INFO-CALCULO` Constantes de cálculo (inferido, tela de testes) (P2, implementada)
-- `F-IDENT-END-BR` Endereço - Brasil (P0, parcial)
-- `F-IDENT-END-EXT` Endereço - Exterior (P0, parcial)
+- `F-IDENT-END-BR` Endereço - Brasil (P0, implementada)
+- `F-IDENT-END-EXT` Endereço - Exterior (P0, implementada)
 - `F-IDENT-OCUP` Ocupação Principal (P0, implementada)
 - `F-BENS-G01` Grupo 01, Bens imóveis (P0, implementada)
 - `F-BENS-G02` Grupo 02, Bens móveis (P0, implementada)

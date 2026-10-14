@@ -6,10 +6,12 @@
 
 Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. Cria, retifica, copia, restaura e exclui declarações, define as opções do Resumo e importa informes colados como texto.
 
-**15 ferramentas**, 13 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
+**17 ferramentas**, 15 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
+| [`importar_declaracao_anterior`](#importar_declaracao_anterior) | Importar dados da declaração de 2025 | **sim** |
+| [`importar_pre_preenchida`](#importar_pre_preenchida) | Importar a declaração pré-preenchida | **sim** |
 | [`criar_declaracao`](#criar_declaracao) | Criar uma declaração nova | **sim** |
 | [`criar_retificadora`](#criar_retificadora) | Criar declaração retificadora | **sim** |
 | [`registrar_recibo`](#registrar_recibo) | Registrar o recibo da declaração transmitida | **sim** |
@@ -25,6 +27,227 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | [`importar_informe_plano_saude`](#importar_informe_plano_saude) | Importar informe de plano de saúde | **sim** |
 | [`ler_informe`](#ler_informe) | Ler um informe de rendimentos | não |
 | [`transferir_excedente_isencao_65`](#transferir_excedente_isencao_65) | Transferir o excedente da parcela isenta de 65 anos | **sim** |
+
+## `importar_declaracao_anterior`
+
+**Importar dados da declaração de 2025**. Grava na pasta autorizada. Exige `--dir`.
+
+Começa a declaração de 2026 com os dados do arquivo de 2025 (DEC gravado para entrega, transmitido ou DBK de cópia de segurança, lido com o leiaute de 2025), como "Importar dados da Declaração de 2025" do programa: Identificação; dependentes e alimentandos; fontes pagadoras de PJ e beneficiários de pagamentos (sem valores); bens e dívidas com situação em 31/12/2024 diferente de zero (o valor passa para a coluna de 31/12/2024); imóveis, bens, rebanho (estoque final como inicial) e dívidas da atividade rural; e o recibo de 2025. Grava um DBK novo (padrão CPF-IRPF-A-2026-2025-ORIGI.DBK) e recusa sobrescrever sem sobrescrever: true. Devolve o que foi importado, o que não foi e o que falta preencher.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| não | sim | não | não |
+
+Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o conteúdo anterior em `.mcp-imposto-de-renda-backups`.
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `arquivo` | texto | **sim** | Declaração de 2025 (.DEC ou .DBK). Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
+| `recibo` | texto | não | Recibo da declaração de 2025 entregue (padrão: o registrado com registrar_recibo para o arquivo de 2025). (formato `^\d{12}$`) |
+| `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
+| `sobrescrever` | booleano | não |   |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `arquivo` | texto | DBK gravado (nome relativo à pasta autorizada). |
+| `bytes` | número |   |
+| `backup` | texto ou nulo | Cópia do conteúdo anterior em .mcp-imposto-de-renda-backups. |
+| `registros` | número |   |
+| `controlesValidos` | booleano |   |
+| `podeEntregar` | booleano | Falso se houver pendência do tipo erro. |
+| `totalErros` | número |   |
+| `totalAvisos` | número |   |
+| `pendencias` | lista de objeto |   |
+| `avisos` | lista de texto |   |
+| `importados` | lista de texto |   |
+| `naoImportados` | lista de texto |   |
+| `aPreencher` | lista de texto |   |
+| `recibo` | texto ou nulo |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2025-2024-ORIGI.DEC",
+  "arquivo_destino": "importada-de-2025.DBK"
+}
+```
+
+Resposta em texto:
+
+```text
+Declaração de 2026 criada a partir de 10234522275-IRPF-A-2025-2024-ORIGI.DEC.
+Importado: Identificação do Contribuinte (todos os dados); 3 dependentes; 1 fonte pagadora de PJ; 8 beneficiários de pagamentos; 3 bens com a situação em 31/12/2024; 1 dívida com a situação em 31/12/2024.
+Não importado: Valores de rendimentos, imposto retido, pagamentos, doações, renda variável, ganhos de capital e demais fichas do ano-calendário 2024.
+Falta preencher: Rendimentos Tributáveis Recebidos de Pessoa Jurídica: valores de 2025 de cada fonte; Pagamentos Efetuados: valores pagos em 2025; Bens e Direitos: situação em 31/12/2025 (use repetir_valores_bens se não mudou); Dívidas e Ônus Reais: situação em 31/12/2025 e valor pago em 2025.
+Sem o recibo de 2025: informe-o com o parâmetro recibo, se tiver (é opcional na original). Gravado importada-de-2025.DBK (21 registros).
+Arquivo novo (sem backup).
+Controles: conferem.
+Sem erros impeditivos; 2 aviso(s).
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "arquivo": "importada-de-2025.DBK",
+  "bytes": 14476,
+  "backup": null,
+  "registros": 21,
+  "controlesValidos": true,
+  "podeEntregar": true,
+  "totalErros": 0,
+  "totalAvisos": 2,
+  "pendencias": [
+    {
+      "codigo": "IDENT-RACA-COR",
+      "gravidade": "aviso",
+      "ficha": "identificacao",
+      "nomeFicha": "Identificação do Contribuinte",
+      "caminho": "identificacao.racaCor",
+      "mensagem": "Raça/cor não informada."
+    },
+    {
+      "codigo": "RES-RESTITUICAO",
+      "gravidade": "aviso",
+      "ficha": "resumo",
+      "nomeFicha": "Resumo da Declaração",
+      "caminho": "resumo.conta",
+      "mensagem": "Informe uma conta ou a chave Pix (CPF) para receber a restituição."
+    }
+  ],
+  "avisos": [],
+  "importados": [
+    "Identificação do Contribuinte (todos os dados)",
+    "3 dependentes",
+    "(+4 itens omitidos)"
+  ],
+  "naoImportados": [
+    "Valores de rendimentos, imposto retido, pagamentos, doações, renda variável, ganhos de capital e demais fichas do ano-calendário 2024"
+  ],
+  "aPreencher": [
+    "Rendimentos Tributáveis Recebidos de Pessoa Jurídica: valores de 2025 de cada fonte",
+    "Pagamentos Efetuados: valores pagos em 2025",
+    "(+2 itens omitidos)"
+  ],
+  "recibo": null
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 6 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-INICIAL-NOVA` Aba "Nova" (tela "O que você deseja fazer?") (P0, parcial)
+- `M-IMP-ANO-ANTERIOR` Importar dados da Declaração de 2025 (P0, implementada)
+- `M-IMP-SUGESTAO` Sugestão de importação (inferido) (P2, implementada)
+- `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, implementada)
+- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, parcial)
+- `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, implementada)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `importar_pre_preenchida`
+
+**Importar a declaração pré-preenchida**. Grava na pasta autorizada. Exige `--dir`.
+
+Cria a declaração de 2026 a partir do arquivo da pré-preenchida trazido pelo usuário (o DBK ou DEC que o programa oficial grava depois de "Iniciar a partir da Pré-Preenchida" com a conta gov.br Ouro ou Prata). O download em si exige login gov.br num serviço da Receita e é feito no programa oficial ou no Meu Imposto de Renda (orientar_servico_externo explica os passos). Preserva todos os registros do arquivo, grava com o nome padrão sem apagar em silêncio a declaração que já exista e lista as fichas trazidas para conferência: a completude e a exatidão continuam sendo responsabilidade do contribuinte.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| não | sim | não | não |
+
+Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o conteúdo anterior em `.mcp-imposto-de-renda-backups`.
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `arquivo` | texto | **sim** | Arquivo da pré-preenchida (.DBK ou .DEC do exercício 2026). Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
+| `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
+| `sobrescrever` | booleano | não |   |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `arquivo` | texto | DBK gravado (nome relativo à pasta autorizada). |
+| `bytes` | número |   |
+| `backup` | texto ou nulo | Cópia do conteúdo anterior em .mcp-imposto-de-renda-backups. |
+| `registros` | número |   |
+| `controlesValidos` | booleano |   |
+| `podeEntregar` | booleano | Falso se houver pendência do tipo erro. |
+| `totalErros` | número |   |
+| `totalAvisos` | número |   |
+| `pendencias` | lista de objeto |   |
+| `avisos` | lista de texto |   |
+| `fichas` | lista de texto |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DBK",
+  "arquivo_destino": "pre-preenchida.DBK"
+}
+```
+
+Resposta em texto:
+
+```text
+Pré-preenchida importada de 10234522275-IRPF-A-2026-2025-ORIGI.DBK para o CPF 10234522275.
+Fichas trazidas: Dependentes: 3; Rendimentos Tributáveis Recebidos de Pessoa Jurídica: 1; Imposto Pago/Retido; Pagamentos Efetuados: 8; Doações Diretamente na Declaração; Bens e Direitos: 3; Dívidas e Ônus Reais: 1.
+Confira cada valor com os comprovantes e complete o que faltar: a pré-preenchida não traz tudo (por exemplo, rendimentos sem DIRF/eSocial, bens sem informação de terceiros) e dependentes exigem procuração para vir preenchidos. Gravado pre-preenchida.DBK (21 registros).
+Arquivo novo (sem backup).
+Controles: conferem.
+Sem erros impeditivos; 0 aviso(s).
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "arquivo": "pre-preenchida.DBK",
+  "bytes": 14476,
+  "backup": null,
+  "registros": 21,
+  "controlesValidos": true,
+  "podeEntregar": true,
+  "totalErros": 0,
+  "totalAvisos": 0,
+  "pendencias": [],
+  "avisos": [],
+  "fichas": [
+    "Dependentes: 3",
+    "Rendimentos Tributáveis Recebidos de Pessoa Jurídica: 1",
+    "(+5 itens omitidos)"
+  ]
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-INICIAL-NOVA` Aba "Nova" (tela "O que você deseja fazer?") (P0, parcial)
+- `M-IMP-PREPREENCHIDA` Importar Declaração Pré-Preenchida (P1, parcial)
+- `S-REGRA-PREENCHIMENTO` Forma de preenchimento e pré-preenchida (P1, parcial)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
 ## `criar_declaracao`
 
@@ -143,7 +366,7 @@ Sem erros impeditivos; 1 aviso(s).
 Aparece em 10 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-DECLARACAO` Menu Declaração (P0, implementada)
-- `M-INICIAL` Tela "O que você deseja fazer?" (P0, parcial)
+- `M-INICIAL` Tela "O que você deseja fazer?" (P0, implementada)
 - `M-INICIAL-NOVA` Aba "Nova" (tela "O que você deseja fazer?") (P0, parcial)
 - `M-DECL-NOVA` Declaração > Nova (P0, implementada)
 - `S-TIPO-AJUSTE` Declaração de Ajuste Anual (P0, implementada)
@@ -239,11 +462,11 @@ Sem erros impeditivos; 0 aviso(s).
 Aparece em 7 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-DECLARACAO` Menu Declaração (P0, implementada)
-- `M-INICIAL-TRANSMITIDAS` Aba "Transmitidas" (P1, parcial)
+- `M-INICIAL-TRANSMITIDAS` Aba "Transmitidas" (P1, implementada)
 - `M-DECL-RETIFICAR` Declaração > Retificar (P1, implementada)
 - `M-IMPR-RECIBO` Imprimir Recibo de Entrega (P1, implementada)
 - `S-REGRA-RETIF` Retificação da declaração (P1, implementada)
-- `S-RECIBO` Recibo de entrega e número do recibo (P1, parcial)
+- `S-RECIBO` Recibo de entrega e número do recibo (P1, implementada)
 - `S-ARQ-REG-RECIBO` Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -312,9 +535,9 @@ Para retificar depois, use criar_retificadora com este arquivo; guarde também o
 
 Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
-- `M-INICIAL-TRANSMITIDAS` Aba "Transmitidas" (P1, parcial)
+- `M-INICIAL-TRANSMITIDAS` Aba "Transmitidas" (P1, implementada)
 - `M-IMPR-RECIBO` Imprimir Recibo de Entrega (P1, implementada)
-- `S-RECIBO` Recibo de entrega e número do recibo (P1, parcial)
+- `S-RECIBO` Recibo de entrega e número do recibo (P1, implementada)
 - `S-ARQ-REG-RECIBO` Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -512,7 +735,7 @@ Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 - `M-MENU-FERRAMENTAS` Menu Ferramentas (P1, implementada)
 - `M-DECL-RECUPERAR-ONLINE` Declaração > Recuperar On-line (F7) (P2, implementada)
-- `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, parcial)
+- `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -578,7 +801,7 @@ Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 - `M-MENU-FERRAMENTAS` Menu Ferramentas (P1, implementada)
 - `M-DECL-RECUPERAR-ONLINE` Declaração > Recuperar On-line (F7) (P2, implementada)
-- `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, parcial)
+- `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -778,7 +1001,7 @@ Sem erros impeditivos; 0 aviso(s).
 Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `F-RESUMO-QUOTAS` Resumo, Imposto a pagar: formas de pagamento, quotas e débito automático (P0, implementada)
-- `F-RESUMO-BANCO` Resumo, Informações Bancárias (restituição e débito) (P0, parcial)
+- `F-RESUMO-BANCO` Resumo, Informações Bancárias (restituição e débito) (P0, implementada)
 - `S-PAG-DEBITO` Débito automático das quotas (P0, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -868,7 +1091,7 @@ Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 - `F-IMPPAGO` Imposto Pago/Retido (ficha) (P0, implementada)
 - `F-IMPPAGO-01` Linha 01: Imposto Complementar (P1, implementada)
-- `F-IMPPAGO-02` Linha 02: Imposto pago no exterior pelo titular e pelos dependentes (P1, parcial)
+- `F-IMPPAGO-02` Linha 02: Imposto pago no exterior pelo titular e pelos dependentes (P1, implementada)
 - `F-IMPPAGO-03` Linha 03: Imposto sobre a renda na fonte (Lei nº 11.033/2004) (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -959,7 +1182,7 @@ Sem erros impeditivos; 0 aviso(s).
 Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `F-BENS` Bens e Direitos (ficha, Declaração de Ajuste Anual) (P0, implementada)
-- `F-BENS-DSDP` Bens e Direitos na Declaração de Saída Definitiva (P1, parcial)
+- `F-BENS-DSDP` Bens e Direitos na Declaração de Saída Definitiva (P1, implementada)
 - `D-AR-BENS` Bens da Atividade Rural (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

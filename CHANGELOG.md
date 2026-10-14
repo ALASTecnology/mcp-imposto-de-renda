@@ -8,6 +8,29 @@ adota o [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/). Enquan
 
 ## [Não publicado]
 
+### Adicionado
+
+- `importar_declaracao_anterior`: começa a declaração de 2026 com os dados do arquivo de 2025, lido
+  com o leiaute de 2025 (agora embarcado), migrando só o que o programa oficial recupera e
+  relatando o que foi importado, o que não foi e o que falta preencher.
+- `importar_pre_preenchida`: cria a declaração a partir do arquivo da pré-preenchida trazido pelo
+  usuário, sem apagar em silêncio a que já existe.
+- `listar_declaracoes`: relação das declarações da pasta com situação (em preenchimento, gravada
+  para entrega, transmitida), tipo, modelo, filtros, ordenação e aviso das de 2025.
+- `gravar_relatorio` e partes do relatório: `gerar_relatorio_declaracao` detalha a declaração
+  inteira, os rendimentos de PF ou qualquer ficha, em Markdown ou HTML; `gravar_relatorio` grava
+  em PDF ou HTML, sem metadados de autor ou ferramenta.
+- `validar_documento` confere também recibo, CEP, telefone, e-mail, nome, data, Renavam, NIT/PIS e
+  conta bancária.
+- `converter_moeda` usa a tabela oficial do dólar de 2025 (nova tabela `dolar-2025`, 32 no total)
+  quando a cotação não é informada.
+- `listar_ganhos_capital` mostra os registros 64, 67, 70 a 73 e 75 a 78 do GCAP decodificados.
+- `calcular_expressao` (calculadora com aritmética decimal exata) e `consultar_atalhos` (atalhos e
+  botões do programa oficial com a ferramenta equivalente).
+- Totais: **160 ferramentas MCP** em 11 grupos (98 gravam; 62 no modo `--somente-leitura`; perfis
+  `essencial` com 84 e `consulta` com 40). Matriz de cobertura: 386 funções atendidas, 24 parciais
+  (com justificativa e alternativa) e 6 sem equivalente.
+
 ### Alterado
 
 - **Novo nome do projeto: MCP Imposto de Renda** (antes AutoIR), com repositório em

@@ -19,7 +19,7 @@
 
 | Documento | Para quê |
 | --- | --- |
-| [Referência das ferramentas](ferramentas/README.md) | As 154 ferramentas, uma página por grupo: parâmetros, anotações, exemplo real de chamada e resposta e funções do programa oficial correspondentes. |
+| [Referência das ferramentas](ferramentas/README.md) | As 160 ferramentas, uma página por grupo: parâmetros, anotações, exemplo real de chamada e resposta e funções do programa oficial correspondentes. |
 | [Regras do IRPF 2026](regras/irpf-2026.md) | Parâmetros e regras de cálculo do exercício, com fonte legal, e as divergências investigadas. |
 | [Notas do IRPF 2027](regras/irpf-2027.md) | Mudanças já conhecidas para o próximo exercício. |
 | [Tabelas de códigos](mapeamento/tabelas/README.md) | As 32 tabelas embarcadas, com origem e vigência. |

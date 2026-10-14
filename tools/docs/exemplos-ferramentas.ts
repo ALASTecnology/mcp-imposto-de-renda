@@ -12,10 +12,13 @@ import { cnpj, cpf } from "../../exemplos/documentos.js";
 export const ARQ = "10234522275-IRPF-A-2026-2025-ORIGI.DBK";
 /** Declaração da autônoma (exemplo 4), com carnê-leão e saldo a pagar. */
 export const ARQ_PF = "10459818260-IRPF-A-2026-2025-ORIGI.DBK";
-/** Arquivos copiados de `exemplos/` para a pasta de cada cenário. */
+/** Declaração de 2025 da família, no leiaute de 2025 (sintética, de `tools/docs/dados/`). */
+export const ARQ_2025 = "10234522275-IRPF-A-2025-2024-ORIGI.DEC";
+/** Arquivos copiados para a pasta de cada cenário (caminhos relativos a `exemplos/`). */
 export const BASE: Record<string, string> = {
   [ARQ]: `02-familia-dependentes/${ARQ}`,
   [ARQ_PF]: `04-autonomo-carne-leao/${ARQ_PF}`,
+  [ARQ_2025]: `../tools/docs/dados/${ARQ_2025}`,
 };
 
 const TITULAR = "10234522275";
@@ -104,6 +107,19 @@ export const CENARIOS: readonly Cenario[] = [
   // declaracao, fichas, arquivos, validacao, tabelas
   [
     { ferramenta: "listar_arquivos", argumentos: {} },
+    { ferramenta: "listar_declaracoes", argumentos: { ordenar_por: "nome" } },
+    {
+      ferramenta: "importar_declaracao_anterior",
+      argumentos: { arquivo: ARQ_2025, arquivo_destino: "importada-de-2025.DBK" },
+    },
+    {
+      ferramenta: "importar_pre_preenchida",
+      argumentos: { arquivo: ARQ, arquivo_destino: "pre-preenchida.DBK" },
+    },
+    {
+      ferramenta: "gravar_relatorio",
+      argumentos: { arquivo: ARQ, partes: ["bens"], formato: "pdf", arquivo_destino: "bens.pdf" },
+    },
     { ferramenta: "abrir_declaracao", argumentos: { arquivo: ARQ } },
     { ferramenta: "listar_fichas", argumentos: { arquivo: ARQ } },
     { ferramenta: "ler_ficha", argumentos: { arquivo: ARQ, ficha: "dependentes" } },
@@ -670,5 +686,7 @@ export const CENARIOS: readonly Cenario[] = [
     { ferramenta: "orientar_servico_externo", argumentos: { servico: "pre_preenchida" } },
     { ferramenta: "obter_ajuda", argumentos: { consulta: "dependentes", limite: 2 } },
     { ferramenta: "verificar_versao_tabelas", argumentos: {} },
+    { ferramenta: "calcular_expressao", argumentos: { expressao: "1.903,98 * 13" } },
+    { ferramenta: "consultar_atalhos", argumentos: { consulta: "Ctrl+P" } },
   ],
 ];

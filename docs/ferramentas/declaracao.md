@@ -76,17 +76,17 @@ Controles (CRC e T9): conferem.
 
 ### Funções do programa oficial
 
-Aparece em 21 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 18 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-DECLARACAO` Menu Declaração (P0, implementada)
 - `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
-- `M-INICIAL-NOVA` Aba "Nova" (tela "O que você deseja fazer?") (P0, parcial)
-- `M-INICIAL-EMPREENCH` Aba "Em Preenchimento" (P1, parcial)
+- `M-INICIAL-EMPREENCH` Aba "Em Preenchimento" (P1, implementada)
 - `M-DECL-ABRIR` Declaração > Abrir (P0, implementada)
-- `M-IMP-PREPREENCHIDA` Importar Declaração Pré-Preenchida (P1, parcial)
 - `M-IMP-GCAP` Importar Ganhos de Capital 2025 (P1, parcial)
-- `S-REGRA-PREENCHIMENTO` Forma de preenchimento e pré-preenchida (P1, parcial)
-- e mais 13 linhas na matriz.
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
+- `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, parcial)
+- e mais 10 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -160,14 +160,7 @@ Modelo de 10234522275-IRPF-A-2026-2025-ORIGI.DBK (válido):
 
 ### Funções do programa oficial
 
-Aparece em 6 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
-
-- `M-INICIAL-NOVA` Aba "Nova" (tela "O que você deseja fazer?") (P0, parcial)
-- `M-IMP-ANO-ANTERIOR` Importar dados da Declaração de 2025 (P0, parcial)
-- `M-IMP-SUGESTAO` Sugestão de importação (inferido) (P2, parcial)
-- `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, parcial)
-- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, parcial)
-- `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, parcial)
+Sem função correspondente na [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz): é recurso próprio do servidor.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -297,7 +290,7 @@ Aparece em 16 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `M-DECL-ENTREGAR` Declaração > Entregar Declaração (P0, implementada)
 - `M-FERR-COPIA-GRAVAR` Gravar Cópia de Segurança (P1, implementada)
 - `S-GRAVAR-ENTREGA` Gravação da declaração para entrega (arquivo .DEC) (P0, implementada)
-- `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, parcial)
+- `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, implementada)
 - `S-ARQ-REG-IDENT` Registro 16 (identificação do contribuinte) (P0, implementada)
 - `S-ARQ-REG-TOTAIS` Registros 17, 18, 19 e 20 (totais, modelo, imposto pago e resumo) (P0, implementada)
 - `S-ARQ-REG-RENDIMENTOS` Registros 21, 32, 22, 49, 80, 81 (rendimentos PJ, PF/Exterior e exigibilidade suspensa) (P0, implementada)
@@ -382,7 +375,7 @@ Aparece em 16 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `M-DECL-ENTREGAR` Declaração > Entregar Declaração (P0, implementada)
 - `M-FERR-COPIA-GRAVAR` Gravar Cópia de Segurança (P1, implementada)
 - `S-GRAVAR-ENTREGA` Gravação da declaração para entrega (arquivo .DEC) (P0, implementada)
-- `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, parcial)
+- `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, implementada)
 - `S-ARQ-REG-IDENT` Registro 16 (identificação do contribuinte) (P0, implementada)
 - `S-ARQ-REG-TOTAIS` Registros 17, 18, 19 e 20 (totais, modelo, imposto pago e resumo) (P0, implementada)
 - `S-ARQ-REG-RENDIMENTOS` Registros 21, 32, 22, 49, 80, 81 (rendimentos PJ, PF/Exterior e exigibilidade suspensa) (P0, implementada)

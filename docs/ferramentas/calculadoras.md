@@ -97,8 +97,12 @@ Carnê-leão de 6/2025: base R$ 7.283,02 (deduções legais), imposto R$ 1.094,1
 
 ### Funções do programa oficial
 
-Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 5 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
+- `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
+- `M-IMP-CARNE-LEAO` Importar Carnê-Leão 2025 (P1, parcial)
+- `F-RTPF-IMPCL` Importação do Carnê-leão (P1, parcial)
+- `D-CL-GERAL` Escrituração do Carnê-Leão importada (titular e dependentes) (P1, parcial)
 - `D-CL-PROGRAMA` Programa Carnê-Leão (e-CAC) (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -173,10 +177,10 @@ RRA: base R$ 30.000,00, imposto pela tabela acumulada R$ 0,00. Cálculo de orien
 
 Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
-- `S-REGRA-RRA` Rendimentos recebidos acumuladamente (regra geral) (P1, parcial)
-- `F-RRA` Rendimentos Recebidos Acumuladamente (ficha) (P1, parcial)
-- `F-RRA-TIT` Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelo Titular (P1, parcial)
-- `F-RRA-DEP` Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelos Dependentes (P1, parcial)
+- `S-REGRA-RRA` Rendimentos recebidos acumuladamente (regra geral) (P1, implementada)
+- `F-RRA` Rendimentos Recebidos Acumuladamente (ficha) (P1, implementada)
+- `F-RRA-TIT` Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelo Titular (P1, implementada)
+- `F-RRA-DEP` Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelos Dependentes (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -807,7 +811,7 @@ Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Converter valor em moeda estrangeira**. Não grava nada.
 
-Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o MCP Imposto de Renda não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023).
+Converte para reais um valor em moeda estrangeira e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, atividade rural, bem ou aplicação financeira (Lei 14.754/2023). Sem `cotacao`, usa a tabela oficial "Conversão para Reais do Dólar dos Estados Unidos da América em 2025" (Ajuda do PGD, pág. 356): compra do mês para rendimento e imposto pago, venda do mês para dedução e compra de 31/12/2025 para atividade rural; nesse caso o valor deve estar em dólares. Bens e aplicações exigem a cotação da data, informada pelo usuário.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -818,14 +822,17 @@ Converte um valor em moeda estrangeira para reais pela cotação informada pelo 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
 | `valor` | texto | **sim** | Valor na moeda estrangeira: "1.234,56" (vírgula decimal) ou "1234.56" (ponto decimal, sem separador de milhar). "1.234" é recusado por ser ambíguo. (até 32 caracteres) |
-| `cotacao` | texto | **sim** | Cotação em reais por unidade ("5,1234"). (até 16 caracteres) |
-| `finalidade` | `"rendimento"` \| `"imposto_exterior"` \| `"deducao"` \| `"bem"` \| `"aplicacao"` | **sim** |   |
+| `cotacao` | texto | não | Cotação em reais por unidade ("5,1234"); omita para usar a tabela do dólar de 2025. (até 16 caracteres) |
+| `mes` | inteiro (1 a 12) | não | Mês de 2025 do recebimento ou do pagamento, para usar a tabela do dólar. |
+| `finalidade` | `"rendimento"` \| `"imposto_exterior"` \| `"deducao"` \| `"atividade_rural"` \| `"bem"` \| `"aplicacao"` | **sim** |   |
 
 ### Resposta estruturada
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
 | `reais` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
+| `cotacao` | texto |   |
+| `fonte` | texto |   |
 | `regra` | texto |   |
 
 ### Exemplo
@@ -843,7 +850,7 @@ Chamada (`tools/call`, campo `arguments`):
 Resposta em texto:
 
 ```text
-1.200,00 x 5,4321 = R$ 6.518,52. Rendimentos do exterior: converta para dólar pelo valor fixado pela autoridade do país e depois para reais pela cotação de compra do dólar do Banco Central do último dia útil da 1ª quinzena do mês anterior ao do recebimento.
+1.200,00 x 5,4321 = R$ 6.518,52 (cotação informada pelo usuário). Rendimentos do exterior: converta para dólar pelo valor fixado pela autoridade do país e depois para reais pela cotação de compra do dólar do Banco Central do último dia útil da 1ª quinzena do mês anterior ao do recebimento.
 ```
 
 <details>
@@ -852,6 +859,8 @@ Resposta em texto:
 ```json
 {
   "reais": 651852,
+  "cotacao": "5,4321",
+  "fonte": "cotação informada pelo usuário",
   "regra": "Rendimentos do exterior: converta para dólar pelo valor fixado pela autoridade do país e depois para reais pela cotação de compra do dólar do Banco Central do último dia útil da 1ª quinzena do mês anterior ao do recebimento."
 }
 ```
@@ -862,14 +871,14 @@ Resposta em texto:
 
 Aparece em 19 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
-- `S-REGRA-AUSENTE-SERVICO` Contribuinte ausente no exterior a serviço do Brasil (P2, parcial)
-- `S-REGRA-CONVERSAO` Conversão em reais de rendimentos ou pagamentos em moeda estrangeira (P1, parcial)
-- `F-RTPF-EXT` Coluna Exterior (P1, parcial)
-- `F-ISENTO-08` Ganho de capital na alienação de moeda estrangeira em espécie com total anual até US$ 5,000.00 (P2, parcial)
-- `F-IMPPAGO-02` Linha 02: Imposto pago no exterior pelo titular e pelos dependentes (P1, parcial)
-- `F-PAG-02` Código 02, Despesas com instrução no exterior (P1, parcial)
-- `F-PAG-15` Código 15, Médicos no exterior (P1, parcial)
-- `F-PAG-16` Código 16, Dentistas no exterior (P1, parcial)
+- `S-REGRA-AUSENTE-SERVICO` Contribuinte ausente no exterior a serviço do Brasil (P2, implementada)
+- `S-REGRA-CONVERSAO` Conversão em reais de rendimentos ou pagamentos em moeda estrangeira (P1, implementada)
+- `F-RTPF-EXT` Coluna Exterior (P1, implementada)
+- `F-ISENTO-08` Ganho de capital na alienação de moeda estrangeira em espécie com total anual até US$ 5,000.00 (P2, implementada)
+- `F-IMPPAGO-02` Linha 02: Imposto pago no exterior pelo titular e pelos dependentes (P1, implementada)
+- `F-PAG-02` Código 02, Despesas com instrução no exterior (P1, implementada)
+- `F-PAG-15` Código 15, Médicos no exterior (P1, implementada)
+- `F-PAG-16` Código 16, Dentistas no exterior (P1, implementada)
 - e mais 11 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

@@ -888,8 +888,8 @@ Fontes: https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/ta
 Aparece em 22 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-FERR-INFO-CALCULO` Constantes de cálculo (inferido, tela de testes) (P2, implementada)
-- `F-IDENT-END-BR` Endereço - Brasil (P0, parcial)
-- `F-IDENT-END-EXT` Endereço - Exterior (P0, parcial)
+- `F-IDENT-END-BR` Endereço - Brasil (P0, implementada)
+- `F-IDENT-END-EXT` Endereço - Exterior (P0, implementada)
 - `F-IDENT-OCUP` Ocupação Principal (P0, implementada)
 - `F-BENS-G01` Grupo 01, Bens imóveis (P0, implementada)
 - `F-BENS-G02` Grupo 02, Bens móveis (P0, implementada)

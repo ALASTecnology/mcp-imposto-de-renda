@@ -159,8 +159,8 @@ Depois da publicação no npm, o comando vira `npx -y mcp-imposto-de-renda --dir
 
 | Opção | Efeito |
 | --- | --- |
-| `--perfil essencial` | 78 ferramentas: a declaração inteira, sem os atalhos repetidos por ficha. Use em clientes com limite de ferramentas (VS Code: 128; Windsurf: 100). |
-| `--perfil consulta` | 37 ferramentas: só leitura e cálculo, nada grava. |
+| `--perfil essencial` | 84 ferramentas: a declaração inteira, sem os atalhos repetidos por ficha. Use em clientes com limite de ferramentas (VS Code: 128; Windsurf: 100). |
+| `--perfil consulta` | 40 ferramentas: só leitura e cálculo, nada grava. |
 | `--grupos` e `--sem-grupos` | Expõem ou tiram grupos inteiros, por nome. |
 | `--somente-leitura` | Desliga todas as ferramentas que gravam arquivos. |
 
@@ -199,13 +199,13 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 
 | Indicador | Valor | Onde conferir |
 | --- | --- | --- |
-| Ferramentas MCP | **154** em 11 grupos; 95 gravam, 59 com `--somente-leitura`; perfis `essencial` (78) e `consulta` (37) | [referência das ferramentas](docs/ferramentas/README.md) |
+| Ferramentas MCP | **160** em 11 grupos; 98 gravam, 62 com `--somente-leitura`; perfis `essencial` (84) e `consulta` (40) | [referência das ferramentas](docs/ferramentas/README.md) |
 | Casos de referência (golden) reproduzidos ao centavo | **48 de 48** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [regras do IRPF 2026](docs/regras/irpf-2026.md) |
 | Arquivos do programa oficial relidos e regravados byte a byte | **96** (48 `.DBK` e 48 `.DEC`) | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
 | Tipos de registro do `.DBK` convertidos para o modelo | **57**, em 26 fichas | [formato do DBK](docs/formato-dbk.md) |
 | Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
 | Tabelas de códigos do exercício | **31** | [tabelas](docs/mapeamento/tabelas/README.md) |
-| Funções do programa oficial mapeadas | **416**: 328 atendidas, 76 parciais, 12 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
+| Funções do programa oficial mapeadas | **416**: 386 atendidas, 24 parciais, 6 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
 | Testes automatizados | **mais de 1.100 testes**, em Vitest (o total exato sai de `pnpm test`) | [estratégia de testes](docs/testes.md) |
 | Declarações de exemplo regeneradas a cada teste | **4** | [exemplos](exemplos/README.md) |
 | Chamadas de rede | **nenhuma** (verificado por teste) | [segurança](docs/seguranca.md) |
@@ -216,17 +216,17 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 
 | Grupo | Ferramentas | O que cobre |
 | --- | --- | --- |
-| [`ciclo`](docs/ferramentas/ciclo.md) | 15 | Criar, retificar, copiar, restaurar e excluir; opção de tributação, conta e quotas; importação de informes colados |
+| [`ciclo`](docs/ferramentas/ciclo.md) | 17 | Criar, retificar, copiar, restaurar e excluir; importar a declaração de 2025 e a pré-preenchida; opção de tributação, conta e quotas; importação de informes colados |
 | [`declaracao`](docs/ferramentas/declaracao.md) | 4 | Abrir o `.DBK`/`.DEC`, converter para o modelo JSON e de volta, gerar o `.DEC` de conferência |
-| [`arquivos`](docs/ferramentas/arquivos.md) | 2 | Listar a pasta e conferir os controles de integridade |
+| [`arquivos`](docs/ferramentas/arquivos.md) | 4 | Listar a pasta e as declarações (em preenchimento e transmitidas), gravar relatório em PDF ou HTML e conferir os controles de integridade |
 | [`fichas`](docs/ferramentas/fichas.md) | 1 | Ler uma ficha isolada |
 | [`edicao`](docs/ferramentas/edicao.md) | 105 | Incluir, alterar, remover e listar em 22 fichas em lista, mais as fichas únicas |
 | [`tabelas`](docs/ferramentas/tabelas.md) | 2 | Consultar as 32 tabelas de códigos |
-| [`validacao`](docs/ferramentas/validacao.md) | 2 | Pendências da declaração e dígitos de CPF e CNPJ |
+| [`validacao`](docs/ferramentas/validacao.md) | 2 | Pendências da declaração e conferência de CPF, CNPJ, NIT, recibo, CEP, contatos, Renavam e conta bancária |
 | [`calculo`](docs/ferramentas/calculo.md) | 6 | Simular, comparar modelos, explicar o cálculo, quotas, multa e parâmetros |
 | [`calculadoras`](docs/ferramentas/calculadoras.md) | 10 | Carnê-leão, RRA, preço médio, renda variável, ganho de capital, acréscimos, residência, obrigatoriedade, câmbio |
 | [`saidas`](docs/ferramentas/saidas.md) | 4 | Dados do Darf, relatório, comunicação de saída e passo a passo da transmissão |
-| [`orientacao`](docs/ferramentas/orientacao.md) | 3 | Ajuda do programa e serviços que só existem fora do servidor |
+| [`orientacao`](docs/ferramentas/orientacao.md) | 5 | Ajuda do programa, atalhos com a ferramenta equivalente, calculadora exata e serviços que só existem fora do servidor |
 
 A [referência das ferramentas](docs/ferramentas/README.md) traz, para cada uma, os parâmetros com
 tipo e obrigatoriedade, as anotações MCP, um exemplo real de chamada e resposta e as funções
@@ -244,10 +244,10 @@ declaração, os valores são inteiros em centavos, as datas em `AAAA-MM-DD` e C
 | Recurso | `mcp-imposto-de-renda://aviso-legal` | Limites do servidor: não é serviço oficial, dados vão ao provedor de LLM, revisar e transmitir pelo programa oficial. |
 
 <details>
-<summary><strong>Catálogo resumido das 154 ferramentas</strong> (gerado a partir do <code>tools/list</code>)</summary>
+<summary><strong>Catálogo resumido das 160 ferramentas</strong> (gerado a partir do <code>tools/list</code>)</summary>
 
 <!-- catalogo:inicio -->
-Gerado a partir de `tools/list` do servidor: **154 ferramentas** em 11 grupos, 95 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 59).
+Gerado a partir de `tools/list` do servidor: **160 ferramentas** em 11 grupos, 98 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 62).
 
 ### calculo
 
@@ -340,6 +340,8 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
+| `importar_declaracao_anterior` | Começa a declaração de 2026 com os dados do arquivo de 2025 (DEC gravado para entrega, transmitido ou DBK de cópia de segurança, lido com o leiaute de 2025), como "Importar dados da Declaração de 2025" do programa: Identificação; dependentes e alimentandos; fontes pagadoras de PJ e beneficiários de pagamentos (sem valores); bens e dívidas com situação em 31/12/2024 diferente de zero (o valor passa para a coluna de 31/12/2024); imóveis, bens, rebanho (estoque final como inicial) e dívidas da atividade rural; e o recibo de 2025. | **sim** |
+| `importar_pre_preenchida` | Cria a declaração de 2026 a partir do arquivo da pré-preenchida trazido pelo usuário (o DBK ou DEC que o programa oficial grava depois de "Iniciar a partir da Pré-Preenchida" com a conta gov.br Ouro ou Prata). | **sim** |
 | `criar_declaracao` | Cria um DBK novo na pasta autorizada a partir da identificação do contribuinte (formato do modelo) e da opção de tributação. | **sim** |
 | `criar_retificadora` | Marca a declaração como retificadora com o número do recibo (12 dígitos) da declaração a retificar e grava em um novo DBK (padrão: CPF-IRPF-A-2026-2025-RETIF.DBK), preservando o restante. | **sim** |
 | `registrar_recibo` | Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). | **sim** |
@@ -358,11 +360,11 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 
 ### validacao
 
-Validação de CPF/CNPJ e pendências da declaração.
+Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração.
 
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
-| `validar_documento` | Confere os dígitos verificadores de um CPF (11 dígitos) ou CNPJ (14 dígitos). | não |
+| `validar_documento` | Confere o formato e o dígito verificador de um campo como o programa oficial faz na digitação. | não |
 | `validar_declaracao` | Aplica as regras de consistência equivalentes às críticas do programa oficial e lista as pendências: 'erro' impede a entrega, 'aviso' indica risco de malha fina. | não |
 
 ### tabelas
@@ -381,6 +383,8 @@ Arquivos da pasta autorizada. Exige `--dir`.
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
 | `listar_arquivos` | Lista os arquivos .DBK, .DEC, .json e .txt da pasta autorizada (sem subpastas, ocultos ou links). | não |
+| `listar_declaracoes` | Relação das declarações DBK/DEC da pasta autorizada, como as abas "Em Preenchimento" e "Transmitidas" da tela inicial e a Relação de Declarações do programa: nome, CPF, exercício, tipo (ajuste, final de espólio, saída definitiva), original ou retificadora, modelo (completa ou simplificada) e situação (em preenchimento para DBK, gravada para entrega para DEC, transmitida quando há recibo registrado). | não |
+| `gravar_relatorio` | Grava na pasta autorizada, em PDF (A4) ou HTML, com layout próprio: o relatório da declaração (`arquivo` ou `declaracao`, resumo ou `partes` como em gerar_relatorio_declaracao, inclusive 'todas' e 'rendimentos_pf') ou um `texto` em Markdown simples devolvido por outra ferramenta (Darf, comunicação de saída, relação de declarações). | **sim** |
 | `verificar_integridade_arquivo` | Confere os controles do arquivo: número de controle (CRC-32) de cada registro, contagens do registro T9 e hash do header. | não |
 
 ### saidas
@@ -391,7 +395,7 @@ Etapa final: dados do Darf e passo a passo para transmitir pelo programa oficial
 | --- | --- | --- |
 | `gerar_darf` | Calcula os dados do Darf (código de receita, período de apuração, vencimentos e valores de cada quota, juros Selic das quotas e, se informada a data de pagamento após o vencimento, multa de 0,33% ao dia até 20% e juros de mora). | não |
 | `instruir_transmissao` | Gera o passo a passo e o checklist para concluir no programa oficial da declaração 2026: restaurar o DBK gravado pelo MCP Imposto de Renda, verificar pendências, conferir o Resumo, transmitir com ou sem certificado digital, guardar o recibo e pagar o Darf. | não |
-| `gerar_relatorio_declaracao` | Monta um relatório em Markdown da declaração (identificação, fichas preenchidas, totais e resultado simulado) para conferência. | não |
+| `gerar_relatorio_declaracao` | Monta o relatório da declaração para conferência ou impressão, com layout próprio. | não |
 | `gerar_comunicacao_saida` | Gera o texto da comunicação de saída definitiva do país, uma por fonte pagadora de rendimentos de PJ, a partir da ficha Saída Definitiva. | não |
 
 ### calculadoras
@@ -409,7 +413,7 @@ Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, R
 | `calcular_acrescimos_moratorios` | Calcula a multa de mora (0,33% por dia de atraso, limitada a 20%) e os juros (Selic acumulada informada mais 1% no mês do pagamento) de qualquer débito federal vencido. | não |
 | `calcular_condicao_residencia` | Determina a data em que a pessoa passa a residente ou não residente no Brasil (IN SRF 208/2002): saída definitiva (não residente na data da saída), ausência temporária (não residente no dia seguinte ao que completar 12 meses fora), retorno de brasileiro ou visto permanente (residente na chegada) e visto temporário (residente ao completar 184 dias no país em 12 meses). | não |
 | `verificar_obrigatoriedade` | Avalia os critérios de obrigatoriedade da declaração de 2026 (rendimentos tributáveis acima de R$ 35.584,00; isentos e exclusivos acima de R$ 200.000,00; ganho de capital; bolsa acima de R$ 40.000,00; atividade rural; bens acima de R$ 800.000,00; residência; reaplicação de imóvel; exterior e trust) a partir das respostas do usuário. | não |
-| `converter_moeda` | Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o MCP Imposto de Renda não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023). | não |
+| `converter_moeda` | Converte para reais um valor em moeda estrangeira e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, atividade rural, bem ou aplicação financeira (Lei 14.754/2023). | não |
 
 ### orientacao
 
@@ -420,6 +424,8 @@ Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem a
 | `orientar_servico_externo` | Explica como usar um serviço que só existe fora do MCP Imposto de Renda (gov.br, pré-preenchida, Carnê-Leão Web, consulta de CPF, e-CAC, extrato e malha, débito automático, Darf e Sicalc, GCAP, Livro Caixa rural, restituição) e o que trazer de volta para a pasta autorizada. | não |
 | `obter_ajuda` | Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do MCP Imposto de Renda (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). | não |
 | `verificar_versao_tabelas` | Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no MCP Imposto de Renda e quantos registros cada uma tem. | não |
+| `calcular_expressao` | Calculadora do MCP Imposto de Renda, equivalente a Ferramentas > Calculadora do programa oficial: avalia expressões com +, -, *, /, parênteses e porcentagem ("27,5% * 10.000,00") em aritmética decimal exata, sem erro de arredondamento binário, e arredonda o resultado (metade para cima) nas casas pedidas. | não |
+| `consultar_atalhos` | Explica os atalhos de teclado e os botões do programa oficial (barra de ferramentas, menus por Alt, F1, F5, F11 de acessibilidade, Ctrl+P, Ctrl+Shift+G e outros) e diz qual ferramenta do MCP Imposto de Renda faz a mesma coisa, com o status de cobertura. | não |
 <!-- catalogo:fim -->
 
 </details>
@@ -443,7 +449,7 @@ programa oficial. A suíte de testes regenera os quatro exemplos e falha se algu
 
 ```
 apps/cli        mcp-imposto-de-renda          executável stdio: argumentos, pasta, logs em stderr
-packages/mcp    @mcp-imposto-de-renda/mcp     createServer(): 154 ferramentas, prompts, recursos, PastaAutorizada
+packages/mcp    @mcp-imposto-de-renda/mcp     createServer(): 160 ferramentas, prompts, recursos, PastaAutorizada
 packages/core   @mcp-imposto-de-renda/core    codec DBK, modelo, conversão, motor de cálculo, validação, tabelas (sem I/O)
 exemplos/                                     declarações fictícias geradas pelo servidor
 tools/                                        leiaute, harness de referência, mapeamento e geradores de documentação
@@ -556,8 +562,8 @@ T9, hash e controle do header), está em [docs/formato-dbk.md](docs/formato-dbk.
   RRA pela opção do ajuste, prejuízo rural a compensar, atividade rural no exterior e a Lei 14.754
   ficam com os valores do arquivo. Ganho de capital e renda variável são de tributação definitiva e
   não mudam o ajuste.
-- **Limite de ferramentas de alguns clientes.** Clientes que aceitam menos de 154 ferramentas
-  precisam de `--perfil essencial` (78) ou de `--grupos`; o guia de cada cliente explica como.
+- **Limite de ferramentas de alguns clientes.** Clientes que aceitam menos de 160 ferramentas
+  precisam de `--perfil essencial` (84) ou de `--grupos`; o guia de cada cliente explica como.
 - Pendências documentadas em [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md), como a
   contribuição do ente patrocinador no código 37 e os limites de 6%, 7% e 1% das doações, ainda não
   confirmados por caso de referência.
@@ -592,8 +598,9 @@ Mais respostas em [docs/guias/perguntas-frequentes.md](docs/guias/perguntas-freq
 - **Importação de PDF local** de informes de rendimentos, lida na máquina, sem serviço externo.
 - **Publicação no npm**, para instalar com `npx mcp-imposto-de-renda`.
 - As funções do programa oficial ainda parciais na
-  [matriz de cobertura](docs/mapeamento/matriz-cobertura.md), como a importação do arquivo do
-  Carnê-Leão Web e do demonstrativo de ganhos de capital.
+  [matriz de cobertura](docs/mapeamento/matriz-cobertura.md), cada uma com a justificativa e a
+  alternativa em uso: a importação do Carnê-Leão Web e da pré-preenchida (serviços autenticados da
+  Receita) e a leitura dos arquivos exportados pelo GCAP e pelo programa da Atividade Rural.
 - Caso de referência de ganho de capital para confirmar os dois campos do recibo ainda sem caso.
 
 ## Documentação

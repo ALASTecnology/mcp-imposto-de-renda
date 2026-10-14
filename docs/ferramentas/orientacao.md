@@ -6,13 +6,15 @@
 
 Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). Ajuda do programa e orientação sobre serviços que só existem fora do servidor.
 
-**3 ferramentas**, 0 delas gravam na pasta autorizada. O grupo funciona mesmo sem `--dir`.
+**5 ferramentas**, 0 delas gravam na pasta autorizada. O grupo funciona mesmo sem `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
 | [`orientar_servico_externo`](#orientar_servico_externo) | Orientar sobre serviço externo | não |
 | [`obter_ajuda`](#obter_ajuda) | Ajuda por ficha | não |
 | [`verificar_versao_tabelas`](#verificar_versao_tabelas) | Versão das tabelas embarcadas | não |
+| [`calcular_expressao`](#calcular_expressao) | Calculadora | não |
+| [`consultar_atalhos`](#consultar_atalhos) | Atalhos e botões do programa oficial | não |
 
 ## `orientar_servico_externo`
 
@@ -55,7 +57,7 @@ Resposta em texto:
 Declaração pré-preenchida (Programa IRPF 2026 (Nova Declaração > Iniciar declaração a partir da pré-preenchida) ou e-CAC.)
 1. No programa oficial, entre com a conta gov.br e crie a declaração a partir da pré-preenchida.
 2. Salve a declaração e use Ferramentas > Gravar Cópia de Segurança para gerar o .DBK.
-3. Coloque o .DBK na pasta autorizada e abra com abrir_declaracao para conferir e completar.
+3. Coloque o .DBK na pasta autorizada e use importar_pre_preenchida para criar a declaração com o nome padrão (ou abrir_declaracao para só conferir).
 Trazer: O arquivo .DBK gravado pelo programa.
 ```
 
@@ -206,17 +208,17 @@ Resposta em texto:
 
 ### Funções do programa oficial
 
-Aparece em 22 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 27 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-AJUDA` Menu Ajuda (P2, implementada)
+- `M-TOOLBAR` Barra de ferramentas (P2, implementada)
 - `M-INICIAL-BOASVINDAS` Aba "Boas-vindas", links úteis e "Entrar com gov.br" (P2, implementada)
 - `M-FERR-PAGINAS` Links para páginas da RFB (IRPF, DTE) e navegador (P2, implementada)
+- `M-FERR-LEAOZINHO` Assistente "Leãozinho" (inferido) (P2, implementada)
 - `M-AJUDA-CONTEXTUAL` Ajuda de campo (F1) e textos em azul (P1, implementada)
 - `M-AJUDA-DOCUMENTOS` Conteúdo, Instruções, Como Fazer, Perguntas e Respostas, FAQ (P2, implementada)
-- `M-AJUDA-SOBRE` Sobre, Novidades, Tutorial (P2, implementada)
-- `S-REGRA-CASADO` Contribuinte casado (P1, implementada)
-- `S-REGRA-COMPANHEIRO` Contribuinte que tenha companheiro (P1, implementada)
-- e mais 14 linhas na matriz.
+- `M-AJUDA-ATALHOS` Exibir atalhos (P2, implementada)
+- e mais 19 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -266,6 +268,7 @@ Tabelas do IRPF 2026 versão 1.5:
 - datas-prazos: 11
 - dependentes: 10
 - dividas-onus: 6
+- dolar-2025: 13
 - fundos-eca: 4618
 - fundos-idoso: 2458
 - moedas: 47
@@ -276,8 +279,7 @@ Tabelas do IRPF 2026 versão 1.5:
 - pagamentos: 42
 - paises: 248
 - paises-gcap: 249
-- raca-cor: 6
-(... mais 8 linhas)
+(... mais 9 linhas)
 ```
 
 <details>
@@ -296,7 +298,7 @@ Tabelas do IRPF 2026 versão 1.5:
       "tabela": "altcoins",
       "registros": 16
     },
-    "(+29 itens omitidos)"
+    "(+30 itens omitidos)"
   ]
 }
 ```
@@ -309,5 +311,142 @@ Aparece em 2 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 - `M-FERR-ATUALIZACOES` Verificar Atualizações (P2, implementada)
 - `S-NUVEM-MUNICIPIOS` Atualização da tabela de municípios (P2, implementada)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `calcular_expressao`
+
+**Calculadora**. Não grava nada.
+
+Calculadora do MCP Imposto de Renda, equivalente a Ferramentas > Calculadora do programa oficial: avalia expressões com +, -, *, /, parênteses e porcentagem ("27,5% * 10.000,00") em aritmética decimal exata, sem erro de arredondamento binário, e arredonda o resultado (metade para cima) nas casas pedidas. Aceita "1.234,56" ou "1234.56"; "1.234" sem vírgula é recusado por ser ambíguo. Use para conferir somas de comprovantes, limites e parcelas antes de lançar.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| sim | não | sim | não |
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `expressao` | texto | **sim** | Expressão, por exemplo "1.903,98 * 13". (até 500 caracteres) |
+| `casas` | inteiro (0 a 10) | não | Casas decimais do resultado. (padrão: `2`) |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `resultado` | texto | Formato brasileiro: 1.234,56. |
+| `decimal` | texto | Com ponto decimal: 1234.56. |
+| `exato` | booleano |   |
+| `fracao` | texto | Valor exato como fração n/d. |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "expressao": "1.903,98 * 13"
+}
+```
+
+Resposta em texto:
+
+```text
+1.903,98 * 13 = 24.751,74
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "resultado": "24.751,74",
+  "decimal": "24751.74",
+  "exato": true,
+  "fracao": "1237587/50"
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-FERR-CALCULADORA` Calculadora (P2, implementada)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `consultar_atalhos`
+
+**Atalhos e botões do programa oficial**. Não grava nada.
+
+Explica os atalhos de teclado e os botões do programa oficial (barra de ferramentas, menus por Alt, F1, F5, F11 de acessibilidade, Ctrl+P, Ctrl+Shift+G e outros) e diz qual ferramenta do MCP Imposto de Renda faz a mesma coisa, com o status de cobertura. Busca por tecla ("Ctrl+P", "F5") ou por palavras da função ("pendências", "imprimir"); sem consulta, lista todos. Útil quando o usuário segue um tutorial do programa ou vai concluir a entrega nele.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| sim | não | sim | não |
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `consulta` | texto | não | (até 100 caracteres) |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `total` | número |   |
+| `atalhos` | lista de objeto |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "consulta": "Ctrl+P"
+}
+```
+
+Resposta em texto:
+
+```text
+- Ctrl+P: Imprimir Declaração (M-IMPR-DECLARACAO). No MCP: gerar_relatorio_declaracao, gravar_relatorio (implementada).
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "total": 1,
+  "atalhos": [
+    {
+      "tecla": "Ctrl+P",
+      "id": "M-IMPR-DECLARACAO",
+      "funcao": "Imprimir Declaração",
+      "status": "implementada",
+      "ferramentas": [
+        "gerar_relatorio_declaracao",
+        "gravar_relatorio"
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-TOOLBAR` Barra de ferramentas (P2, implementada)
+- `M-FERR-LEAOZINHO` Assistente "Leãozinho" (inferido) (P2, implementada)
+- `M-AJUDA-ATALHOS` Exibir atalhos (P2, implementada)
+- `M-AJUDA-ACESSIBILIDADE` Acessibilidade (F11) e leitura de tela (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

@@ -131,7 +131,7 @@ Aparece em 15 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `M-IMPR-DARF-MAED` Imprimir Darf de Multa por Atraso na Entrega (P1, implementada)
 - `M-IMPR-DARF-ECA` Imprimir Darf, Doações Diretamente na Declaração, ECA (P1, implementada)
 - `M-IMPR-DARF-IDOSO` Imprimir Darf, Doações Diretamente na Declaração, Pessoa Idosa (P1, implementada)
-- `M-IMPR-SALVAR-PDF` Visualizar e salvar em PDF (P2, parcial)
+- `M-IMPR-SALVAR-PDF` Visualizar e salvar em PDF (P2, implementada)
 - `F-DDD` Doações Diretamente na Declaração (ficha) (P1, implementada)
 - `F-DDD-ECA` Aba "Criança e Adolescente" (P1, implementada)
 - `F-DDD-IDOSO` Aba "Pessoa Idosa" (P1, implementada)
@@ -241,7 +241,7 @@ Aparece em 6 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Relatório da declaração**. Não grava nada.
 
-Monta um relatório em Markdown da declaração (identificação, fichas preenchidas, totais e resultado simulado) para conferência. Só devolve o texto; nada é gravado.
+Monta o relatório da declaração para conferência ou impressão, com layout próprio. Sem `partes`, devolve o resumo (identificação, fichas preenchidas, totais e resultado simulado). Com `partes`, detalha cada lançamento das fichas pedidas: 'todas' (declaração inteira), 'rendimentos_pf' (Rendimentos Recebidos de PF e do Exterior) ou o nome de qualquer ficha (por exemplo 'bens', 'rendimentosPJ', 'ganhosCapital'). `formato` 'markdown' (padrão) ou 'html'. Só devolve o conteúdo; a gravação em PDF ou HTML na pasta é feita pela ferramenta de gravar relatório.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -253,12 +253,15 @@ Monta um relatório em Markdown da declaração (identificação, fichas preench
 | --- | --- | --- | --- |
 | `arquivo` | texto | não | DBK/DEC/JSON da pasta. Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
 | `declaracao` | objeto livre | não | Declaração no modelo do MCP Imposto de Renda (mesma forma devolvida por converter_dbk_para_modelo): valores monetários em centavos (número inteiro), datas AAAA-MM-DD, CPF/CNPJ só dígitos. |
+| `partes` | lista de um de 28 valores (`"todas"`, `"rendimentos_pf"`, `"identificacao"`, `"dependentes"`, `"alimentandos"`, `"rendimentosPJ"`, ...) | não | Partes da declaração a detalhar; omita para o resumo. (até 40 itens) |
+| `formato` | `"markdown"` \| `"html"` | não | (padrão: `"markdown"`) |
 
 ### Resposta estruturada
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
 | `relatorio` | texto |   |
+| `formato` | `"markdown"` \| `"html"` |   |
 
 ### Exemplo
 
@@ -304,9 +307,9 @@ Opção de tributação: deduções legais.
 
 Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
-- `M-IMPR-DECLARACAO` Imprimir Declaração (P1, parcial)
-- `M-IMPR-REND-PF` Imprimir Rendimentos Recebidos de PF (P2, parcial)
-- `M-IMPR-SALVAR-PDF` Visualizar e salvar em PDF (P2, parcial)
+- `M-IMPR-DECLARACAO` Imprimir Declaração (P1, implementada)
+- `M-IMPR-REND-PF` Imprimir Rendimentos Recebidos de PF (P2, implementada)
+- `M-IMPR-SALVAR-PDF` Visualizar e salvar em PDF (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

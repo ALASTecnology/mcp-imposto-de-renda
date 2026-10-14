@@ -220,7 +220,7 @@ Modelo de ameaças completo em [seguranca.md](seguranca.md).
 
 ![Mapa dos 11 grupos de ferramentas](assets/grupos-ferramentas.svg)
 
-As 154 ferramentas estão em 11 grupos. Cada grupo é um módulo em `ferramentas/` que exporta um
+As 160 ferramentas estão em 11 grupos. Cada grupo é um módulo em `ferramentas/` que exporta um
 `GrupoFerramentas` e entra na lista `GRUPOS` de `ferramentas/registro.ts`; a ordem da lista é a
 ordem do `tools/list`.
 

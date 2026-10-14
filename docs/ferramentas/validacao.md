@@ -4,20 +4,20 @@
 
 # Grupo `validacao`
 
-Validação de CPF/CNPJ e pendências da declaração. Confere documentos e aplica as regras de consistência da declaração.
+Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração. Confere documentos e aplica as regras de consistência da declaração.
 
 **2 ferramentas**, 0 delas gravam na pasta autorizada. O grupo funciona mesmo sem `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
-| [`validar_documento`](#validar_documento) | Validar CPF ou CNPJ | não |
+| [`validar_documento`](#validar_documento) | Validar CPF, CNPJ e outros campos | não |
 | [`validar_declaracao`](#validar_declaracao) | Validar a declaração (pendências) | não |
 
 ## `validar_documento`
 
-**Validar CPF ou CNPJ**. Não grava nada.
+**Validar CPF, CNPJ e outros campos**. Não grava nada.
 
-Confere os dígitos verificadores de um CPF (11 dígitos) ou CNPJ (14 dígitos). Aceita o número com ou sem pontuação. Não consulta a situação cadastral.
+Confere o formato e o dígito verificador de um campo como o programa oficial faz na digitação. Sem `tipo`, detecta CPF (11 dígitos) ou CNPJ (14 dígitos) pelo tamanho. Com `tipo`: 'recibo' (12 dígitos), 'cep' (8 dígitos), 'telefone' (DDD e número), 'email', 'nome' (regras da ficha Identificação), 'data' (dd/mm/aaaa), 'renavam' (DV módulo 11), 'nit' (NIT, PIS, Pasep) e 'conta_bancaria' (banco da rede autorizada, tamanhos e DV público do banco; informe `banco` e `agencia`). Aceita pontuação. Não consulta a situação cadastral nem base externa.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -27,15 +27,20 @@ Confere os dígitos verificadores de um CPF (11 dígitos) ou CNPJ (14 dígitos).
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `documento` | texto | **sim** | CPF ou CNPJ, com ou sem pontuação. (até 32 caracteres) |
+| `documento` | texto | **sim** | Valor a validar, com ou sem pontuação. (até 120 caracteres) |
+| `tipo` | um de 11 valores (`"cpf"`, `"cnpj"`, `"recibo"`, `"cep"`, `"telefone"`, `"email"`, ...) | não | Tipo do campo; omita para CPF ou CNPJ. |
+| `banco` | texto | não | Código do banco, para 'conta_bancaria'. (até 5 caracteres) |
+| `agencia` | texto | não | Agência sem DV, para 'conta_bancaria'. (até 10 caracteres) |
+| `tabela` | `"bancos"` \| `"bancos-bens"` | não | Para 'conta_bancaria': 'bancos' (restituição e débito, padrão) ou 'bancos-bens' (ficha Bens e Direitos). |
 
 ### Resposta estruturada
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `tipo` | `"cpf"` \| `"cnpj"` \| `"desconhecido"` |   |
+| `tipo` | um de 12 valores (`"desconhecido"`, `"cpf"`, `"cnpj"`, `"recibo"`, `"cep"`, `"telefone"`, ...) |   |
 | `valido` | booleano |   |
 | `normalizado` | texto |   |
+| `mensagem` | texto |   |
 
 ### Exemplo
 
@@ -70,14 +75,14 @@ CPF válido.
 
 Aparece em 16 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
-- `F-IDENT` Identificação do Contribuinte (visão geral) (P0, parcial)
-- `F-IDENT-TIPO` Que Tipo de Declaração Você Deseja Fazer? (P0, parcial)
-- `F-IDENT-NOME` Nome (P0, parcial)
-- `F-IDENT-NASC` Data de Nascimento (P0, parcial)
-- `F-IDENT-DOENCA` Há declarante ou dependente com doença grave ou deficiência física ou mental? (P0, parcial)
-- `F-IDENT-RACA` Raça/Cor (P0, parcial)
-- `F-IDENT-ALTCAD` Houve alteração de dados cadastrais? (P0, parcial)
-- `F-IDENT-CONJ` Possui cônjuge ou companheiro(a)? (P0, parcial)
+- `F-IDENT` Identificação do Contribuinte (visão geral) (P0, implementada)
+- `F-IDENT-TIPO` Que Tipo de Declaração Você Deseja Fazer? (P0, implementada)
+- `F-IDENT-NOME` Nome (P0, implementada)
+- `F-IDENT-NASC` Data de Nascimento (P0, implementada)
+- `F-IDENT-DOENCA` Há declarante ou dependente com doença grave ou deficiência física ou mental? (P0, implementada)
+- `F-IDENT-RACA` Raça/Cor (P0, implementada)
+- `F-IDENT-ALTCAD` Houve alteração de dados cadastrais? (P0, implementada)
+- `F-IDENT-CONJ` Possui cônjuge ou companheiro(a)? (P0, implementada)
 - e mais 8 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

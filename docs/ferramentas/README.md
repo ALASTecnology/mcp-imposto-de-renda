@@ -2,9 +2,9 @@
 
 # Referência das ferramentas
 
-Referência completa das **154 ferramentas** do servidor, em **11 grupos**, gerada a partir do `tools/list` real: nome, descrição, parâmetros com tipo e obrigatoriedade tirados do JSON Schema, anotações MCP, campos da resposta estruturada, um exemplo de chamada executado contra o servidor com dados fictícios e as funções correspondentes do programa oficial.
+Referência completa das **160 ferramentas** do servidor, em **11 grupos**, gerada a partir do `tools/list` real: nome, descrição, parâmetros com tipo e obrigatoriedade tirados do JSON Schema, anotações MCP, campos da resposta estruturada, um exemplo de chamada executado contra o servidor com dados fictícios e as funções correspondentes do programa oficial.
 
-95 ferramentas gravam na pasta autorizada e somem com `--somente-leitura` (que deixa 59). Sem `--dir`, os grupos que exigem pasta não são registrados e restam 27.
+98 ferramentas gravam na pasta autorizada e somem com `--somente-leitura` (que deixa 62). Sem `--dir`, os grupos que exigem pasta não são registrados e restam 29.
 
 ## Convenções
 
@@ -24,14 +24,14 @@ Referência completa das **154 ferramentas** do servidor, em **11 grupos**, gera
 | [`declaracao`](declaracao.md) | 4 | 2 | sim | Abrir, converter e gravar o arquivo da declaração (DBK/DEC). |
 | [`fichas`](fichas.md) | 1 | 0 | sim | Consulta de fichas da declaração. |
 | [`edicao`](edicao.md) | 105 | 80 | sim | Inclusão, edição, remoção e listagem de lançamentos de cada ficha da declaração. |
-| [`ciclo`](ciclo.md) | 15 | 13 | sim | Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. |
-| [`validacao`](validacao.md) | 2 | 0 | não | Validação de CPF/CNPJ e pendências da declaração. |
+| [`ciclo`](ciclo.md) | 17 | 15 | sim | Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. |
+| [`validacao`](validacao.md) | 2 | 0 | não | Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração. |
 | [`tabelas`](tabelas.md) | 2 | 0 | não | Tabelas de códigos do programa (dependentes, pagamentos, bens, municípios...). |
-| [`arquivos`](arquivos.md) | 2 | 0 | sim | Arquivos da pasta autorizada. |
+| [`arquivos`](arquivos.md) | 4 | 1 | sim | Arquivos da pasta autorizada. |
 | [`saidas`](saidas.md) | 4 | 0 | não | Etapa final: dados do Darf e passo a passo para transmitir pelo programa oficial. |
 | [`calculadoras`](calculadoras.md) | 10 | 0 | não | Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, RRA, ganho de capital e acréscimos. |
-| [`orientacao`](orientacao.md) | 3 | 0 | não | Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). |
-| **Total** | **154** | **95** | | |
+| [`orientacao`](orientacao.md) | 5 | 0 | não | Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). |
+| **Total** | **160** | **98** | | |
 
 ## Todas as ferramentas
 
@@ -68,12 +68,14 @@ Referência completa das **154 ferramentas** do servidor, em **11 grupos**, gera
 | [`calcular_acrescimos_moratorios`](calculadoras.md#calcular_acrescimos_moratorios) | `calculadoras` | Calcular multa e juros de mora | não |
 | [`calcular_carne_leao`](calculadoras.md#calcular_carne_leao) | `calculadoras` | Calcular o carnê-leão do mês | não |
 | [`calcular_condicao_residencia`](calculadoras.md#calcular_condicao_residencia) | `calculadoras` | Determinar a condição de residente | não |
+| [`calcular_expressao`](orientacao.md#calcular_expressao) | `orientacao` | Calculadora | não |
 | [`calcular_ganho_capital`](calculadoras.md#calcular_ganho_capital) | `calculadoras` | Simular ganho de capital | não |
 | [`calcular_multa_atraso`](calculo.md#calcular_multa_atraso) | `calculo` | Calcular multa por atraso na entrega | não |
 | [`calcular_preco_medio`](calculadoras.md#calcular_preco_medio) | `calculadoras` | Calcular preço médio e ganho por venda | não |
 | [`calcular_quotas`](calculo.md#calcular_quotas) | `calculo` | Calcular quotas do imposto a pagar | não |
 | [`calcular_rra`](calculadoras.md#calcular_rra) | `calculadoras` | Simular rendimentos recebidos acumuladamente | não |
 | [`comparar_modelos`](calculo.md#comparar_modelos) | `calculo` | Comparar modelo completo e simplificado | não |
+| [`consultar_atalhos`](orientacao.md#consultar_atalhos) | `orientacao` | Atalhos e botões do programa oficial | não |
 | [`consultar_parametros`](calculo.md#consultar_parametros) | `calculo` | Consultar parâmetros do exercício | não |
 | [`converter_dbk_para_modelo`](declaracao.md#converter_dbk_para_modelo) | `declaracao` | Converter DBK/DEC para o modelo | não |
 | [`converter_modelo_para_dbk`](declaracao.md#converter_modelo_para_dbk) | `declaracao` | Gravar o modelo em DBK | **sim** |
@@ -124,8 +126,11 @@ Referência completa das **154 ferramentas** do servidor, em **11 grupos**, gera
 | [`gerar_darf`](saidas.md#gerar_darf) | `saidas` | Dados do Darf | não |
 | [`gerar_relatorio_declaracao`](saidas.md#gerar_relatorio_declaracao) | `saidas` | Relatório da declaração | não |
 | [`gravar_copia_seguranca`](ciclo.md#gravar_copia_seguranca) | `ciclo` | Gravar cópia de segurança (DBK) | **sim** |
+| [`gravar_relatorio`](arquivos.md#gravar_relatorio) | `arquivos` | Gravar relatório em PDF ou HTML | **sim** |
+| [`importar_declaracao_anterior`](ciclo.md#importar_declaracao_anterior) | `ciclo` | Importar dados da declaração de 2025 | **sim** |
 | [`importar_informe_plano_saude`](ciclo.md#importar_informe_plano_saude) | `ciclo` | Importar informe de plano de saúde | **sim** |
 | [`importar_informe_rendimentos`](ciclo.md#importar_informe_rendimentos) | `ciclo` | Importar informe de rendimentos | **sim** |
+| [`importar_pre_preenchida`](ciclo.md#importar_pre_preenchida) | `ciclo` | Importar a declaração pré-preenchida | **sim** |
 | [`instruir_transmissao`](saidas.md#instruir_transmissao) | `saidas` | Passo a passo para transmitir | não |
 | [`ler_ficha`](fichas.md#ler_ficha) | `fichas` | Ler uma ficha da declaração | não |
 | [`ler_informe`](ciclo.md#ler_informe) | `ciclo` | Ler um informe de rendimentos | não |
@@ -134,6 +139,7 @@ Referência completa das **154 ferramentas** do servidor, em **11 grupos**, gera
 | [`listar_bens`](edicao.md#listar_bens) | `edicao` | Listar Bens e Direitos | não |
 | [`listar_bens_rurais`](edicao.md#listar_bens_rurais) | `edicao` | Listar Demonstrativo da Atividade Rural: Bens da atividade rural | não |
 | [`listar_copias_seguranca`](ciclo.md#listar_copias_seguranca) | `ciclo` | Listar cópias de segurança | não |
+| [`listar_declaracoes`](arquivos.md#listar_declaracoes) | `arquivos` | Listar declarações (em preenchimento e transmitidas) | não |
 | [`listar_dependentes`](edicao.md#listar_dependentes) | `edicao` | Listar Dependentes | não |
 | [`listar_dividas`](edicao.md#listar_dividas) | `edicao` | Listar Dívidas e Ônus Reais | não |
 | [`listar_dividas_rurais`](edicao.md#listar_dividas_rurais) | `edicao` | Listar Demonstrativo da Atividade Rural: Dívidas vinculadas à atividade rural | não |
@@ -187,7 +193,7 @@ Referência completa das **154 ferramentas** do servidor, em **11 grupos**, gera
 | [`simular_imposto`](calculo.md#simular_imposto) | `calculo` | Simular imposto do exercício | não |
 | [`transferir_excedente_isencao_65`](ciclo.md#transferir_excedente_isencao_65) | `ciclo` | Transferir o excedente da parcela isenta de 65 anos | **sim** |
 | [`validar_declaracao`](validacao.md#validar_declaracao) | `validacao` | Validar a declaração (pendências) | não |
-| [`validar_documento`](validacao.md#validar_documento) | `validacao` | Validar CPF ou CNPJ | não |
+| [`validar_documento`](validacao.md#validar_documento) | `validacao` | Validar CPF, CNPJ e outros campos | não |
 | [`verificar_integridade_arquivo`](arquivos.md#verificar_integridade_arquivo) | `arquivos` | Verificar integridade do DBK/DEC | não |
 | [`verificar_obrigatoriedade`](calculadoras.md#verificar_obrigatoriedade) | `calculadoras` | Verificar a obrigatoriedade de declarar | não |
 | [`verificar_versao_tabelas`](orientacao.md#verificar_versao_tabelas) | `orientacao` | Versão das tabelas embarcadas | não |

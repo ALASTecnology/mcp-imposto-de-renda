@@ -54,11 +54,21 @@ export interface OpcoesServidor {
   readonly registrarErro?: (ferramenta: string, erro: unknown) => void;
 }
 
-/** Pasta aberta na primeira utilização, para manter `createServer` síncrono. */
+/**
+ * Pasta aberta na primeira utilização, para manter `createServer` síncrono. Uma abertura que
+ * falha (pasta ainda não criada, disco não montado) não fica em cache: a próxima chamada tenta
+ * de novo (revisão 2, achado 9).
+ */
 function pastaSobDemanda(diretorio: string, opcoes: OpcoesPasta): PastaAutorizada {
   let aberta: Promise<PastaAutorizada> | undefined;
   const obter = () => {
-    aberta ??= abrirPastaAutorizada(diretorio, opcoes);
+    if (!aberta) {
+      const tentativa = abrirPastaAutorizada(diretorio, opcoes);
+      aberta = tentativa;
+      tentativa.catch(() => {
+        if (aberta === tentativa) aberta = undefined;
+      });
+    }
     return aberta;
   };
   return {

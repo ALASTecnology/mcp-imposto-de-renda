@@ -146,22 +146,38 @@ O `.DBK`/`.DEC` é gravado com o modelo mais vantajoso selecionado, como faria o
 
 ## Casos gerados
 
-31 casos em `casos/`, todos com golden e fixtures: isento, cada faixa da tabela anual (isenção,
-7,5%, 15%, 22,5%, 27,5%), desconto simplificado abaixo, exatamente no teto e acima, dependentes,
-instrução abaixo e acima do limite (titular e dependente), despesas médicas (profissional, plano com
-parcela não dedutível, hospital para dependente), PGBL acima e abaixo de 12%, pensão alimentícia
-judicial, maior de 65 anos com e sem parcela isenta, carnê-leão, carnê-leão com livro-caixa e
-previdência, rendimentos do exterior com imposto pago no exterior, IRRF maior que o devido
-(restituição), saldo a pagar, doações ECA e pessoa idosa, 13º salário e tributação exclusiva
-(aplicações, JCP, PLR) com isentos (poupança, lucros), imposto complementar, dependente com
-rendimento próprio, completo mais vantajoso, várias fontes pagadoras e previdência oficial alta.
+37 casos em `casos/`, todos com golden e fixtures (37 `.DBK` e 37 `.DEC`, 74 arquivos). O motor
+do AutoIR reproduz os 37 ao centavo (`packages/core/test/calc/golden.test.ts`).
+
+Os 31 casos iniciais cobrem: isento, cada faixa da tabela anual (isenção, 7,5%, 15%, 22,5%,
+27,5%), desconto simplificado abaixo, exatamente no teto e acima, dependentes, instrução abaixo e
+acima do limite (titular e dependente), despesas médicas (profissional, plano com parcela não
+dedutível, hospital para dependente), PGBL acima e abaixo de 12%, pensão alimentícia judicial,
+maior de 65 anos com e sem parcela isenta, carnê-leão, carnê-leão com livro-caixa e previdência,
+rendimentos do exterior com imposto pago no exterior, IRRF maior que o devido (restituição), saldo a
+pagar, doações ECA e pessoa idosa, 13º salário e tributação exclusiva (aplicações, JCP, PLR) com
+isentos (poupança, lucros), imposto complementar, dependente com rendimento próprio, completo mais
+vantajoso, várias fontes pagadoras e previdência oficial alta.
+
+Os 6 casos seguintes foram criados para investigar regras de arredondamento e limites; o que cada
+um confirmou está em `docs/regras/irpf-2026.md`:
+
+| Caso | O que isola |
+|---|---|
+| `arredondamento-percentuais-01` | 20% do desconto simplificado e 12% do limite do PGBL com fração de centavo acima de meio: o programa trunca |
+| `doacoes-acima-limite-01` | doações diretas ao ECA e à pessoa idosa acima de 3% do imposto devido, com 3% gerando fração de centavo: limite aplicado e truncado |
+| `empate-modelos-01` | deduções do completo iguais ao desconto simplificado: em empate, o programa indica o completo |
+| `exterior-limite-01` | imposto pago no exterior maior que a diferença de imposto atribuível aos rendimentos do exterior: limite de compensação em cada modelo |
+| `faixa-limite-075-01` | base exatamente no teto da faixa de 7,5% (R$ 33.919,80), com meio centavo exato: o imposto da tabela é truncado |
+| `livro-caixa-excesso-01` | livro-caixa maior que a receita do trabalho não assalariado: o Resumo não limita a dedução e o excesso não passa ao mês seguinte |
 
 Limitações observadas:
 
 - `irrfLei11033`: o programa aceita o valor no cálculo, mas aponta "valor indevido" quando não há
   operações de renda variável, que o formato do caso não cobre. Nenhum caso usa esse campo.
 - Doações diretamente na declaração ficam limitadas pelo programa ao valor disponível (3% do
-  imposto devido para cada fundo); o caso usa valores dentro do limite.
+  imposto devido para cada fundo, com a fração de centavo truncada). `doacoes-eca-idoso-01` usa
+  valores dentro do limite e `doacoes-acima-limite-01`, acima dele.
 
 ## Verificação de arquivos de terceiros
 
@@ -184,8 +200,8 @@ não agrega as fichas, então o harness consulta cada ficha da declaração por 
 
 Pendência inerente: a confirmação de que os alimentandos atendem aos requisitos não faz parte do
 leiaute do registro 35, por isso qualquer `.DBK` restaurado com alimentandos volta com essa
-pendência (o usuário confirma de novo no PGD). É o caso de `pensao-alimenticia-01`; os demais 30
-fixtures restauram sem pendências.
+pendência (o usuário confirma de novo no PGD). É o caso de `pensao-alimenticia-01`, o único dos
+37 casos com alimentando.
 
 ## Controles de integridade do arquivo (observados)
 
@@ -198,7 +214,7 @@ fixtures restauram sem pendências.
   `<8 primeiros dígitos do CPF>.<extensão em maiúsculas>`, por exemplo `10011265.DBK` e
   `10011265.DEC`. Por isso um `.DBK` e um `.DEC` com a mesma linha de header têm controles
   diferentes. Não depende de caminho, nome real do arquivo, data ou hora (dois `gerar` seguidos
-  produzem arquivos idênticos byte a byte). A fórmula confere em todos os 62 fixtures.
+  produzem arquivos idênticos byte a byte). A fórmula confere em todos os 74 fixtures.
 - **Tolerância do programa**: a restauração pelo importador do programa **não** confere o
   NR_CONTROLE do header nem o CRC por linha nem os hashes: um `.DBK` com controle `0000000001` ou com
   o CRC de um registro zerado é restaurado normalmente, e `crcPrograma` continua `ok`. Só

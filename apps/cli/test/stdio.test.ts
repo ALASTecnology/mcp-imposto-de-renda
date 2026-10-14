@@ -38,11 +38,17 @@ interface Processo {
   stderr(): string;
 }
 
+/** Ambiente do processo sem o perfil herdado de quem roda os testes. */
+function ambienteLimpo(): NodeJS.ProcessEnv {
+  const { MCP_IMPOSTO_DE_RENDA_PERFIL: _, ...resto } = process.env;
+  return resto;
+}
+
 function iniciar(args: string[]): Processo {
   const filho = spawn(
     process.execPath,
     ["--conditions=@mcp-imposto-de-renda/source", "--import", CARREGADOR, ENTRADA, ...args],
-    { cwd: RAIZ, stdio: ["pipe", "pipe", "pipe"] },
+    { cwd: RAIZ, env: ambienteLimpo(), stdio: ["pipe", "pipe", "pipe"] },
   );
   vivos.add(filho);
   let buffer = "";

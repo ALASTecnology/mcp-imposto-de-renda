@@ -67,7 +67,13 @@ Logs e mensagens vão para stderr; stdout é exclusivo do protocolo MCP.
 `;
 }
 
-export const AJUDA = montarAjuda();
+let ajudaMontada: string | undefined;
+
+/** Texto do --ajuda. Montado só na primeira chamada: contar as ferramentas exige o catálogo. */
+export function ajuda(): string {
+  ajudaMontada ??= montarAjuda();
+  return ajudaMontada;
+}
 
 export type ResultadoArgs =
   | {

@@ -1,12 +1,12 @@
 import {
-  catalogoFerramentas,
   createServer,
+  ferramentasRegistradas,
   GRUPOS,
   VERSAO_SERVIDOR,
 } from "@mcp-imposto-de-renda/mcp";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type { JSONRPCMessage } from "@modelcontextprotocol/sdk/types.js";
-import { AJUDA, interpretarArgs } from "./args.js";
+import { ajuda, interpretarArgs } from "./args.js";
 
 // stdout é exclusivo do protocolo MCP: qualquer mensagem humana vai para stderr. Os logs nunca
 // levam conteúdo da declaração: só eventos do processo, nome de ferramenta e classe do erro.
@@ -25,13 +25,13 @@ async function main(): Promise<void> {
   const args = interpretarArgs(process.argv.slice(2));
   switch (args.acao) {
     case "ajuda":
-      process.stderr.write(AJUDA);
+      process.stderr.write(ajuda());
       return;
     case "versao":
       process.stderr.write(`${VERSAO_SERVIDOR}\n`);
       return;
     case "erro":
-      process.stderr.write(`mcp-imposto-de-renda: ${args.mensagem}\n\n${AJUDA}`);
+      process.stderr.write(`mcp-imposto-de-renda: ${args.mensagem}\n\n${ajuda()}`);
       process.exitCode = 2;
       return;
     case "iniciar":
@@ -40,13 +40,10 @@ async function main(): Promise<void> {
 
   const escolhidos = args.grupos;
   const grupos = escolhidos ? GRUPOS.filter((g) => escolhidos.includes(g.nome)) : undefined;
-  const selecao = {
+  const server = createServer({
     perfil: args.perfil,
     somenteLeitura: args.somenteLeitura,
     ...(grupos ? { grupos } : {}),
-  };
-  const server = createServer({
-    ...selecao,
     diretorioAutorizado: args.diretorio,
     registrarErro: (ferramenta, erro) => log(`falha em ${ferramenta} (${classeDoErro(erro)})`),
   });
@@ -99,7 +96,7 @@ async function main(): Promise<void> {
     if (id !== undefined && pendentes.delete(id) && pendentes.size === 0) aoEsvaziar?.();
   };
   transport.onclose = () => void encerrar("transporte fechado");
-  const total = catalogoFerramentas(selecao).length;
+  const total = ferramentasRegistradas(server).length;
   log(
     `pronto (versão ${VERSAO_SERVIDOR}, perfil ${args.perfil}, ${total} ferramentas${args.somenteLeitura ? ", somente leitura" : ""})`,
   );

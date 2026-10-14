@@ -1,8 +1,8 @@
 import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterAll, describe, expect, it } from "vitest";
-import { AJUDA, interpretarArgs } from "../src/args.js";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ajuda, interpretarArgs } from "../src/args.js";
 
 const pasta = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-cli-"));
 const arquivo = join(pasta, "arquivo.txt");
@@ -16,7 +16,16 @@ afterAll(() => {
   rmSync(pasta, { recursive: true, force: true });
 });
 
+// O ambiente de quem roda os testes não pode mudar o perfil padrão.
+beforeEach(() => vi.stubEnv("MCP_IMPOSTO_DE_RENDA_PERFIL", undefined));
+afterEach(() => vi.unstubAllEnvs());
+
 describe("interpretarArgs", () => {
+  it("ignora o perfil herdado do ambiente quando a variável está ausente", () => {
+    expect(process.env.MCP_IMPOSTO_DE_RENDA_PERFIL).toBeUndefined();
+    expect(interpretarArgs(["--dir", pasta])).toMatchObject({ perfil: "completo" });
+  });
+
   it("exige --dir", () => {
     expect(interpretarArgs([])).toEqual({ acao: "erro", mensagem: "--dir é obrigatório" });
   });
@@ -63,7 +72,7 @@ describe("interpretarArgs", () => {
     expect(interpretarArgs(["--help"])).toEqual({ acao: "ajuda" });
     expect(interpretarArgs(["--versao"])).toEqual({ acao: "versao" });
     expect(interpretarArgs(["-v"])).toEqual({ acao: "versao" });
-    expect(AJUDA).toContain("--somente-leitura");
+    expect(ajuda()).toContain("--somente-leitura");
   });
 
   it("aceita --perfil e a variável MCP_IMPOSTO_DE_RENDA_PERFIL, com a opção valendo mais", () => {
@@ -126,11 +135,11 @@ describe("interpretarArgs", () => {
   });
 
   it("mostra na ajuda quantas ferramentas cada perfil expõe e os grupos", () => {
-    expect(AJUDA).toMatch(/completo\s+154 ferramentas/);
-    expect(AJUDA).toMatch(/essencial\s+78 ferramentas/);
-    expect(AJUDA).toMatch(/consulta\s+37 ferramentas/);
-    expect(AJUDA).toContain("MCP_IMPOSTO_DE_RENDA_PERFIL");
-    expect(AJUDA).toContain("--sem-grupos");
-    expect(AJUDA).toContain("calculadoras (10)");
+    expect(ajuda()).toMatch(/completo\s+154 ferramentas/);
+    expect(ajuda()).toMatch(/essencial\s+78 ferramentas/);
+    expect(ajuda()).toMatch(/consulta\s+37 ferramentas/);
+    expect(ajuda()).toContain("MCP_IMPOSTO_DE_RENDA_PERFIL");
+    expect(ajuda()).toContain("--sem-grupos");
+    expect(ajuda()).toContain("calculadoras (10)");
   });
 });

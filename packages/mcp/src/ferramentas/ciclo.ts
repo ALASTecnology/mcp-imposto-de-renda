@@ -923,20 +923,37 @@ export const grupoCiclo: GrupoFerramentas = {
             for (let k = doBenef.length - 1; k >= 0 && excedente > 0n; k--) {
               const i = doBenef[k];
               if (!i) continue;
+              // Primeiro a parcela anual, depois a do 13º (revisão B3: o 13º também entra).
               const tirar = i.valor < excedente ? i.valor : excedente;
               i.valor = (i.valor - tirar) as typeof i.valor;
               excedente -= tirar;
-              const pj = dec.rendimentosPJ.find(
+              const tirar13 = i.decimoTerceiro < excedente ? i.decimoTerceiro : excedente;
+              i.decimoTerceiro = (i.decimoTerceiro - tirar13) as typeof i.decimoTerceiro;
+              excedente -= tirar13;
+              if (tirar === 0n && tirar13 === 0n) continue;
+              let pj = dec.rendimentosPJ.find(
                 (x) =>
                   x.fonte.ni === i.fonte.ni &&
                   x.beneficiario.tipo === p.b.tipo &&
                   (p.b.tipo === "titular" || (x.beneficiario as { cpf: string }).cpf === p.b.cpf),
               );
-              if (pj) pj.rendimentos = (pj.rendimentos + tirar) as typeof pj.rendimentos;
-              else
-                dec.rendimentosPJ.push(
-                  zRendimentoPJ.parse({ beneficiario: p.b, fonte: i.fonte, rendimentos: tirar }),
-                );
+              if (!pj) {
+                pj = zRendimentoPJ.parse({ beneficiario: p.b, fonte: i.fonte, rendimentos: 0n });
+                dec.rendimentosPJ.push(pj);
+              }
+              pj.rendimentos = (pj.rendimentos + tirar) as typeof pj.rendimentos;
+              pj.decimoTerceiro = (pj.decimoTerceiro + tirar13) as typeof pj.decimoTerceiro;
+              if (tirar13 > 0n) {
+                // O 13º tributável vai para Exclusivos 01 (titular) ou 08 (dependentes).
+                const codigo = p.b.tipo === "dependente" ? "08" : "01";
+                const ex = dec.rendimentosExclusivos.find((e) => e.codigo === codigo);
+                if (ex) ex.valor = (ex.valor + tirar13) as typeof ex.valor;
+                else
+                  dec.rendimentosExclusivos.push({
+                    codigo,
+                    valor: tirar13,
+                  } as Declaracao["rendimentosExclusivos"][number]);
+              }
             }
           }
           return dec;

@@ -26,7 +26,7 @@ Primeira versão. Cobre o exercício 2026 (ano-calendário 2025).
 - **Motor de cálculo próprio** do exercício 2026: modelos completo e simplificado, deduções e seus
   limites, incentivos, imposto pago, saldo, quotas com juros Selic, multa por atraso e memória de
   cálculo explicada linha a linha.
-- **107 regras de validação** (80 erros e 27 avisos) equivalentes às críticas do programa oficial,
+- **108 regras de validação** (81 erros e 27 avisos) equivalentes às críticas do programa oficial,
   com ficha, caminho do campo e fonte de cada regra.
 - **31 tabelas de códigos** do exercício (dependentes, pagamentos, bens e direitos, municípios,
   bancos e outras), com busca sem diferenciar acentos.
@@ -41,8 +41,19 @@ Primeira versão. Cobre o exercício 2026 (ano-calendário 2025).
   limites de tamanho e de elementos por chamada.
 - **Harness de referência** (`tools/referencia`) que usa, só na máquina do desenvolvedor, o
   programa oficial como biblioteca para gerar casos golden e fixtures a partir de dados sintéticos.
-- **37 casos de referência** reproduzidos ao centavo e **74 fixtures** (37 `.DBK` e 37 `.DEC`)
-  relidos e regravados byte a byte.
+- **48 casos de referência** reproduzidos ao centavo e **96 fixtures** (48 `.DBK` e 48 `.DEC`)
+  relidos e regravados byte a byte; cada `.DBK` convertido em `.DEC` é igual ao do programa.
+- **154 ferramentas MCP** em 11 grupos (95 gravam; 59 no modo `--somente-leitura`).
+- **Arquivo de entrega**: conversão de `.DBK` em `.DEC` com os registros do recibo (`HR`, `DR` e
+  `R9`) montados a partir do header e das fichas, e a ferramenta `gerar_arquivo_entrega`, com
+  validação, escrita segura e o lembrete de que a transmissão é feita pelo programa oficial.
+- Ferramentas `registrar_recibo` (guarda o recibo para a retificadora), `atualizar_custo_bem`
+  (UFIR, coeficiente informado e Lei 14.973/2024), `obter_ajuda` (ajuda por ficha gerada das notas
+  de mapeamento) e `ler_informe` (campos de um informe colado ou em `.txt`, sem gravar).
+- Conta de restituição como o programa grava: tipo de conta pela tabela (1 a 3), Pix pela chave CPF
+  (tipo 4) e operação da Caixa antes do número da conta; indicador `IN_IMPOSTO_PAGO` do header;
+  resultado da atividade rural no Brasil no cálculo do ajuste.
+- `pnpm docs:catalogo` regenera o catálogo de ferramentas do README a partir do `tools/list`.
 - **Inventário das 416 funções** do programa oficial com a matriz de cobertura do AutoIR.
 - Documentação: guias de instalação, clientes MCP, primeira declaração, fichas, perguntas
   frequentes, solução de problemas e desenvolvimento; formato do arquivo; regras do IRPF 2026 e
@@ -58,6 +69,21 @@ Primeira versão. Cobre o exercício 2026 (ano-calendário 2025).
 - `impostoRetidoTotal` passa a ser o total pago do modelo completo, como no programa.
 - O codec aceita os campos monetários com sinal gravados pelo programa (por exemplo, base negativa
   do carnê-leão).
+- Quotas: sem saldo a pagar, o número de quotas é 0 ("não se aplica"), como no arquivo; o valor da
+  quota gravado é a divisão truncada.
+- Atividade rural: códigos da forma de apuração (2 resultado, 1 limite de 20%, 0 não informada) e
+  chave do imóvel a partir de 0; exclusivo de apostas gravado com o código 14.
+- Informe colado: os rótulos são comparados sem o valor da linha (o IRRF anual virava IRRF do 13º
+  e a parcela isenta de 65 anos virava 13º tributável), linhas longas são truncadas e reimportar
+  com `substituir` não duplica o 13º nem o plano de saúde.
+- Cópias de segurança: a primeira cópia de cada arquivo nunca sai da rotação, nomes de cópia sem
+  colisão, temporários curtos e limpos na abertura da pasta, restauração só em `.DBK`.
+- `converter_modelo_para_dbk` com base `.DEC` grava um `.DBK` de verdade, validado.
+- O CLI responde as chamadas em andamento antes de sair quando o stdin fecha; o executável leva o
+  núcleo e o servidor no próprio bundle.
+- Conteúdo de arquivo e de informe devolvido ao cliente vem delimitado como dado; ferramentas que
+  acrescentam não se anunciam idempotentes; índice correto ao incluir em listas compostas;
+  excedente do 13º da parcela isenta de 65 anos transferido; percentual numérico aceito no Darf.
 
 ### Conhecido
 

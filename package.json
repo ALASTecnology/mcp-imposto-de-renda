@@ -14,7 +14,8 @@
     "format": "biome format --write .",
     "typecheck": "pnpm -r --parallel run typecheck",
     "test": "vitest run",
-    "build": "pnpm -r run build"
+    "build": "pnpm -r run build",
+    "docs:catalogo": "vitest run --config tools/docs/vitest.config.mts && node tools/docs/catalogo.mjs && node tools/docs/inserir.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

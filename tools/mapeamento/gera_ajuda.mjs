@@ -62,7 +62,9 @@ const conteudo = [
 if (process.argv.includes("--verificar")) {
   const atual = readFileSync(SAIDA, "utf8");
   if (atual !== conteudo) {
-    console.error("packages/mcp/src/ajuda/dados.ts desatualizado: rode node tools/mapeamento/gera_ajuda.mjs");
+    console.error(
+      "packages/mcp/src/ajuda/dados.ts desatualizado: rode node tools/mapeamento/gera_ajuda.mjs",
+    );
     process.exit(1);
   }
   console.log(`ok: ${topicos.length} tópicos`);

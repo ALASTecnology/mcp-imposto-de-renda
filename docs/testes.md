@@ -48,7 +48,7 @@ desenvolvedor e nunca versionado (ADR 0002), para montar declarações sintétic
 - `packages/core/test/golden/2026/<id>.json`: entrada no formato do motor e o bloco `esperado`
   calculado pelo programa. `calc/golden.test.ts` exige todos os campos de `esperado` ao centavo.
 - `packages/core/test/fixtures/dbk/2026/<id>.DBK` e `.DEC`: os arquivos gravados pelo programa.
-  São 37 pares, 74 arquivos. `dbk/fixtures.test.ts` e `integridade/fixtures.test.ts` os usam.
+  São 48 pares, 96 arquivos. `dbk/fixtures.test.ts` e `integridade/fixtures.test.ts` os usam.
 
 Divergência com um caso de referência nunca se corrige ajustando o motor ao número: investiga-se
 a regra e registra-se em `docs/regras/irpf-2026.md`. Nem os goldens nem as fixtures são editados
@@ -60,7 +60,7 @@ Contrato: `lerArquivo` devolve registros ou lança `ArquivoDeclaracaoError` (ou 
 outro erro; quando aceita a entrada, regravar reproduz os mesmos bytes; e nenhuma alteração de um
 byte num arquivo do programa passa despercebida por `verificarControles`.
 
-- Fixtures: ida e volta das 74 fixtures, conversão de cada DEC em DBK idêntica ao DBK do
+- Fixtures: ida e volta das 96 fixtures, conversão de cada DEC em DBK idêntica ao DBK do
   programa, um byte trocado por linha de cada fixture mais 15 posições sorteadas, varredura
   exaustiva de todas as posições do menor par (header, fichas, `T9` e recibo) e o sinal de menos
   em cada campo monetário zerado.

@@ -78,14 +78,14 @@ da sua máquina; o único dado que sai dela é o que o seu cliente MCP manda ao 
 
 | Indicador | Valor | Onde conferir |
 | --- | --- | --- |
-| Casos de referência (golden) reproduzidos ao centavo | **37 de 37** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md) |
-| Arquivos do programa oficial relidos e regravados byte a byte | **74** (37 `.DBK` e 37 `.DEC`) | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
+| Casos de referência (golden) reproduzidos ao centavo | **48 de 48** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md) |
+| Arquivos do programa oficial relidos e regravados byte a byte | **96** (48 `.DBK` e 48 `.DEC`); cada `.DBK` convertido em `.DEC` igual ao do programa | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
 | Funções do programa oficial inventariadas e mapeadas | **416** | [`docs/mapeamento/matriz-cobertura.md`](docs/mapeamento/matriz-cobertura.md) |
-| Ferramentas MCP registradas | **138** em 9 grupos (93 gravam; 45 com `--somente-leitura`) | [catálogo](#catálogo-de-ferramentas) |
-| Regras de validação | **107** (80 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
+| Ferramentas MCP registradas | **154** em 11 grupos (95 gravam; 59 com `--somente-leitura`) | [catálogo](#catálogo-de-ferramentas) |
+| Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
 | Tabelas de códigos do exercício | **31** | [`docs/mapeamento/tabelas`](docs/mapeamento/tabelas/README.md) |
 | Tipos de registro do `.DBK` convertidos para o modelo | **57** | [`docs/formato-dbk.md`](docs/formato-dbk.md) |
-| Testes automatizados | mais de 900, em Vitest | [`docs/testes.md`](docs/testes.md) |
+| Testes automatizados | **1.126**, em Vitest | [`docs/testes.md`](docs/testes.md) |
 | Chamadas de rede | **nenhuma** (verificado por teste) | [`docs/seguranca.md`](docs/seguranca.md) |
 
 ## Instalação
@@ -274,9 +274,11 @@ O tutorial completo, com uma declaração fictícia do início ao fim, está em
    controles e `gerar_relatorio_declaracao` monta um relatório para conferência.
 7. **Restaure no programa oficial.** No PGD IRPF 2026, use **Ferramentas > Cópia de Segurança >
    Restaurar** (Ctrl+T) e escolha o arquivo gravado. `instruir_transmissao` gera o passo a passo
-   com as pendências e o saldo.
+   com as pendências e o saldo. Se precisar do arquivo de entrega (`.DEC`) para conferência,
+   `gerar_arquivo_entrega` o grava a partir do `.DBK`; a transmissão continua sendo pelo programa.
 8. **Confira e transmita.** Revise cada ficha no programa, rode **Verificar Pendências** (F5) e
-   transmita pelo próprio programa. Guarde o recibo. `gerar_darf` calcula os dados do Darf (código,
+   transmita pelo próprio programa. Guarde o recibo e registre o número com `registrar_recibo`, para
+   uma eventual retificadora. `gerar_darf` calcula os dados do Darf (código,
    vencimentos, quotas e acréscimos); o documento com código de barras é emitido pelo programa
    oficial.
 
@@ -287,7 +289,7 @@ Todas as ferramentas são locais (`openWorldHint: false`). As que gravam são an
 oficial está na [matriz de cobertura](docs/mapeamento/matriz-cobertura.md).
 
 <!-- catalogo:inicio -->
-Gerado a partir de `tools/list` do servidor: **138 ferramentas** em 9 grupos, 93 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 45).
+Gerado a partir de `tools/list` do servidor: **154 ferramentas** em 11 grupos, 95 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 59).
 
 ### calculo
 
@@ -311,6 +313,7 @@ Abrir, converter e gravar o arquivo da declaração (DBK/DEC). Exige `--dir`.
 | `abrir_declaracao` | Lê um DBK ou DEC da pasta autorizada e devolve um resumo: contribuinte, tipo de declaração, quantidade de itens e totais por ficha, registros por tipo e integridade dos controles. | não |
 | `converter_dbk_para_modelo` | Converte um DBK/DEC da pasta autorizada no modelo JSON do AutoIR (identificação, dependentes, rendimentos de PJ, pagamentos, bens e dívidas). | não |
 | `converter_modelo_para_dbk` | Grava a declaração (modelo JSON) em um arquivo .DBK da pasta autorizada. | **sim** |
+| `gerar_arquivo_entrega` | Gera o arquivo de entrega (.DEC) a partir de um .DBK da pasta autorizada, montando os registros do recibo (HR, DR e R9) e recalculando os controles, como o programa oficial grava. | **sim** |
 
 ### fichas
 
@@ -381,16 +384,18 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | --- | --- | --- |
 | `criar_declaracao` | Cria um DBK novo na pasta autorizada a partir da identificação do contribuinte (formato do modelo) e da opção de tributação. | **sim** |
 | `criar_retificadora` | Marca a declaração como retificadora com o número do recibo (12 dígitos) da declaração a retificar e grava em um novo DBK (padrão: CPF-IRPF-A-2026-2025-RETIF.DBK), preservando o restante. | **sim** |
+| `registrar_recibo` | Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). | **sim** |
 | `excluir_declaracao` | Remove um DBK ou DEC da pasta autorizada, guardando antes uma cópia em .autoir-backups. | **sim** |
 | `gravar_copia_seguranca` | Copia um DBK ou DEC da pasta para outro .DBK (um DEC vira DBK sem o recibo, com os controles refeitos). | **sim** |
 | `listar_copias_seguranca` | Lista as cópias automáticas guardadas em .autoir-backups (feitas antes de sobrescrever ou excluir), da mais recente para a mais antiga. | não |
-| `restaurar_copia_seguranca` | Restaura uma cópia de .autoir-backups (nome de listar_copias_seguranca) sobre um arquivo da pasta (padrão: o arquivo de origem). | **sim** |
+| `restaurar_copia_seguranca` | Restaura uma cópia de .autoir-backups (nome de listar_copias_seguranca) sobre um .DBK da pasta (padrão: o arquivo de origem; cópia de um .DEC exige arquivo_destino .DBK). | **sim** |
 | `definir_opcao_tributacao` | Escolhe deduções legais (completa) ou desconto simplificado, preservando as deduções informadas, e devolve a comparação dos dois modelos com a recomendação. | **sim** |
 | `definir_informacoes_bancarias` | Grava a conta para restituição ou débito (banco, agência sem DV, conta, DV, tipo e operação da Caixa), Pix pela chave CPF, número de quotas (1 a 8) e débito automático, validando banco, agência, conta e DV pela regra de cada banco. | **sim** |
 | `definir_imposto_pago` | Grava as linhas digitadas da ficha Imposto Pago/Retido: imposto complementar (Darf 0246), imposto pago no exterior e imposto retido na fonte da Lei 11.033/2004. | **sim** |
 | `repetir_valores_bens` | Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens) ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. | **sim** |
 | `importar_informe_rendimentos` | Lança na declaração o comprovante de rendimentos de PJ colado pelo usuário, em texto ou JSON (sem OCR e sem rede): fonte e CNPJ, quadro 3 (rendimentos, previdência oficial, IRRF), quadro 4 (isentos como parcela de 65 anos, indenizações, lucros), quadro 5 (13º e IRRF do 13º, PLR, aplicações) e plano de saúde do quadro 7. | **sim** |
 | `importar_informe_plano_saude` | Lança em Pagamentos Efetuados (código 26) o informe de plano de saúde colado em texto ou JSON: operadora (CNPJ e nome), valor pago por beneficiário e reembolsos. | **sim** |
+| `ler_informe` | Lê o comprovante de rendimentos de PJ colado em 'texto' ou num arquivo .txt da pasta autorizada e devolve os campos extraídos por regras fixas (fonte e CNPJ, rendimentos, previdência oficial, IRRF, 13º e IRRF do 13º, isentos e exclusivos), sem gravar nada, sem OCR e sem rede. | não |
 | `transferir_excedente_isencao_65` | Soma, por beneficiário com 65 anos ou mais em 2025 (contando a partir do mês em que completa 65), a parcela isenta de aposentadoria (isento código 10) de todas as fontes, aplica o limite de R$ 1.903,98 por mês mais o 13º e transfere o excedente para os Rendimentos Tributáveis de PJ da mesma fonte, como a pergunta do programa. | **sim** |
 
 ### validacao
@@ -431,7 +436,32 @@ Etapa final: dados do Darf e passo a passo para transmitir pelo programa oficial
 | `gerar_relatorio_declaracao` | Monta um relatório em Markdown da declaração (identificação, fichas preenchidas, totais e resultado simulado) para conferência. | não |
 | `gerar_comunicacao_saida` | Gera o texto da comunicação de saída definitiva do país, uma por fonte pagadora de rendimentos de PJ, a partir da ficha Saída Definitiva. | não |
 
-Grupos declarados no registro e ainda sem ferramentas: `calculadoras`, `orientacao`.
+### calculadoras
+
+Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, RRA, ganho de capital e acréscimos.
+
+| Ferramenta | O que faz | Grava? |
+| --- | --- | --- |
+| `calcular_carne_leao` | Calcula o carnê-leão (Darf 0190) de um mês de 2025 pela tabela progressiva mensal vigente no mês (janeiro a abril pela Lei 14.848/2024; maio a dezembro pela Lei 15.191/2025), com as deduções de previdência oficial, dependentes (R$ 189,59 cada), pensão e livro-caixa, ou o desconto simplificado mensal quando mais vantajoso. | não |
+| `calcular_rra` | Calcula o imposto do RRA pela tabela progressiva acumulada (tabela mensal do mês do recebimento vezes o número de meses, art. | não |
+| `calcular_preco_medio` | Calcula o custo médio ponderado por ativo e o resultado de cada venda a partir das notas de corretagem (compras e vendas com custos), separando day-trade (compra e venda do mesmo ativo no mesmo dia), para preencher a Renda Variável. | não |
+| `apurar_renda_variavel` | Apura o imposto mensal sobre ganhos líquidos: operações comuns 15%, day-trade 20%, FII e Fiagro 20%, com compensação de prejuízos separada por tipo, compensação de IR na fonte (day-trade e Lei 11.033/2004), isenção de ganhos com ações à vista quando as vendas do mês não passam de R$ 20.000,00 e Darf 6015 com vencimento no último dia útil do mês seguinte (abaixo de R$ 10,00 acumula). | não |
+| `calcular_ganho_capital` | Simulador de orientação para alienação de imóvel, móvel ou participação: ganho = valor de alienação menos corretagem e custo; reduções da Lei 7.713/1988 (aquisição até 1988) e fatores FR1/FR2 da Lei 11.196/2005 para imóveis; isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor; alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. | não |
+| `atualizar_custo_bem` | Orientação e cálculo da atualização do custo de bem ou direito com os valores informados pelo usuário: 'ufir' (bens adquiridos até 31/12/1995, quantidade de UFIR vezes R$ 0,8287, Lei 9.249/1995, art. | não |
+| `calcular_acrescimos_moratorios` | Calcula a multa de mora (0,33% por dia de atraso, limitada a 20%) e os juros (Selic acumulada informada mais 1% no mês do pagamento) de qualquer débito federal vencido. | não |
+| `calcular_condicao_residencia` | Determina a data em que a pessoa passa a residente ou não residente no Brasil (IN SRF 208/2002): saída definitiva (não residente na data da saída), ausência temporária (não residente no dia seguinte ao que completar 12 meses fora), retorno de brasileiro ou visto permanente (residente na chegada) e visto temporário (residente ao completar 184 dias no país em 12 meses). | não |
+| `verificar_obrigatoriedade` | Avalia os critérios de obrigatoriedade da declaração de 2026 (rendimentos tributáveis acima de R$ 35.584,00; isentos e exclusivos acima de R$ 200.000,00; ganho de capital; bolsa acima de R$ 40.000,00; atividade rural; bens acima de R$ 800.000,00; residência; reaplicação de imóvel; exterior e trust) a partir das respostas do usuário. | não |
+| `converter_moeda` | Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o AutoIR não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023). | não |
+
+### orientacao
+
+Orientação sobre serviços que só existem fora do AutoIR (sem acesso à rede).
+
+| Ferramenta | O que faz | Grava? |
+| --- | --- | --- |
+| `orientar_servico_externo` | Explica como usar um serviço que só existe fora do AutoIR (gov.br, pré-preenchida, Carnê-Leão Web, consulta de CPF, e-CAC, extrato e malha, débito automático, Darf e Sicalc, GCAP, Livro Caixa rural, restituição) e o que trazer de volta para a pasta autorizada. | não |
+| `obter_ajuda` | Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do AutoIR (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). | não |
+| `verificar_versao_tabelas` | Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no AutoIR e quantos registros cada uma tem. | não |
 <!-- catalogo:fim -->
 
 **Valores monetários na entrada:** texto é sempre em **reais** no formato brasileiro (`"1.234,56"`);
@@ -505,15 +535,18 @@ hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato
 
 - **Só o exercício 2026** (ano-calendário 2025). Leiaute, tabelas e motor são versionados por
   exercício.
-- **Conversão de `.DBK` em `.DEC` pendente.** O `.DEC` exige o registro `DR`, que repete dados de
-  outras fichas e ainda tem campos de origem não determinada. O AutoIR grava `.DBK`; o programa
-  oficial gera o `.DEC` de entrega.
+- **Arquivo de entrega sem ganho de capital conferido.** `gerar_arquivo_entrega` grava o `.DEC`
+  igual ao do programa nos 48 casos de referência, mas os campos de imposto pago de ganho de
+  capital e de moeda estrangeira do recibo não têm caso (o GCAP só calcula pela interface do
+  programa). A transmissão continua sendo feita pelo programa oficial.
 - **Serviços on-line da Receita Federal estão fora de escopo**: transmissão, certificado digital,
   login gov.br, declaração pré-preenchida, Carnê-Leão Web, Darf com código de barras e recibo.
 - **Sem leitura de PDF.** Informes de rendimentos e de plano de saúde entram como texto ou JSON
   colado pelo usuário; não há OCR.
-- **Cálculo do ajuste sem demonstrativos.** RRA, atividade rural, ganho de capital e renda variável
-  não entram no cálculo do motor.
+- **Cálculo do ajuste com demonstrativos parciais.** A atividade rural no Brasil entra no cálculo;
+  RRA pela opção do ajuste, prejuízo rural a compensar, atividade rural no exterior e a Lei 14.754
+  ficam com os valores do arquivo. Ganho de capital e renda variável são de tributação definitiva e
+  não mudam o ajuste.
 - Pendências documentadas em [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md), como a
   contribuição do ente patrocinador no código 37 e os limites de 6%, 7% e 1% das doações, ainda não
   confirmados por caso de referência.
@@ -531,7 +564,7 @@ hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato
 - As funções do programa oficial ainda pendentes na
   [matriz de cobertura](docs/mapeamento/matriz-cobertura.md), como a importação do arquivo do
   Carnê-Leão Web e do demonstrativo de ganhos de capital.
-- Geração do `.DEC` a partir do `.DBK`, quando o registro `DR` estiver completamente mapeado.
+- Caso de referência de ganho de capital para confirmar os dois campos do recibo ainda sem caso.
 
 ## Estrutura do repositório
 

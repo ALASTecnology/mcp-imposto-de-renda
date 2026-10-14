@@ -261,7 +261,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
       {
         titulo: "Apurar a renda variável mês a mês",
         descricao:
-          "Apura o imposto mensal sobre ganhos líquidos: operações comuns 15%, day-trade 20%, FII e Fiagro 20%, com compensação de prejuízos separada por tipo, compensação de IR na fonte (day-trade e Lei 11.033/2004), isenção de ganhos com ações à vista quando as vendas do mês não passam de R$ 20.000,00 e Darf 6015 com vencimento no último dia útil do mês seguinte (abaixo de R$ 10,00 acumula).",
+          "Apura o imposto mensal sobre ganhos líquidos: operações comuns 15%, day-trade 20%, FII e Fiagro 20%, com compensação de prejuízos separada por tipo, compensação de IR na fonte (day-trade e Lei 11.033/2004), isenção de ganhos com ações à vista quando as vendas do mês não passam de R$ 20.000,00 e Darf 6015 com vencimento no último dia útil do mês seguinte. Imposto abaixo de R$ 10,00 não é recolhido no mês: soma-se ao dos meses seguintes até chegar a R$ 10,00 (Lei 9.430/1996, art. 68, § 1º).",
         entrada: {
           meses: z
             .array(
@@ -292,8 +292,14 @@ export const grupoCalculadoras: GrupoFerramentas = {
               baseFii: zTexto,
               impostoDevido: zTexto,
               irrfCompensado: zTexto,
+              impostoMesesAnteriores: zTexto.describe(
+                "Imposto abaixo de R$ 10,00 trazido dos meses anteriores (já somado em impostoPagar).",
+              ),
               impostoPagar: zTexto,
               recolher: z.boolean(),
+              impostoPendente: zTexto.describe(
+                "Imposto que fica para somar ao do mês seguinte por não chegar a R$ 10,00.",
+              ),
               vencimento: z.string(),
               prejuizoComunsSeguinte: zTexto,
               prejuizoDayTradeSeguinte: zTexto,
@@ -323,14 +329,22 @@ export const grupoCalculadoras: GrupoFerramentas = {
             prejuizoFii: big(a.prejuizo_anterior_fii),
           },
         ).map((m) => ({ ...m, vencimento: vencimentoMesSeguinte(2025, m.mes) }));
+        const ultimo = meses[meses.length - 1];
+        const pendente =
+          ultimo !== undefined && ultimo.impostoPendente > 0n
+            ? [
+                `Ficam ${brl(ultimo.impostoPendente)} de imposto abaixo de R$ 10,00 após ${ultimo.mes}/2025: some ao imposto dos meses seguintes e recolha quando o total chegar a R$ 10,00 (Lei 9.430/1996, art. 68, § 1º).`,
+              ]
+            : [];
         return {
-          texto: meses
-            .map(
+          texto: [
+            ...meses.map(
               (m) =>
-                `- ${m.mes}/2025: imposto ${brl(m.impostoDevido)}, a pagar ${brl(m.impostoPagar)}${m.recolher ? ` até ${dataBr(m.vencimento)} (Darf 6015)` : ""}`,
-            )
-            .join("\n"),
-          dados: objetoJson({ meses, avisos: [AVISO_FERIADOS, AVISO] }),
+                `- ${m.mes}/2025: imposto ${brl(m.impostoDevido)}, a pagar ${brl(m.impostoPagar)}${m.impostoMesesAnteriores > 0n ? ` (com ${brl(m.impostoMesesAnteriores)} acumulados)` : ""}${m.recolher ? ` até ${dataBr(m.vencimento)} (Darf 6015)` : m.impostoPagar > 0n ? ", abaixo de R$ 10,00: soma ao mês seguinte" : ""}`,
+            ),
+            ...pendente,
+          ].join("\n"),
+          dados: objetoJson({ meses, avisos: [...pendente, AVISO_FERIADOS, AVISO] }),
         };
       },
     );

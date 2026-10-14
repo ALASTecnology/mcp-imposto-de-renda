@@ -234,7 +234,18 @@ export interface MesRv {
   irrfLei11033: bigint;
 }
 
-/** Apuração mensal de renda variável e FII com compensação de prejuízos e de IR na fonte. */
+/** Valor mínimo de um Darf: abaixo dele o imposto passa para o período seguinte. */
+export const DARF_MINIMO = 1_000n;
+
+/**
+ * Apuração mensal de renda variável e FII com compensação de prejuízos e de IR na fonte.
+ *
+ * O imposto de cada mês vence no último dia útil do mês seguinte (IN RFB 1.585/2015, art. 56,
+ * § 5º). Quando o valor a pagar fica abaixo de R$ 10,00, ele não é recolhido: soma-se ao imposto
+ * de mesmo código dos meses seguintes até o total chegar a R$ 10,00, e então é pago no prazo do
+ * último desses meses (Lei 9.430/1996, art. 68, caput e § 1º). `impostoMesesAnteriores` traz o
+ * que veio acumulado e `impostoPendente`, o que ficou para o mês seguinte.
+ */
 export function apurarRendaVariavel(
   meses: readonly MesRv[],
   inicial: { prejuizoComuns: bigint; prejuizoDayTrade: bigint; prejuizoFii: bigint },
@@ -244,6 +255,7 @@ export function apurarRendaVariavel(
   let pf = inicial.prejuizoFii;
   let saldoDay = 0n;
   let saldoLei = 0n;
+  let pendente = 0n;
   const pos = (v: bigint) => (v > 0n ? v : 0n);
   return [...meses]
     .sort((a, b) => a.mes - b.mes)
@@ -271,7 +283,10 @@ export function apurarRendaVariavel(
       const usoLei = dispLei < devido - usoDay ? dispLei : devido - usoDay;
       saldoDay = dispDay - usoDay;
       saldoLei = dispLei - usoLei;
-      const pagar = devido - usoDay - usoLei;
+      const anteriores = pendente;
+      const pagar = devido - usoDay - usoLei + anteriores;
+      const recolher = pagar >= DARF_MINIMO;
+      pendente = recolher ? 0n : pagar;
       return {
         mes: m.mes,
         isentoAcoes: isento,
@@ -280,9 +295,10 @@ export function apurarRendaVariavel(
         baseFii: baseF,
         impostoDevido: devido,
         irrfCompensado: usoDay + usoLei,
+        impostoMesesAnteriores: anteriores,
         impostoPagar: pagar,
-        // Darf abaixo de R$ 10,00 não é recolhido: acumula para o mês seguinte.
-        recolher: pagar >= 1_000n,
+        recolher,
+        impostoPendente: pendente,
         prejuizoComunsSeguinte: pc,
         prejuizoDayTradeSeguinte: pd,
         prejuizoFiiSeguinte: pf,

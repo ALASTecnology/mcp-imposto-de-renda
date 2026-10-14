@@ -231,6 +231,26 @@ function carimbo(d: Date): string {
 
 const PADRAO_BACKUP = /^(.*)\.(\d{8}T\d{6}Z)(?:-(\d+))?\.bak$/;
 
+/**
+ * Prefixo da cópia de segurança a partir do nome relativo, reversível e sem colisão: `%` vira
+ * `%25` e `/` vira `%2F` (antes, `/` virava `__`, e `a__b.DBK` colidia com `a/b.DBK`).
+ */
+export function prefixoBackup(nome: string): string {
+  return nome.replaceAll("%", "%25").replaceAll("/", "%2F");
+}
+
+/** Nome relativo a partir do prefixo da cópia (inverso de `prefixoBackup`). */
+export function nomeDoPrefixo(prefixo: string): string {
+  return prefixo.replace(/%2F|%25/gi, (x) => (x.toUpperCase() === "%2F" ? "/" : "%"));
+}
+
+/** Espaço do carimbo e da sequência no nome da cópia: `.AAAAMMDDTHHMMSSZ-999.bak`. */
+const TAMANHO_SUFIXO_BACKUP = 25;
+
+/** Temporário da escrita atômica: nome curto e reconhecível, limpo na abertura da pasta. */
+const PREFIXO_TEMPORARIO = ".autoir-";
+const PADRAO_TEMPORARIO = /^\.autoir-[0-9a-f-]{36}\.tmp$/;
+
 async function lerHandle(h: FileHandle, nome: string, limite: number): Promise<Uint8Array> {
   const st = await h.stat();
   if (!st.isFile()) {
@@ -324,9 +344,15 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     if (atual && !atual.isFile()) {
       throw new ErroArquivo("NAO_E_ARQUIVO", `"${nome}" existe e não é um arquivo comum.`);
     }
+    if (atual && prefixoBackup(nome).length + TAMANHO_SUFIXO_BACKUP > MAX_NOME) {
+      // Valida antes de qualquer efeito: a cópia de segurança não caberia no limite de nome.
+      throw invalido(
+        `Nome longo demais para guardar a cópia de segurança; use um nome com até ${MAX_NOME - TAMANHO_SUFIXO_BACKUP} caracteres.`,
+      );
+    }
     const backup = atual ? await this.fazerBackup(nome) : undefined;
 
-    const temporario = join(dirname(destino), `.${basename(destino)}.${randomUUID()}.tmp`);
+    const temporario = join(dirname(destino), `${PREFIXO_TEMPORARIO}${randomUUID()}.tmp`);
     try {
       const h = await open(temporario, "wx", 0o600);
       try {
@@ -383,7 +409,7 @@ class PastaAutorizadaImpl implements PastaAutorizada {
       const c = m[2] ?? "";
       copias.push({
         copia: nome,
-        arquivo: (m[1] ?? "").replaceAll("__", "/"),
+        arquivo: nomeDoPrefixo(m[1] ?? ""),
         criadaEm: `${c.slice(0, 4)}-${c.slice(4, 6)}-${c.slice(6, 8)}T${c.slice(9, 11)}:${c.slice(11, 13)}:${c.slice(13, 15)}Z`,
         tamanho: info.size,
       });
@@ -458,7 +484,7 @@ class PastaAutorizadaImpl implements PastaAutorizada {
   /** Copia o conteúdo atual para a pasta de backups e aplica a rotação. */
   private async fazerBackup(nome: string): Promise<string> {
     const pasta = await this.pastaBackups();
-    const prefixo = nome.replaceAll("/", "__");
+    const prefixo = prefixoBackup(nome);
     const conteudo = await this.ler(nome, [extname(nome)]);
     const marca = carimbo(this.relogio());
     let destino = "";
@@ -491,8 +517,11 @@ class PastaAutorizadaImpl implements PastaAutorizada {
       .filter((x) => x.m?.[1] === prefixo)
       .map((x) => ({ n: x.n, marca: x.m?.[2] ?? "", seq: Number(x.m?.[3] ?? 0) }))
       .sort((a, b) => (a.marca === b.marca ? a.seq - b.seq : a.marca < b.marca ? -1 : 1));
-    const excesso = meus.length - this.maxBackups;
-    for (const item of meus.slice(0, Math.max(0, excesso))) {
+    // A primeira cópia de cada arquivo (o conteúdo original, de antes do AutoIR) nunca sai da
+    // rotação: a quantidade só gira entre as demais (revisão M2).
+    const [, ...giram] = meus;
+    const excesso = meus.length - Math.max(2, this.maxBackups);
+    for (const item of giram.slice(0, Math.max(0, excesso))) {
       await unlink(join(pasta, item.n)).catch(() => undefined);
     }
   }
@@ -527,5 +556,24 @@ export async function abrirPastaAutorizada(
   if (!st.isDirectory()) {
     throw new ErroArquivo("PASTA_INVALIDA", "A pasta autorizada não é um diretório.");
   }
+  await limparTemporarios(real);
   return new PastaAutorizadaImpl(real, opcoes);
+}
+
+/**
+ * Apaga temporários de escrita deixados por um encerramento no meio de uma gravação (podem ter
+ * dados pessoais). Só os que seguem o padrão do AutoIR, na raiz da pasta autorizada.
+ */
+async function limparTemporarios(raiz: string): Promise<void> {
+  let nomes: string[];
+  try {
+    nomes = await readdir(raiz);
+  } catch {
+    return;
+  }
+  for (const n of nomes) {
+    if (!PADRAO_TEMPORARIO.test(n)) continue;
+    const st = await lstatOuNada(join(raiz, n));
+    if (st?.isFile()) await unlink(join(raiz, n)).catch(() => undefined);
+  }
 }

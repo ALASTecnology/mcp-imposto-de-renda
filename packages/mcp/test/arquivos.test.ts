@@ -193,19 +193,21 @@ describe("escrita atômica e backup", () => {
     expect(readFileSync(join(raiz, r.backup ?? ""), "utf8")).toBe("conteudo original");
   });
 
-  it("mantém só os backups mais recentes (rotação)", async () => {
+  it("mantém a primeira cópia e as mais recentes (rotação, revisão M2)", async () => {
     for (let i = 1; i <= 5; i++) {
       agora = new Date(Date.UTC(2026, 9, 14, 12, i, 0));
       await pasta.escrever("decl.DBK", new TextEncoder().encode(`v${i}`), DBK);
     }
     const backups = readdirSync(join(raiz, PASTA_BACKUPS)).sort();
+    // A primeira cópia (o conteúdo de antes do AutoIR) nunca sai da rotação.
     expect(backups).toEqual([
-      "decl.DBK.20261014T120300Z.bak",
+      "decl.DBK.20261014T120100Z.bak",
       "decl.DBK.20261014T120400Z.bak",
       "decl.DBK.20261014T120500Z.bak",
     ]);
     // Cada backup guarda o conteúdo anterior à escrita daquele instante.
     expect(readFileSync(join(raiz, PASTA_BACKUPS, backups[2] ?? ""), "utf8")).toBe("v4");
+    expect(readFileSync(join(raiz, PASTA_BACKUPS, backups[0] ?? ""), "utf8")).toBe("conteudo original");
   });
 
   it("não perde backup quando dois são feitos no mesmo segundo", async () => {

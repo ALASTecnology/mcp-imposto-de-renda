@@ -31,7 +31,14 @@ import {
   interpretarInforme,
   interpretarPlanoSaude,
 } from "./ciclo-informe.js";
-import { EXT_DECLARACAO, EXT_GRAVACAO, exigirPasta, zNomeArquivo } from "./comum.js";
+import {
+  blocoDeDados,
+  EXT_DECLARACAO,
+  EXT_GRAVACAO,
+  EXT_INFORME,
+  exigirPasta,
+  zNomeArquivo,
+} from "./comum.js";
 import { validarLancamento, zObjetoLivre } from "./edicao-esquemas.js";
 import {
   abrirDeclaracao,
@@ -118,6 +125,22 @@ function aplicarInforme(dec: Declaracao, inf: InformeRendimentos, substituir: bo
     );
   }
   if (duplicado) {
+    // O 13º da fonte foi somado ao Exclusivos 01/08 (sem fonte): retira a parte dela antes.
+    const codigo13 = inf.beneficiario.tipo === "dependente" ? "08" : "01";
+    const decimoAntigo = dec.rendimentosPJ
+      .filter((p) => p.fonte.ni === inf.fonte.ni && mesmo(p.beneficiario))
+      .reduce((s, p) => s + p.decimoTerceiro, 0n);
+    const ex13 = dec.rendimentosExclusivos.find((e) => e.codigo === codigo13);
+    if (ex13 && decimoAntigo > 0n) {
+      const resto = ex13.valor - decimoAntigo;
+      if (resto > 0n) ex13.valor = resto as typeof ex13.valor;
+      else dec.rendimentosExclusivos = dec.rendimentosExclusivos.filter((e) => e !== ex13);
+    }
+    // Plano de saúde do mesmo informe: pagamentos 26 das mesmas operadoras saem antes.
+    const operadoras = new Set(inf.planoSaude.map((p) => p.cnpj));
+    dec.pagamentos = dec.pagamentos.filter(
+      (p) => !(p.codigo === "26" && operadoras.has(p.niBeneficiario ?? "")),
+    );
     dec.rendimentosPJ = dec.rendimentosPJ.filter(
       (p) => !(p.fonte.ni === inf.fonte.ni && mesmo(p.beneficiario)),
     );
@@ -156,15 +179,26 @@ function aplicarInforme(dec: Declaracao, inf: InformeRendimentos, substituir: bo
   }
   for (const i of inf.isentos) {
     const item =
-      i.codigo === "10"
+      i.codigo === "11"
         ? {
-            codigo: "10",
+            codigo: "11",
             beneficiario: inf.beneficiario,
             fonte: inf.fonte,
             valor: i.valor,
-            decimoTerceiro: i.decimoTerceiro ?? 0n,
+            decimoTerceiro: 0n,
+            impostoRetido: 0n,
+            impostoRetidoDecimoTerceiro: 0n,
+            contribuicaoPrevidenciaria: 0n,
           }
-        : { codigo: i.codigo, beneficiario: inf.beneficiario, fonte: inf.fonte, valor: i.valor };
+        : i.codigo === "10"
+          ? {
+              codigo: "10",
+              beneficiario: inf.beneficiario,
+              fonte: inf.fonte,
+              valor: i.valor,
+              decimoTerceiro: i.decimoTerceiro ?? 0n,
+            }
+          : { codigo: i.codigo, beneficiario: inf.beneficiario, fonte: inf.fonte, valor: i.valor };
     dec.rendimentosIsentos.push(item as Declaracao["rendimentosIsentos"][number]);
     lancados.push(`Isento ${i.codigo}: ${i.valor} centavos.`);
   }
@@ -178,6 +212,7 @@ function aplicarInforme(dec: Declaracao, inf: InformeRendimentos, substituir: bo
     lancados.push(`Exclusivo ${e.codigo}: ${e.valor} centavos.`);
   }
   lancados.push(...aplicarPlano(dec, inf.planoSaude));
+  lancados.push(...inf.avisos.map((a) => `Aviso: ${a}`));
   return lancados;
 }
 
@@ -671,6 +706,74 @@ export const grupoCiclo: GrupoFerramentas = {
         },
       );
     }
+
+    r.ferramenta(
+      "ler_informe",
+      {
+        titulo: "Ler um informe de rendimentos",
+        descricao:
+          "Lê o comprovante de rendimentos de PJ colado em 'texto' ou num arquivo .txt da pasta autorizada e devolve os campos extraídos por regras fixas (fonte e CNPJ, rendimentos, previdência oficial, IRRF, 13º e IRRF do 13º, isentos e exclusivos), sem gravar nada, sem OCR e sem rede. Linhas não reconhecidas e campos repetidos voltam em 'avisos'. Para lançar, use importar_informe_rendimentos.",
+        entrada: {
+          texto: z.string().max(50_000).optional().describe("Informe colado como texto."),
+          arquivo: zNomeArquivo("Arquivo .txt com o informe.").optional(),
+        },
+        saida: {
+          fonte: z.object({ ni: z.string(), nome: z.string() }),
+          rendimentos: z.string(),
+          previdenciaOficial: z.string(),
+          irrf: z.string(),
+          decimoTerceiro: z.string(),
+          irrfDecimoTerceiro: z.string(),
+          isentos: z.array(
+            z.object({ codigo: z.string(), valor: z.string(), decimoTerceiro: z.string() }),
+          ),
+          exclusivos: z.array(z.object({ codigo: z.string(), valor: z.string() })),
+          avisos: z.array(z.string()),
+        },
+      },
+      async ({ texto, arquivo }) => {
+        if ((texto === undefined) === (arquivo === undefined)) {
+          throw new EntradaInvalidaError("Informe exatamente um entre 'texto' e 'arquivo' (.txt).");
+        }
+        let conteudo = texto ?? "";
+        if (arquivo !== undefined) {
+          const bytes = await exigirPasta(r.ctx).ler(arquivo, EXT_INFORME);
+          if (bytes.length > 50_000) {
+            throw new EntradaInvalidaError("O arquivo do informe passa de 50.000 bytes.");
+          }
+          try {
+            conteudo = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+          } catch {
+            conteudo = new TextDecoder("latin1").decode(bytes);
+          }
+        }
+        const inf = interpretarInforme(conteudo, { tipo: "titular" });
+        const c = (v: bigint) => v.toString();
+        const dados = {
+          fonte: inf.fonte,
+          rendimentos: c(inf.rendimentos),
+          previdenciaOficial: c(inf.previdenciaOficial),
+          irrf: c(inf.irrf),
+          decimoTerceiro: c(inf.decimoTerceiro),
+          irrfDecimoTerceiro: c(inf.irrfDecimoTerceiro),
+          isentos: inf.isentos.map((i) => ({
+            codigo: i.codigo,
+            valor: c(i.valor),
+            decimoTerceiro: c(i.decimoTerceiro ?? 0n),
+          })),
+          exclusivos: inf.exclusivos.map((e) => ({ codigo: e.codigo, valor: c(e.valor) })),
+          avisos: inf.avisos,
+        };
+        return {
+          texto: [
+            "Campos extraídos do informe (valores em centavos). Nada foi gravado.",
+            blocoDeDados("informe", JSON.stringify(dados, null, 2)),
+            ...inf.avisos.map((x) => `Aviso: ${x}`),
+          ].join("\n"),
+          dados: objetoJson(dados),
+        };
+      },
+    );
 
     r.ferramenta(
       "transferir_excedente_isencao_65",

@@ -25,7 +25,7 @@ import {
 import { EntradaInvalidaError } from "../erros.js";
 import { DESCRICAO_VALOR, zValorMonetario } from "../esquemas.js";
 import { objetoJson } from "../serializacao.js";
-import { carregarDeclaracao, zDeclaracaoJson, zNomeArquivo } from "./comum.js";
+import { blocoDeDados, carregarDeclaracao, zDeclaracaoJson, zNomeArquivo } from "./comum.js";
 import { pendenciasDe } from "./fluxo.js";
 import type { GrupoFerramentas, RegistroFerramentas } from "./tipos.js";
 
@@ -109,8 +109,17 @@ async function declaracaoOpcional(
   r: RegistroFerramentas,
   args: { arquivo?: string | undefined; declaracao?: Record<string, unknown> | undefined },
 ): Promise<Declaracao | undefined> {
+  return (await declaracaoComOrigem(r, args))?.declaracao;
+}
+
+/** Declaração e origem (nome do arquivo ou "modelo informado"), para delimitar o texto. */
+async function declaracaoComOrigem(
+  r: RegistroFerramentas,
+  args: { arquivo?: string | undefined; declaracao?: Record<string, unknown> | undefined },
+): Promise<{ declaracao: Declaracao; origem: string } | undefined> {
   if (args.arquivo === undefined && args.declaracao === undefined) return undefined;
-  return (await carregarDeclaracao(r.ctx, args)).declaracao;
+  const c = await carregarDeclaracao(r.ctx, args);
+  return { declaracao: c.declaracao, origem: c.origem };
 }
 
 function relatorio(dec: Declaracao): string {
@@ -428,10 +437,14 @@ export const grupoSaidas: GrupoFerramentas = {
         saida: { relatorio: z.string() },
       },
       async (a) => {
-        const dec = await declaracaoOpcional(r, a);
-        if (!dec) throw new EntradaInvalidaError("Informe 'arquivo' ou 'declaracao'.");
-        const texto = relatorio(dec);
-        return { texto, dados: { relatorio: texto } };
+        const carregada = await declaracaoComOrigem(r, a);
+        if (!carregada) throw new EntradaInvalidaError("Informe 'arquivo' ou 'declaracao'.");
+        const conteudo = relatorio(carregada.declaracao);
+        // Nome do contribuinte e demais dados vêm do arquivo: vão delimitados (achado 2).
+        return {
+          texto: blocoDeDados(carregada.origem, conteudo),
+          dados: { relatorio: conteudo },
+        };
       },
     );
 
@@ -452,8 +465,9 @@ export const grupoSaidas: GrupoFerramentas = {
         },
       },
       async (a) => {
-        const dec = await declaracaoOpcional(r, a);
-        if (!dec) throw new EntradaInvalidaError("Informe 'arquivo' ou 'declaracao'.");
+        const carregada = await declaracaoComOrigem(r, a);
+        if (!carregada) throw new EntradaInvalidaError("Informe 'arquivo' ou 'declaracao'.");
+        const dec = carregada.declaracao;
         const sd = dec.saidaDefinitiva;
         if (!sd)
           throw new EntradaInvalidaError(
@@ -487,7 +501,11 @@ export const grupoSaidas: GrupoFerramentas = {
           );
         }
         return {
-          texto: comunicacoes.map((c) => c.texto).join("\n\n----\n\n"),
+          // Nomes das fontes, do contribuinte e do procurador vêm do arquivo (achado 2).
+          texto: blocoDeDados(
+            carregada.origem,
+            comunicacoes.map((c) => c.texto).join("\n\n----\n\n"),
+          ),
           dados: { comunicacoes },
         };
       },

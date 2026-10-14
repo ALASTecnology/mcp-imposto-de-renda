@@ -226,8 +226,10 @@ export function modeloParaRegistros(
   ctx.adicionar("IR", { ...valoresHeader(dec, leiaute, semBaseIr), ...header });
 
   const tratados = tiposTratados();
+  // Uma cópia de segurança (DBK) não leva o recibo de entrega de um DEC.
+  const semRecibo = opcoes.controles?.tipoArquivo === "DBK";
   const preservados = (base ?? [])
-    .filter((r) => !tratados.has(r.tipo))
+    .filter((r) => !tratados.has(r.tipo) && !(semRecibo && TIPOS_RECIBO.has(r.tipo)))
     .map((r) => {
       if (TIPOS_RECIBO.has(r.tipo) || !Object.hasOwn(r.campos, "NR_CPF")) return r;
       return { tipo: r.tipo, campos: { ...r.campos, NR_CPF: cpf } };

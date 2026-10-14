@@ -69,3 +69,16 @@ describe("conversão DBK/DEC, modelo e DBK com os arquivos do programa oficial",
     expect(relido).toEqual(dec);
   });
 });
+
+describe("DEC com recibo gravado como DBK", () => {
+  const dec = arquivos.find((n) => /\.dec$/i.test(n));
+  it.skipIf(!dec)("não leva os registros do recibo e confere os controles", () => {
+    const { lido, dec: modelo } = idaEVolta(dec ?? "");
+    const r = modeloParaRegistros(modelo, {
+      base: lido.registros,
+      controles: { tipoArquivo: "DBK" },
+    });
+    expect(r.registros.some((x) => ["HR", "DR", "R9"].includes(x.tipo))).toBe(false);
+    expect(verificarControles(r.registros, { tipoArquivo: "DBK" }).valido).toBe(true);
+  });
+});

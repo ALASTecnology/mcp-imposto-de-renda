@@ -4,6 +4,7 @@
  */
 import {
   type Centavos,
+  converterTipoArquivo,
   type Declaracao,
   FICHAS,
   formatCentavos,
@@ -18,7 +19,7 @@ import {
   modeloParaRegistros,
   registrosParaModelo,
 } from "../conversao/dbk-modelo.js";
-import { ErroFerramenta } from "../erros.js";
+import { EntradaInvalidaError, ErroFerramenta } from "../erros.js";
 import { objetoJson } from "../serializacao.js";
 import {
   EXT_GRAVACAO,
@@ -27,7 +28,17 @@ import {
   zDeclaracaoJson,
   zNomeArquivo,
 } from "./comum.js";
+import { pendenciasDe } from "./fluxo.js";
 import type { GrupoFerramentas } from "./tipos.js";
+
+/** O arquivo de entrega só é gravado com a extensão .DEC. */
+const EXT_ENTREGA = [".DEC"] as const;
+
+/** Lembrete que acompanha todo arquivo de entrega gerado. */
+export const AVISO_TRANSMISSAO =
+  "O AutoIR não transmite a declaração. A transmissão continua sendo feita pelo programa oficial " +
+  "da Receita Federal: restaure o DBK no programa (Ferramentas > Cópia de Segurança > Restaurar), " +
+  "confira cada ficha, rode Verificar Pendências e use Entregar Declaração por ele.";
 
 const brl = (v: bigint) => `R$ ${formatCentavos(v as Centavos)}`;
 const soma = <T>(itens: readonly T[], f: (t: T) => bigint) => itens.reduce((s, t) => s + f(t), 0n);
@@ -258,6 +269,101 @@ export const grupoDeclaracao: GrupoFerramentas = {
             registrosPorTipo: contagem,
             controlesValidos: controles.valido,
             avisos: [...avisos],
+          },
+        };
+      },
+    );
+
+    r.ferramenta(
+      "gerar_arquivo_entrega",
+      {
+        titulo: "Gerar o arquivo de entrega (DEC)",
+        descricao:
+          "Gera o arquivo de entrega (.DEC) a partir de um .DBK da pasta autorizada, montando os " +
+          "registros do recibo (HR, DR e R9) e recalculando os controles, como o programa oficial " +
+          "grava. Valida a declaração antes: com erros, só gera com aceitar_pendencias: true. Não " +
+          "sobrescreve um .DEC existente sem sobrescrever: true (e guarda cópia em .autoir-backups). " +
+          "O AutoIR não transmite: a transmissão continua sendo feita pelo programa oficial.",
+        escreve: true,
+        entrada: {
+          arquivo: zNomeArquivo("Arquivo .DBK (ou .DEC) de origem."),
+          arquivo_destino: zNomeArquivo(
+            "Arquivo .DEC a gravar (padrão: o nome de origem com extensão .DEC).",
+          ).optional(),
+          sobrescrever: z.boolean().optional(),
+          aceitar_pendencias: z
+            .boolean()
+            .optional()
+            .describe("Gera mesmo com pendências do tipo erro (que impedem a entrega)."),
+        },
+        saida: {
+          arquivo: z.string(),
+          bytes: z.number(),
+          backup: z.string().nullable(),
+          controlesValidos: z.boolean(),
+          totalErros: z.number(),
+          totalAvisos: z.number(),
+          avisoTransmissao: z.string(),
+        },
+      },
+      async ({ arquivo, arquivo_destino, sobrescrever, aceitar_pendencias }) => {
+        const pasta = exigirPasta(r.ctx);
+        const destino = arquivo_destino ?? arquivo.replace(/\.[^.]*$/, ".DEC");
+        const { registros, exercicio } = await lerDeclaracaoArquivo(r.ctx, arquivo);
+        const validacao = pendenciasDe(
+          interpretarDeclaracao(registrosParaModelo(registros, exercicio).declaracao),
+        );
+        if (validacao.totalErros > 0 && !aceitar_pendencias) {
+          const lista = validacao.pendencias
+            .filter((p) => p.gravidade === "erro")
+            .slice(0, 10)
+            .map((p) => `- ${p.mensagem}`);
+          throw new EntradaInvalidaError(
+            [
+              `A declaração tem ${validacao.totalErros} pendência(s) que impedem a entrega:`,
+              ...lista,
+              "Corrija antes ou, para gerar mesmo assim, informe aceitar_pendencias: true.",
+            ].join("\n"),
+          );
+        }
+        if (!sobrescrever) {
+          const existe = await pasta.ler(destino, EXT_ENTREGA).then(
+            () => true,
+            () => false,
+          );
+          if (existe) {
+            throw new EntradaInvalidaError(
+              `Já existe "${destino}". Para substituí-lo (com cópia em .autoir-backups), informe sobrescrever: true.`,
+            );
+          }
+        }
+        const bytes = gravarArquivo(converterTipoArquivo(registros, "DEC"));
+        // Confere o que vai ao disco relendo os bytes gerados.
+        const controles = verificarControles(lerArquivo(bytes).registros, { tipoArquivo: "DEC" });
+        if (!controles.valido) {
+          throw new ErroFerramenta(
+            "Os controles do arquivo gerado não conferem; nada foi gravado.",
+          );
+        }
+        const escrito = await pasta.escrever(destino, bytes, EXT_ENTREGA);
+        const texto = [
+          `Arquivo de entrega gravado em ${escrito.arquivo} (${escrito.bytes} bytes).`,
+          escrito.backup
+            ? `Cópia do conteúdo anterior: ${escrito.backup}.`
+            : "Arquivo novo (sem backup).",
+          `Pendências: ${validacao.totalErros} erro(s) e ${validacao.totalAvisos} aviso(s).`,
+          AVISO_TRANSMISSAO,
+        ].join("\n");
+        return {
+          texto,
+          dados: {
+            arquivo: escrito.arquivo,
+            bytes: escrito.bytes,
+            backup: escrito.backup ?? null,
+            controlesValidos: controles.valido,
+            totalErros: validacao.totalErros,
+            totalAvisos: validacao.totalAvisos,
+            avisoTransmissao: AVISO_TRANSMISSAO,
           },
         };
       },

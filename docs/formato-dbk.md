@@ -141,6 +141,7 @@ oficial com dados sintéticos (`packages/core/test/fixtures/dbk/2026`).
 | `NR_HASH` do header | CRC-32 das linhas seguintes ao header, `T9` incluído | confirmado |
 | `NR_CONTROLE` do header | CRC-32 de `<8 primeiros dígitos do CPF>.<DBK ou DEC>` seguido da linha do header sem o controle | confirmado |
 | `NR_HASH` do `R9` | CRC-32 das linhas entre o header e o `R9` (fichas, `T9`, `HR` e `DR`) | confirmado |
+| Conteúdo do `DR` | copiado do header e das fichas 16, 18 e 20 (ver "Conversão entre DBK e DEC") | confirmado |
 
 ### Número de controle de registro
 
@@ -198,17 +199,41 @@ ordem e `verificarControles` confere o `NR_HASH` do `R9`. O complemento do recib
 
 `converterTipoArquivo(registros, "DBK")` retira `HR`, `DR`, `R9` (e qualquer complemento do
 recibo) e recalcula os controles como DBK; aplicada às 37 DEC dos fixtures, produz o DBK do
-programa byte a byte. `converterTipoArquivo(registros, "DEC")` só funciona quando os registros
-já trazem o recibo (recalcula os controles como DEC). A conversão de DBK em DEC não é feita
-porque não basta trocar o header: a DEC exige os registros `HR` (CPF e controle), `DR` e `R9`.
-O `DR` repete dados que estão em outras fichas, observados nos fixtures: `NR_CPF`,
-`IN_COMPLETA`, `NM_NOME` e `SG_UF` do header ou da ficha 16; endereço (`TIP_LOGRA`, `NM_LOGRA`,
-`NR_NUMERO`, `NM_BAIRRO`, `NR_CEP`, `CD_MUNICIP`, `NM_MUNICIP`) da ficha 16; `VR_TOTTRIB`
-(`VR_TOTAL_RENDTRIB_PFPJ_TITDEP` do header), `VR_IMPDEV` (`VR_IMPDEVIDO`), `VR_IMPPAGAR` e
-`VR_QUOTA` (`VR_SOMA_IMPOSTO_PAGAR`), `NR_QUOTAS` (ficha 16). `VR_IMPREST`, banco, agência, conta,
-e-mail e telefone não tiveram a origem determinada com os fixtures atuais (todos sem conta
-bancária, e-mail ou telefone). Montar o `DR` fica como pendência; com ele, o `R9` sai da regra
-acima.
+programa byte a byte.
+
+`converterTipoArquivo(registros, "DEC")` recalcula os controles como DEC quando os registros já
+trazem o recibo; a partir de um DBK, monta antes os registros `HR`, `DR` e `R9`
+(`montarRecibo`, em `packages/core/src/dbk/recibo.ts`). Aplicada aos 37 DBK dos fixtures,
+produz a DEC do programa **byte a byte**. A origem de cada campo do `DR`:
+
+| Campo do `DR` | Origem |
+| --- | --- |
+| `NR_CPF`, `IN_COMPLETA` | header `IR` |
+| `NM_NOME`, `TIP_LOGRA`, `NM_LOGRA`, `NR_NUMERO`, `NM_COMPLEM`, `NM_BAIRRO`, `NR_CEP`, `CD_MUNICIP`, `NM_MUNICIP`, `SG_UF` | ficha 16, mesmo nome |
+| `NM_EMAIL`, `NR_DDD_TELEFONE`, `NR_TELEFONE` | ficha 16, mesmo nome |
+| `IN_RETIFICADORA`, `NR_QUOTAS`, `IN_DEBITO_PRIMEIRA_QUOTA` | ficha 16, mesmo nome |
+| `NR_BANCO`, `NR_AGENCIA`, `NR_CONTA`, `NR_DV_CONTA` | ficha 16, mesmo nome |
+| `VR_TOTTRIB` | `VR_TOTAL_RENDTRIB_PFPJ_TITDEP` do header |
+| `VR_IMPDEV` | `VR_IMPDEVIDO` do header |
+| `VR_IMPPAGAR` | `VR_SOMA_IMPOSTO_PAGAR` do header |
+| `VR_IMPREST` | `VR_IMPREST` do registro 20 (completa) ou `VR_IMPRESTIT` do 18 (simplificada) |
+| `VR_QUOTA` | `VR_QUOTA` do registro 20 ou 18, conforme o modelo |
+| `VR_GCIMPOSTOPAGO`, `VR_VCMOEDAEST` | zerados (ver abaixo) |
+| `FILLER*`, `HR.FILLER`, `R9.FILLER` | em branco |
+
+`HR` e `R9` levam só o CPF do header; os controles saem de `recalcularControles`, na ordem
+descrita em "Hash do recibo (R9)".
+
+Campos não cobertos pelos 37 pares e conferidos à parte, com casos sintéticos do harness
+(`tools/referencia`), estão em "Casos de referência". Nenhum campo do recibo depende do
+sistema operacional ou da JVM: esses dados (`NOME_SO`, `VERSAO_SO`, `VERSAO_JVM`,
+`ENDERECO_MAC`) ficam no header, que a conversão preserva como está no DBK. Por isso uma DEC
+gerada a partir de um DBK gravado em outra máquina continua igual à que o programa gravaria
+naquela máquina.
+
+A ferramenta MCP `gerar_arquivo_entrega` usa essa conversão: valida a declaração, grava o
+`.DEC` com escrita atômica e cópia de segurança e lembra que a transmissão continua sendo feita
+pelo programa oficial.
 
 ### Diagnóstico
 

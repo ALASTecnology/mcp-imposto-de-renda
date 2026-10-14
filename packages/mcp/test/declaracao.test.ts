@@ -234,3 +234,76 @@ describe("tabelas", () => {
     expect(n.structuredContent).toMatchObject({ encontrado: false, entrada: null });
   });
 });
+
+describe("gerar_arquivo_entrega", () => {
+  it("gera do DBK a DEC igual à do programa oficial e avisa que a transmissão é no programa", async () => {
+    const r = await c.chamar("gerar_arquivo_entrega", { arquivo: "pj.DBK" });
+    expect(r.isError, textoDe(r)).toBeFalsy();
+    expect(r.structuredContent).toMatchObject({
+      arquivo: "pj.DEC",
+      controlesValidos: true,
+      backup: null,
+    });
+    const gerado = readFileSync(join(pasta, "pj.DEC"));
+    expect(Buffer.compare(gerado, Buffer.from(fixture("pj-simples-01.DEC")))).toBe(0);
+    expect(textoDe(r)).toMatch(/programa oficial/);
+    expect(textoDe(r)).toMatch(/não transmite/);
+  });
+
+  it("não sobrescreve sem pedir e guarda cópia quando sobrescreve", async () => {
+    await c.chamar("gerar_arquivo_entrega", { arquivo: "pj.DBK", arquivo_destino: "x.DEC" });
+    const recusa = await c.chamar("gerar_arquivo_entrega", {
+      arquivo: "pj.DBK",
+      arquivo_destino: "x.DEC",
+    });
+    expect(recusa.isError).toBe(true);
+    expect(textoDe(recusa)).toMatch(/sobrescrever/);
+    const ok = await c.chamar("gerar_arquivo_entrega", {
+      arquivo: "pj.DBK",
+      arquivo_destino: "x.DEC",
+      sobrescrever: true,
+    });
+    expect(ok.isError).toBeFalsy();
+    expect((ok.structuredContent as { backup: string | null }).backup).toMatch(/x\.DEC/);
+    expect(existsSync(join(pasta, PASTA_BACKUPS))).toBe(true);
+  });
+
+  it("só grava .DEC dentro da pasta e recusa declaração com erro sem confirmação", async () => {
+    for (const arquivo_destino of ["x.DBK", "../x.DEC", "/tmp/x.DEC"]) {
+      const r = await c.chamar("gerar_arquivo_entrega", { arquivo: "pj.DBK", arquivo_destino });
+      expect(r.isError, arquivo_destino).toBe(true);
+    }
+    expect(existsSync(join(base, "x.DEC"))).toBe(false);
+    const declaracao = declaracaoSintetica();
+    // Dependente nascido depois do ano-calendário: erro que impede a entrega.
+    declaracao.dependentes = [
+      { ...(declaracao.dependentes?.[0] ?? {}), dataNascimento: "2027-01-01" },
+    ] as never;
+    const gravada = await c.chamar("converter_modelo_para_dbk", {
+      declaracao: declaracao as Record<string, unknown>,
+      arquivo_destino: "nova.DBK",
+    });
+    expect(gravada.isError, textoDe(gravada)).toBeFalsy();
+    const r = await c.chamar("gerar_arquivo_entrega", { arquivo: "nova.DBK" });
+    expect(r.isError).toBe(true);
+    expect(textoDe(r)).toMatch(/aceitar_pendencias/);
+    expect(existsSync(join(pasta, "nova.DEC"))).toBe(false);
+    const forcado = await c.chamar("gerar_arquivo_entrega", {
+      arquivo: "nova.DBK",
+      aceitar_pendencias: true,
+    });
+    expect(forcado.isError, textoDe(forcado)).toBeFalsy();
+    expect(existsSync(join(pasta, "nova.DEC"))).toBe(true);
+  });
+
+  it("no modo somente leitura a ferramenta não existe", async () => {
+    const leitura = await conectar({ diretorioAutorizado: pasta, somenteLeitura: true });
+    try {
+      const r = await leitura.chamar("gerar_arquivo_entrega", { arquivo: "pj.DBK" });
+      expect(r.isError).toBe(true);
+      expect(existsSync(join(pasta, "pj.DEC"))).toBe(false);
+    } finally {
+      await leitura.fechar();
+    }
+  });
+});

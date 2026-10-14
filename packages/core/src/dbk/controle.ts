@@ -19,7 +19,7 @@
 
 import { codificarRegistro, leiauteDosRegistros, type Registro, type ValorCampo } from "./codec.js";
 import { type Leiaute, tipoDoLeiaute } from "./leiaute.js";
-import { montarRecibo } from "./recibo.js";
+import { ajustarParaEntrega, montarRecibo } from "./recibo.js";
 
 /** Tipos do recibo de entrega e do complemento do recibo, emitidos pela Receita Federal. */
 export const TIPOS_RECIBO: ReadonlySet<string> = new Set([
@@ -281,6 +281,7 @@ export function recalcularControles(
  *
  * - Para `DBK`: retira os registros do recibo e recalcula os controles como DBK.
  * - Para `DEC`: se os registros já trazem o recibo, só recalcula os controles como DEC; senão,
+ *   aplica `ajustarParaEntrega` (conta sem débito automático com saldo a pagar é descartada),
  *   monta `HR`, `DR` e `R9` com `montarRecibo` (header e ficha 16 obrigatórios) e recalcula.
  *   Nos 37 pares do programa oficial o resultado é igual à DEC byte a byte.
  */
@@ -297,7 +298,7 @@ export function converterTipoArquivo(
   if (registros.some((r) => r.tipo === "R9")) {
     return recalcularControles(registros, { leiaute, tipoArquivo: "DEC" });
   }
-  const declaracao = registros.filter((r) => !TIPOS_RECIBO.has(r.tipo));
+  const declaracao = ajustarParaEntrega(registros.filter((r) => !TIPOS_RECIBO.has(r.tipo)));
   return recalcularControles([...declaracao, ...montarRecibo(declaracao, leiaute)], {
     leiaute,
     tipoArquivo: "DEC",

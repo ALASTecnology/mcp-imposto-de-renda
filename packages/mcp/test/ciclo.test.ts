@@ -152,8 +152,8 @@ describe("Resumo e imposto pago", () => {
     });
     const d = modelo("pj.DBK");
     expect(d.resumo.conta?.banco).toBe("001");
-    // Sem saldo a pagar o arquivo grava 0 quotas; a escolha volta como 1.
-    expect(d.resumo.quotas).toBe(1);
+    // Sem saldo a pagar o arquivo grava 0 quotas: "não se aplica".
+    expect(d.resumo.quotas).toBe(0);
   });
 
   it("imposto pago e repetição dos valores dos bens", async () => {

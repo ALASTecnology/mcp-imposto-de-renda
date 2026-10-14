@@ -1,0 +1,31 @@
+{
+  "id": "renda-variavel-comum-01",
+  "descricao": "Renda variável: lucro em operação comum no mercado à vista de ações em março, com o imposto pago.",
+  "entrada": {
+    "titular": {
+      "cpf": "10665692234",
+      "nome": "JOANA FICTICIA BOLSA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pgd": [
+      {
+        "definir": {
+          "getRendaVariavel.getMarco.getOperacoesComuns.getMercadoVistaAcoes": "30000,00",
+          "getRendaVariavel.getMarco.getImpostoPago": "4500,00"
+        }
+      }
+    ]
+  }
+}

@@ -12,10 +12,11 @@
  * | 86 | outros isentos (código 26 no arquivo, 99 no modelo), com descrição |
  * | 87 | isentos 05, 06 e 07, valor informado e valor transportado do GCAP |
  * | 88 | exclusivos com fonte: 06, 10 e 11 |
- * | 89 | outros exclusivos (código 12 no arquivo, 99 no modelo) e 13 (apostas), com descrição |
+ * | 89 | outros exclusivos (código 12 no arquivo, 99 no modelo) e apostas (14 no arquivo, 13 no modelo), com descrição |
  *
- * Os registros 84 e 88 foram confirmados com arquivos do programa oficial; os demais seguem a
- * descrição dos campos no leiaute e ainda não têm caso de referência. Códigos sem detalhe (por
+ * Os registros 83 a 86, 88 e 89 foram confirmados com arquivos do programa oficial (casos
+ * `isentos-detalhados-01` e anteriores); o 87 (valores transportados do GCAP) segue a descrição
+ * dos campos no leiaute, porque o harness não consegue fazer o programa calcular um GCAP. Códigos sem detalhe (por
  * exemplo o 13º salário, exclusivo 01) ficam só no total e viram lançamento de valor único.
  */
 import type { Registro } from "../../dbk/codec.js";
@@ -29,6 +30,8 @@ import type { ContextoGravacao, ContextoLeitura, Mapeador } from "../contexto.js
 const ISENTO_OUTROS_ARQUIVO = "26";
 /** Exclusivo "outros": 99 no modelo, 12 no arquivo. */
 const EXCLUSIVO_OUTROS_ARQUIVO = "12";
+/** Exclusivo de apostas de quota fixa: 13 no modelo, 14 no arquivo (observado no harness). */
+const EXCLUSIVO_APOSTAS_ARQUIVO = "14";
 
 const ISENTOS_VALOR_UNICO = new Set(["08", "15", "22", "27"]);
 const EXCLUSIVOS_TRANSPORTADOS = new Set(["01", "02", "03", "04", "05", "07", "08", "09", "12"]);
@@ -66,7 +69,8 @@ function valorDeEntrada(o: Objeto): bigint {
 /** Código do modelo para o código do arquivo (só "outros" muda de número). */
 const isentoArquivo = (c: string) => (c === "99" ? ISENTO_OUTROS_ARQUIVO : c);
 const isentoModelo = (c: string) => (c === ISENTO_OUTROS_ARQUIVO ? "99" : c);
-const exclusivoArquivo = (c: string) => (c === "99" ? EXCLUSIVO_OUTROS_ARQUIVO : c);
+const exclusivoArquivo = (c: string) =>
+  c === "99" ? EXCLUSIVO_OUTROS_ARQUIVO : c === "13" ? EXCLUSIVO_APOSTAS_ARQUIVO : c;
 
 function lerIsentos(ctx: ContextoLeitura): Objeto[] {
   const itens: Objeto[] = [];
@@ -173,7 +177,7 @@ function lerExclusivos(ctx: ContextoLeitura): Objeto[] {
       descricao: texto(r, "NM_DESCRICAO"),
       valor: numero(r, "VR_VALOR"),
     };
-    if (c === "13") itens.push({ codigo: "13", ...comum });
+    if (c === EXCLUSIVO_APOSTAS_ARQUIVO) itens.push({ codigo: "13", ...comum });
     else itens.push(semIndefinidos({ codigo: "99", ...comum, fonte: fonteDe(r) }));
   }
   for (const r of ctx.doTipo("24")) {
@@ -317,7 +321,7 @@ function gravarExclusivos(ctx: ContextoGravacao, itens: readonly RendimentoExclu
         "89",
         {
           ...tipoECpf(i.beneficiario, ctx),
-          NR_COD: BigInt(i.codigo === "99" ? EXCLUSIVO_OUTROS_ARQUIVO : "13"),
+          NR_COD: BigInt(exclusivoArquivo(i.codigo)),
           NR_PAGADORA: i.codigo === "99" ? i.fonte.ni : "",
           NM_NOME: i.codigo === "99" ? i.fonte.nome : "",
           VR_VALOR: i.valor,

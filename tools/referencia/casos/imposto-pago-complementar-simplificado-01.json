@@ -1,0 +1,28 @@
+{
+  "id": "imposto-pago-complementar-simplificado-01",
+  "descricao": "Imposto complementar sem IRRF na declaração simplificada (indicador de imposto pago 6).",
+  "entrada": {
+    "titular": {
+      "cpf": "10643162631",
+      "nome": "HELO FICTICIA COMPLEMENTAR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "0",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "impostoPago": {
+      "complementar": "20000",
+      "exterior": "0",
+      "irrfLei11033": "0"
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "id": "imposto-pago-carne-completo-01",
+  "descricao": "Carnê-leão sem IRRF na declaração completa (indicador de imposto pago 2).",
+  "entrada": {
+    "titular": {
+      "cpf": "10620633093",
+      "nome": "FABIA FICTICIA CARNE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": "1",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "2",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "3",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "4",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "5",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "6",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "7",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "8",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "9",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "10",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "11",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        },
+        {
+          "mes": "12",
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "50000"
+        }
+      ]
+    },
+    "pagamentos": [
+      {
+        "codigo": "10",
+        "cpfCnpj": "68417382000197",
+        "valor": "4000000",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "7200000",
+    "deducoesCompleto": "4000000",
+    "baseCalculoCompleto": "3200000",
+    "impostoDevidoCompleto": "26496",
+    "descontoSimplificado": "1440000",
+    "baseCalculoSimplificado": "5760000",
+    "impostoDevidoSimplificado": "498622",
+    "impostoRetidoTotal": "600000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "573504",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "101378",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "36"
+  }
+}

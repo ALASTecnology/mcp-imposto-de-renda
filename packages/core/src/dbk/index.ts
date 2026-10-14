@@ -70,4 +70,4 @@ export {
   tipoDoLeiaute,
 } from "./leiaute.js";
 export { LEIAUTE_2026, LEIAUTES, obterLeiaute } from "./leiautes/index.js";
-export { montarRecibo } from "./recibo.js";
+export { ajustarParaEntrega, montarRecibo } from "./recibo.js";

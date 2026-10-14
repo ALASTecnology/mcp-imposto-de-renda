@@ -365,7 +365,8 @@ function entrada(): DeclaracaoEntrada {
       quotas: 3,
       debitoAutomatico: true,
       debitoPrimeiraQuota: false,
-      conta: { banco: "001", agencia: "1234", conta: "56789", dv: "0", tipo: "poupanca" },
+      // Débito automático só em conta corrente (o programa grava o tipo 0 com saldo a pagar).
+      conta: { banco: "001", agencia: "1234", conta: "56789", dv: "0", tipo: "corrente" },
     },
   };
 }

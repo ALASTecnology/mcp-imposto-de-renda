@@ -119,7 +119,7 @@ function abaVazia(a: Aba): boolean {
     ap.compensacaoPrejuizo === 0n &&
     ap.adiantamentosRecebidos === 0n &&
     ap.adiantamentosAnterioresEntregues === 0n &&
-    ap.opcao === "resultado"
+    ap.opcao !== "limite20"
   );
 }
 
@@ -127,7 +127,8 @@ function gravarAba(ctx: ContextoGravacao, aba: Aba, exterior: boolean, chave: { 
   if (abaVazia(aba)) return;
   const ind = exterior ? 1n : 0n;
   for (const im of aba.imoveis) {
-    const c = BigInt(++chave.n);
+    // A chave começa em 0, como o programa grava (caso atividade-rural-resultado-01).
+    const c = BigInt(chave.n++);
     if (im.pais) {
       ctx.aviso(
         "O país do imóvel rural no exterior não tem campo próprio no registro 50; inclua-o na localização.",

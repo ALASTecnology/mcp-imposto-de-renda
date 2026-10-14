@@ -1,0 +1,46 @@
+{
+  "id": "pix-restituicao-01",
+  "descricao": "Restituição por Pix com a chave CPF do titular.",
+  "entrada": {
+    "titular": {
+      "cpf": "10575573821",
+      "nome": "BETO FICTICIO PIX",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pgdFinal": [
+      {
+        "definir": {
+          "getResumo.getCalculoImposto.getTipoConta": "4"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "6000000",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "6000000",
+    "impostoDevidoCompleto": "564622",
+    "descontoSimplificado": "1200000",
+    "baseCalculoSimplificado": "4800000",
+    "impostoDevidoSimplificado": "274503",
+    "impostoRetidoTotal": "500000",
+    "saldoPagarCompleto": "64622",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "225497",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "457"
+  }
+}

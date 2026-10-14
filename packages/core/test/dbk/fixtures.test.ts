@@ -70,14 +70,20 @@ describe("casos de referência do programa oficial (2026)", () => {
   const pares = arquivos.filter(
     (n) => /\.dec$/i.test(n) && arquivos.includes(n.replace(/\.dec$/i, ".DBK")),
   );
-  it.each(pares)("%s: convertido em DBK é igual, byte a byte, ao DBK do programa", (nome) => {
-    const dec = lerArquivo(new Uint8Array(readFileSync(join(PASTA, nome))));
-    const dbk = new Uint8Array(readFileSync(join(PASTA, nome.replace(/\.dec$/i, ".DBK"))));
-    const convertido = gravarArquivo(converterTipoArquivo(dec.registros, "DBK"), {
-      terminadorFinal: dec.terminadorFinal,
-    });
-    expect(Buffer.compare(Buffer.from(convertido), Buffer.from(dbk))).toBe(0);
-  });
+  // Com saldo a pagar e sem débito automático o programa descarta a conta só na DEC: a DEC
+  // convertida em DBK não tem como recuperá-la.
+  const SEM_CONTA_NA_DEC = new Set(["conta-sem-debito-pagar-01.DEC"]);
+  it.each(pares.filter((n) => !SEM_CONTA_NA_DEC.has(n)))(
+    "%s: convertido em DBK é igual, byte a byte, ao DBK do programa",
+    (nome) => {
+      const dec = lerArquivo(new Uint8Array(readFileSync(join(PASTA, nome))));
+      const dbk = new Uint8Array(readFileSync(join(PASTA, nome.replace(/\.dec$/i, ".DBK"))));
+      const convertido = gravarArquivo(converterTipoArquivo(dec.registros, "DBK"), {
+        terminadorFinal: dec.terminadorFinal,
+      });
+      expect(Buffer.compare(Buffer.from(convertido), Buffer.from(dbk))).toBe(0);
+    },
+  );
 
   it.each(pares)("%s: o DBK convertido em DEC é igual, byte a byte, à DEC do programa", (nome) => {
     const dec = new Uint8Array(readFileSync(join(PASTA, nome)));

@@ -2,6 +2,8 @@
  * Identificação do contribuinte e escolhas do Resumo (registro 16), Espólio (30), Final de
  * Espólio (38), Herdeiros (58), Saída Definitiva (39) e Informações do Cônjuge (29).
  */
+
+import type { Declaracao } from "../../model/declaracao.js";
 import { buscarCodigo, listar } from "../../tabelas/index.js";
 import {
   codigo,
@@ -20,8 +22,34 @@ import type { Mapeador } from "../contexto.js";
 
 const TIPO_DECLARACAO = { A: "ajusteAnual", S: "saidaDefinitiva", E: "finalEspolio" } as const;
 const LETRA_TIPO = { ajusteAnual: "A", saidaDefinitiva: "S", finalEspolio: "E" } as const;
-const TIPO_CONTA = { "0": "corrente", "1": "poupanca", "2": "pagamento" } as const;
-const CODIGO_CONTA = { corrente: "0", poupanca: "1", pagamento: "2" } as const;
+/**
+ * `IN_TIPO_CONTA` (registro 16 e header), observado no harness: com imposto a restituir o
+ * programa grava o código da tabela tipos-conta (1 corrente, 2 poupança, 3 pagamento, 4 Pix);
+ * sem conta ou com saldo a pagar, grava 0.
+ */
+const TIPO_CONTA = { "0": "corrente", "1": "corrente", "2": "poupanca", "3": "pagamento" } as const;
+const CODIGO_CONTA = { corrente: "1", poupanca: "2", pagamento: "3" } as const;
+const CODIGO_PIX = "4";
+const BANCO_CAIXA = 104n;
+
+/**
+ * Campos da conta do Resumo como o programa grava no registro 16 e no header: a operação da
+ * Caixa vai antes do número da conta (3 dígitos), o débito automático completa a conta com zeros
+ * à esquerda até 11 dígitos e o Pix (chave CPF) não leva banco nem conta.
+ */
+export function camposContaResumo(r: Declaracao["resumo"], saldoAPagar: bigint): Valores {
+  const pagar = saldoAPagar > 0n;
+  const c = r.pix && !pagar ? undefined : r.conta;
+  let numero = c ? `${c.operacao ?? ""}${c.conta}` : "";
+  if (c && pagar && r.debitoAutomatico) numero = numero.padStart(11, "0");
+  return {
+    NR_BANCO: c ? BigInt(c.banco) : 0n,
+    NR_AGENCIA: c ? BigInt(c.agencia) : 0n,
+    NR_CONTA: numero,
+    NR_DV_CONTA: c?.dv ?? "",
+    IN_TIPO_CONTA: pagar ? "0" : r.pix ? CODIGO_PIX : c ? CODIGO_CONTA[c.tipo] : "0",
+  };
+}
 
 function telefone(ddd: string, num: string): Objeto | undefined {
   const d = ddd.replace(/\D/g, "").slice(-2);
@@ -116,25 +144,34 @@ export const mapeadorIdentificacao: Mapeador = {
     const dv = texto(r16, "NR_DV_CONTA");
     const debito = texto(r16, "IN_DEBITO_AUTOM") === "S";
     let conta: Objeto | undefined;
+    const tipoConta = texto(r16, "IN_TIPO_CONTA");
     if (banco > 0n && contaNum !== "") {
       if (dv === "") ctx.aviso("Conta bancária do Resumo sem dígito verificador: não foi lida.");
-      else
-        conta = {
+      else {
+        // Caixa: os 3 primeiros dígitos de uma conta de 11 são a operação.
+        const caixa = banco === BANCO_CAIXA && contaNum.length === 11;
+        // Com débito automático o programa completa a conta com zeros à esquerda (11 dígitos).
+        const semZeros = debito ? contaNum.replace(/^0+(?=\d)/, "") : contaNum;
+        conta = semIndefinidos({
           banco: codigo(banco, 3),
           agencia: numero(r16, "NR_AGENCIA").toString(),
-          conta: contaNum,
+          conta: caixa ? contaNum.slice(3) : semZeros,
           dv,
-          tipo: TIPO_CONTA[texto(r16, "IN_TIPO_CONTA") as keyof typeof TIPO_CONTA] ?? "corrente",
-        };
+          tipo: TIPO_CONTA[tipoConta as keyof typeof TIPO_CONTA] ?? "corrente",
+          operacao: caixa ? contaNum.slice(0, 3) : undefined,
+        });
+      }
     }
     const quotas = Number(numero(r16, "NR_QUOTAS"));
     saida.resumo = semIndefinidos({
       opcaoTributacao:
         texto(r16, "IN_COMPLETA") === "S" ? "deducoesLegais" : "descontoSimplificado",
-      quotas: quotas >= 1 && quotas <= 8 ? quotas : 1,
+      // 0 = não se aplica (sem saldo a pagar), como o programa grava.
+      quotas: quotas >= 0 && quotas <= 8 ? quotas : 0,
       debitoAutomatico: debito,
       debitoPrimeiraQuota: debito ? numero(r16, "IN_DEBITO_PRIMEIRA_QUOTA") === 1n : true,
       conta,
+      pix: tipoConta === CODIGO_PIX,
     });
 
     // Espólio no ajuste anual (natureza 81).
@@ -244,16 +281,6 @@ export const mapeadorIdentificacao: Mapeador = {
         "O recibo da declaração do exercício anterior não é gravado: o campo do registro 16 tem 10 posições e o recibo, 12.",
       );
     }
-    if (r.pix) {
-      ctx.aviso(
-        "A opção de restituição por Pix não tem campo no arquivo: confirme-a no Resumo do programa oficial.",
-      );
-    }
-    if (r.conta?.operacao) {
-      ctx.aviso(
-        "A operação da conta (Caixa) não tem campo no arquivo: confirme-a no programa oficial.",
-      );
-    }
     const v: Valores = {
       NM_NOME: id.nome,
       DT_NASCIM: ddmmaaaaDeIso(id.dataNascimento),
@@ -279,14 +306,10 @@ export const mapeadorIdentificacao: Mapeador = {
       NM_EMAIL: e.email ?? "",
       // Resumo.
       IN_COMPLETA: r.opcaoTributacao === "deducoesLegais" ? "S" : "N",
-      NR_QUOTAS: ctx.saldoAPagar > 0n ? BigInt(r.quotas) : 0n,
+      NR_QUOTAS: ctx.saldoAPagar > 0n ? BigInt(Math.max(1, r.quotas)) : 0n,
       IN_DEBITO_AUTOM: r.debitoAutomatico ? "S" : "N",
       IN_DEBITO_PRIMEIRA_QUOTA: r.debitoAutomatico && r.debitoPrimeiraQuota ? 1n : 0n,
-      NR_BANCO: r.conta ? BigInt(r.conta.banco) : 0n,
-      NR_AGENCIA: r.conta ? BigInt(r.conta.agencia) : 0n,
-      NR_CONTA: r.conta?.conta ?? "",
-      NR_DV_CONTA: r.conta?.dv ?? "",
-      IN_TIPO_CONTA: r.conta ? CODIGO_CONTA[r.conta.tipo] : "0",
+      ...camposContaResumo(r, ctx.saldoAPagar),
     };
     if (e.local === "brasil") {
       Object.assign(v, {

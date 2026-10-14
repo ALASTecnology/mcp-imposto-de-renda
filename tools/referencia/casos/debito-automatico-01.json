@@ -1,0 +1,36 @@
+{
+  "id": "debito-automatico-01",
+  "descricao": "Saldo a pagar em 3 quotas com débito automático em conta corrente.",
+  "entrada": {
+    "titular": {
+      "cpf": "10598103449",
+      "nome": "DORA FICTICIA DEBITO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "9000000",
+        "previdenciaOficial": "0",
+        "irrf": "300000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pgdFinal": [
+      {
+        "definir": {
+          "getResumo.getCalculoImposto.getTipoConta": "1",
+          "getResumo.getCalculoImposto.getBanco": "001",
+          "getResumo.getCalculoImposto.getAgencia": "1234",
+          "getResumo.getCalculoImposto.getContaCredito": "56789",
+          "getResumo.getCalculoImposto.getDvContaCredito": "5",
+          "getResumo.getCalculoImposto.getNumQuotas": "3",
+          "getResumo.getCalculoImposto.getDebitoAutomatico": "autorizado"
+        }
+      }
+    ]
+  }
+}

@@ -11,6 +11,11 @@ import { calcularDvCpf } from "../../src/validate/index.js";
 
 const cpf = (base: string) => `${base}${calcularDvCpf(base)}`;
 const TITULAR = cpf("123456789");
+
+const semQuotas = <T extends { resumo: { quotas: number } }>(d: T): T => ({
+  ...d,
+  resumo: { ...d.resumo, quotas: 0 },
+});
 const DEP = cpf("987654321");
 
 function identificacao(): DeclaracaoEntrada["identificacao"] {
@@ -126,7 +131,8 @@ describe("Renda Variável: registros 40 a 43", () => {
     const relido = zDeclaracao.parse(leitura.declaracao);
     expect(relido.rendaVariavel).toEqual(dec.rendaVariavel);
     expect(relido.fundosImobiliarios).toEqual(dec.fundosImobiliarios);
-    expect({ ...relido, resumoCalculado: undefined }).toEqual(dec);
+    // Sem saldo a pagar, o arquivo grava 0 quotas ("não se aplica").
+    expect({ ...relido, resumoCalculado: undefined }).toEqual(semQuotas(dec));
   });
 
   it("bytes gravados e relidos conferem com os controles", () => {
@@ -134,7 +140,7 @@ describe("Renda Variável: registros 40 a 43", () => {
     const relidos = lerArquivo(bytes).registros;
     expect(verificarControles(relidos).divergencias).toEqual([]);
     const volta = zDeclaracao.parse(registrosParaModelo(relidos).declaracao);
-    expect({ ...volta, resumoCalculado: undefined }).toEqual(dec);
+    expect({ ...volta, resumoCalculado: undefined }).toEqual(semQuotas(dec));
   });
 
   it("regravar sobre a base sem mudanças devolve os mesmos registros", () => {

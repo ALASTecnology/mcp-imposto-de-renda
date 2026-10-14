@@ -93,6 +93,7 @@ final class Preenchedor {
         }
         impostoPago(Referencia.mapa(e, "impostoPago"));
         doacoes(Referencia.mapa(e, "doacoesDiretas"));
+        atividadeRural(Referencia.mapa(e, "atividadeRural"));
         for (Object o : Referencia.lista(e, "pgd")) {
             operacaoPgd(cast(o));
         }
@@ -100,6 +101,13 @@ final class Preenchedor {
             // Confirmação de que os alimentandos atendem aos requisitos ("S"); feita por último
             // porque a inclusão de pagamentos de pensão limpa o indicativo.
             d.getAlimentandos().getConfirmacao().setConteudo("S");
+        }
+    }
+
+    /** Aplica "pgdFinal": operações genéricas feitas depois do cálculo final, antes de gravar. */
+    void finalizar(Map<String, Object> e) {
+        for (Object o : Referencia.lista(e, "pgdFinal")) {
+            operacaoPgd(cast(o));
         }
     }
 
@@ -328,6 +336,39 @@ final class Preenchedor {
             e.getUf().setConteudo("DF");
             valor(e.getValor(), m, "idoso");
             d.getColecaoEstatutoIdoso().add(e);
+        }
+    }
+
+    // ---------------------------------------------------- atividade rural
+
+    /**
+     * Atividade rural no Brasil: um imóvel fictício, receitas e despesas por mês e a forma de
+     * apuração ("resultado" ou "limite20"; sem opção o programa não tributa o resultado).
+     */
+    private void atividadeRural(Map<String, Object> m) {
+        if (m.isEmpty()) {
+            return;
+        }
+        var br = d.getAtividadeRural().getBrasil();
+        var imovel = br.getIdentificacaoImovel().instanciaNovoObjeto();
+        imovel.getCodigo().setConteudo("11");
+        imovel.getNome().setConteudo("SITIO FICTICIO");
+        imovel.getLocalizacao().setConteudo("BRASILIA DF");
+        imovel.getArea().setConteudo("10,0");
+        imovel.getParticipacao().setConteudo("100,00");
+        imovel.getCondicaoExploracao().setConteudo("1");
+        br.getIdentificacaoImovel().add(imovel);
+        for (Object o : Referencia.lista(m, "meses")) {
+            Map<String, Object> mes = cast(o);
+            int n = Integer.parseInt(t(mes, "mes"));
+            var x = br.getReceitasDespesas().getMesReceitaPorIndice(n - 1);
+            valor(x.getReceitaBrutaMensal(), mes, "receita");
+            valor(x.getDespesaCusteioInvestimento(), mes, "despesa");
+        }
+        String opcao = t(m, "opcao");
+        if (!opcao.isEmpty()) {
+            // Códigos do programa: 1 = limite de 20% da receita bruta, 2 = resultado.
+            br.getApuracaoResultado().getOpcaoFormaApuracao().setConteudo("limite20".equals(opcao) ? "1" : "2");
         }
     }
 

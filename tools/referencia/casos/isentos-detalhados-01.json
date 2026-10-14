@@ -1,0 +1,61 @@
+{
+  "id": "isentos-detalhados-01",
+  "descricao": "Isentos com detalhe próprio (moléstia grave, meação, ações e ouro até R$ 20 mil, outros) e exclusivos de outros e de apostas.",
+  "entrada": {
+    "titular": {
+      "cpf": "10676957021",
+      "nome": "KAUA FICTICIO ISENTO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosIsentos": [
+      {
+        "codigo": "11",
+        "valor": "2400000",
+        "cnpj": "33683111000107",
+        "nome": "INSTITUTO FICTICIO DE PREVIDENCIA"
+      },
+      {
+        "codigo": "19",
+        "valor": "1500000"
+      },
+      {
+        "codigo": "20",
+        "valor": "1200000"
+      },
+      {
+        "codigo": "21",
+        "valor": "800000"
+      },
+      {
+        "codigo": "26",
+        "valor": "300000",
+        "cnpj": "33683111000107",
+        "nome": "FONTE FICTICIA OUTROS"
+      }
+    ],
+    "tributacaoExclusiva": [
+      {
+        "codigo": "12",
+        "valor": "250000",
+        "cnpj": "33683111000107",
+        "nome": "FONTE FICTICIA EXCLUSIVO"
+      },
+      {
+        "codigo": "13",
+        "valor": "100000"
+      }
+    ]
+  }
+}

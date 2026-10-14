@@ -158,8 +158,8 @@ describe("Atividade Rural: registros 50 a 57", () => {
 
   it("rebanho com estoque final e participantes ligados ao imóvel", () => {
     expect(doTipo(rs, "53")[0]?.campos.QT_ESTFINAL).toBe(9_500n);
-    expect(doTipo(rs, "57").map((r) => r.campos.NR_CHAVE_AR)).toEqual([1n, 1n]);
-    expect(doTipo(rs, "50").map((r) => r.campos.NR_CHAVE_AR)).toEqual([1n, 2n]);
+    expect(doTipo(rs, "57").map((r) => r.campos.NR_CHAVE_AR)).toEqual([0n, 0n]);
+    expect(doTipo(rs, "50").map((r) => r.campos.NR_CHAVE_AR)).toEqual([0n, 1n]);
   });
 
   it("opção pelo limite de 20% não deixa saldo de prejuízo", () => {

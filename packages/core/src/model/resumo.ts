@@ -37,8 +37,11 @@ export type ContaRestituicao = z.infer<typeof zContaRestituicao>;
 /** Escolhas do Resumo. */
 export const zResumo = z.object({
   opcaoTributacao: zOpcaoTributacao.default("deducoesLegais"),
-  /** Número de quotas do imposto a pagar (1 a 8; Saída Definitiva e Final de Espólio: 1). */
-  quotas: z.number().int().min(1).max(8).default(1),
+  /**
+   * Número de quotas do imposto a pagar (1 a 8; Saída Definitiva e Final de Espólio: 1). 0
+   * significa "não se aplica" (sem saldo a pagar), como o programa grava no arquivo.
+   */
+  quotas: z.number().int().min(0).max(8).default(1),
   debitoAutomatico: z.boolean().default(false),
   /** Débito a partir da 1ª quota (ou quota única); falso = a partir da 2ª quota. */
   debitoPrimeiraQuota: z.boolean().default(true),

@@ -1,0 +1,52 @@
+{
+  "id": "imposto-pago-complementar-completo-01",
+  "descricao": "Imposto complementar sem IRRF na declaração completa (indicador de imposto pago 4).",
+  "entrada": {
+    "titular": {
+      "cpf": "10631897801",
+      "nome": "GIL FICTICIO COMPLEMENTAR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "0",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "10",
+        "cpfCnpj": "68417382000197",
+        "valor": "3000000",
+        "beneficiario": "T"
+      }
+    ],
+    "impostoPago": {
+      "complementar": "20000",
+      "exterior": "0",
+      "irrfLei11033": "0"
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "6000000",
+    "deducoesCompleto": "3000000",
+    "baseCalculoCompleto": "3000000",
+    "impostoDevidoCompleto": "11496",
+    "descontoSimplificado": "1200000",
+    "baseCalculoSimplificado": "4800000",
+    "impostoDevidoSimplificado": "274503",
+    "impostoRetidoTotal": "20000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "8504",
+    "saldoPagarSimplificado": "254503",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "19"
+  }
+}

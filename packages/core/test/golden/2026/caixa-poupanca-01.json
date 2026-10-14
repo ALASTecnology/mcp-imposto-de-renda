@@ -1,0 +1,51 @@
+{
+  "id": "caixa-poupanca-01",
+  "descricao": "Restituição em conta poupança da Caixa, com operação 013.",
+  "entrada": {
+    "titular": {
+      "cpf": "10586838619",
+      "nome": "CAIO FICTICIO CAIXA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pgdFinal": [
+      {
+        "definir": {
+          "getResumo.getCalculoImposto.getTipoConta": "2",
+          "getResumo.getCalculoImposto.getBanco": "104",
+          "getResumo.getCalculoImposto.getAgencia": "0647",
+          "getResumo.getCalculoImposto.getContaCredito": "12345678",
+          "getResumo.getCalculoImposto.getDvContaCredito": "9",
+          "getResumo.getCalculoImposto.getOperacao": "013"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "6000000",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "6000000",
+    "impostoDevidoCompleto": "564622",
+    "descontoSimplificado": "1200000",
+    "baseCalculoSimplificado": "4800000",
+    "impostoDevidoSimplificado": "274503",
+    "impostoRetidoTotal": "500000",
+    "saldoPagarCompleto": "64622",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "225497",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "457"
+  }
+}

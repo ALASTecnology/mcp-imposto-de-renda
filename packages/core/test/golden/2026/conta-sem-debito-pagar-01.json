@@ -1,0 +1,51 @@
+{
+  "id": "conta-sem-debito-pagar-01",
+  "descricao": "Saldo a pagar com conta informada e sem débito automático: o arquivo de entrega não leva a conta.",
+  "entrada": {
+    "titular": {
+      "cpf": "10609368281",
+      "nome": "EDU FICTICIO PAGADOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "9000000",
+        "previdenciaOficial": "0",
+        "irrf": "300000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pgdFinal": [
+      {
+        "definir": {
+          "getResumo.getCalculoImposto.getTipoConta": "1",
+          "getResumo.getCalculoImposto.getBanco": "001",
+          "getResumo.getCalculoImposto.getAgencia": "1234",
+          "getResumo.getCalculoImposto.getContaCredito": "56789",
+          "getResumo.getCalculoImposto.getDvContaCredito": "5",
+          "getResumo.getCalculoImposto.getNumQuotas": "3"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "9000000",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "9000000",
+    "impostoDevidoCompleto": "1389622",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "7324566",
+    "impostoDevidoSimplificado": "928877",
+    "impostoRetidoTotal": "300000",
+    "saldoPagarCompleto": "1089622",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "628877",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "1032"
+  }
+}

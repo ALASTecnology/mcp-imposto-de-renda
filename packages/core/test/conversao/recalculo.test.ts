@@ -31,6 +31,14 @@ const IGNORAR = new Set(["NR_CONTROLE", "NR_HASH"]);
  * programa mantém no header de uma declaração simplificada sem os registros 91 e 92.
  */
 const CAMPOS_FORA_DO_MODELO: readonly string[] = [
+  // Mensagem do recibo sobre débito automático, texto fixo do programa com saldo a pagar.
+  "16.TX_MENSAGEM_RECIBO",
+  // Transporte da renda variável para o Resumo (ganho líquido e imposto), não recalculado.
+  "18.VR_GANHOLIQUIDORVTRANSPORTE",
+  "18.VR_IMPOSTO_GANHOLIQ_RVAR",
+  "18.VR_SUBTOTALEXCLUSIVOTRANSPORTE",
+  // Critérios de obrigatoriedade além dos rendimentos tributáveis (bolsa, atividade rural).
+  "IR.IN_CRIT_OBRIGAT",
   "IR.ENDERECO_MAC",
   "IR.FILLER3",
   "IR.NOME_SO",

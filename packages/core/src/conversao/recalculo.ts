@@ -156,6 +156,7 @@ function somas(dec: Declaracao) {
     lucros: z(),
     exclusivos: z(),
     exclusivos13: z(),
+    exclusivosRV: z(),
     susp: z(),
     deposito: z(),
     rra: z(),
@@ -193,6 +194,8 @@ function somas(dec: Declaracao) {
     const p = e.codigo === "08" ? "D" : quem("beneficiario" in e ? e.beneficiario : undefined);
     t.exclusivos[p] += e.valor;
     if (e.codigo === "01" || e.codigo === "08") t.exclusivos13[p] += e.valor;
+    // Ganho líquido de renda variável transportado: fora de VR_EXCLUSIVOS do registro 17.
+    if (e.codigo === "05") t.exclusivosRV[p] += e.valor;
   }
   for (const s of dec.rendimentosExigibilidadeSuspensa) {
     const p = quem(s.beneficiario);
@@ -235,7 +238,6 @@ function ddmmaaaaOuVazio(iso: string | undefined): string {
 export const CAMPOS_NAO_RECALCULADOS: Readonly<Record<string, readonly string[]>> = {
   "17": [],
   "18": [
-    "VR_RENDTRIBARURAL",
     "VR_RESNAOTRIB_AR",
     "VR_IMPPAGARESPECIE",
     "VR_GANHOLIQUIDORVTRANSPORTE",
@@ -253,7 +255,6 @@ export const CAMPOS_NAO_RECALCULADOS: Readonly<Record<string, readonly string[]>
   ],
   "19": [],
   "20": [
-    "VR_RESAR",
     "VR_CONTPATRONAL",
     "VR_IMPGC",
     "VR_IMPRV",
@@ -311,12 +312,11 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
     : 0n;
 
   const pagar = escolhido.saldoPagar;
-  const quotas = pagar > 0n ? Math.min(dec.resumo.quotas, 8) : 0;
-  let valorQuota = 0n;
-  if (pagar > 0n) {
-    const q = motor2026.calcularQuotas(pagar, quotas);
-    valorQuota = q.quotas[0]?.principal ?? pagar;
-  }
+  // Resultado tributável da atividade rural incluído pelo motor nos rendimentos tributáveis.
+  const rural = c.rendimentosTributaveis - (soma(t.pj) + soma(t.pf) + soma(t.ext));
+  const quotas = pagar > 0n ? Math.min(Math.max(1, dec.resumo.quotas), 8) : 0;
+  // Valor de cada quota como o programa grava: a divisão truncada (o resto não entra).
+  const valorQuota = pagar > 0n ? pagar / BigInt(quotas) : 0n;
   const bens = {
     anterior: dec.bens.reduce((a, b) => a + b.situacaoAnterior, 0n),
     atual: dec.bens.reduce((a, b) => a + b.situacaoAtual, 0n),
@@ -334,12 +334,12 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
   const r17: Valores = {
     VR_LUCROSTIT: t.lucros.T,
     VR_ISENTOS: t.isentos.T,
-    VR_EXCLUSIVOS: t.exclusivos.T - t.exclusivos13.T,
+    VR_EXCLUSIVOS: t.exclusivos.T - t.exclusivos13.T - t.exclusivosRV.T,
     VR_TOTAL13: t.exclusivos13.T,
     VR_TOTAL13DEPEND: t.exclusivos13.D,
     VR_LUCROSDEPEND: t.lucros.D,
     VR_ISENTOSDEPEND: t.isentos.D,
-    VR_EXCLUSIVOSDEPEND: t.exclusivos.D - t.exclusivos13.D,
+    VR_EXCLUSIVOSDEPEND: t.exclusivos.D - t.exclusivos13.D - t.exclusivosRV.D,
     VR_RENDPFTIT: t.pf.T,
     VR_RENDPFDEPEN: t.pf.D,
     VR_RENDEXTTIT: t.ext.T,
@@ -371,6 +371,7 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
   const r18: Valores = {
     ...comuns18e20,
     VR_RENDTRIB: s.rendimentosTributaveis,
+    VR_RENDTRIBARURAL: rural,
     VR_DESCSIMP: s.desconto,
     VR_BASECALC: s.baseCalculo,
     VR_IMPDEVIDO: s.impostoDevido,
@@ -442,6 +443,7 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
     VR_RENDFISICEXT_TIT: t.pf.T + t.ext.T,
     VR_RENDFISICEXT_DEP: t.pf.D + t.ext.D,
     VR_TOTTRIB: c.rendimentosTributaveis,
+    VR_RESAR: rural,
     VR_PREVOF: d.previdenciaOficial,
     VR_TOTPRIVADA: d.previdenciaComplementar,
     VR_DEPEN: d.dependentes,
@@ -488,8 +490,10 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
   const header: Valores = {
     VR_IMPDEVIDO: escolhido.impostoDevido,
     VR_SOMA_IMPOSTO_PAGAR: pagar,
-    IN_RESULTADO_IMPOSTO: pagar > 0n ? "1" : escolhido.restituir > 0n ? "2" : "0",
-    VR_TOTAL_RENDTRIB_PFPJ_TITDEP: soma(t.pj) + soma(t.pf) + soma(t.ext),
+    // 1 = a pagar, 3 = a pagar com débito automático, 2 = a restituir, 0 = sem saldo.
+    IN_RESULTADO_IMPOSTO:
+      pagar > 0n ? (dec.resumo.debitoAutomatico ? "3" : "1") : escolhido.restituir > 0n ? "2" : "0",
+    VR_TOTAL_RENDTRIB_PFPJ_TITDEP: soma(t.pj) + soma(t.pf) + soma(t.ext) + rural,
     VR_TOTISENTOS: soma(t.isentos),
     VR_TOTEXCLUSIVO: soma(t.exclusivos),
     VR_TOTAL_PAGAMENTOS: dec.pagamentos.reduce((a, p) => a + p.valorPago, 0n),

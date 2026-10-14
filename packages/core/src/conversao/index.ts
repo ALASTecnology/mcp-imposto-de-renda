@@ -23,7 +23,11 @@ import { GravacaoRegistros, LeituraRegistros, type Mapeador } from "./contexto.j
 import { mapeadorAtividadeRural } from "./mapeadores/atividade-rural.js";
 import { mapeadorBensDividas } from "./mapeadores/bens-dividas.js";
 import { mapeadorGanhosCapital } from "./mapeadores/ganhos-capital.js";
-import { mapeadorIdentificacao, nomeMunicipio } from "./mapeadores/identificacao.js";
+import {
+  camposContaResumo,
+  mapeadorIdentificacao,
+  nomeMunicipio,
+} from "./mapeadores/identificacao.js";
 import { mapeadorIsentosExclusivos } from "./mapeadores/isentos-exclusivos.js";
 import { mapeadorPagamentosDoacoes } from "./mapeadores/pagamentos-doacoes.js";
 import { mapeadorPessoas } from "./mapeadores/pessoas.js";
@@ -163,11 +167,6 @@ function valoresHeader(dec: Declaracao, leiaute: Leiaute, semBase: boolean): Val
     CD_MUNICIP: e.local === "brasil" ? e.municipio : "",
     NM_MUNICIPIO: e.local === "brasil" ? (nomeMunicipio(e.municipio) ?? "") : e.cidade,
     NR_CEP: e.local === "brasil" ? e.cep : 0n,
-    NR_BANCO: r.conta ? BigInt(r.conta.banco) : 0n,
-    NR_AGENCIA: r.conta ? BigInt(r.conta.agencia) : 0n,
-    NR_CONTA: r.conta?.conta ?? "",
-    NR_DV_CONTA: r.conta?.dv ?? "",
-    IN_TIPO_CONTA: r.conta ? { corrente: "0", poupanca: "1", pagamento: "2" }[r.conta.tipo] : "0",
     IN_DEBITO_PRIMEIRA_QUOTA: r.debitoAutomatico && r.debitoPrimeiraQuota ? 1n : 0n,
     NR_CPF_PROCURADOR: procurador ?? "",
     NR_CPF_INVENTARIANTE: inventariante ?? "",
@@ -252,6 +251,7 @@ export function modeloParaRegistros(
   const semBaseIr = ctx.baseDoTipo("IR").length === 0;
   ctx.adicionar("IR", {
     ...valoresHeader(dec, leiaute, semBaseIr),
+    ...camposContaResumo(dec.resumo, ctx.saldoAPagar),
     ...(semBaseIr && calculados ? calculados.headerArquivoNovo : {}),
     ...header,
   });

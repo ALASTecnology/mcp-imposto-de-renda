@@ -249,7 +249,7 @@ export const grupoSaidas: GrupoFerramentas = {
         let parcelas: ParcelaDarf[];
         let periodo = "31/12/2025";
         if (tipo === "imposto") {
-          const n = a.quotas ?? dec?.resumo.quotas ?? 1;
+          const n = a.quotas ?? Math.max(1, dec?.resumo.quotas ?? 1);
           const selic = a.selic_mensal
             ? Object.fromEntries(Object.entries(a.selic_mensal).map(([k, v]) => [k, percentual(v)]))
             : undefined;

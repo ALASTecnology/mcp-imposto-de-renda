@@ -112,6 +112,9 @@ public final class Referencia {
             d.setModeloCompleta();
         }
         d.recalcularDeclaracao();
+        // Operações que o programa desfaz quando o resultado muda (a conta de restituição é
+        // limpa a cada recálculo que altera o imposto): aplicadas depois do cálculo final.
+        p.finalizar(entrada);
         facade.salvarDeclaracao(d);
 
         File tmp = Files.createTempDirectory("autoir-ref-saida").toFile();

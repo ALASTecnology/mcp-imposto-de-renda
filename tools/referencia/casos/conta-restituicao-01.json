@@ -1,0 +1,46 @@
+{
+  "id": "conta-restituicao-01",
+  "descricao": "Restituição em conta corrente do Banco do Brasil, com e-mail, telefone, celular e complemento do endereço.",
+  "entrada": {
+    "titular": {
+      "cpf": "10564309079",
+      "nome": "ANA FICTICIA CONTA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pgd": [
+      {
+        "definir": {
+          "getContribuinte.getEmail": "ana.ficticia@exemplo.com.br",
+          "getContribuinte.getDdd": "61",
+          "getContribuinte.getTelefone": "33334444",
+          "getContribuinte.getComplemento": "APTO 101",
+          "getContribuinte.getDddCelular": "61",
+          "getContribuinte.getCelular": "999998888"
+        }
+      }
+    ],
+    "pgdFinal": [
+      {
+        "definir": {
+          "getResumo.getCalculoImposto.getTipoConta": "1",
+          "getResumo.getCalculoImposto.getBanco": "001",
+          "getResumo.getCalculoImposto.getAgencia": "1234",
+          "getResumo.getCalculoImposto.getContaCredito": "56789",
+          "getResumo.getCalculoImposto.getDvContaCredito": "5"
+        }
+      }
+    ]
+  }
+}

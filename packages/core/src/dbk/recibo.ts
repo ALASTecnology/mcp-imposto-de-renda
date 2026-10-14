@@ -96,3 +96,28 @@ export function montarRecibo(registros: readonly Registro[], leiaute: Leiaute): 
     criarRegistro(leiaute, "R9", comCpf),
   ];
 }
+
+/** Campos da conta do Resumo que o programa descarta no arquivo de entrega sem débito automático. */
+const CAMPOS_CONTA = ["NR_BANCO", "NR_AGENCIA", "NR_DV_CONTA", "NR_CONTA"] as const;
+
+/**
+ * Ajustes que o programa faz na declaração ao gravar o arquivo de entrega: com saldo a pagar e
+ * sem débito automático, a conta informada no Resumo não vai para a DEC (header e ficha 16),
+ * embora fique na cópia de segurança (caso `conta-sem-debito-pagar-01`). Devolve novos
+ * registros; a entrada não muda.
+ */
+export function ajustarParaEntrega(registros: readonly Registro[]): Registro[] {
+  const ir = registros.find((r) => r.tipo === "IR")?.campos;
+  const r16 = registros.find((r) => r.tipo === "16")?.campos;
+  const pagar = ir?.VR_SOMA_IMPOSTO_PAGAR;
+  const descartar = typeof pagar === "bigint" && pagar > 0n && r16?.IN_DEBITO_AUTOM !== "S";
+  if (!descartar) return [...registros];
+  return registros.map((r) => {
+    if (r.tipo !== "IR" && r.tipo !== "16") return r;
+    const campos: Record<string, ValorCampo> = { ...r.campos };
+    for (const c of CAMPOS_CONTA) {
+      if (Object.hasOwn(campos, c)) campos[c] = typeof campos[c] === "bigint" ? 0n : "";
+    }
+    return { tipo: r.tipo, campos };
+  });
+}

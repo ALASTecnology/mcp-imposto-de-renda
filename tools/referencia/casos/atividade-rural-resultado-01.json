@@ -1,0 +1,38 @@
+{
+  "id": "atividade-rural-resultado-01",
+  "descricao": "Atividade rural no Brasil com resultado positivo apurado pelo resultado da atividade.",
+  "entrada": {
+    "titular": {
+      "cpf": "10654427429",
+      "nome": "IVO FICTICIO RURAL",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "68417382000197",
+        "nome": "EMPRESA FICTICIA 40 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "atividadeRural": {
+      "opcao": "resultado",
+      "meses": [
+        {
+          "mes": 3,
+          "receita": "5000000",
+          "despesa": "2000000"
+        },
+        {
+          "mes": 8,
+          "receita": "3000000",
+          "despesa": "1000000"
+        }
+      ]
+    }
+  }
+}

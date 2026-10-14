@@ -60,7 +60,7 @@ describe("abrir_declaracao", () => {
       tipoDeclaracao: "ajusteAnual",
       modeloValido: true,
       controlesValidos: true,
-      tiposNaoConvertidos: ["17", "18", "24"],
+      tiposNaoConvertidos: [],
     });
     const fichas = s.fichas as { ficha: string; itens: number; totais: Record<string, string> }[];
     expect(fichas.find((f) => f.ficha === "rendimentosPJ")).toMatchObject({

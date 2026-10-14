@@ -23,7 +23,7 @@ describe("DBK para modelo", () => {
     expect(dec.rendimentosPJ).toHaveLength(1);
     expect(dec.rendimentosPJ[0]?.rendimentos).toBe(6_000_000n);
     expect(dec.rendimentosPJ[0]?.impostoRetido).toBe(500_000n);
-    expect(r.tiposNaoConvertidos).toEqual(["17", "18", "24"]);
+    expect(r.tiposNaoConvertidos).toEqual([]);
   });
 });
 

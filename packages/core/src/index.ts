@@ -4,3 +4,4 @@ export * from "./dbk/index.js";
 export * from "./model/index.js";
 export * from "./tabelas/index.js";
 export * from "./validate/index.js";
+export * from "./conversao/index.js";

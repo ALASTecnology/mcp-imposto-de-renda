@@ -257,7 +257,7 @@ export const grupoDeclaracao: GrupoFerramentas = {
             registros: registros.length,
             registrosPorTipo: contagem,
             controlesValidos: controles.valido,
-            avisos,
+            avisos: [...avisos],
           },
         };
       },

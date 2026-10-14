@@ -1,0 +1,38 @@
+{
+  "id": "gcap-participacao-pequeno-valor-01",
+  "descricao": "Venda de quotas fora de bolsa por R$ 30.000,00 no mês: confere o limite de pequeno valor aplicado pelo programa a participações societárias.",
+  "entrada": {
+    "titular": {
+      "cpf": "18268171316",
+      "nome": "HUGO FICTICIO GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "participacao",
+        "descricao": "SOCIEDADE FICTICIA GCAP LTDA",
+        "cnpj": "10911345000150",
+        "quantidade": "1000",
+        "dataAquisicao": "01022015",
+        "dataAlienacao": "05082025",
+        "valorAlienacao": "3000000",
+        "custoCorretagem": "0",
+        "custoAquisicao": "1000000",
+        "adquirente": {
+          "cpf": "18155523365",
+          "nome": "COMPRADOR FICTICIO SETE"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "gcap-movel-pequeno-valor-01",
+  "descricao": "Venda de bem móvel por até R$ 35.000,00 no mês: ganho isento (pequeno valor).",
+  "entrada": {
+    "titular": {
+      "cpf": "18211847345",
+      "nome": "GABRIELA FICTICIA GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "descricao": "EQUIPAMENTO FICTICIO",
+        "dataAquisicao": "20062019",
+        "dataAlienacao": "03042025",
+        "valorAlienacao": "3000000",
+        "custoCorretagem": "0",
+        "custoAquisicao": "1800000",
+        "adquirente": {
+          "cpf": "17308624030",
+          "nome": "COMPRADOR FICTICIO SEIS"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "gcap-participacao-01",
+  "descricao": "Venda de quotas de sociedade limitada fora de bolsa: ganho tributado a 15%.",
+  "entrada": {
+    "titular": {
+      "cpf": "18189317709",
+      "nome": "ELISA FICTICIA GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "participacao",
+        "descricao": "SOCIEDADE FICTICIA GCAP LTDA",
+        "cnpj": "10911345000150",
+        "quantidade": "10000",
+        "dataAquisicao": "01022015",
+        "dataAlienacao": "12112025",
+        "valorAlienacao": "30000000",
+        "custoCorretagem": "0",
+        "custoAquisicao": "10000000",
+        "adquirente": {
+          "cpf": "18301965703",
+          "nome": "COMPRADOR FICTICIO QUATRO"
+        }
+      }
+    ]
+  }
+}

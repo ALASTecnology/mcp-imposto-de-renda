@@ -1,0 +1,37 @@
+{
+  "id": "gcap-imovel-unico-01",
+  "descricao": "Venda do único imóvel por até R$ 440.000,00, sem outra alienação em 5 anos: ganho isento (FR2 aplicado antes da isenção).",
+  "entrada": {
+    "titular": {
+      "cpf": "18166788136",
+      "nome": "CARLA FICTICIA GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "imovel",
+        "descricao": "APARTAMENTO FICTICIO UNICO",
+        "dataAquisicao": "15082012",
+        "dataAlienacao": "20052025",
+        "valorAlienacao": "42000000",
+        "custoCorretagem": "1200000",
+        "custoAquisicao": "25000000",
+        "unicoImovel": true,
+        "adquirente": {
+          "cpf": "18279436103",
+          "nome": "COMPRADOR FICTICIO DOIS"
+        }
+      }
+    ]
+  }
+}

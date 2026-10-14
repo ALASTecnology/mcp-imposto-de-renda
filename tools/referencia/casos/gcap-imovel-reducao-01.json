@@ -1,0 +1,37 @@
+{
+  "id": "gcap-imovel-reducao-01",
+  "descricao": "Venda de imóvel adquirido em 1985: redução da Lei 7.713/1988, fatores FR1 e FR2 da Lei 11.196/2005 e imposto pago em DARF.",
+  "entrada": {
+    "titular": {
+      "cpf": "18155523365",
+      "nome": "BRUNO FICTICIO GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "imovel",
+        "descricao": "CASA FICTICIA ADQUIRIDA EM 1985",
+        "dataAquisicao": "15031985",
+        "dataAlienacao": "10072025",
+        "valorAlienacao": "120000000",
+        "custoCorretagem": "6000000",
+        "custoAquisicao": "15000000",
+        "impostoPago": "1000000",
+        "adquirente": {
+          "cpf": "18268171316",
+          "nome": "COMPRADOR FICTICIO UM"
+        }
+      }
+    ]
+  }
+}

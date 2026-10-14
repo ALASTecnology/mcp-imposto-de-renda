@@ -18,8 +18,10 @@ CACHE="${CACHE%/}"
 JAVA="${JAVA:-java}"
 JAVAC="${JAVAC:-javac}"
 TEMPO_MAXIMO="${TEMPO_MAXIMO:-300}"
+GCAP_ZIP="${GCAP_ZIP:-$RAIZ/vendor/rfb/gcap/GCAP2025v1.6.zip}"
 GOLDEN_DIR="${GOLDEN_DIR:-$RAIZ/packages/core/test/golden/2026}"
 FIXTURES_DIR="${FIXTURES_DIR:-$RAIZ/packages/core/test/fixtures/dbk/2026}"
+GCAP_FIXTURES_DIR="${GCAP_FIXTURES_DIR:-$RAIZ/packages/core/test/fixtures/gcap/2026}"
 
 erro() { echo "gerar.sh: $*" >&2; exit 1; }
 
@@ -71,6 +73,75 @@ compilar() {
   fi
 }
 
+# GCAP 2025 avulso (o "Exportar para o IRPF2026" fica nele), só para casos com ganhosCapital.
+preparar_gcap() {
+  if [[ -n "${GCAP_DIR:-}" ]]; then
+    [[ -f "$GCAP_DIR/GCAP.jar" ]] || erro "GCAP_DIR=$GCAP_DIR não contém GCAP.jar"
+  else
+    GCAP_DIR="$CACHE/GCAP2025"
+    if [[ ! -f "$GCAP_DIR/GCAP.jar" ]]; then
+      [[ -f "$GCAP_ZIP" ]] || erro "GCAP não encontrado: defina GCAP_DIR ou coloque o zip em $GCAP_ZIP"
+      mkdir -p "$CACHE/extracao-gcap"
+      unzip -q -o "$GCAP_ZIP" -d "$CACHE/extracao-gcap"
+      local jar
+      jar="$(find "$CACHE/extracao-gcap" -maxdepth 3 -name GCAP.jar | head -n 1)"
+      [[ -n "$jar" ]] || erro "GCAP.jar não encontrado dentro de $GCAP_ZIP"
+      rm -rf "$GCAP_DIR"
+      mv "$(dirname "$jar")" "$GCAP_DIR"
+      rm -rf "$CACHE/extracao-gcap"
+    fi
+  fi
+  local cp="$GCAP_DIR/GCAP.jar" j
+  for j in "$GCAP_DIR"/lib/*.jar; do
+    [[ -f "$j" ]] && cp="$cp:$j"
+  done
+  CLASSPATH_GCAP="$cp"
+  CLASSES_GCAP="$CACHE/classes-gcap"
+  local fontes=("$AQUI"/gcap/*.java "$AQUI"/src/Json.java "$AQUI"/src/Documentos.java)
+  local carimbo="$CLASSES_GCAP/.compilado" precisa=1 f
+  if [[ -f "$carimbo" ]]; then
+    precisa=0
+    for f in "${fontes[@]}"; do
+      [[ "$f" -nt "$carimbo" ]] && precisa=1
+    done
+  fi
+  if [[ "$precisa" == 1 ]]; then
+    rm -rf "$CLASSES_GCAP"
+    mkdir -p "$CLASSES_GCAP"
+    "$JAVAC" -nowarn -encoding UTF-8 -cp "$CLASSPATH_GCAP" -d "$CLASSES_GCAP" "${fontes[@]}"
+    touch "$carimbo"
+  fi
+}
+
+# Roda o GCAP numa JVM isolada (casa temporária, locale pt_BR, que o programa exige para
+# quantidades) e grava o arquivo exportado e o resultado em $2/.
+executar_gcap() {
+  local caso="$1" saida="$2" casa rc=0 cpf
+  cpf="$(sed -n 's/.*"cpf" *: *"\([0-9]*\)".*/\1/p' "$caso" | head -n 1)"
+  casa="$(mktemp -d "$CACHE/execucao-gcap.XXXXXX")"
+  # O programa lê as tabelas (países etc.) de resources/ relativo ao diretório de trabalho.
+  mkdir -p "$casa/lib"
+  ln -s "$GCAP_DIR/lib/resources" "$casa/lib/resources"
+  ln -s "$GCAP_DIR/lib/resources" "$casa/resources"
+  (
+    cd "$casa"
+    timeout "$TEMPO_MAXIMO" "$JAVA" \
+      -Djava.awt.headless=true \
+      -Dfile.encoding=UTF-8 \
+      -Duser.language=pt -Duser.country=BR \
+      -Duser.home="$casa" \
+      -Duser.dir="$casa" \
+      -Djava.io.tmpdir="$casa" \
+      -cp "$CLASSES_GCAP:$CLASSPATH_GCAP" \
+      Gcap gerar "$caso" "$saida/$cpf-0101-3112-GCAP-2025.DEC" "$saida/gcap.json" 2> "$casa/stderr.log"
+  ) || rc=$?
+  if [[ "$rc" != 0 ]]; then
+    grep -vE 'charToByteConverter|^\s+at ' "$casa/stderr.log" >&2 || true
+  fi
+  rm -rf "$casa"
+  return "$rc"
+}
+
 # Executa o harness numa JVM isolada: diretório de trabalho e user.home temporários,
 # para que o programa oficial grave aplicacao/dados/<CPF>/ fora do repositório.
 executar() {
@@ -85,6 +156,7 @@ executar() {
       -Duser.home="$casa" \
       -Duser.dir="$casa" \
       -Djava.io.tmpdir="$casa" \
+      ${PROPRIEDADES_EXTRAS:-} \
       -cp "$CLASSES:$CLASSPATH_PGD" \
       Referencia "$@" 2> "$casa/stderr.log"
   ) || rc=$?
@@ -138,10 +210,24 @@ case "$comando" in
     falhas=0
     for caso in "${casos[@]}"; do
       id="$(basename "$caso" .json)"
+      PROPRIEDADES_EXTRAS=""
+      saida_gcap=""
+      if grep -q '"ganhosCapital"' "$caso"; then
+        [[ -n "${CLASSES_GCAP:-}" ]] || preparar_gcap
+        saida_gcap="$(mktemp -d "$CACHE/saida-gcap.XXXXXX")"
+        if ! executar_gcap "$(absoluto "$caso")" "$saida_gcap"; then
+          echo "FALHOU (GCAP): $id" >&2
+          falhas=$((falhas + 1))
+          rm -rf "$saida_gcap"
+          continue
+        fi
+        PROPRIEDADES_EXTRAS="-Dgcap.dec=$(ls "$saida_gcap"/*.DEC) -Dgcap.resultado=$saida_gcap/gcap.json -Dgcap.fixtures=$GCAP_FIXTURES_DIR"
+      fi
       if ! executar gerar "$(absoluto "$caso")" "$GOLDEN_DIR/$id.json" "$FIXTURES_DIR"; then
         echo "FALHOU: $id" >&2
         falhas=$((falhas + 1))
       fi
+      [[ -n "$saida_gcap" ]] && rm -rf "$saida_gcap"
     done
     echo "casos: ${#casos[@]}, falhas: $falhas"
     [[ "$falhas" == 0 ]]

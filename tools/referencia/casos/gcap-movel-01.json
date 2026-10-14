@@ -1,0 +1,36 @@
+{
+  "id": "gcap-movel-01",
+  "descricao": "Venda de bem móvel (obra de arte) acima de R$ 35.000,00 no mês: ganho tributado a 15%.",
+  "entrada": {
+    "titular": {
+      "cpf": "18178052903",
+      "nome": "DANIEL FICTICIO GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "descricao": "OBRA DE ARTE FICTICIA",
+        "dataAquisicao": "05042018",
+        "dataAlienacao": "10092025",
+        "valorAlienacao": "15000000",
+        "custoCorretagem": "750000",
+        "custoAquisicao": "6000000",
+        "adquirente": {
+          "cpf": "18290700962",
+          "nome": "COMPRADOR FICTICIO TRES"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "gcap-imovel-faixas-01",
+  "descricao": "Venda de imóvel com ganho acima de R$ 5.000.000,00: faixas progressivas de 15% e 17,5%.",
+  "entrada": {
+    "titular": {
+      "cpf": "18200582558",
+      "nome": "FABIO FICTICIO GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "imovel",
+        "descricao": "TERRENO FICTICIO",
+        "dataAquisicao": "10022020",
+        "dataAlienacao": "18032025",
+        "valorAlienacao": "800000000",
+        "custoCorretagem": "20000000",
+        "custoAquisicao": "100000000",
+        "adquirente": {
+          "cpf": "17297359246",
+          "nome": "COMPRADOR FICTICIO CINCO"
+        }
+      }
+    ]
+  }
+}

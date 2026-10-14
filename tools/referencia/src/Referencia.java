@@ -98,6 +98,10 @@ public final class Referencia {
 
         Preenchedor p = new Preenchedor(d, cpf);
         p.preencher(entrada);
+        String gcapDec = System.getProperty("gcap.dec");
+        if (gcapDec != null) {
+            ImportacaoGcap.importar(d, new File(gcapDec));
+        }
         d.recalcularDeclaracao();
 
         Map<String, Object> esperado = Resultado.extrair(d);
@@ -142,6 +146,12 @@ public final class Referencia {
         golden.put("descricao", caso.get("descricao"));
         golden.put("entrada", entrada);
         golden.put("esperado", esperado);
+        String gcapResultado = System.getProperty("gcap.resultado");
+        if (gcapResultado != null) {
+            golden.put("esperadoGcap", Json.ler(new String(Files.readAllBytes(new File(gcapResultado).toPath()),
+                    StandardCharsets.UTF_8)));
+            copiados += ImportacaoGcap.copiarExportado(new File(gcapDec), idCaso);
+        }
         arqGolden.getParentFile().mkdirs();
         Files.write(arqGolden.toPath(), Json.escrever(golden).getBytes(StandardCharsets.UTF_8));
 
@@ -154,7 +164,7 @@ public final class Referencia {
         for (String a : avisos) {
             System.out.println("  aviso: " + a);
         }
-        return copiados == 2 ? 0 : 3;
+        return copiados == (gcapResultado != null ? 4 : 2) ? 0 : 3;
     }
 
     // -------------------------------------------------------------- verificar

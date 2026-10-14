@@ -1,0 +1,1190 @@
+[
+ {
+  "codigo": "200",
+  "descricao": "Abidjã",
+  "pais": "Costa do Marfim",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "260",
+  "descricao": "Abu Dhabi",
+  "pais": "Emirados Árabes Unidos",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "651",
+  "descricao": "Abuja",
+  "pais": "Nigéria",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "350",
+  "descricao": "Acra",
+  "pais": "Gana",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "306",
+  "descricao": "Adis Abeba",
+  "pais": "Etiópia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "550",
+  "descricao": "Amã",
+  "pais": "Jordânia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "991",
+  "descricao": "Amsterdã",
+  "pais": "Holanda",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "930",
+  "descricao": "Ancara",
+  "pais": "Turquia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "040",
+  "descricao": "Argel",
+  "pais": "Argélia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "950",
+  "descricao": "Artigas",
+  "pais": "Uruguai",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "700",
+  "descricao": "Assunção",
+  "pais": "Paraguai",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "147",
+  "descricao": "Astana",
+  "pais": "Cazaquistão",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "360",
+  "descricao": "Atenas",
+  "pais": "Grécia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "289",
+  "descricao": "Atlanta",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "485",
+  "descricao": "Bagdá",
+  "pais": "Iraque",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "821",
+  "descricao": "Baku",
+  "pais": "Azerbaijão",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "595",
+  "descricao": "Bamako",
+  "pais": "Mali",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "880",
+  "descricao": "Bangkok",
+  "pais": "Tailândia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "280",
+  "descricao": "Barcelona",
+  "pais": "Espanha",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "828",
+  "descricao": "Basseterre",
+  "pais": "São Cristóvão e Névis",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "570",
+  "descricao": "Beirute",
+  "pais": "Líbano",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "520",
+  "descricao": "Belgrado",
+  "pais": "Sérvia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "104",
+  "descricao": "Belmopan",
+  "pais": "Belize",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "010",
+  "descricao": "Berlim",
+  "pais": "Alemanha",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "992",
+  "descricao": "Berna",
+  "pais": "Suiça",
+  "tipoRepresentacao": "Embaixada do Brasi"
+ },
+ {
+  "codigo": "400",
+  "descricao": "Bissau",
+  "pais": "Guiné-Bissau",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "180",
+  "descricao": "Bogotá",
+  "pais": "Colômbia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "290",
+  "descricao": "Boston",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "274",
+  "descricao": "Bratislava",
+  "pais": "Eslováquia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "187",
+  "descricao": "Brazzaville",
+  "pais": "Congo",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "090",
+  "descricao": "Bridgetown",
+  "pais": "Barbados",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "100",
+  "descricao": "Bruxelas",
+  "pais": "Bélgica",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "810",
+  "descricao": "Bucareste",
+  "pais": "Romênia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "440",
+  "descricao": "Budapeste",
+  "pais": "Hungria",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "050",
+  "descricao": "Buenos Aires",
+  "pais": "Argentina",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "390",
+  "descricao": "Caiena",
+  "pais": "Guiana Francesa",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "240",
+  "descricao": "Cairo",
+  "pais": "Egito",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "060",
+  "descricao": "Camberra",
+  "pais": "Austrália",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "163",
+  "descricao": "Cantão",
+  "pais": "China",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "970",
+  "descricao": "Caracas",
+  "pais": "Venezuela",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "847",
+  "descricao": "Cartum",
+  "pais": "Sudão",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "823",
+  "descricao": "Castries",
+  "pais": "Santa Lúcia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "291",
+  "descricao": "Chicago",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "951",
+  "descricao": "Chuí",
+  "pais": "Uruguai",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "001",
+  "descricao": "Cidade do Cabo",
+  "pais": "África do Sul",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "610",
+  "descricao": "Cidade do México",
+  "pais": "México",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "960",
+  "descricao": "Cidade do Vaticano",
+  "pais": "Vaticano",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "170",
+  "descricao": "Cingapura",
+  "pais": "Cingapura",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "701",
+  "descricao": "Ciudad Del Este",
+  "pais": "Paraguai",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "971",
+  "descricao": "Ciudad Guayana",
+  "pais": "Venezuela",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "110",
+  "descricao": "Cobija",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "111",
+  "descricao": "Cochabamba",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "843",
+  "descricao": "Colombo",
+  "pais": "Sri Lanka",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "396",
+  "descricao": "Conacri",
+  "pais": "Guiné",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "702",
+  "descricao": "Concepción",
+  "pais": "Paraguai",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "230",
+  "descricao": "Copenhague",
+  "pais": "Dinamarca",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "053",
+  "descricao": "Córdoba",
+  "pais": "Argentina",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "107",
+  "descricao": "Cotonou",
+  "pais": "Benin",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "830",
+  "descricao": "Dacar",
+  "pais": "Senegal",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "085",
+  "descricao": "Daca",
+  "pais": "Bangladesh",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "840",
+  "descricao": "Damasco",
+  "pais": "Síria",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "893",
+  "descricao": "Dar es Salaam",
+  "pais": "Tanzânia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "900",
+  "descricao": "Díli",
+  "pais": "Timor Leste",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "143",
+  "descricao": "Doha",
+  "pais": "Catar",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "490",
+  "descricao": "Dublin",
+  "pais": "Irlanda",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "703",
+  "descricao": "Encarnación",
+  "pais": "Paraguai",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "850",
+  "descricao": "Estocolmo",
+  "pais": "Suécia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "752",
+  "descricao": "Faro",
+  "pais": "Portugal",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "011",
+  "descricao": "Frankfurt",
+  "pais": "Alemanha",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "835",
+  "descricao": "Freetown",
+  "pais": "Serra Leoa",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "118",
+  "descricao": "Gaborone",
+  "pais": "Botsuana",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "862",
+  "descricao": "Genebra",
+  "pais": "Suíça",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "380",
+  "descricao": "Georgetown",
+  "pais": "Guiana",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "370",
+  "descricao": "Guatemala",
+  "pais": "Guatemala",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "112",
+  "descricao": "Guayaramerin",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "542",
+  "descricao": "Hamamatsu",
+  "pais": "Japão",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "980",
+  "descricao": "Hanói",
+  "pais": "Vietnam",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "990",
+  "descricao": "Harare",
+  "pais": "Zimbábue",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "298",
+  "descricao": "Hartford",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "220",
+  "descricao": "Havana",
+  "pais": "Cuba",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "320",
+  "descricao": "Helsinque",
+  "pais": "Finlândia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "162",
+  "descricao": "Hong Kong",
+  "pais": "China",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "292",
+  "descricao": "Houston",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "136",
+  "descricao": "Iaundê",
+  "pais": "Camarões",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "057",
+  "descricao": "Ierevan",
+  "pais": "Armênia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "721",
+  "descricao": "Iquitos",
+  "pais": "Peru",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "690",
+  "descricao": "Islamabade",
+  "pais": "Paquistão",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "931",
+  "descricao": "Istambul",
+  "pais": "Turquia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "460",
+  "descricao": "Jacarta",
+  "pais": "Indonésia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "635",
+  "descricao": "Kathmandu",
+  "pais": "Nepal",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "940",
+  "descricao": "Kiev",
+  "pais": "Ucrânia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "530",
+  "descricao": "Kingston",
+  "pais": "Jamaica",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "693",
+  "descricao": "Kingstown",
+  "pais": "São Vicente e Granadinas",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "776",
+  "descricao": "Kinshasa",
+  "pais": "Congo, República Democrática do",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "560",
+  "descricao": "Kuaite",
+  "pais": "Kuaite",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "590",
+  "descricao": "Kuala Lumpur",
+  "pais": "Malásia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "113",
+  "descricao": "La Paz",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "650",
+  "descricao": "Lagos",
+  "pais": "Nigéria",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "381",
+  "descricao": "Lethem",
+  "pais": "Guiana",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "181",
+  "descricao": "Letícia",
+  "pais": "Colômbia",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "340",
+  "descricao": "Libreville",
+  "pais": "Gabão",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "593",
+  "descricao": "Lilongwe",
+  "pais": "Malauí",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "720",
+  "descricao": "Lima",
+  "pais": "Peru",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "750",
+  "descricao": "Lisboa",
+  "pais": "Portugal",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "277",
+  "descricao": "Liubliana",
+  "pais": "Eslovênia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "906",
+  "descricao": "Lomé",
+  "pais": "Togo",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "470",
+  "descricao": "Londres",
+  "pais": "Inglaterra",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "293",
+  "descricao": "Los Angeles",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "020",
+  "descricao": "Luanda",
+  "pais": "Angola",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "986",
+  "descricao": "LusaKa",
+  "pais": "Zâmbia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "281",
+  "descricao": "Madri",
+  "pais": "Espanha",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "406",
+  "descricao": "Malabo",
+  "pais": "Guiné-Equatorial",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "640",
+  "descricao": "Manágua",
+  "pais": "Nicarágua",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "310",
+  "descricao": "Manila",
+  "pais": "Filipinas",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "620",
+  "descricao": "Maputo",
+  "pais": "Moçambique",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "675",
+  "descricao": "Mascate",
+  "pais": "Omã",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "054",
+  "descricao": "Mendoza",
+  "pais": "Argentina",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "294",
+  "descricao": "Miami",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "510",
+  "descricao": "Milão",
+  "pais": "Itália",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "095",
+  "descricao": "Minsk",
+  "pais": "Belarus",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "575",
+  "descricao": "Monróvia",
+  "pais": "Libéria",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "952",
+  "descricao": "Montevidéu",
+  "pais": "Uruguai",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "140",
+  "descricao": "Montreal",
+  "pais": "Canadá",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "820",
+  "descricao": "Moscou",
+  "pais": "Rússia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "451",
+  "descricao": "Mumbai",
+  "pais": "Índia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "012",
+  "descricao": "Munique",
+  "pais": "Alemanha",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "540",
+  "descricao": "Nagoia",
+  "pais": "Japão",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "770",
+  "descricao": "Nairóbi",
+  "pais": "Quênia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "080",
+  "descricao": "Nassau",
+  "pais": "Bahamas",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "157",
+  "descricao": "Nicósia",
+  "pais": "Chipre",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "450",
+  "descricao": "Nova Delhi",
+  "pais": "Índia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "295",
+  "descricao": "Nova York",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "605",
+  "descricao": "Nouakchott",
+  "pais": "Mauritânia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "660",
+  "descricao": "Oslo",
+  "pais": "Noruega",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "141",
+  "descricao": "Ottawa",
+  "pais": "Canadá",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "680",
+  "descricao": "Cidade do Panamá",
+  "pais": "Panamá",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "870",
+  "descricao": "Paramaribo",
+  "pais": "Suriname",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "330",
+  "descricao": "Paris",
+  "pais": "França",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "051",
+  "descricao": "Paso de Los Libres",
+  "pais": "Argentina",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "704",
+  "descricao": "Pedro Juan Caballero",
+  "pais": "Paraguai",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "160",
+  "descricao": "Pequim",
+  "pais": "China",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "751",
+  "descricao": "Porto",
+  "pais": "Portugal",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "410",
+  "descricao": "Porto Príncipe",
+  "pais": "Haiti",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "910",
+  "descricao": "Port-of-Spain",
+  "pais": "Trinidad e Tobago",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "800",
+  "descricao": "Praga",
+  "pais": "República Tcheca",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "130",
+  "descricao": "Praia",
+  "pais": "Cabo Verde",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "002",
+  "descricao": "Pretória",
+  "pais": "África do Sul",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "973",
+  "descricao": "Puerto Ayacucho",
+  "pais": "Venezuela",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "052",
+  "descricao": "Puerto Iguazu",
+  "pais": "Argentina",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "116",
+  "descricao": "Puerto Quijarro",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "993",
+  "descricao": "Puerto Suárez",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "195",
+  "descricao": "Pyongyang",
+  "pais": "Coréia do Norte",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "270",
+  "descricao": "Quito",
+  "pais": "Equador",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "600",
+  "descricao": "Rabat",
+  "pais": "Marrocos",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "030",
+  "descricao": "Riade",
+  "pais": "Arábia Saudita",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "953",
+  "descricao": "Rio Branco",
+  "pais": "Uruguai",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "954",
+  "descricao": "Rivera",
+  "pais": "Uruguai",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "511",
+  "descricao": "Roma",
+  "pais": "Itália",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "237",
+  "descricao": "Roseau",
+  "pais": "Dominica",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "421",
+  "descricao": "Roterdã",
+  "pais": "Holanda",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "355",
+  "descricao": "Saint George's",
+  "pais": "Granada",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "391",
+  "descricao": "Saint Georges de L'Oyapock",
+  "pais": "Guiana Francesa",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "025",
+  "descricao": "Saint John's",
+  "pais": "Antígua e Barbuda",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "705",
+  "descricao": "Salto del Guairá",
+  "pais": "Paraguai",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "115",
+  "descricao": "Santa Cruz de La Sierra",
+  "pais": "Bolívia",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "972",
+  "descricao": "Santa Elena do Uairén",
+  "pais": "Venezuela",
+  "tipoRepresentacao": "Vice-Consulado do Brasil"
+ },
+ {
+  "codigo": "150",
+  "descricao": "Santiago",
+  "pais": "Chile",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "780",
+  "descricao": "São Domingos",
+  "pais": "República Dominicana",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "296",
+  "descricao": "São Francisco",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "210",
+  "descricao": "São José",
+  "pais": "Costa Rica",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "250",
+  "descricao": "São Salvador",
+  "pais": "El Salvador",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "825",
+  "descricao": "São Tomé",
+  "pais": "São Tomé e Principe",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "125",
+  "descricao": "Sarajevo",
+  "pais": "Bósnia e Herzegovina",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "190",
+  "descricao": "Seul",
+  "pais": "Coréia do Sul",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "120",
+  "descricao": "Sófia",
+  "pais": "Bulgária",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "061",
+  "descricao": "Sydney",
+  "pais": "Austrália",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "326",
+  "descricao": "Taipé",
+  "pais": "Taiwan (Formosa)",
+  "tipoRepresentacao": "Escritório Comercial"
+ },
+ {
+  "codigo": "785",
+  "descricao": "Talin",
+  "pais": "Estônia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "788",
+  "descricao": "Tbilisi",
+  "pais": "Geórgia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "480",
+  "descricao": "Teerã",
+  "pais": "Irã",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "430",
+  "descricao": "Tegucigalpa",
+  "pais": "Honduras",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "500",
+  "descricao": "Tel Aviv",
+  "pais": "Israel",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "007",
+  "descricao": "Tirana",
+  "pais": "Albânia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "541",
+  "descricao": "Tóquio",
+  "pais": "Japão",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "142",
+  "descricao": "Toronto",
+  "pais": "Canadá",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "580",
+  "descricao": "Trípoli",
+  "pais": "Líbia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "920",
+  "descricao": "Túnis",
+  "pais": "Tunísia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "127",
+  "descricao": "Uagadugu",
+  "pais": "Burkina Faso",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "139",
+  "descricao": "Vancouver",
+  "pais": "Canadá",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "740",
+  "descricao": "Varsóvia",
+  "pais": "Polônia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "070",
+  "descricao": "Viena",
+  "pais": "Áustria",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "297",
+  "descricao": "Washington D.C.",
+  "pais": "Estados Unidos da América",
+  "tipoRepresentacao": "Consulado e Embaixada do Brasil"
+ },
+ {
+  "codigo": "670",
+  "descricao": "Wellington",
+  "pais": "Nova Zelândia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "630",
+  "descricao": "Windhoek",
+  "pais": "Namíbia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "161",
+  "descricao": "Xangai",
+  "pais": "China",
+  "tipoRepresentacao": "Consulado do Brasil"
+ },
+ {
+  "codigo": "608",
+  "descricao": "Yangon",
+  "pais": "Mianmar",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "216",
+  "descricao": "Zagreb",
+  "pais": "Croácia",
+  "tipoRepresentacao": "Embaixada do Brasil"
+ },
+ {
+  "codigo": "861",
+  "descricao": "Zurique",
+  "pais": "Suíça",
+  "tipoRepresentacao": "Consulado do Brasil"
+ }
+]

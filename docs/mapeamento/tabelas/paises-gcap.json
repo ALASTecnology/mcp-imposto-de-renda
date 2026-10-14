@@ -1,0 +1,1250 @@
+[
+ {
+  "codigo": "013",
+  "descricao": "Afeganistão",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "756",
+  "descricao": "África do Sul",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "015",
+  "descricao": "Aland, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "017",
+  "descricao": "Albânia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "023",
+  "descricao": "Alemanha",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "037",
+  "descricao": "Andorra",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "040",
+  "descricao": "Angola",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "041",
+  "descricao": "Anguilla",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "042",
+  "descricao": "Antártica",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "043",
+  "descricao": "Antigua E Barbuda",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "053",
+  "descricao": "Arábia Saudita",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "059",
+  "descricao": "Argélia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "063",
+  "descricao": "Argentina",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "064",
+  "descricao": "Armênia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "065",
+  "descricao": "Aruba",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "069",
+  "descricao": "Austrália",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "072",
+  "descricao": "Áustria",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "073",
+  "descricao": "Azerbaijão, República do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "077",
+  "descricao": "Bahamas, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "080",
+  "descricao": "Bahrein, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "081",
+  "descricao": "Bangladesh",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "083",
+  "descricao": "Barbados",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "085",
+  "descricao": "Belarus, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "087",
+  "descricao": "Bélgica",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "088",
+  "descricao": "Belize",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "229",
+  "descricao": "Benin",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "090",
+  "descricao": "Bermudas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "097",
+  "descricao": "Bolívia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "099",
+  "descricao": "Bonaire, Saint Eustatius e Saba",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "098",
+  "descricao": "Bosnia-Herzegovina (República da)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "101",
+  "descricao": "Botsuana",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "102",
+  "descricao": "Bouvet, Ilha",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "105",
+  "descricao": "Brasil",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "108",
+  "descricao": "Brunei",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "111",
+  "descricao": "Bulgária, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "031",
+  "descricao": "Burkina Faso",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "115",
+  "descricao": "Burundi",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "119",
+  "descricao": "Butão",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "127",
+  "descricao": "Cabo Verde, República de",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "145",
+  "descricao": "Camarões",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "141",
+  "descricao": "Camboja",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "149",
+  "descricao": "Canadá",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "154",
+  "descricao": "Catar",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "137",
+  "descricao": "Cayman, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "153",
+  "descricao": "Cazaquistão, República do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "788",
+  "descricao": "Chade",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "158",
+  "descricao": "Chile",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "160",
+  "descricao": "China, República Popular",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "163",
+  "descricao": "Chipre",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "511",
+  "descricao": "Christmas,Ilhas (Navidad)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "741",
+  "descricao": "Cingapura",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "165",
+  "descricao": "Cocos-Keeling, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "169",
+  "descricao": "Colômbia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "173",
+  "descricao": "Comores, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "177",
+  "descricao": "Congo",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "888",
+  "descricao": "Congo, República Democrática do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "183",
+  "descricao": "Cook, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "187",
+  "descricao": "Coréia (do Norte), Rep.Pop.Democrática",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "190",
+  "descricao": "Coréia (do Sul), República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "193",
+  "descricao": "Costa do Marfim",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "196",
+  "descricao": "Costa Rica",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "198",
+  "descricao": "Coveite",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "195",
+  "descricao": "Croácia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "199",
+  "descricao": "Cuba",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "200",
+  "descricao": "Curaçao",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "232",
+  "descricao": "Dinamarca",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "783",
+  "descricao": "Djibuti",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "235",
+  "descricao": "Dominica, Ilha",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "240",
+  "descricao": "Egito",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "687",
+  "descricao": "El Salvador",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "244",
+  "descricao": "Emirados Árabes Unidos",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "239",
+  "descricao": "Equador",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "243",
+  "descricao": "Eritreia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "247",
+  "descricao": "Eslovaca, República",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "246",
+  "descricao": "Eslovênia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "245",
+  "descricao": "Espanha",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "249",
+  "descricao": "Estados Unidos",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "251",
+  "descricao": "Estônia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "253",
+  "descricao": "Etiópia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "255",
+  "descricao": "Falkland (Ilhas Malvinas)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "259",
+  "descricao": "Feroe, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "870",
+  "descricao": "Fiji",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "267",
+  "descricao": "Filipinas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "271",
+  "descricao": "Finlândia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "161",
+  "descricao": "Formosa (Taiwan)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "275",
+  "descricao": "França",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "281",
+  "descricao": "Gabão",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "285",
+  "descricao": "Gambia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "289",
+  "descricao": "Gana",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "292",
+  "descricao": "Georgia do Sul e Sandwich do Sul, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "291",
+  "descricao": "Georgia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "293",
+  "descricao": "Gibraltar",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "297",
+  "descricao": "Granada",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "301",
+  "descricao": "Grécia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "305",
+  "descricao": "Groenlândia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "309",
+  "descricao": "Guadalupe",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "313",
+  "descricao": "Guam",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "317",
+  "descricao": "Guatemala",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "321",
+  "descricao": "Guernsey",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "337",
+  "descricao": "Guiana",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "325",
+  "descricao": "Guiana Francesa",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "329",
+  "descricao": "Guiné",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "334",
+  "descricao": "Guiné-Bissau",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "331",
+  "descricao": "Guiné-Equatorial",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "341",
+  "descricao": "Haiti",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "343",
+  "descricao": "Heard e Ilhas Mcdonald, Ilha",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "345",
+  "descricao": "Honduras",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "351",
+  "descricao": "Hong Kong",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "355",
+  "descricao": "Hungria, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "357",
+  "descricao": "Iemen",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "361",
+  "descricao": "Índia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "365",
+  "descricao": "Indonésia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "372",
+  "descricao": "Irã, República Islâmica do",
+  "tributacaoFavorecida": false,
+  "observacao": "Regime fiscal privilegiado restrito a: Ilha Queshm"
+ },
+ {
+  "codigo": "369",
+  "descricao": "Iraque",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "375",
+  "descricao": "Irlanda",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "379",
+  "descricao": "Islândia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "383",
+  "descricao": "Israel",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "386",
+  "descricao": "Itália",
+  "tributacaoFavorecida": false,
+  "observacao": "Regime fiscal privilegiado restrito a: Campione D' Italia"
+ },
+ {
+  "codigo": "391",
+  "descricao": "Jamaica",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "399",
+  "descricao": "Japão",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "393",
+  "descricao": "Jersey",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "403",
+  "descricao": "Jordânia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "411",
+  "descricao": "Kiribati",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "420",
+  "descricao": "Laos, Rep.Pop.Democr.do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "426",
+  "descricao": "Lesoto",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "427",
+  "descricao": "Letônia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "431",
+  "descricao": "Líbano",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "434",
+  "descricao": "Libéria",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "438",
+  "descricao": "Líbia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "440",
+  "descricao": "Liechtenstein",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "442",
+  "descricao": "Lituânia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "445",
+  "descricao": "Luxemburgo",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "447",
+  "descricao": "Macau",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "449",
+  "descricao": "Macedônia, Ant.Rep.Iugoslava",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "450",
+  "descricao": "Madagascar",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "455",
+  "descricao": "Malásia",
+  "tributacaoFavorecida": false,
+  "observacao": "Regime fiscal privilegiado restrito a: Wilayah Persekutuan Labuan"
+ },
+ {
+  "codigo": "458",
+  "descricao": "Malavi",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "461",
+  "descricao": "Maldivas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "464",
+  "descricao": "Mali",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "467",
+  "descricao": "Malta",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "359",
+  "descricao": "Man, Ilha de",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "472",
+  "descricao": "Marianas do Norte",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "474",
+  "descricao": "Marrocos",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "476",
+  "descricao": "Marshall, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "477",
+  "descricao": "Martinica",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "485",
+  "descricao": "Maurício",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "488",
+  "descricao": "Mauritânia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "489",
+  "descricao": "Mayotte",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "493",
+  "descricao": "México",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "093",
+  "descricao": "Mianmar (Birmânia)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "499",
+  "descricao": "Micronésia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "505",
+  "descricao": "Moçambique",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "494",
+  "descricao": "Moldavia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "495",
+  "descricao": "Mônaco",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "497",
+  "descricao": "Mongólia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "498",
+  "descricao": "Montenegro",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "501",
+  "descricao": "Montserrat, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "507",
+  "descricao": "Namíbia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "508",
+  "descricao": "Nauru",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "517",
+  "descricao": "Nepal",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "521",
+  "descricao": "Nicarágua",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "525",
+  "descricao": "Niger",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "528",
+  "descricao": "Nigéria",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "531",
+  "descricao": "Niue, Ilha",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "535",
+  "descricao": "Norfolk, Ilha",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "538",
+  "descricao": "Noruega",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "542",
+  "descricao": "Nova Caledônia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "548",
+  "descricao": "Nova Zelândia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "556",
+  "descricao": "Omã",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "566",
+  "descricao": "Pacífico, Ilhas do (Possessão dos EUA)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "573",
+  "descricao": "Países Baixos (Holanda)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "575",
+  "descricao": "Palau",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "578",
+  "descricao": "Palestina",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "580",
+  "descricao": "Panamá",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "545",
+  "descricao": "Papua Nova Guiné",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "576",
+  "descricao": "Paquistão",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "586",
+  "descricao": "Paraguai",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "589",
+  "descricao": "Peru",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "593",
+  "descricao": "Pitcairn, Ilha De",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "599",
+  "descricao": "Polinésia Francesa",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "603",
+  "descricao": "Polônia, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "611",
+  "descricao": "Porto Rico",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "607",
+  "descricao": "Portugal",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "623",
+  "descricao": "Quênia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "625",
+  "descricao": "Quirguiz, República da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "628",
+  "descricao": "Reino Unido",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "640",
+  "descricao": "República Centro-Africana",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "647",
+  "descricao": "República Dominicana",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "660",
+  "descricao": "Reunião, Ilha",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "670",
+  "descricao": "Romênia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "675",
+  "descricao": "Ruanda",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "676",
+  "descricao": "Rússia, Federação da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "685",
+  "descricao": "Saara Ocidental",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "677",
+  "descricao": "Salomão, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "690",
+  "descricao": "Samoa",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "691",
+  "descricao": "Samoa Americana",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "697",
+  "descricao": "San Marino",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "710",
+  "descricao": "Santa Helena",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "715",
+  "descricao": "Santa Lúcia",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "693",
+  "descricao": "São Bartolomeu",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "695",
+  "descricao": "São Cristovão e Neves, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "698",
+  "descricao": "São Martinho, Ilha de (Parte Francesa)",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "700",
+  "descricao": "São Pedro e Miquelon",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "720",
+  "descricao": "São Tomé e Príncipe, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "705",
+  "descricao": "São Vicente e Granadinas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "728",
+  "descricao": "Senegal",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "735",
+  "descricao": "Serra Leoa",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "737",
+  "descricao": "Servia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "731",
+  "descricao": "Seychelles",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "699",
+  "descricao": "São Martinho, Ilha de (Parte Holandesa)",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "744",
+  "descricao": "Síria, República Árabe da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "748",
+  "descricao": "Somália",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "750",
+  "descricao": "Sri Lanka",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "754",
+  "descricao": "Suazilândia",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "759",
+  "descricao": "Sudão",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "760",
+  "descricao": "Sudão do Sul",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "764",
+  "descricao": "Suécia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "767",
+  "descricao": "Suíça",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "770",
+  "descricao": "Suriname",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "755",
+  "descricao": "Svalbard e Jan Mayen",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "772",
+  "descricao": "Tadjiquistão, República do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "776",
+  "descricao": "Tailândia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "780",
+  "descricao": "Tanzania, Rep. Unida da",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "791",
+  "descricao": "Tcheca, República",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "781",
+  "descricao": "Terras Austrais Francesas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "782",
+  "descricao": "Território Britânico no Oceano Índico",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "795",
+  "descricao": "Timor Leste",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "800",
+  "descricao": "Togo",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "810",
+  "descricao": "Tonga",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "805",
+  "descricao": "Toquelau, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "815",
+  "descricao": "Trinidad e Tobago",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "820",
+  "descricao": "Tunísia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "823",
+  "descricao": "Turcas e Caicos, Ilhas",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "824",
+  "descricao": "Turcomenistão, República do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "827",
+  "descricao": "Turquia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "828",
+  "descricao": "Tuvalu",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "831",
+  "descricao": "Ucrânia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "833",
+  "descricao": "Uganda",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "845",
+  "descricao": "Uruguai",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "847",
+  "descricao": "Uzbequistão, República do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "551",
+  "descricao": "Vanuatu",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "848",
+  "descricao": "Vaticano, Est. da Cidade do",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "850",
+  "descricao": "Venezuela",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "858",
+  "descricao": "Vietnã",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "863",
+  "descricao": "Virgens, Ilhas (Britânicas)",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "866",
+  "descricao": "Virgens, Ilhas (E.U.A.)",
+  "tributacaoFavorecida": true
+ },
+ {
+  "codigo": "875",
+  "descricao": "Wallis e Futuna, Ilhas",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "890",
+  "descricao": "Zâmbia",
+  "tributacaoFavorecida": false
+ },
+ {
+  "codigo": "665",
+  "descricao": "Zimbabue",
+  "tributacaoFavorecida": false
+ }
+]

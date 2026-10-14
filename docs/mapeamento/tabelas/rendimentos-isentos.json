@@ -1,0 +1,124 @@
+[
+ {
+  "codigo": "01",
+  "descricao": "Bolsas de estudo e de pesquisa caracterizadas como doação",
+  "descricaoCompleta": "Bolsas de estudo e de pesquisa caracterizadas como doação, exceto médico-residente ou Pronatec, exclusivamente para proceder a estudos ou pesquisas e desde que os resultados dessas atividades não representem vantagem para o doador, nem importem contraprestação de serviços",
+  "observacao": "Texto de ajuda com destaque: Bolsas de estudo e de pesquisa caracterizadas como doação, [negrito]exceto médico-residente ou Pronatec[/negrito], exclusivamente para proceder a estudos ou pesquisas e desde que os resultados dessas atividades não representem vantagem para o doador, nem importem contraprestação de serviços"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Bolsas de médico-residente ou de participante do Pronatec",
+  "descricaoCompleta": "Bolsas de estudo e de pesquisa caracterizadas como doação, quando recebidas exclusivamente para proceder a estudos ou pesquisas, recebidas por médico-residente e por servidor da rede pública de educação profissional, científica e tecnológica que participe das atividades do Pronatec",
+  "observacao": "Texto de ajuda com destaque: Bolsas de estudo e de pesquisa caracterizadas como doação, quando recebidas exclusivamente para proceder a estudos ou pesquisas, recebidas por [negrito]médico-residente[/negrito] e por servidor da rede pública de educação profissional, científica e tecnológica que participe das atividades do [negrito]Pronatec[/negrito]"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Capital das apólices de seguro e pecúlio de previdência privada",
+  "descricaoCompleta": "Capital das apólices de seguro ou pecúlio pago por morte do segurado, prêmio de seguro restituído em qualquer caso e pecúlio recebido de entidades de previdência privada em decorrência de morte ou invalidez permanente"
+ },
+ {
+  "codigo": "04",
+  "descricao": "Indenizações por rescisão de contrato de trabalho, PDV e FGTS",
+  "descricaoCompleta": "Indenizações por rescisão de contrato de trabalho, inclusive a título de PDV, e por acidente de trabalho; e FGTS"
+ },
+ {
+  "codigo": "05",
+  "descricao": "Lucro na alienação de bens de pequeno valor",
+  "descricaoCompleta": "Ganho de capital na alienação de bem, direito ou conjunto de bens ou direitos da mesma natureza, alienados em um mesmo mês, de valor total de alienação até R$ 20.000,00, para ações alienadas no mercado de balcão, e R$ 35.000,00, nos demais casos"
+ },
+ {
+  "codigo": "06",
+  "descricao": "Lucro na alienação do único imóvel",
+  "descricaoCompleta": "Ganho de capital na alienação do único imóvel por valor igual ou inferior a R$ 440.000,00 e que, nos últimos 5 anos, não tenha efetuado nenhuma outra alienação de imóvel"
+ },
+ {
+  "codigo": "07",
+  "descricao": "Lucro na alienação de outros bens imóveis",
+  "descricaoCompleta": "Ganho de capital na venda de imóveis residenciais para aquisição, no prazo de 180 dias, de imóveis residenciais localizados no Brasil e redução sobre o ganho de capital"
+ },
+ {
+  "codigo": "08",
+  "descricao": "Lucro na alienação de moeda estrangeira em espécie",
+  "descricaoCompleta": "Ganho de capital na alienação de moeda estrangeira mantida em espécie cujo total de alienações, no ano-calendário, seja igual ou inferior ao equivalente a US$ 5,000.00"
+ },
+ {
+  "codigo": "09",
+  "descricao": "Lucros e dividendos recebidos",
+  "descricaoCompleta": "Lucros e dividendos recebidos"
+ },
+ {
+  "codigo": "10",
+  "descricao": "Parcela isenta de aposentadoria de maior de 65 anos",
+  "descricaoCompleta": "Parcela isenta de proventos de aposentadoria, reserva remunerada, reforma e pensão de declarante com 65 anos ou mais"
+ },
+ {
+  "codigo": "11",
+  "descricao": "Pensão, aposentadoria ou reforma por doença grave ou por acidente",
+  "descricaoCompleta": "Pensão, proventos de aposentadoria ou reforma por moléstia grave ou aposentadoria ou reforma por acidente  em serviço"
+ },
+ {
+  "codigo": "12",
+  "descricao": "Rendimentos de poupanças, letras hipotecárias, LCI, LCA, CRI, CRA",
+  "descricaoCompleta": "Rendimentos de cadernetas de poupança, letras hipotecárias, letras de crédito do agronegócio e imobiliário (LCA e LCI) e certificados de recebíveis do agronegócio e imobiliários (CRA e CRI)"
+ },
+ {
+  "codigo": "13",
+  "descricao": "Rendimentos de sócio de ME ou optante pelo Simples, exceto pró-labore",
+  "descricaoCompleta": "Rendimento de sócio ou titular de microempresa ou empresa de pequeno porte optante pelo Simples Nacional, exceto pro labore, aluguéis e serviços prestados"
+ },
+ {
+  "codigo": "14",
+  "descricao": "Transferências patrimoniais – doações e heranças",
+  "descricaoCompleta": "Transferências patrimoniais – doações e heranças"
+ },
+ {
+  "codigo": "16",
+  "descricao": "Imposto de anos anteriores compensado judicialmente",
+  "descricaoCompleta": "Imposto sobre a renda de anos-calendário anteriores compensado judicialmente neste ano-calendário"
+ },
+ {
+  "codigo": "17",
+  "descricao": "75% dos rendimentos em moeda estrangeira de servidores do Governo",
+  "descricaoCompleta": "75% (setenta e cinco por cento) dos rendimentos do trabalho assalariado recebidos em moeda estrangeira por servidores de autarquias ou repartições do Governo Brasileiro situadas no exterior, convertidos em reais"
+ },
+ {
+  "codigo": "18",
+  "descricao": "Incorporação de reservas ao capital/Bonificações em ações",
+  "descricaoCompleta": "Incorporação de reservas ao capital / Bonificações em ações"
+ },
+ {
+  "codigo": "19",
+  "descricao": "Transferências patrimoniais – meação e divórcio",
+  "descricaoCompleta": "Transferências patrimoniais – meação e dissolução da sociedade conjugal e da unidade familiar"
+ },
+ {
+  "codigo": "20",
+  "descricao": "Ganhos líquidos de ações até R$ 20.000,00",
+  "descricaoCompleta": "Ganhos líquidos em operações no mercado à vista de ações negociadas em bolsas de valores nas alienações realizadas até R$ 20.000,00 em cada mês, para o conjunto de ações"
+ },
+ {
+  "codigo": "21",
+  "descricao": "Ganhos líquidos com ouro até R$ 20.000,00",
+  "descricaoCompleta": "Ganhos líquidos em operações com ouro, ativo financeiro, nas alienações realizadas até R$ 20.000,00 em cada mês"
+ },
+ {
+  "codigo": "23",
+  "descricao": "Rendimento bruto, transporte de carga (max. 90%)",
+  "descricaoCompleta": "Rendimento bruto, até o máximo de 90%, da prestação de serviços decorrente do transporte de carga e com trator, máquina de terraplenagem, colheitadeira e assemelhados"
+ },
+ {
+  "codigo": "24",
+  "descricao": "Rendimento bruto, transporte de passageiros (max. 40%)",
+  "descricaoCompleta": "Rendimento bruto, até o máximo de 40%, da prestação de serviços decorrente do transporte de passageiros"
+ },
+ {
+  "codigo": "25",
+  "descricao": "Restituição de imposto sobre a renda de anos-calendário anteriores",
+  "descricaoCompleta": "Restituição do imposto sobre a renda de anos-calendário anteriores"
+ },
+ {
+  "codigo": "26",
+  "descricao": "Outros",
+  "descricaoCompleta": "Outros"
+ }
+]

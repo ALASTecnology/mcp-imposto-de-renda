@@ -1,0 +1,105 @@
+[
+ {
+  "codigo": "01",
+  "descricao": "Empregado de empresa do setor privado, exceto de instituições financeiras",
+  "descricaoResumida": "Empregado setor privado, exceto de inst. financeiras"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Empregado de instituições financeiras públicas e privadas"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Empregado ou contratado de organismo internacional e de organização não-governamental",
+  "descricaoResumida": "Empregado ou contratado de organismo internacional e de orga"
+ },
+ {
+  "codigo": "11",
+  "descricao": "Profissional liberal ou autônomo sem vínculo de emprego"
+ },
+ {
+  "codigo": "12",
+  "descricao": "Proprietário de empresa ou de firma individual ou empregador-titular",
+  "descricaoResumida": "Proprietário de empresa ou de firma individual ou empregador"
+ },
+ {
+  "codigo": "13",
+  "descricao": "Capitalista, que auferiu rendimentos de capital, inclusive de aluguéis",
+  "descricaoResumida": "Capitalista, que auferiu rendimentos de capital, inclusive d"
+ },
+ {
+  "codigo": "14",
+  "descricao": "Microempreendedor individual (MEI)"
+ },
+ {
+  "codigo": "21",
+  "descricao": "Membro ou servidor público da administração direta federal"
+ },
+ {
+  "codigo": "22",
+  "descricao": "Servidor público de autarquia ou fundação federal"
+ },
+ {
+  "codigo": "23",
+  "descricao": "Empregado de empresa pública ou de sociedade de economia mista federal, exceto de instituições financeiras",
+  "descricaoResumida": "Empregado de empresa pública ou de sociedade de economia mis"
+ },
+ {
+  "codigo": "31",
+  "descricao": "Membro ou servidor público da administração direta estadual e do Distrito Federal",
+  "descricaoResumida": "Membro ou servidor público da administração direta estadual"
+ },
+ {
+  "codigo": "32",
+  "descricao": "Servidor público de autarquia ou fundação estadual e do Distrito Federal",
+  "descricaoResumida": "Servidor público de autarquia ou fundação estadual e do Dist"
+ },
+ {
+  "codigo": "33",
+  "descricao": "Empregado de empresa pública ou de sociedade de economia mista estadual e do Distrito Federal, exceto de instituições financeiras",
+  "descricaoResumida": "Empregado de empresa pública ou de sociedade de economia mis"
+ },
+ {
+  "codigo": "41",
+  "descricao": "Membro ou servidor público da administração direta municipal"
+ },
+ {
+  "codigo": "42",
+  "descricao": "Servidor público de autarquia ou fundação municipal"
+ },
+ {
+  "codigo": "43",
+  "descricao": "Empregado de empresa pública ou de sociedade de economia mista municipal",
+  "descricaoResumida": "Empregado de empresa pública ou de sociedade de economia mis"
+ },
+ {
+  "codigo": "51",
+  "descricao": "Militar"
+ },
+ {
+  "codigo": "61",
+  "descricao": "Aposentado, militar da reserva ou reformado e pensionista de previdência, exceto portador de moléstia grave",
+  "descricaoResumida": "Aposentado, militar da reserva ou reformado e pensionista de"
+ },
+ {
+  "codigo": "62",
+  "descricao": "Aposentado, militar da reserva ou reformado e pensionista de previdência oficial portador de moléstia grave",
+  "descricaoResumida": "Aposentado, militar reformado e pensionista de previdência o"
+ },
+ {
+  "codigo": "71",
+  "descricao": "Beneficiário de pensão alimentícia"
+ },
+ {
+  "codigo": "72",
+  "descricao": "Bolsista"
+ },
+ {
+  "codigo": "81",
+  "descricao": "Espólio"
+ },
+ {
+  "codigo": "91",
+  "descricao": "Natureza da ocupação não especificada anteriormente"
+ }
+]

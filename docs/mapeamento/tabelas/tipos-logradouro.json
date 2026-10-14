@@ -1,0 +1,202 @@
+[
+ {
+  "codigo": "AEROPORTO",
+  "descricao": "Aeroporto"
+ },
+ {
+  "codigo": "ALAMEDA",
+  "descricao": "Alameda"
+ },
+ {
+  "codigo": "AREA",
+  "descricao": "Área"
+ },
+ {
+  "codigo": "AVENIDA",
+  "descricao": "Avenida"
+ },
+ {
+  "codigo": "CAMPO",
+  "descricao": "Campo"
+ },
+ {
+  "codigo": "CHACARA",
+  "descricao": "Chácara"
+ },
+ {
+  "codigo": "COLONIA",
+  "descricao": "Colônia"
+ },
+ {
+  "codigo": "CONDOMINIO",
+  "descricao": "Condomínio"
+ },
+ {
+  "codigo": "CONJUNTO",
+  "descricao": "Conjunto"
+ },
+ {
+  "codigo": "DISTRITO",
+  "descricao": "Distrito"
+ },
+ {
+  "codigo": "ESPLANADA",
+  "descricao": "Esplanada"
+ },
+ {
+  "codigo": "ESTACAO",
+  "descricao": "Estação"
+ },
+ {
+  "codigo": "ESTRADA",
+  "descricao": "Estrada"
+ },
+ {
+  "codigo": "FAVELA",
+  "descricao": "Favela"
+ },
+ {
+  "codigo": "FAZENDA",
+  "descricao": "Fazenda"
+ },
+ {
+  "codigo": "FEIRA",
+  "descricao": "Feira"
+ },
+ {
+  "codigo": "JARDIM",
+  "descricao": "Jardim"
+ },
+ {
+  "codigo": "LADEIRA",
+  "descricao": "Ladeira"
+ },
+ {
+  "codigo": "LAGO",
+  "descricao": "Lago"
+ },
+ {
+  "codigo": "LAGOA",
+  "descricao": "Lagoa"
+ },
+ {
+  "codigo": "LARGO",
+  "descricao": "Largo"
+ },
+ {
+  "codigo": "LINHA",
+  "descricao": "Linha"
+ },
+ {
+  "codigo": "LOTEAMENTO",
+  "descricao": "Loteamento"
+ },
+ {
+  "codigo": "MARGEM",
+  "descricao": "Margem"
+ },
+ {
+  "codigo": "MORRO",
+  "descricao": "Morro"
+ },
+ {
+  "codigo": "NUCLEO",
+  "descricao": "Núcleo"
+ },
+ {
+  "codigo": "OUTROS",
+  "descricao": "Outros"
+ },
+ {
+  "codigo": "PARQUE",
+  "descricao": "Parque"
+ },
+ {
+  "codigo": "PASSAGEM",
+  "descricao": "Passagem"
+ },
+ {
+  "codigo": "PASSARELA",
+  "descricao": "Passarela"
+ },
+ {
+  "codigo": "PATIO",
+  "descricao": "Pátio"
+ },
+ {
+  "codigo": "PRACA",
+  "descricao": "Praça"
+ },
+ {
+  "codigo": "PRAIA",
+  "descricao": "Praia"
+ },
+ {
+  "codigo": "QUADRA",
+  "descricao": "Quadra"
+ },
+ {
+  "codigo": "RECANTO",
+  "descricao": "Recanto"
+ },
+ {
+  "codigo": "RESIDENCIAL",
+  "descricao": "Residencial"
+ },
+ {
+  "codigo": "RODOVIA",
+  "descricao": "Rodovia"
+ },
+ {
+  "codigo": "RUA",
+  "descricao": "Rua"
+ },
+ {
+  "codigo": "SETOR",
+  "descricao": "Setor"
+ },
+ {
+  "codigo": "SITIO",
+  "descricao": "Sítio"
+ },
+ {
+  "codigo": "SUPERQUADRA",
+  "descricao": "Superquadra"
+ },
+ {
+  "codigo": "TRAVESSA",
+  "descricao": "Travessa"
+ },
+ {
+  "codigo": "TRECHO",
+  "descricao": "Trecho"
+ },
+ {
+  "codigo": "TREVO",
+  "descricao": "Trevo"
+ },
+ {
+  "codigo": "VALE",
+  "descricao": "Vale"
+ },
+ {
+  "codigo": "VEREDA",
+  "descricao": "Vereda"
+ },
+ {
+  "codigo": "VIA",
+  "descricao": "Via"
+ },
+ {
+  "codigo": "VIADUTO",
+  "descricao": "Viaduto"
+ },
+ {
+  "codigo": "VIELA",
+  "descricao": "Viela"
+ },
+ {
+  "codigo": "VILA",
+  "descricao": "Vila"
+ }
+]

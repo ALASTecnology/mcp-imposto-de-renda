@@ -1,0 +1,46 @@
+[
+ {
+  "codigo": "11",
+  "descricao": "Prédios/galpões/estábulos/mangueiras/currais/aviários/comportas/canais/açudes/barragens."
+ },
+ {
+  "codigo": "12",
+  "descricao": "Cercas e instalações para abrigo e/ou tratamento de animais."
+ },
+ {
+  "codigo": "13",
+  "descricao": "Eletrificação rural, telefone, rádio, bússola, sonda, radares."
+ },
+ {
+  "codigo": "14",
+  "descricao": "Culturas permanentes,essências florestais/pastagens artificiais."
+ },
+ {
+  "codigo": "15",
+  "descricao": "Produtos estocados."
+ },
+ {
+  "codigo": "16",
+  "descricao": "Tratores/veículos de carga/utilitários rurais/embarcações/aeronaves de uso agrícola."
+ },
+ {
+  "codigo": "17",
+  "descricao": "Motores e implementos agrícolas em geral."
+ },
+ {
+  "codigo": "18",
+  "descricao": "Equipamentos e veículos de tração animal."
+ },
+ {
+  "codigo": "19",
+  "descricao": "Outros bens móveis/imóveis/equipamentos da atividade rural."
+ },
+ {
+  "codigo": "20",
+  "descricao": "Poupança p/ aquisição bens móveis por intermédio de consórcio."
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros bens vinculados à atividade rural."
+ }
+]

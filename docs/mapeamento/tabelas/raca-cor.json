@@ -1,0 +1,27 @@
+[
+ {
+  "codigo": "0",
+  "descricao": "",
+  "observacao": "Descrição em branco no recurso original (opção não informada)."
+ },
+ {
+  "codigo": "1",
+  "descricao": "Amarela"
+ },
+ {
+  "codigo": "2",
+  "descricao": "Branca"
+ },
+ {
+  "codigo": "3",
+  "descricao": "Indígena"
+ },
+ {
+  "codigo": "4",
+  "descricao": "Parda"
+ },
+ {
+  "codigo": "5",
+  "descricao": "Preta"
+ }
+]

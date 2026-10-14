@@ -1,0 +1,1899 @@
+[
+ {
+  "codigo": "anoCalendario",
+  "descricao": "anoCalendario",
+  "valorBruto": "2025",
+  "valor": 2025,
+  "tipo": "inteiro",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducaoDependente",
+  "descricao": "deducaoDependente",
+  "valorBruto": "0000000227508",
+  "valor": 2275.08,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducaoDespesaInstrucao",
+  "descricao": "deducaoDespesaInstrucao",
+  "valorBruto": "0000000356150",
+  "valor": 3561.5,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducaoIncentivo",
+  "descricao": "deducaoIncentivo",
+  "valorBruto": "00600",
+  "valor": 6.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducaoLimiteContribuicaoPatronal",
+  "descricao": "deducaoLimiteContribuicaoPatronal",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducaoPrevidenciaPrivada",
+  "descricao": "deducaoPrevidenciaPrivada",
+  "valorBruto": "01200",
+  "valor": 12.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducoesIncDesporto",
+  "descricao": "deducoesIncDesporto",
+  "valorBruto": "00100",
+  "valor": 1.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducoesIncECA",
+  "descricao": "deducoesIncECA",
+  "valorBruto": "00300",
+  "valor": 3.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducoesIncIdoso",
+  "descricao": "deducoesIncIdoso",
+  "valorBruto": "00300",
+  "valor": 3.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducoesIncPronas",
+  "descricao": "deducoesIncPronas",
+  "valorBruto": "00100",
+  "valor": 1.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "deducoesIncPronon",
+  "descricao": "deducoesIncPronon",
+  "valorBruto": "00100",
+  "valor": 1.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "descontoLimiteDPadrao",
+  "descricao": "descontoLimiteDPadrao",
+  "valorBruto": "0000001675434",
+  "valor": 16754.34,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "descontoPercentualDPadrao",
+  "descricao": "descontoPercentualDPadrao",
+  "valorBruto": "02000",
+  "valor": 20.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "limiteBensDireitos",
+  "descricao": "limiteBensDireitos",
+  "valorBruto": "0000080000000",
+  "valor": 800000.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "limiteIAP",
+  "descricao": "limiteIAP",
+  "valorBruto": "0000050000000",
+  "valor": 500000.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "limiteIsencao",
+  "descricao": "limiteIsencao",
+  "valorBruto": "0000003558400",
+  "valor": 35584.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "limiteReceitaBrutaAtividadeRural",
+  "descricao": "limiteReceitaBrutaAtividadeRural",
+  "valorBruto": "0000017792000",
+  "valor": 177920.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "limiteRendimentoTributavel",
+  "descricao": "limiteRendimentoTributavel",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "limiteRendimentosIsentosTributExclusiva",
+  "descricao": "limiteRendimentosIsentosTributExclusiva",
+  "valorBruto": "0000020000000",
+  "valor": 200000.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "peMultaParteBSuplementar",
+  "descricao": "peMultaParteBSuplementar",
+  "valorBruto": "02000",
+  "valor": 20.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "peMultaSuplementar",
+  "descricao": "peMultaSuplementar",
+  "valorBruto": "07500",
+  "valor": 75.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "peMultaSuplementarReduzida",
+  "descricao": "peMultaSuplementarReduzida",
+  "valorBruto": "03750",
+  "valor": 37.5,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "percentualFaixa1",
+  "descricao": "percentualFaixa1",
+  "valorBruto": "00750",
+  "valor": 7.5,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "percentualFaixa2",
+  "descricao": "percentualFaixa2",
+  "valorBruto": "01500",
+  "valor": 15.0,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "percentualFaixa3",
+  "descricao": "percentualFaixa3",
+  "valorBruto": "02250",
+  "valor": 22.5,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "percentualFaixa4",
+  "descricao": "percentualFaixa4",
+  "valorBruto": "02750",
+  "valor": 27.5,
+  "tipo": "percentual",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "qtdDiasAcessoECAC",
+  "descricao": "qtdDiasAcessoECAC",
+  "valorBruto": "30",
+  "valor": 30,
+  "tipo": "inteiro",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "qtdMaxQuota",
+  "descricao": "qtdMaxQuota",
+  "valorBruto": "08",
+  "valor": 8,
+  "tipo": "inteiro",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "quantidadeMesesSemAumento",
+  "descricao": "quantidadeMesesSemAumento",
+  "valorBruto": "00",
+  "valor": 0,
+  "tipo": "inteiro",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "vaFolga1Mditec",
+  "descricao": "vaFolga1Mditec",
+  "valorBruto": "0000000000100",
+  "valor": 1.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "vaFolga2Mditec",
+  "descricao": "vaFolga2Mditec",
+  "valorBruto": "0000000001000",
+  "valor": 10.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "vaFolga3Mditec",
+  "descricao": "vaFolga3Mditec",
+  "valorBruto": "0000000005000",
+  "valor": 50.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "vaMinMdIAR",
+  "descricao": "vaMinMdIAR",
+  "valorBruto": "0000000001000",
+  "valor": 10.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "vaTolerancia",
+  "descricao": "vaTolerancia",
+  "valorBruto": "0000000001000",
+  "valor": 10.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteDescontoAnualFaixa1",
+  "descricao": "valorAjusteDescontoAnualFaixa1",
+  "valorBruto": "000000021350400",
+  "valor": 2135.04,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteDescontoAnualFaixa2",
+  "descricao": "valorAjusteDescontoAnualFaixa2",
+  "valorBruto": "000000046790300",
+  "valor": 4679.03,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteDescontoAnualFaixa3",
+  "descricao": "valorAjusteDescontoAnualFaixa3",
+  "valorBruto": "000000080549700",
+  "valor": 8054.97,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteDescontoAnualFaixa4",
+  "descricao": "valorAjusteDescontoAnualFaixa4",
+  "valorBruto": "000000108537800",
+  "valor": 10853.78,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteLimiteAnualFaixa1",
+  "descricao": "valorAjusteLimiteAnualFaixa1",
+  "valorBruto": "0000002846720",
+  "valor": 28467.2,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteLimiteAnualFaixa2",
+  "descricao": "valorAjusteLimiteAnualFaixa2",
+  "valorBruto": "0000003391980",
+  "valor": 33919.8,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteLimiteAnualFaixa3",
+  "descricao": "valorAjusteLimiteAnualFaixa3",
+  "valorBruto": "0000004501260",
+  "valor": 45012.6,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteLimiteAnualFaixa4",
+  "descricao": "valorAjusteLimiteAnualFaixa4",
+  "valorBruto": "0000005597616",
+  "valor": 55976.16,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorMensalComAumento",
+  "descricao": "valorMensalComAumento",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorMensalSemAumento",
+  "descricao": "valorMensalSemAumento",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorMinDevImposto",
+  "descricao": "valorMinDevImposto",
+  "valorBruto": "0000000001000",
+  "valor": 10.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorMinIAP",
+  "descricao": "valorMinIAP",
+  "valorBruto": "0000000001000",
+  "valor": 10.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorMinQuota",
+  "descricao": "valorMinQuota",
+  "valorBruto": "0000000005000",
+  "valor": 50.0,
+  "tipo": "valor",
+  "grupo": "anual"
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes1",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001694400",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes2",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001694400",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes3",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001694400",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes4",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001694400",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes5",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes6",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes7",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes8",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes9",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes10",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes11",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa1mes12",
+  "descricao": "valorAjusteDescontoMEFaixa1",
+  "valorBruto": "000000001821600",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes1",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003814400",
+  "valor": 381.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes2",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003814400",
+  "valor": 381.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes3",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003814400",
+  "valor": 381.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes4",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003814400",
+  "valor": 381.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes5",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes6",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes7",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes8",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes9",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes10",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes11",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa2mes12",
+  "descricao": "valorAjusteDescontoMEFaixa2",
+  "valorBruto": "000000003941600",
+  "valor": 394.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes1",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006627700",
+  "valor": 662.77,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes2",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006627700",
+  "valor": 662.77,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes3",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006627700",
+  "valor": 662.77,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes4",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006627700",
+  "valor": 662.77,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes5",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes6",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes7",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes8",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes9",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes10",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes11",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa3mes12",
+  "descricao": "valorAjusteDescontoMEFaixa3",
+  "valorBruto": "000000006754900",
+  "valor": 675.49,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes1",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000008960000",
+  "valor": 896.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes2",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000008960000",
+  "valor": 896.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes3",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000008960000",
+  "valor": 896.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes4",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000008960000",
+  "valor": 896.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes5",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes6",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes7",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes8",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes9",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes10",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes11",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteDescontoMEFaixa4mes12",
+  "descricao": "valorAjusteDescontoMEFaixa4",
+  "valorBruto": "000000009087300",
+  "valor": 908.73,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes1",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000225920",
+  "valor": 2259.2,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes2",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000225920",
+  "valor": 2259.2,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes3",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000225920",
+  "valor": 2259.2,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes4",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000225920",
+  "valor": 2259.2,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes5",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes6",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes7",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes8",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes9",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes10",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes11",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa1mes12",
+  "descricao": "valorAjusteLimiteMEFaixa1",
+  "valorBruto": "0000000242880",
+  "valor": 2428.8,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes1",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes2",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes3",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes4",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes5",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes6",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes7",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes8",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes9",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes10",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes11",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa2mes12",
+  "descricao": "valorAjusteLimiteMEFaixa2",
+  "valorBruto": "0000000282665",
+  "valor": 2826.65,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes1",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes2",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes3",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes4",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes5",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes6",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes7",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes8",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes9",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes10",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes11",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa3mes12",
+  "descricao": "valorAjusteLimiteMEFaixa3",
+  "valorBruto": "0000000375105",
+  "valor": 3751.05,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes1",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes2",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes3",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes4",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes5",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes6",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes7",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes8",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes9",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes10",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes11",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteMEFaixa4mes12",
+  "descricao": "valorAjusteLimiteMEFaixa4",
+  "valorBruto": "0000000466468",
+  "valor": 4664.68,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes1",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000169440000",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes2",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000169440000",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes3",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000169440000",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes4",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000169440000",
+  "valor": 169.44,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes5",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes6",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes7",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes8",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes9",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes10",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes11",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa1mes12",
+  "descricao": "valorAjusteLimiteRRAFaixa1",
+  "valorBruto": "00000000182160000",
+  "valor": 182.16,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes1",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000381438750",
+  "valor": 381.43875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes2",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000381438750",
+  "valor": 381.43875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes3",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000381438750",
+  "valor": 381.43875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes4",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000381438750",
+  "valor": 381.43875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes5",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes6",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes7",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes8",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes9",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes10",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes11",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa2mes12",
+  "descricao": "valorAjusteLimiteRRAFaixa2",
+  "valorBruto": "00000000394158750",
+  "valor": 394.15875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes1",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000662767500",
+  "valor": 662.7675,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes2",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000662767500",
+  "valor": 662.7675,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes3",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000662767500",
+  "valor": 662.7675,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes4",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000662767500",
+  "valor": 662.7675,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes5",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes6",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes7",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes8",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes9",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes10",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes11",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa3mes12",
+  "descricao": "valorAjusteLimiteRRAFaixa3",
+  "valorBruto": "00000000675487500",
+  "valor": 675.4875,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes1",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000896001500",
+  "valor": 896.0015,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes2",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000896001500",
+  "valor": 896.0015,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes3",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000896001500",
+  "valor": 896.0015,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes4",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000896001500",
+  "valor": 896.0015,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes5",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes6",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes7",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes8",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes9",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes10",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes11",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorAjusteLimiteRRAFaixa4mes12",
+  "descricao": "valorAjusteLimiteRRAFaixa4",
+  "valorBruto": "00000000908721500",
+  "valor": 908.7215,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes1",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes2",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes3",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes4",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes5",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes6",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes7",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes8",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes9",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes10",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes11",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes12",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ },
+ {
+  "codigo": "valorCotaSalMinCPMEmes13",
+  "descricao": "valorCotaSalMinCPME",
+  "valorBruto": "0000000000000",
+  "valor": 0.0,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 13
+ },
+ {
+  "codigo": "valorDedDependenteMEmes1",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 1
+ },
+ {
+  "codigo": "valorDedDependenteMEmes2",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 2
+ },
+ {
+  "codigo": "valorDedDependenteMEmes3",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 3
+ },
+ {
+  "codigo": "valorDedDependenteMEmes4",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 4
+ },
+ {
+  "codigo": "valorDedDependenteMEmes5",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 5
+ },
+ {
+  "codigo": "valorDedDependenteMEmes6",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 6
+ },
+ {
+  "codigo": "valorDedDependenteMEmes7",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 7
+ },
+ {
+  "codigo": "valorDedDependenteMEmes8",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 8
+ },
+ {
+  "codigo": "valorDedDependenteMEmes9",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 9
+ },
+ {
+  "codigo": "valorDedDependenteMEmes10",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 10
+ },
+ {
+  "codigo": "valorDedDependenteMEmes11",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 11
+ },
+ {
+  "codigo": "valorDedDependenteMEmes12",
+  "descricao": "valorDedDependenteME",
+  "valorBruto": "0000000018959",
+  "valor": 189.59,
+  "tipo": "valor",
+  "grupo": "mensal",
+  "mes": 12
+ }
+]

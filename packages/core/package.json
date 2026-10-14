@@ -1,0 +1,25 @@
+{
+  "name": "@autoir/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Núcleo do AutoIR: modelo da declaração, codec DBK, cálculo e validação.",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": {
+      "@autoir/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}

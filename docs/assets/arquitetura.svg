@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="t d">
+  <title id="t">Arquitetura do AutoIR</title>
+  <desc id="d">O cliente MCP conversa por stdio com apps/cli, que usa packages/mcp, que usa packages/core. O core reúne leiautes por ano, codec .DBK, modelo das fichas, motor de cálculo 2026 e validações.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+    </marker>
+  </defs>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    .h{font-size:26px;font-weight:700}
+    .sub{font-size:16px;fill:#475569}
+    .b{font-size:19px;font-weight:700}
+    .s{font-size:15px;fill:#334155}
+    .xs{font-size:13px;fill:#475569}
+    .c{font-size:15px;font-weight:600;fill:#4C1D95}
+    .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ln{stroke:#475569;stroke-width:2;fill:none}
+  </style>
+  <rect x="1" y="1" width="1198" height="638" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="40" y="52" class="h">Arquitetura do AutoIR</text>
+  <text x="40" y="78" class="sub">Monorepo em três camadas. Cada seta aponta para a dependência.</text>
+
+  
+  <rect x="40" y="110" width="230" height="110" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="60" y="146" class="b">Cliente MCP</text>
+  <text x="60" y="172" class="s">seu assistente ou editor</text>
+  <text x="60" y="196" class="xs">fala o protocolo MCP</text>
+
+  
+  <rect x="40" y="250" width="230" height="110" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="60" y="286" class="b">Pasta autorizada</text>
+  <text x="60" y="312" class="s">arquivos .DBK e backups</text>
+  <text x="60" y="336" class="xs">nada fora dela é tocado</text>
+
+  
+  <rect x="340" y="100" width="820" height="130" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="364" y="136" class="b m">apps/cli</text>
+  <text x="480" y="136" class="s">binário <tspan class="m">autoir-mcp</tspan>, transporte stdio</text>
+  <g>
+    <rect x="364" y="158" width="200" height="48" rx="10" fill="#EDE9FE" stroke="#C4B5FD"/>
+    <text x="464" y="188" class="c" text-anchor="middle">Pasta autorizada</text>
+    <rect x="580" y="158" width="200" height="48" rx="10" fill="#EDE9FE" stroke="#C4B5FD"/>
+    <text x="680" y="188" class="c" text-anchor="middle">Backup automático</text>
+    <rect x="796" y="158" width="200" height="48" rx="10" fill="#EDE9FE" stroke="#C4B5FD"/>
+    <text x="896" y="188" class="c" text-anchor="middle">Escrita atômica</text>
+  </g>
+
+  
+  <rect x="340" y="270" width="820" height="100" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="364" y="306" class="b m">packages/mcp</text>
+  <text x="530" y="306" class="s">ferramentas MCP e esquemas de entrada</text>
+  <text x="364" y="342" class="s">Ler declaração, preencher fichas, calcular imposto, validar e exportar .DBK</text>
+
+  
+  <rect x="340" y="410" width="820" height="190" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="364" y="446" class="b m">packages/core</text>
+  <text x="532" y="446" class="s">regras de domínio puras, sem E/S e sem rede</text>
+  <g>
+    <rect x="364" y="468" width="146" height="108" rx="10" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="437" y="508" class="c" text-anchor="middle">Leiautes</text>
+    <text x="437" y="532" class="xs" text-anchor="middle">um por ano</text>
+    <text x="437" y="552" class="xs" text-anchor="middle">de exercício</text>
+
+    <rect x="522" y="468" width="146" height="108" rx="10" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="595" y="508" class="c" text-anchor="middle">Codec .DBK</text>
+    <text x="595" y="532" class="xs" text-anchor="middle">CRC32 por linha</text>
+    <text x="595" y="552" class="xs" text-anchor="middle">e registro T9</text>
+
+    <rect x="680" y="468" width="146" height="108" rx="10" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="753" y="508" class="c" text-anchor="middle">Modelo</text>
+    <text x="753" y="532" class="xs" text-anchor="middle">fichas da</text>
+    <text x="753" y="552" class="xs" text-anchor="middle">declaração</text>
+
+    <rect x="838" y="468" width="146" height="108" rx="10" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="911" y="508" class="c" text-anchor="middle">Motor 2026</text>
+    <text x="911" y="532" class="xs" text-anchor="middle">cálculo próprio,</text>
+    <text x="911" y="552" class="xs" text-anchor="middle">ao centavo</text>
+
+    <rect x="996" y="468" width="140" height="108" rx="10" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="1066" y="508" class="c" text-anchor="middle">Validações</text>
+    <text x="1066" y="532" class="xs" text-anchor="middle">entrada e</text>
+    <text x="1066" y="552" class="xs" text-anchor="middle">regras do ano</text>
+  </g>
+
+  
+  <path d="M270 150H334" class="ln" marker-end="url(#a)"/>
+  <text x="302" y="141" class="xs" text-anchor="middle">stdio</text>
+  <path d="M270 305H300V205H334" class="ln" stroke-dasharray="6 5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <path d="M750 230V264" class="ln" marker-end="url(#a)"/>
+  <text x="762" y="253" class="xs">usa</text>
+  <path d="M750 370V404" class="ln" marker-end="url(#a)"/>
+  <text x="762" y="393" class="xs">usa</text>
+
+  
+  <rect x="40" y="410" width="260" height="190" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="60" y="444" class="b" style="font-size:17px">Regra de dependência</text>
+  <text x="60" y="474" class="s">cli depende de mcp,</text>
+  <text x="60" y="496" class="s">mcp depende de core.</text>
+  <text x="60" y="526" class="s">core não depende de</text>
+  <text x="60" y="548" class="s">nenhum outro pacote.</text>
+  <path d="M60 578H100" class="ln" stroke-dasharray="6 5"/>
+  <text x="110" y="583" class="xs">leitura e escrita em disco</text>
+</svg>

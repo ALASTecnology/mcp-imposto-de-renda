@@ -1,0 +1,286 @@
+[
+ {
+  "codigo": "00001",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Jurídica - Titular",
+  "descricaoResumida": "Rendimentos PJ - Titular"
+ },
+ {
+  "codigo": "00002",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Jurídica - Dependentes",
+  "descricaoResumida": "Rendimentos PJ - Dependentes"
+ },
+ {
+  "codigo": "00003",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física e do Exterior  - Titular",
+  "descricaoResumida": "Rendimentos PF/Exterior - Titular"
+ },
+ {
+  "codigo": "00004",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física e do Exterior  - Dependentes",
+  "descricaoResumida": "Rendimentos PF/Exterior - Dependentes"
+ },
+ {
+  "codigo": "00005",
+  "descricao": "Bolsas de estudo e de pesquisa caracterizadas como doação, exceto médico-residente ou Pronatec, exclusivamente para proceder a estudos ou pesquisas e desde que os resultados dessas atividades não representem vantagem para o doador, nem importem contraprestação de serviços",
+  "descricaoResumida": "Bolsa de estudo, exceto médico-residente ou Pronatec"
+ },
+ {
+  "codigo": "00006",
+  "descricao": "Bolsas de estudo e de pesquisa caracterizadas como doação, quando recebidas exclusivamente para proceder a estudos ou pesquisas, recebidas por médico-residente e por servidor da rede pública de educação profissional, científica e tecnológica que participe das atividades do Pronatec",
+  "descricaoResumida": "Bolsa de estudo médico-residente ou Pronatec"
+ },
+ {
+  "codigo": "00007",
+  "descricao": "Capital das apólices de seguro ou pecúlio pago por morte do segurado, prêmio de seguro restituído em qualquer caso e pecúlio recebido de entidades de previdência privada em decorrência de morte ou invalidez permanente",
+  "descricaoResumida": "Apólice de seguro, pecúlio, prêmio em decorrência de morte/invalidez"
+ },
+ {
+  "codigo": "00008",
+  "descricao": "Indenizações por rescisão de contrato de trabalho, inclusive a título de PDV, e por acidente de trabalho; e FGTS",
+  "descricaoResumida": "Indenizações por recisão, acidente de trabalho e FGTS"
+ },
+ {
+  "codigo": "00009",
+  "descricao": "Ganho de capital na alienação de bem, direito ou conjunto de bens ou direitos da mesma natureza, alienados em um mesmo mês, de valor total de alienação até R$ 20.000,00, para ações alienadas no mercado de balcão, e R$ 35.000,00, nos demais casos",
+  "descricaoResumida": "Gcap bens até R$ 20.000,00 e ações até R$ 35.000,00"
+ },
+ {
+  "codigo": "00010",
+  "descricao": "Ganho de capital na alienação do único imóvel por valor igual ou inferior a R$ 440.000,00 e que, nos últimos 5 anos, não tenha efetuado nenhuma outra alienação de imóvel",
+  "descricaoResumida": "Gcap único imóvel inferior a R$ 440.000,00"
+ },
+ {
+  "codigo": "00011",
+  "descricao": "Ganho de capital na venda de imóveis residenciais para aquisição, no prazo de 180 dias, de imóveis residenciais localizados no Brasil e redução sobre o ganho de capital",
+  "descricaoResumida": "Gcap aquisição no prazo de 180 dias"
+ },
+ {
+  "codigo": "00012",
+  "descricao": "Ganho de capital na alienação de moeda estrangeira mantida em espécie cujo total de alienações, no ano-calendário, seja igual ou inferior ao equivalente a US$ 5,000.00",
+  "descricaoResumida": "GCAP Moeda - inferior a US$ 5,000.00"
+ },
+ {
+  "codigo": "00013",
+  "descricao": "Lucros e dividendos recebidos"
+ },
+ {
+  "codigo": "00014",
+  "descricao": "Parcela isenta de proventos de aposentadoria, reserva remunerada, reforma e pensão de declarante com 65 anos ou mais",
+  "descricaoResumida": "Parcela isenta, declarante com mais de 65 anos"
+ },
+ {
+  "codigo": "00015",
+  "descricao": "Pensão, proventos de aposentadoria ou reforma por moléstia grave ou aposentadoria ou reforma por acidente  em serviço",
+  "descricaoResumida": "Moléstia grave ou reforma por acidente de trabalho"
+ },
+ {
+  "codigo": "00016",
+  "descricao": "Rendimentos de cadernetas de poupança, letras hipotecárias, letras de crédito do agronegócio e imobiliário (LCA e LCI) e certificados de recebíveis do agronegócio e imobiliários (CRA e CRI)",
+  "descricaoResumida": "Rendimentos caderneta de poupança e outros"
+ },
+ {
+  "codigo": "00017",
+  "descricao": "Rendimento de sócio ou titular de microempresa ou empresa de pequeno porte optante pelo Simples Nacional, exceto pro labore, aluguéis e serviços prestados",
+  "descricaoResumida": "Rendimento  sócio/ titular de microempresa"
+ },
+ {
+  "codigo": "00018",
+  "descricao": "Transferências patrimoniais  - doações e heranças",
+  "descricaoResumida": "Transferências patrimoniais - doações e heranças"
+ },
+ {
+  "codigo": "00019",
+  "descricao": "Parcela não tributável correspondente à atividade rural",
+  "descricaoResumida": "Parcela não tributável - atividade rural"
+ },
+ {
+  "codigo": "00020",
+  "descricao": "Imposto sobre a renda de anos-calendário anteriores compensado judicialmente neste ano-calendário",
+  "descricaoResumida": "Imposto sobre a renda compensado judicialmente"
+ },
+ {
+  "codigo": "00021",
+  "descricao": "75% (setenta e cinco por cento) dos rendimentos do trabalho assalariado recebidos em moeda estrangeira por servidores de autarquias ou repartições do Governo Brasileiro situadas no exterior, convertidos em reais",
+  "descricaoResumida": "75% rend trabalho assalariado recebido em moeda estrangeira"
+ },
+ {
+  "codigo": "00022",
+  "descricao": "Incorporação de reservas ao capital / Bonificações em ações",
+  "descricaoResumida": "Incorporação de reservas ao capital / ações"
+ },
+ {
+  "codigo": "00023",
+  "descricao": "Transferências patrimoniais - meação e dissolução da sociedade conjugal e da unidade familiar",
+  "descricaoResumida": "Transferências patrimoniais - meação e divórcio"
+ },
+ {
+  "codigo": "00024",
+  "descricao": "Ganhos líquidos em operações no mercado à vista de ações negociadas em bolsas de valores nas alienações realizadas até R$ 20.000,00 em cada mês, para o conjunto de ações",
+  "descricaoResumida": "Ganhos líquidos de ações até R$ 20.000,00"
+ },
+ {
+  "codigo": "00025",
+  "descricao": "Ganhos líquidos em operações com ouro, ativo financeiro, nas alienações realizadas até R$ 20.000,00 em cada mês",
+  "descricaoResumida": "Ganhos líquidos com ouro até R$ 20.000,00"
+ },
+ {
+  "codigo": "00026",
+  "descricao": "Recuperação de prejuízos em renda variável (bolsa de valores, de mercadorias, de futuros e assemelhados, fundos de investimento imobiliário e Fiagro)",
+  "descricaoResumida": "Recuperação de prejuízos em renda variável"
+ },
+ {
+  "codigo": "00027",
+  "descricao": "Rendimento bruto, até o máximo de 90%, da prestação de serviços decorrente do transporte de carga e com trator, máquina de terraplenagem, colheitadeira e assemelhados",
+  "descricaoResumida": "Rendimento bruto, transporte de carga (max. 90%)"
+ },
+ {
+  "codigo": "00028",
+  "descricao": "Rendimento bruto, até o máximo de 40%, da prestação de serviços decorrente do transporte de passageiros",
+  "descricaoResumida": "Rendimento bruto, transporte de passageiros (max. 40%)"
+ },
+ {
+  "codigo": "00029",
+  "descricao": "Restituição do imposto sobre a renda de anos-calendário anteriores",
+  "descricaoResumida": "Restituição anos anteriores"
+ },
+ {
+  "codigo": "00030",
+  "descricao": "Outros"
+ },
+ {
+  "codigo": "00031",
+  "descricao": "13º salário"
+ },
+ {
+  "codigo": "00032",
+  "descricao": "Ganhos de capital na alienação de bens e/ou direitos"
+ },
+ {
+  "codigo": "00033",
+  "descricao": "Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridas em moeda estrangeira",
+  "descricaoResumida": "Ganhos de capital na alienação de bens/direitos moeda estrangeira"
+ },
+ {
+  "codigo": "00034",
+  "descricao": "Ganhos de capital na alienação moeda estrangeira em espécie"
+ },
+ {
+  "codigo": "00035",
+  "descricao": "Ganhos líquidos em renda variável (bolsa de valores, de mercadorias, de futuros e assemelhados, fundos de investimento imobiliário e Fiagro)",
+  "descricaoResumida": "Ganhos líquidos em renda variável"
+ },
+ {
+  "codigo": "00036",
+  "descricao": "Rendimentos de aplicações financeiras"
+ },
+ {
+  "codigo": "00037",
+  "descricao": "Rendimentos recebidos acumuladamente",
+  "descricaoResumida": "RRA - Titular"
+ },
+ {
+  "codigo": "00038",
+  "descricao": "13º salário recebido pelos dependentes",
+  "descricaoResumida": "13º salário - dependentes"
+ },
+ {
+  "codigo": "00039",
+  "descricao": "Rendimentos recebidos acumuladamente pelos dependentes",
+  "descricaoResumida": "RRA - Dependentes"
+ },
+ {
+  "codigo": "00040",
+  "descricao": "Juros sobre capital próprio"
+ },
+ {
+  "codigo": "00041",
+  "descricao": "Participação nos lucros ou resultados"
+ },
+ {
+  "codigo": "00042",
+  "descricao": "Outros"
+ },
+ {
+  "codigo": "00043",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Jurídica pelo Titular com Exigibilidade Suspensa",
+  "descricaoResumida": "Rend Trib Receb PJ - Titular - Exigibilidade suspensa"
+ },
+ {
+  "codigo": "00044",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Jurídica pelos Dependentes com Exigibilidade Suspensa",
+  "descricaoResumida": "Rend Trib Receb PJ - Dependentes - Exigibilidade suspensa"
+ },
+ {
+  "codigo": "00045",
+  "descricao": "Rendimentos Tributáveis de Pessoa Jurídica Recebidos Acumuladamente pelo Titular",
+  "descricaoResumida": "RRA - Titular"
+ },
+ {
+  "codigo": "00046",
+  "descricao": "Rendimentos Tributáveis de Pessoa Jurídica Recebidos Acumuladamente pelos Dependentes",
+  "descricaoResumida": "RRA - Dependentes"
+ },
+ {
+  "codigo": "00047",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Jurídica",
+  "descricaoResumida": "Recebidos PJ"
+ },
+ {
+  "codigo": "00048",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física",
+  "descricaoResumida": "Recebidos PF"
+ },
+ {
+  "codigo": "00049",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física - Trabalho não assalariado",
+  "descricaoResumida": "Trabalho não assalariado"
+ },
+ {
+  "codigo": "00050",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física - Aluguéis",
+  "descricaoResumida": "Aluguéis"
+ },
+ {
+  "codigo": "00051",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física -  Outros",
+  "descricaoResumida": "Outros"
+ },
+ {
+  "codigo": "00052",
+  "descricao": "Rendimentos Tributáveis Recebidos de Pessoa Física - Exterior",
+  "descricaoResumida": "Exterior"
+ },
+ {
+  "codigo": "00053",
+  "descricao": "Rendimentos Recebidos Acumuladamente - Ajuste Anual",
+  "descricaoResumida": "Recebidos Acumuladamente"
+ },
+ {
+  "codigo": "00054",
+  "descricao": "Rendimentos Tributáveis (Imposto com Exigibilidade Suspensa)",
+  "descricaoResumida": "Rendimentos Tributáveis (Exigibilidade Suspensa)"
+ },
+ {
+  "codigo": "00055",
+  "descricao": "Rendimentos Recebidos Acumuladamente - Exclusivo na Fonte",
+  "descricaoResumida": "Recebidos Acumuladamente"
+ },
+ {
+  "codigo": "00056",
+  "descricao": "Juros referentes aos Rendimentos Recebidos Acumuladamente"
+ },
+ {
+  "codigo": "00057",
+  "descricao": "Pensão Alimentícia"
+ },
+ {
+  "codigo": "00058",
+  "descricao": "Aplicações Financeiras e Lucros e Dividendos no Exterior (Lei 14.754/2023)",
+  "descricaoResumida": "Aplicações Financeiras e Lucros e Dividendos no Exterior Lei 14.754/23"
+ },
+ {
+  "codigo": "00059",
+  "descricao": "Prêmios líquidos obtidos em loterias de apostas de quota fixa - Lei 14.790/2023",
+  "descricaoResumida": "Prêmios líquidos em loterias de apostas quota fixa - Lei 14.790/2023"
+ }
+]

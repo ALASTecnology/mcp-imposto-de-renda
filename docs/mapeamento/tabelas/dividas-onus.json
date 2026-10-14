@@ -1,0 +1,27 @@
+[
+ {
+  "codigo": "11",
+  "descricao": "Estabelecimento bancário comercial.",
+  "descricaoResumida": "Estabelecimento bancário."
+ },
+ {
+  "codigo": "12",
+  "descricao": "Sociedades de crédito, financiamento e investimento."
+ },
+ {
+  "codigo": "13",
+  "descricao": "Outras pessoas jurídicas."
+ },
+ {
+  "codigo": "14",
+  "descricao": "Pessoas físicas."
+ },
+ {
+  "codigo": "15",
+  "descricao": "Empréstimos contraídos no exterior."
+ },
+ {
+  "codigo": "16",
+  "descricao": "Outras dívidas e ônus reais."
+ }
+]

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="t d">
+  <title id="t">Fluxo da declaração com o AutoIR</title>
+  <desc id="d">Você conversa com o cliente MCP, que chama o autoir-mcp por stdio. O autoir-mcp lê e grava o arquivo .DBK na sua máquina. Você abre o arquivo no programa oficial, confere e transmite pela via oficial. Nenhum dado vai para servidor do projeto.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+    </marker>
+  </defs>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    .h{font-size:26px;font-weight:700}
+    .sub{font-size:16px;fill:#475569}
+    .b{font-size:18px;font-weight:700}
+    .s{font-size:14px;fill:#334155}
+    .xs{font-size:13px;fill:#475569}
+    .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ln{stroke:#475569;stroke-width:2;fill:none}
+    .box{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.5}
+    .acc{fill:#F5F3FF;stroke:#8B5CF6;stroke-width:2}
+  </style>
+  <rect x="1" y="1" width="1198" height="578" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="40" y="52" class="h">Do pedido ao programa oficial</text>
+  <text x="40" y="78" class="sub">Tudo acontece no seu computador. O projeto não mantém servidor e não recebe nenhum dado.</text>
+
+  
+  <rect x="30" y="100" width="910" height="290" rx="16" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="50" y="128" class="b" style="fill:#5B21B6;font-size:16px">Seu computador</text>
+
+  <rect x="60" y="150" width="130" height="90" rx="12" class="box"/>
+  <text x="125" y="192" class="b" text-anchor="middle">Você</text>
+  <text x="125" y="216" class="xs" text-anchor="middle">pede e revisa</text>
+
+  <rect x="260" y="150" width="170" height="90" rx="12" class="box"/>
+  <text x="345" y="192" class="b" text-anchor="middle">Cliente MCP</text>
+  <text x="345" y="216" class="xs" text-anchor="middle">assistente ou editor</text>
+
+  <rect x="500" y="150" width="170" height="90" rx="12" class="acc"/>
+  <text x="585" y="192" class="b m" text-anchor="middle">autoir-mcp</text>
+  <text x="585" y="216" class="xs" text-anchor="middle">calcula e valida</text>
+
+  <rect x="740" y="150" width="170" height="90" rx="12" class="box"/>
+  <text x="825" y="192" class="b" text-anchor="middle">Arquivo .DBK</text>
+  <text x="825" y="216" class="xs" text-anchor="middle">na pasta autorizada</text>
+
+  <rect x="650" y="290" width="260" height="80" rx="12" class="box"/>
+  <text x="780" y="326" class="b" text-anchor="middle">Programa oficial do IRPF</text>
+  <text x="780" y="350" class="xs" text-anchor="middle">você abre, confere e corrige</text>
+
+  <text x="60" y="320" class="s">A área tracejada roda inteira na sua máquina.</text>
+  <text x="60" y="344" class="s">O autoir-mcp não abre conexão de rede.</text>
+
+  <path d="M190 195H254" class="ln" marker-end="url(#a)"/>
+  <text x="225" y="185" class="xs" text-anchor="middle">conversa</text>
+  <path d="M430 195H494" class="ln" marker-end="url(#a)"/>
+  <text x="465" y="185" class="xs" text-anchor="middle">stdio</text>
+  <path d="M670 195H734" class="ln" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="705" y="185" class="xs" text-anchor="middle">lê e grava</text>
+  <path d="M825 240V284" class="ln" marker-end="url(#a)"/>
+  <text x="815" y="268" class="xs" text-anchor="end">importa</text>
+
+  
+  <rect x="980" y="290" width="190" height="80" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="1075" y="320" class="b" text-anchor="middle">Transmissão</text>
+  <text x="1075" y="342" class="xs" text-anchor="middle">feita por você,</text><text x="1075" y="358" class="xs" text-anchor="middle">pela via oficial</text>
+  <path d="M910 330H974" class="ln" marker-end="url(#a)"/>
+
+  
+  <rect x="980" y="150" width="190" height="90" rx="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="1075" y="188" class="b" text-anchor="middle" style="fill:#991B1B">Servidor do projeto</text>
+  <text x="1075" y="212" class="xs" text-anchor="middle" style="fill:#991B1B">não existe e não recebe</text>
+  <text x="1075" y="228" class="xs" text-anchor="middle" style="fill:#991B1B">nenhum dado</text>
+  <path d="M585 150V112H1075V144" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="6 5"/>
+  <circle cx="960" cy="112" r="14" fill="#FFFFFF" stroke="#DC2626" stroke-width="2"/>
+  <path d="M953 105l14 14M967 105l-14 14" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/>
+
+  
+  <g>
+    <rect x="30" y="420" width="366" height="130" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="50" y="452" class="b" style="font-size:16px">Sem rede</text>
+    <text x="50" y="478" class="s">O servidor MCP só fala por stdio com</text>
+    <text x="50" y="498" class="s">o cliente. Não envia telemetria nem</text>
+    <text x="50" y="518" class="s">consulta serviços externos.</text>
+
+    <rect x="417" y="420" width="366" height="130" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="437" y="452" class="b" style="font-size:16px">A decisão final é sua</text>
+    <text x="437" y="478" class="s">O arquivo é aberto e conferido no</text>
+    <text x="437" y="498" class="s">programa oficial. Só você transmite</text>
+    <text x="437" y="518" class="s">a declaração.</text>
+
+    <rect x="804" y="420" width="366" height="130" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="824" y="452" class="b" style="font-size:16px">E o cliente MCP?</text>
+    <text x="824" y="478" class="s">O que você mostra ao seu assistente</text>
+    <text x="824" y="498" class="s">segue a política de privacidade dele.</text>
+    <text x="824" y="518" class="s">Escolha um cliente de sua confiança.</text>
+  </g>
+</svg>

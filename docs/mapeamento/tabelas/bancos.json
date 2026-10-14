@@ -1,0 +1,245 @@
+[
+ {
+  "codigo": "001",
+  "descricao": "BANCO DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "003",
+  "descricao": "BANCO DA AMAZONIA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "004",
+  "descricao": "BANCO DO NORDESTE DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "021",
+  "descricao": "BANESTES S.A. BANCO DO ESTADO DO ESPIRITO SANTO",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "025",
+  "descricao": "BANCO ALFA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "033",
+  "descricao": "BANCO SANTANDER (BRASIL) S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "037",
+  "descricao": "BANCO DO ESTADO DO PARA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "041",
+  "descricao": "BANCO DO ESTADO DO RIO GRANDE DO SUL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "047",
+  "descricao": "BANCO DO ESTADO DE SERGIPE S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "070",
+  "descricao": "BRB BANCO DE BRASILIA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "077",
+  "descricao": "BANCO INTER S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "084",
+  "descricao": "SISPRIME DO BRASIL - COOPERATIVA DE CRÉDITO",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "085",
+  "descricao": "COOPERATIVA CENTRAL DE CRÉDITO - AILOS",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "104",
+  "descricao": "CAIXA ECONOMICA FEDERAL",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "107",
+  "descricao": "BANCO BOCOM BBM S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "121",
+  "descricao": "BANCO AGIBANK S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "212",
+  "descricao": "BANCO ORIGINAL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "237",
+  "descricao": "BANCO BRADESCO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "320",
+  "descricao": "CHINA CONSTRUCTION BANK (BRASIL) BANCO MÚLTIPLO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "341",
+  "descricao": "ITAU UNIBANCO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "376",
+  "descricao": "BANCO JP MORGAN S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "389",
+  "descricao": "BANCO MERCANTIL DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "422",
+  "descricao": "BANCO SAFRA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "745",
+  "descricao": "BANCO CITIBANK S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "748",
+  "descricao": "BANCO COOPERATIVO SICREDI S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "755",
+  "descricao": "BANK OF AMERICA MERRILL LYNCH BANCO MULTIPLO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N",
+   "COL5": "S"
+  }
+ },
+ {
+  "codigo": "756",
+  "descricao": "BANCO COOPERATIVO SICOOB S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S",
+   "COL5": "S"
+  }
+ }
+]

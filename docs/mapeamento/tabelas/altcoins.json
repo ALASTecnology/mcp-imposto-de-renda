@@ -1,0 +1,66 @@
+[
+ {
+  "codigo": "ETH",
+  "descricao": "Ether"
+ },
+ {
+  "codigo": "XRP",
+  "descricao": "Ripple"
+ },
+ {
+  "codigo": "BCH",
+  "descricao": "Bitcoin Cash"
+ },
+ {
+  "codigo": "LTC",
+  "descricao": "Litecoin"
+ },
+ {
+  "codigo": "BNB",
+  "descricao": "Binance Coin"
+ },
+ {
+  "codigo": "SOL",
+  "descricao": "Solana"
+ },
+ {
+  "codigo": "ADA",
+  "descricao": "Cardano"
+ },
+ {
+  "codigo": "DOGE",
+  "descricao": "Dogecoin"
+ },
+ {
+  "codigo": "LINK",
+  "descricao": "Chainlink"
+ },
+ {
+  "codigo": "AVAX",
+  "descricao": "Avalanche"
+ },
+ {
+  "codigo": "MATIC",
+  "descricao": "Polygon"
+ },
+ {
+  "codigo": "DOT",
+  "descricao": "Polkadot"
+ },
+ {
+  "codigo": "WBTC",
+  "descricao": "Wrapped Bitcoin"
+ },
+ {
+  "codigo": "XLM",
+  "descricao": "Stellar"
+ },
+ {
+  "codigo": "NUCOIN",
+  "descricao": "Nubank Coin"
+ },
+ {
+  "codigo": "999",
+  "descricao": "Outras Altcoins"
+ }
+]

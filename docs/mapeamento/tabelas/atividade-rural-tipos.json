@@ -1,0 +1,38 @@
+[
+ {
+  "codigo": "10",
+  "descricao": "Agricultura - cultura do solo, independentemente do produto cultivado."
+ },
+ {
+  "codigo": "11",
+  "descricao": "Pecuária - criação, recriação ou engorda de animais de médio e grande porte."
+ },
+ {
+  "codigo": "12",
+  "descricao": "Extração e exploração vegetal e animal."
+ },
+ {
+  "codigo": "13",
+  "descricao": "Exploração da apicultura, avicultura, cunicultura, piscicultura, sericultura, suinocultura etc."
+ },
+ {
+  "codigo": "14",
+  "descricao": "Cultura de pequenos animais."
+ },
+ {
+  "codigo": "15",
+  "descricao": "Captura e venda do pescado in natura."
+ },
+ {
+  "codigo": "16",
+  "descricao": "Transformação de produtos agrícolas ou pecuários."
+ },
+ {
+  "codigo": "17",
+  "descricao": "Cultivo de florestas."
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outras."
+ }
+]

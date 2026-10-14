@@ -1,0 +1,5210 @@
+[
+ {
+  "codigo": "001",
+  "descricao": "BANCO DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "003",
+  "descricao": "BANCO DA AMAZONIA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "004",
+  "descricao": "BANCO DO NORDESTE DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "008",
+  "descricao": "BANCO DO ESTADO DE SAO PAULO S.A. - BANESPA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "010",
+  "descricao": "CC CREDICOAMO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "011",
+  "descricao": "CREDIT SUISSE HEDGING-GRIFFO CORRETORA DE VALORES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "012",
+  "descricao": "Banco Inbursa S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "013",
+  "descricao": "SENSO CORRETORA DE CAMBIO E VALORES MOBILIARIOS SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "014",
+  "descricao": "NATIXIS BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "015",
+  "descricao": "SC UBS Brasil",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "016",
+  "descricao": "CC SICOOB CREDITRAN",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "017",
+  "descricao": "BNY MELLON S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "018",
+  "descricao": "BM TRICURY",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "019",
+  "descricao": "BANCO AZTECA DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "020",
+  "descricao": "BANCO DO ESTADO DE ALAGOAS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "021",
+  "descricao": "BANESTES S.A. BANCO DO ESTADO DO ESPIRITO SANTO",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "022",
+  "descricao": "CREDIREAL -EM ABSORCAO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "024",
+  "descricao": "BANCO DE PERNAMBUCO S.A.-BANDEPE",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "025",
+  "descricao": "BANCO ALFA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "026",
+  "descricao": "BANCO DO ESTADO DO ACRE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "027",
+  "descricao": "BANCO DO ESTADO DE SANTA CATARINA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "028",
+  "descricao": "BANEB-EM ABSORCAO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "029",
+  "descricao": "Itau Consignado",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "030",
+  "descricao": "PARAIBAN-BANCO DA PARAIBA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "031",
+  "descricao": "BANCO BEG S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "032",
+  "descricao": "BANCO DO ESTADO DO MATO GROSSO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "033",
+  "descricao": "BANCO SANTANDER (BRASIL) S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "034",
+  "descricao": "BANCO BEA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "035",
+  "descricao": "BANCO BEC S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "036",
+  "descricao": "BANCO BRADESCO BBI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "037",
+  "descricao": "BANCO DO ESTADO DO PARA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "038",
+  "descricao": "BANCO BANESTADO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "039",
+  "descricao": "BANCO DO ESTADO DO PIAUI S.A.-BEP",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "040",
+  "descricao": "BANCO CARGILL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "041",
+  "descricao": "BANCO DO ESTADO DO RIO GRANDE DO SUL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "042",
+  "descricao": "BANCO J. SAFRA S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "044",
+  "descricao": "BANCO BVA SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "045",
+  "descricao": "OPPORTUNITY HDF PARTICIPACOES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "047",
+  "descricao": "BANCO DO ESTADO DE SERGIPE S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "048",
+  "descricao": "BANCO BEMGE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "059",
+  "descricao": "BANCO DO ESTADO DE RONDONIA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "060",
+  "descricao": "SC Confidence",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "061",
+  "descricao": "BANCO ABB SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "062",
+  "descricao": "HIPERCARD BANCO MULTIPLO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "063",
+  "descricao": "BRADESCARD",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "064",
+  "descricao": "BM Goldman Sachs",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "065",
+  "descricao": "BANCO ANDBANK (BRASIL) S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "066",
+  "descricao": "MORGAN STANLEY",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "067",
+  "descricao": "BANCO BANEB SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "068",
+  "descricao": "BANCO BEA S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "069",
+  "descricao": "BANCO CREFISA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "070",
+  "descricao": "BRB BANCO DE BRASILIA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "072",
+  "descricao": "BANCO MAIS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "073",
+  "descricao": "BB BANCO POPULAR DO BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "074",
+  "descricao": "BANCO J. SAFRA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "075",
+  "descricao": "ABN AMRO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "076",
+  "descricao": "KDB DO BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "077",
+  "descricao": "BANCO INTER S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "078",
+  "descricao": "BI HAITONG DO BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "079",
+  "descricao": "BANCO ORIGINAL DO AGRONEGOCIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "080",
+  "descricao": "BT Corretora de Cambio Ltda.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "081",
+  "descricao": "BBN BANCO BRASILEIRO DE NEGOCIOS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "082",
+  "descricao": "TOPAZIO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "083",
+  "descricao": "BANCO DA CHINA BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "084",
+  "descricao": "SISPRIME DO BRASIL - COOPERATIVA DE CRÉDITO",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "085",
+  "descricao": "COOPERATIVA CENTRAL DE CRÉDITO - AILOS",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "086",
+  "descricao": "OBOE CREDITO, FINANCIAMENTO E INVESTIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "087",
+  "descricao": "CC UNICRED CENTRAL SC/PR",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "088",
+  "descricao": "BANCO RANDON S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "089",
+  "descricao": "CC REGIAO DA MOGIANA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "090",
+  "descricao": "CC SICOOB UNIMAIS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "091",
+  "descricao": "CC Unicred Central RS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "092",
+  "descricao": "SCFI BRICKELL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "093",
+  "descricao": "SCM Polocred",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "094",
+  "descricao": "BANCO FINAXIS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "095",
+  "descricao": "TRAVELEX BANCO DE CAMBIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "096",
+  "descricao": "BANCO BMFBOVESPA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "097",
+  "descricao": "CREDISIS - CENTRAL DE COOPERATIVAS DE CREDITO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "098",
+  "descricao": "CREDIALIANCA COOPERATIVA DE CREDITO RURAL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "099",
+  "descricao": "Uniprime Central Nacional - Central Nacional de Cooperativa de Crédito Ltda",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "100",
+  "descricao": "SC Planner",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "101",
+  "descricao": "DTVM RENASCENCA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "102",
+  "descricao": "XP INVEST CORRETORA DE CAMBIO TIT E VALORES MOB SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "103",
+  "descricao": "EBS CAPITAL CORRETORA DE CAMBIO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "104",
+  "descricao": "CAIXA ECONOMICA FEDERAL",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "105",
+  "descricao": "LECCA CREDITO FINANCIAMENTO E INVESTIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "106",
+  "descricao": "BANCO ITABANCO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "107",
+  "descricao": "BANCO BOCOM BBM S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "108",
+  "descricao": "PORTOCRED S A CREDITO FINANCIAMENTO E INVESTIMENTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "109",
+  "descricao": "CREDIBANCO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "111",
+  "descricao": "DTVM Oliveira Trust",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "112",
+  "descricao": "CC UNICRED BRASIL CENTRAL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "113",
+  "descricao": "MAGLIANO S.A CORRETORA CAMBIO E VALORES MOBILIARIO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "114",
+  "descricao": "CENTRAL COOPERATIVA DE CREDITO NO ESTADO DO ESPIRI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "115",
+  "descricao": "ROTULA S/A CREDITO, FINANCIAMENTO E INVESTIMENTOS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "116",
+  "descricao": "BANCO UNICO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "117",
+  "descricao": "ADVANCED CORRETORA DE CAMBIO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "118",
+  "descricao": "STANDARD CHARTERED BANK BRASIL S.A. - BANCO DE INV",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "119",
+  "descricao": "WESTERN UNION",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "120",
+  "descricao": "BANCO RODOBENS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "121",
+  "descricao": "BANCO AGIBANK S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "122",
+  "descricao": "BRADESCO BERJ",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "123",
+  "descricao": "AGIPLAN FINANCEIRA S.A. CREDITO, FINANCIAMENTO E I",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "124",
+  "descricao": "BANCO WOORI BANK DO BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "125",
+  "descricao": "BRASIL PLURAL S.A. BANCO MULTIPLO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "126",
+  "descricao": "BR PARTNERS BANCO DE INVESTIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "127",
+  "descricao": "CODEPE - CORRETORA DE VALORES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "128",
+  "descricao": "BCam MS Bank",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "129",
+  "descricao": "BI UBS Brasil",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "130",
+  "descricao": "CARUANA S.A. SOCIEDADE DE CREDITO FINANCIAMENTO E",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "131",
+  "descricao": "SC Tullett Prebon",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "132",
+  "descricao": "ICBC DO BRASIL BANCO MúLTIPLO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "133",
+  "descricao": "CONFEDERACAO NACIONAL DAS COOPERATIVAS CENTRAIS DE",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "134",
+  "descricao": "DTVM BGC Liquidez",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "135",
+  "descricao": "SC Gradual",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "136",
+  "descricao": "CC UNICRED DO BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "137",
+  "descricao": "SC Multimoney",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "138",
+  "descricao": "SC Get Money",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "139",
+  "descricao": "INTESA SANPAOLO BRASIL S.A. - DTVM",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "140",
+  "descricao": "EASYNVEST - TíTULO CORRETORA DE VALORES SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "141",
+  "descricao": "BANCO MASTER DE INVESTIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "142",
+  "descricao": "BROKER BRASIL CORRETORA DE CAMBIO LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "143",
+  "descricao": "SC Treviso",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "144",
+  "descricao": "Bexs Banco de Cambio S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "145",
+  "descricao": "SC Levycam",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "146",
+  "descricao": "GUITTA CORRETORA DE CAMBIO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "147",
+  "descricao": "RICO CORRETORA DE TITULOS E VALORES MOBILIARIOS S/",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "148",
+  "descricao": "BANK OF AMERICA - BRASIL S.A. (BANCO MULTIPLO)",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "149",
+  "descricao": "FACTA FINANCEIRA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "151",
+  "descricao": "BANCO NOSSA CAIXA S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "153",
+  "descricao": "CAIXA ECONOMICA ESTADUAL DO RIO GRANDE DO SUL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "157",
+  "descricao": "ICAP DO BRASIL CORRETORA DE TIT. VAL. MOBILIARIOS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "159",
+  "descricao": "Casa do Credito S.A. Sociedade de Credito ao Micro",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "163",
+  "descricao": "COMMERZBANK",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "165",
+  "descricao": "BANCO NORCHEM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "166",
+  "descricao": "BANCO INTER-ATLANTICO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "167",
+  "descricao": "S HAYATA CORRETORA DE CAMBIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "168",
+  "descricao": "HSBC INVESTMENT BANK BRASIL S.A.-BANCO MULTIPLO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "169",
+  "descricao": "BM OLE BONSUCESSO CONSIGNADO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "172",
+  "descricao": "Albatross Corretora de Cambio e Valores S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "173",
+  "descricao": "BRL TRUST DISTRIBUIDORA DE TITULOS E VALORES MOBIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "174",
+  "descricao": "Pernambucanas Financiadora S.A. Credito, Financiam",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "175",
+  "descricao": "BANCO FINASA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "177",
+  "descricao": "GUIDE INVESTIMENTOS S.A. CORRETORA DE VALORES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "180",
+  "descricao": "SC CM Capital Markets",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "182",
+  "descricao": "Dacasa Financeira S/A - Sociedade de Credito, Fina",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "183",
+  "descricao": "Socred S.A. - Sociedade de Credito ao Microempreen",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "184",
+  "descricao": "ITAU BBA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "188",
+  "descricao": "Ativa Investimentos S.A. Corretora de Titulos Camb",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "189",
+  "descricao": "HS FINANCEIRA SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "190",
+  "descricao": "SERVICOOP - COOPERATIVA DE CREDITO DOS SERVIDORES PÚBLICOS ESTADUAIS DO RIO GRANDE DO SUL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "191",
+  "descricao": "NOVA FUTURA CORRETORA DE TíTULOS E VALORES MOBILIá",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "194",
+  "descricao": "Parmetal Distribuidora de Titulos e Valores Mobili",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "195",
+  "descricao": "VALOR SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "196",
+  "descricao": "Fair Corretora de Cambio S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "197",
+  "descricao": "Stone Pagamentos S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "199",
+  "descricao": "BANCO CAIXA GERAL - BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "200",
+  "descricao": "BANCO FICRISA AXELRUD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "201",
+  "descricao": "BANCO AXIAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "204",
+  "descricao": "BANCO BRADESCO CARTOES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "205",
+  "descricao": "BANCO SUL AMERICA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "206",
+  "descricao": "BANCO MARTINELLI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "208",
+  "descricao": "BANCO BTG PACTUAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "210",
+  "descricao": "DRESDNER BANK LATEINAMERIKA AKTIENGESELLSCHAFT",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "211",
+  "descricao": "BANCO SISTEMA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "212",
+  "descricao": "BANCO ORIGINAL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "213",
+  "descricao": "BANCO ARBI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "214",
+  "descricao": "BANCO DIBENS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "215",
+  "descricao": "BANCO COMERCIAL E DE INVESTIMENTO SUDAMERIS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "216",
+  "descricao": "BANCO REGIONAL MALCON S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "217",
+  "descricao": "BANCO JOHN DEERE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "218",
+  "descricao": "BANCO BS2 S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "219",
+  "descricao": "BANCO ZOGBI S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "220",
+  "descricao": "BANCO CREFISUL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "221",
+  "descricao": "BANCO CHASE FLEMING S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "222",
+  "descricao": "BANCO CREDIT AGRICOLE BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "224",
+  "descricao": "BANCO FIBRA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "225",
+  "descricao": "BANCO BRASCAN S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "228",
+  "descricao": "BANCO ICATU S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "229",
+  "descricao": "BANCO CRUZEIRO DO SUL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "230",
+  "descricao": "UNICARD BANCO MULTIPLO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "231",
+  "descricao": "BANCO BOAVISTA INTERATLANTICO S.A-EM ABSORCAO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "232",
+  "descricao": "BANCO INTERPART S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "233",
+  "descricao": "Banco Cifra S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "234",
+  "descricao": "BANCO LAVRA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "235",
+  "descricao": "BANK OF AMERICA - LIBERAL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "236",
+  "descricao": "BANCO CAMBIAL SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "237",
+  "descricao": "BANCO BRADESCO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "239",
+  "descricao": "BANCO BANCRED S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "240",
+  "descricao": "BANCO DE CREDITO REAL DE MINAS GERAIS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "241",
+  "descricao": "BANCO CLASSICO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "242",
+  "descricao": "BANCO EUROINVEST S.A. EUROBANCO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "243",
+  "descricao": "BANCO MAXIMA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "244",
+  "descricao": "BANCO CIDADE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "245",
+  "descricao": "BANCO EMPRESARIAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "246",
+  "descricao": "BANCO ABC BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "247",
+  "descricao": "BANCO UBS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "248",
+  "descricao": "BANCO BOA VISTA INTERATLANTICO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "249",
+  "descricao": "BANCO INVESTCRED UNIBANCO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "250",
+  "descricao": "BCV - Banco de Credito e Varejo S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "252",
+  "descricao": "BANCO FININVEST S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "253",
+  "descricao": "BEXS CORRETORA DE CAMBIO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "254",
+  "descricao": "PARANA BANCO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "255",
+  "descricao": "MILBANCO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "256",
+  "descricao": "BANCO GULFINVEST S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "258",
+  "descricao": "BANCO INDUSCRED S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "259",
+  "descricao": "MONEYCORP BANCO DE CAMBIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "260",
+  "descricao": "NU PAGAMENTOS S.A. - INSTITUIÇÃO DE PAGAMENTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "262",
+  "descricao": "BANCO BOREAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "263",
+  "descricao": "BANCO CACIQUE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "265",
+  "descricao": "BANCO FATOR S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "266",
+  "descricao": "BANCO CEDULA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "267",
+  "descricao": "BANCO BBM-COM.C.IMOB.CFI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "268",
+  "descricao": "BARI COMPANHIA HIPOTECARIA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "269",
+  "descricao": "HSBC Brasil S.A. Banco de Investimento",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "270",
+  "descricao": "Sagitur Corretora de Cambio Ltda.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "271",
+  "descricao": "IB Corretora de Cambio, Titulos e Valores Mobiliar",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "272",
+  "descricao": "AGK Corretora de Cambio S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "273",
+  "descricao": "Cooperativa de Credito Rural de Sao Miguel do Oest",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "274",
+  "descricao": "MONEY PLUS SOCIEDADE DE CREDITO AO MICROEMPREENDED",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "275",
+  "descricao": "BANCO REAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "276",
+  "descricao": "Senff S.A. - Credito, Financiamento e Investimento",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "277",
+  "descricao": "BANCO PLANIBANC S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "278",
+  "descricao": "GENIAL INVESTIMENTOS CORRETORA DE VALORES MOBILIAR",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "279",
+  "descricao": "COOPERATIVA DE CREDITO RURAL DE PRIMAVERA DO LESTE",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "280",
+  "descricao": "Avista S.A. Credito, Financiamento e Investimento",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "281",
+  "descricao": "COOPERATIVA DE CREDITO RURAL COOPAVEL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "282",
+  "descricao": "BANCO BRASILEIRO COMERCIAL S.A.- BBC",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "283",
+  "descricao": "RB Capital Investimentos Distribuidora de Titulos",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "285",
+  "descricao": "Frente Corretora de Cambio Ltda.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "286",
+  "descricao": "Cooperativa de Credito Rural de Ouro Sulcredi/Ouro",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "288",
+  "descricao": "Carol Distribuidora de Titulos e Valores Mobiliari",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "289",
+  "descricao": "DECYSEO CORRETORA DE CAMBIO LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "290",
+  "descricao": "PAGSEGURO INTERNET S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "291",
+  "descricao": "BANCO BCN S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "292",
+  "descricao": "BS2 Distribuidora de Titulos e Valores Mobiliarios",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "293",
+  "descricao": "Lastro RDV Distribuidora de Titulos e Valores Mobi",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "294",
+  "descricao": "BCR/EM ABSORCAO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "296",
+  "descricao": "Vision S.A. Corretora de Cambio",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "298",
+  "descricao": "Vip's Corretora de Cambio Ltda.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "299",
+  "descricao": "Sorocred - Credito, Financiamento e Investimento S",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "300",
+  "descricao": "BANCO DE LA NACION ARGENTINA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "301",
+  "descricao": "BPP Instituicao de Pagamento S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "302",
+  "descricao": "BANCO DO PROGRESSO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "303",
+  "descricao": "BANCO HNF S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "304",
+  "descricao": "BANCO PONTUAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "305",
+  "descricao": "FOURTRADE CORRETORA DE CâMBIO LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "306",
+  "descricao": "Portopar Distribuidora de Titulos e Valores Mobili",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "307",
+  "descricao": "Terra Investimentos Distribuidora de Titulos e Val",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "309",
+  "descricao": "Cambionet Corretora de Cambio Ltda.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "310",
+  "descricao": "Vortx Distribuidora de Titulos e Valores Mobiliari",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "311",
+  "descricao": "DOURADA CORRETORA DE CÂMBIO LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "312",
+  "descricao": "HSCM - SOCIEDADE DE CRÉDITO AO MICROEMPREENDEDOR E",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "313",
+  "descricao": "AMAZÔNIA CORRETORA DE CÂMBIO LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "315",
+  "descricao": "PI DISTRIBUIDORA DE TITULOS E VALORES MOBILIARIOS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "318",
+  "descricao": "BANCO BMG S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "319",
+  "descricao": "OM DISTRIBUIDORA DE TITULOS E VALORES MOBILIARIOS",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "320",
+  "descricao": "CHINA CONSTRUCTION BANK (BRASIL) BANCO MÚLTIPLO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "321",
+  "descricao": "CREFAZ SOCIEDADE DE CREDITO AO MICROEMPREENDEDOR E",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "322",
+  "descricao": "COOPERATIVA DE CREDITO RURAL DE ABELARDO LUZ - SUL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "323",
+  "descricao": "MERCADOPAGO.COM REPRESENTACOES LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "324",
+  "descricao": "CARTOS SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "325",
+  "descricao": "ORAMA DISTRIBUIDORA DE TITULOS E VALORES MOBILIARI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "326",
+  "descricao": "PARATI - CREDITO, FINANCIAMENTO E INVESTIMENTO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "328",
+  "descricao": "COOPERATIVA DE ECONOMIA E CRÉDITO MÚTUO DOS FABRIC",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "329",
+  "descricao": "QI SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "330",
+  "descricao": "Banco Bari de Investimentos e Financiamentos S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "331",
+  "descricao": "FRAM CAPITAL DISTRIBUIDORA DE TITULOS E VALORES MO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "332",
+  "descricao": "ACESSO SOLUCOES DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "334",
+  "descricao": "BANCO BESA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "335",
+  "descricao": "BANCO DIGIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "336",
+  "descricao": "BANCO C6 S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "340",
+  "descricao": "SUPER PAGAMENTOS E ADMINISTRACAO DE MEIOS ELETRONI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "341",
+  "descricao": "ITAU UNIBANCO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "342",
+  "descricao": "CREDITAS SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "343",
+  "descricao": "FFA SOCIEDADE DE CREDITO AO MICROEMPREENDEDOR E A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "346",
+  "descricao": "BANCO BFB _ EM ABSORCAO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "347",
+  "descricao": "BANCO SUDAMERIS DO BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "348",
+  "descricao": "BANCO XP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "349",
+  "descricao": "AL5 S.A. - CREDITO, FINANCIAMENTO E INVESTIMENT",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "350",
+  "descricao": "COOPERATIVA DE CRÉDITO RURAL DE PEQUENOS AGRICULTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "351",
+  "descricao": "BANCO SANTANDER S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "352",
+  "descricao": "TORO CORRETORA DE TITULOS E VALORES MOBILIARIOS LT",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "353",
+  "descricao": "BANCO SANTANDER BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "354",
+  "descricao": "NECTON INVESTIMENTOS S.A. CORRETORA DE VALORES MOB",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "355",
+  "descricao": "OTIMO SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "356",
+  "descricao": "BANCO ABN AMRO REAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "358",
+  "descricao": "MIDWAY S.A. - CRÉDITO, FINANCIAMENTO E INVESTIMENT",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "359",
+  "descricao": "ZEMA CRÉDITO, FINANCIAMENTO E INVESTIMENTO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "360",
+  "descricao": "TRINUS CAPITAL DISTRIBUIDORA DE TÍTULOS E VALORES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "362",
+  "descricao": "CIELO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "363",
+  "descricao": "SOCOPA SOCIEDADE CORRETORA PAULISTA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "364",
+  "descricao": "GERENCIANET PAGAMENTOS DO BRASIL LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "365",
+  "descricao": "SOLIDUS S.A. CORRETORA DE CAMBIO E VALORES MOBILIA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "366",
+  "descricao": "BANCO SOCIETE GENERALE BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "367",
+  "descricao": "VITREO DISTRIBUIDORA DE TITULOS E VALORES MOBILIAR",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "368",
+  "descricao": "Banco CSF S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "369",
+  "descricao": "BANCO DIGIBANCO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "370",
+  "descricao": "MIZUHO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "371",
+  "descricao": "WARREN CORRETORA DE VALORES MOBILIÁRIOS E CÂMBIO L",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "372",
+  "descricao": "BANCO ITAMARATI S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "373",
+  "descricao": "UP.P SOCIEDADE DE EMPRÉSTIMO ENTRE PESSOAS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "374",
+  "descricao": "REALIZE CRÉDITO, FINANCIAMENTO E INVESTIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "375",
+  "descricao": "BANCO FENICIA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "376",
+  "descricao": "BANCO JP MORGAN S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "377",
+  "descricao": "MS SOCIEDADE DE CRÉDITO AO MICROEMPREENDEDOR E À E",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "378",
+  "descricao": "BBC LEASING S.A. - ARRENDAMENTO MERCANTIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "379",
+  "descricao": "COOPERFORTE - COOPERATIVA DE ECONOMIA E CRÉDITO MÚ",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "380",
+  "descricao": "PICPAY SERVICOS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "381",
+  "descricao": "BANCO MERCEDES-BENZ DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "382",
+  "descricao": "FIDÚCIA SOCIEDADE DE CRÉDITO AO MICROEMPREENDEDOR",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "383",
+  "descricao": "BOLETOBANCÁRIO.COM TECNOLOGIA DE PAGAMENTOS LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "384",
+  "descricao": "GLOBAL FINANÇAS SOCIEDADE DE CRÉDITO AO MICROEMPRE",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "385",
+  "descricao": "COOP ECON E CRED TRAB PORT GRD VITORIA CREDESTIVA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "386",
+  "descricao": "NU FINANCEIRA S.A. - SOCIEDADE DE CREDITO, FINANCI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "387",
+  "descricao": "BANCO TOYOTA DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "388",
+  "descricao": "BANCO BMD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "389",
+  "descricao": "BANCO MERCANTIL DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "390",
+  "descricao": "BANCO GM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "391",
+  "descricao": "COOPERATIVA DE CREDITO RURAL DE IBIAM - SULCREDI/I",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "392",
+  "descricao": "BANCO MERCANTIL DE SAO PAULO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "393",
+  "descricao": "BANCO VOLKSWAGEN S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "394",
+  "descricao": "BANCO BRADESCO FINANCIAMENTOS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "395",
+  "descricao": "F.D'GOLD - DISTRIBUIDORA DE TÍTULOS E VALORES MOBI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "396",
+  "descricao": "HUB PAGAMENTOS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "397",
+  "descricao": "LISTO SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "398",
+  "descricao": "IDEAL CORRETORA DE TÍTULOS E VALORES MOBILIÁRIOS S",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "399",
+  "descricao": "KIRTON BANK",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "400",
+  "descricao": "COOPERATIVA DE CRÉDITO, POUPANÇA E SERVIÇOS FINANC",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "401",
+  "descricao": "IUGU SERVICOS NA INTERNET S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "402",
+  "descricao": "COBUCCIO SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "403",
+  "descricao": "CORA SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "404",
+  "descricao": "SUMUP SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "406",
+  "descricao": "ACCREDITO - SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "407",
+  "descricao": "ÍNDIGO INVESTIMENTOS DISTRIBUIDORA DE TÍTULOS E VA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "408",
+  "descricao": "BONUSCRED SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "409",
+  "descricao": "UNIBANCO - UNIAO DE BANCOS BRASILEIROS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "410",
+  "descricao": "PLANNER SOCIEDADE DE CRÉDITO AO MICROEMPREENDEDOR",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "411",
+  "descricao": "VIA CERTA FINANCIADORA S.A. - CRÉDITO, FINANCIAMEN",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "412",
+  "descricao": "BANCO CAPITAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "413",
+  "descricao": "BANCO BV S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "414",
+  "descricao": "WORK SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "415",
+  "descricao": "BANCO NACIONAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "416",
+  "descricao": "LAMARA SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "418",
+  "descricao": "ZIPDIN SOLUCAO DIGITAIS SOCIEDADE CREDITO DIRETO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "419",
+  "descricao": "NUMBRS SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "420",
+  "descricao": "BANORTE - BANCO NACIONAL DO NORTE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "421",
+  "descricao": "LAR COOPERATIVA DE CREDITO LAR CREDITO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "422",
+  "descricao": "BANCO SAFRA S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "423",
+  "descricao": "COLUNA S/A DISTRIBUIDORA DE TITULOS E VALORES MOBI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "424",
+  "descricao": "BANCO SANTANDER NOROESTE S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "425",
+  "descricao": "SOCINAL S.A. CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "426",
+  "descricao": "BIORC FINANCEIRA - CRÉDITO, FINANCIAMENTO E INVEST",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "427",
+  "descricao": "COOPERATIVA DE CREDITO DOS SERVIDORES DA UNIVERSID",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "428",
+  "descricao": "CRED-SYSTEM SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "429",
+  "descricao": "CREDIARE S.A.- CRÉDITO, FINANCIAMENTO E INVESTIMEN",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "430",
+  "descricao": "COOPERATIVA DE CREDITO RURAL SEARA - CREDISEARA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "433",
+  "descricao": "BR-CAPITAL DISTRIBUIDORA DE TÍTULOS E VALORES MOBI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "434",
+  "descricao": "BANFORT - BANCO FORTALEZA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "435",
+  "descricao": "DELCRED SOCIEDADE DE CREDITO DIRETO SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "438",
+  "descricao": "PLANNER TRUSTEE DISTRIBUIDORA DE TÍTULOS E VALORES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "439",
+  "descricao": "ID CORRETORA DE TÍTULOS E VALORES MOBILIÁRIOS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "440",
+  "descricao": "COOPERATIVA DE ECONOMIA CREDITO MUTUO BRF CREDIBRF",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "442",
+  "descricao": "MAGNETIS - DISTRIBUIDORA DE TITULOS E VALORES MOBI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "443",
+  "descricao": "CREDIHOME SCD",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "444",
+  "descricao": "TRINUS SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "445",
+  "descricao": "PLANTAE CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "447",
+  "descricao": "MIRAE ASSET CCTVM LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "448",
+  "descricao": "HEMERA DTVM LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "449",
+  "descricao": "DMCARD SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "450",
+  "descricao": "FITBANK S.A. - INSTITUIÇÃO DE PAGAMENTOS ELETRÔNICOS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "451",
+  "descricao": "J17 - SOCIEDADE DE CRÉDITO DIRETO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "452",
+  "descricao": "CREDIFIT SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "453",
+  "descricao": "BANCO RURAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "454",
+  "descricao": "MERITO DTVM LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "455",
+  "descricao": "FÊNIX DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "456",
+  "descricao": "BANCO DE TOKYO MITSUBISHI UFJ BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "457",
+  "descricao": "PLATACRED SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "458",
+  "descricao": "HEDGE INVESTMENTS DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "459",
+  "descricao": "CCM SERV. PÚBLICOS SP",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "460",
+  "descricao": "UNAVANTI SOCIEDADE DE CRÉDITO DIRETO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "461",
+  "descricao": "ASAAS IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "462",
+  "descricao": "STARK SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "463",
+  "descricao": "AZUMI DISTRIBUIDORA DE TÍTULOS E VALORES MOBILIÁRI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "464",
+  "descricao": "BANCO SUMITOMO MITSUI BRASILEIRO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "465",
+  "descricao": "CAPITAL CONSIG SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "466",
+  "descricao": "BANCO MITSUBISHI S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "467",
+  "descricao": "MASTER S/A CORRETORA DE CÂMBIO, TÍTULOS E VALORES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "468",
+  "descricao": "PORTOSEG S.A. - CREDITO, FINANCIAMENTO E INVESTIME",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "469",
+  "descricao": "LECCA DTVM LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "470",
+  "descricao": "CDC SOCIEDADE DE CREDITO AO ME E A EPP LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "471",
+  "descricao": "CECM SERV PUBL PINHÃO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "472",
+  "descricao": "LLOYDS TSB BANK PLC",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "473",
+  "descricao": "BANCO CAIXA GERAL - BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "475",
+  "descricao": "BANCO YAMAHA MOTOR DO BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "477",
+  "descricao": "CITIBANK N.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "478",
+  "descricao": "GAZINCRED S A SOC DE CRED FINACIAMENT E INVEST",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "479",
+  "descricao": "BANCO ITAUBANK S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "480",
+  "descricao": "BANCO WACHOVIA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "481",
+  "descricao": "SUPERLÓGICA SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "482",
+  "descricao": "SBCASH SOCIEDADE DE CREDITO DIRETO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "484",
+  "descricao": "MAF DTVM SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "487",
+  "descricao": "DEUTSCHE BANK S. A. - BANCO ALEMAO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "488",
+  "descricao": "JP MORGAN CHASE BANK",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "489",
+  "descricao": "BANCO FRANCES INTERNACIONAL-BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "492",
+  "descricao": "ING BANK",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "493",
+  "descricao": "BANCO UNION - BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "494",
+  "descricao": "BANCO DE LA REPUBLICA ORIENTAL DEL URUGUAY",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "495",
+  "descricao": "PROVINCIA B. AIRES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "496",
+  "descricao": "BANCO UNO-E BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "497",
+  "descricao": "BANCO HISPANO AMERICANO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "498",
+  "descricao": "CENTRO HISPANO BANCO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "499",
+  "descricao": "BANCO IOCHPE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "500",
+  "descricao": "BANCO HABITASUL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "501",
+  "descricao": "BANCO BRASILEIRO IRAQUIANO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "502",
+  "descricao": "BANCO SANTANDER DE NEGOCIOS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "504",
+  "descricao": "BANCO MULTIPLIC S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "505",
+  "descricao": "BANCO CREDIT SUISSE (BRASIL) S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "506",
+  "descricao": "RJI CORRETORA DE TITULOS VALORES MOBILIARIOS LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "507",
+  "descricao": "GERENCIANET SA CREDITO FINANCIAMENTO INVESTIMENTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "508",
+  "descricao": "AVENUE SECURITIES DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "509",
+  "descricao": "CELCOIN INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "510",
+  "descricao": "FFCRED SOCIEDADE DE CREDITO DIRETO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "511",
+  "descricao": "MAGNUM SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "512",
+  "descricao": "CAPTALYS DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "513",
+  "descricao": "ATF CREDIT SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "514",
+  "descricao": "EXIM CORRETORA DE CÂMBIO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "516",
+  "descricao": "FC FINANCEIRA S.A. - CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "518",
+  "descricao": "MERCADO CRÉDITO SCFI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "519",
+  "descricao": "LIONS TRUST DTVM",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "520",
+  "descricao": "SOMAPAY SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "521",
+  "descricao": "PEAK SOCIEDADE DE EMPRESTIMO ENTRE PESSOAS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "522",
+  "descricao": "RED SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "523",
+  "descricao": "HR DIGITAL SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "524",
+  "descricao": "WNT CAPITAL DTVM",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "525",
+  "descricao": "INTERCAM CORRETORA DE CÂMBIO LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "526",
+  "descricao": "MONETARIE SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "527",
+  "descricao": "ATICCA SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "528",
+  "descricao": "REAG DTVM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "529",
+  "descricao": "PINBANK BRASIL INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "530",
+  "descricao": "SER FINANCE SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "531",
+  "descricao": "BMP SOCIEDADE DE CRÉDITO DIRETO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "532",
+  "descricao": "EAGLE SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "533",
+  "descricao": "M18 INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "534",
+  "descricao": "EWALLY INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "535",
+  "descricao": "MARU SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "536",
+  "descricao": "NEON PAGAMENTOS S.A INSTITUIÇAO DE PAGAMENTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "537",
+  "descricao": "MICROCASH SCMEPP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "538",
+  "descricao": "SUDACRED SCMEPP LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "539",
+  "descricao": "SANTINVEST S.A. - CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "540",
+  "descricao": "FACILICRED SCM LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "541",
+  "descricao": "FUNDO GARANTIDOR DE CREDITOS FGC",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "542",
+  "descricao": "CLOUDWALK INSTITUIÇÃO DE PAGAMENTOS SERVIÇOS LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "543",
+  "descricao": "COOPCRECE",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "544",
+  "descricao": "MULTICRED SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "545",
+  "descricao": "SC Senso",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "546",
+  "descricao": "U4C INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "547",
+  "descricao": "BNK DIGITAL SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "548",
+  "descricao": "RPW S.A. SCFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "549",
+  "descricao": "INTRA DTVM",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "550",
+  "descricao": "BEETELLER INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "551",
+  "descricao": "VERT DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "552",
+  "descricao": "UZZIPAY INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "553",
+  "descricao": "PERCAPITAL SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "554",
+  "descricao": "STONEX BANCO DE CÂMBIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "555",
+  "descricao": "PAN CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "556",
+  "descricao": "PROSEFTUR_CORRETORA CAMBIO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "557",
+  "descricao": "PAGPRIME INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "558",
+  "descricao": "QI DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "559",
+  "descricao": "KANASTRA SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "560",
+  "descricao": "MAG INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "561",
+  "descricao": "PAY4FUN INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "562",
+  "descricao": "AZIMUT BRASIL DISTRIBUIDORA DE TITULOS E VALORES M",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "563",
+  "descricao": "PROTEGE PAY CASH INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "565",
+  "descricao": "ÁGORA CTVM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "566",
+  "descricao": "FLAGSHIP INTITUIÇÃO DE PAGAMENTOS LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "567",
+  "descricao": "CREDITAQUI FINANCEIRA S.A. - CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "568",
+  "descricao": "BRCONDOS SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "569",
+  "descricao": "CONTA PRONTA INSTITUIÇÃO DE PAGAMENTOS LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "572",
+  "descricao": "ALL IN CRED SOCIEDADE DE CREDITO DIRETO S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "573",
+  "descricao": "OXY COMPANHIA HIPOTECÁRIA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "574",
+  "descricao": "A55 SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "575",
+  "descricao": "DGBK CREDIT S.A. - SOCIEDADE DE CRÉDITO DIRETO.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "576",
+  "descricao": "MERCADO BITCOIN IP LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "577",
+  "descricao": "AF DESENVOLVE SP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "578",
+  "descricao": "SICRES",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "579",
+  "descricao": "QUADRA SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "580",
+  "descricao": "CCCPOUPINV SUL E SUDESTE - CENTRAL SICREDI SUL/SUD",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "581",
+  "descricao": "CENTRAL SICREDI NORDESTE",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "582",
+  "descricao": "CCC POUP INV DE MS, GO, DF E TO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "583",
+  "descricao": "CCC POUP INV DO CENTRO NORTE DO BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "584",
+  "descricao": "CCC POUP E INV DOS ESTADOS DO PR, SP E RJ",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "585",
+  "descricao": "SETHI SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "586",
+  "descricao": "Z1 IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "587",
+  "descricao": "FIDD DTVM LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "588",
+  "descricao": "PROVER PROMOCAO DE VENDAS IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "589",
+  "descricao": "G5 SCD SA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "590",
+  "descricao": "REPASSES FINANCEIROS E SOLUCOES TECNOLOGICAS IP S.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "591",
+  "descricao": "BANVOX DTVM",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "592",
+  "descricao": "MAPS IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "593",
+  "descricao": "TRANSFEERA INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "594",
+  "descricao": "EMBRACRED S/A SCD",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "595",
+  "descricao": "ZOOP MEIOS DE PAGAMENTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "597",
+  "descricao": "ISSUER IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "598",
+  "descricao": "KONECT SOCIEDADE DE CRÉDITO DIRETO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "599",
+  "descricao": "AGORACRED S/A SCFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "600",
+  "descricao": "BANCO LUSO BRASILEIRO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "602",
+  "descricao": "BANCO PATENTE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "604",
+  "descricao": "BANCO INDUSTRIAL DO BRASIL S. A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "607",
+  "descricao": "BANCO SANTOS NEVES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "610",
+  "descricao": "BANCO VR S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "611",
+  "descricao": "BANCO PAULISTA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "612",
+  "descricao": "BANCO GUANABARA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "613",
+  "descricao": "OMNI BANCO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "614",
+  "descricao": "NITRO SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "615",
+  "descricao": "SMART SOLUTIONS GROUP IP LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "618",
+  "descricao": "BANCO TENDENCIA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "619",
+  "descricao": "TRIO IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "620",
+  "descricao": "REVOLUT SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "621",
+  "descricao": "BANCO APLICAP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "623",
+  "descricao": "BANCO PAN S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "624",
+  "descricao": "BANCO GENERAL MOTORS S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "625",
+  "descricao": "BANCO ARAUCARIA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "626",
+  "descricao": "BANCO FICSA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "627",
+  "descricao": "BANCO DESTAK S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "628",
+  "descricao": "BANCO CRITERIUM S. A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "630",
+  "descricao": "BANCO SMARTBANK S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "631",
+  "descricao": "BANCO COLUMBIA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "632",
+  "descricao": "Z-ON SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "633",
+  "descricao": "BANCO RENDIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "634",
+  "descricao": "BANCO TRIANGULO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "635",
+  "descricao": "BANCO DO ESTADO AMAPA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "636",
+  "descricao": "GIRO - SCD S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "637",
+  "descricao": "BANCO SOFISA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "638",
+  "descricao": "BANCO PROSPER S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "640",
+  "descricao": "BANCO CREDITO METROPOLITANO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "641",
+  "descricao": "BANCO ALVORADA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "643",
+  "descricao": "BANCO PINE S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "644",
+  "descricao": "321 SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "645",
+  "descricao": "BANCO DO ESTADO DE RORAIMA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "646",
+  "descricao": "DM SA CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "647",
+  "descricao": "BANCO MARKA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "649",
+  "descricao": "BANCO DIMENSAO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "650",
+  "descricao": "BANCO PEBB S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "651",
+  "descricao": "PAGARE IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "652",
+  "descricao": "BANCO ITAU HOLDING FINANCEIRA S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "653",
+  "descricao": "BANCO INDUSVAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "654",
+  "descricao": "BANCO A.J. RENNER S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "655",
+  "descricao": "BANCO VOTORANTIM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "656",
+  "descricao": "BANCO MATRIX S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "657",
+  "descricao": "BANCO TECNICORP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "658",
+  "descricao": "BANCO PORTO REAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "659",
+  "descricao": "ONEKEY PAYMENTS IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "660",
+  "descricao": "PAGME IP LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "661",
+  "descricao": "FREEX CC S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "662",
+  "descricao": "WE PAY OUT IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "663",
+  "descricao": "ACTUAL DTVM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "664",
+  "descricao": "EAGLE IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "665",
+  "descricao": "STARK BANK S.A. - IP",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "666",
+  "descricao": "URBANO S.A. SCFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "667",
+  "descricao": "LIQUIDO IP LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "668",
+  "descricao": "VIA CAPITAL SCD S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "670",
+  "descricao": "IP4Y INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "671",
+  "descricao": "ZERO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "672",
+  "descricao": "STONE CFI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "673",
+  "descricao": "CCR DO AGRESTE ALAGOANO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "674",
+  "descricao": "HINOVA PAY IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "675",
+  "descricao": "BANQI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "676",
+  "descricao": "DUFRIO CFI S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "678",
+  "descricao": "FIDEM SCD S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "679",
+  "descricao": "PAY IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "680",
+  "descricao": "DELTA GLOBAL SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "681",
+  "descricao": "MT IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "682",
+  "descricao": "MONERY IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "684",
+  "descricao": "PLUG FINANCEIRA S.A. SCFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "685",
+  "descricao": "TYCOON TECHNOLOGY IIP S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "686",
+  "descricao": "BIZ IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "687",
+  "descricao": "INCO SEP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "688",
+  "descricao": "KIKAI SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "689",
+  "descricao": "NVIO BRASIL SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "690",
+  "descricao": "BK IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "692",
+  "descricao": "SQUID SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "693",
+  "descricao": "EFEX INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "694",
+  "descricao": "WOOVI IP LTDA.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "695",
+  "descricao": "BEES INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "696",
+  "descricao": "LOAN BRASIL SOCIEDADE DE CREDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "697",
+  "descricao": "MARMARIS_CORRETORA DE CÂMBIO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "698",
+  "descricao": "BIT SCD S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "699",
+  "descricao": "BFC SOCIEDADE DE CRÉDITO DIRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "700",
+  "descricao": "MW INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "701",
+  "descricao": "INTEGRAÇÃO DE CRÉDITO E COBRANÇA SCD",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "702",
+  "descricao": "BANCO SANTOS S. A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "703",
+  "descricao": "GETNET IP",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "704",
+  "descricao": "FEATBANK INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "705",
+  "descricao": "BANCO INVESTCORP S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "707",
+  "descricao": "BANCO DAYCOVAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "708",
+  "descricao": "BANCO INDUSCRED DE INVESTIMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "711",
+  "descricao": "BANCO VETOR S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "712",
+  "descricao": "BM OURINVEST",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "713",
+  "descricao": "BANCO CINDAM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "714",
+  "descricao": "FINAMAX S.A. CREDITO, FINANCIAMENTO E INVESTIMENTO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "715",
+  "descricao": "BANCO VEGA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "718",
+  "descricao": "BANCO OPERADOR S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "719",
+  "descricao": "BANIF-BANCO INTERNACIONAL DO FUNCHAL (BRASIL) S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "720",
+  "descricao": "BANCO MAXINVEST S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "721",
+  "descricao": "CREDIBEL PARTICIPACOES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "722",
+  "descricao": "BANCO INTERIOR DE SAO PAULO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "725",
+  "descricao": "BANCO FINANSINOS S. A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "728",
+  "descricao": "BANCO FITAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "729",
+  "descricao": "BANCO FONTE CINDAM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "732",
+  "descricao": "BANCO MINAS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "733",
+  "descricao": "BANCO DAS NACOES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "734",
+  "descricao": "BANCO GERDAU S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "735",
+  "descricao": "BANCO NEON S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "737",
+  "descricao": "BANCO THECA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "738",
+  "descricao": "BANCO MORADA S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "739",
+  "descricao": "BANCO CETELEM S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "740",
+  "descricao": "BANCO BARCLAYS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "741",
+  "descricao": "BANCO RIBEIRAO PRETO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "742",
+  "descricao": "BANCO EQUATORIAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "743",
+  "descricao": "BANCO SEMEAR S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "744",
+  "descricao": "BANKBOSTON N.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "745",
+  "descricao": "BANCO CITIBANK S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "746",
+  "descricao": "BANCO MODAL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "747",
+  "descricao": "BANCO RABOBANK INTERNATIONAL BRASIL S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "748",
+  "descricao": "BANCO COOPERATIVO SICREDI S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "749",
+  "descricao": "BANCO SIMPLES S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "750",
+  "descricao": "HSBC REPUBLIC BANK BRASIL S.A-BANCO MULTIPLO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "751",
+  "descricao": "SCOTIABANK BRASIL S.A BANCO MULTIPLO",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "752",
+  "descricao": "BANCO BNP PARIBAS BRASIL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "753",
+  "descricao": "NOVO BANCO CONTINENTAL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "754",
+  "descricao": "Sistema",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "755",
+  "descricao": "BANK OF AMERICA MERRILL LYNCH BANCO MULTIPLO S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "756",
+  "descricao": "BANCO COOPERATIVO SICOOB S.A.",
+  "indicadores": {
+   "COL3": "S",
+   "COL4": "S"
+  }
+ },
+ {
+  "codigo": "757",
+  "descricao": "KEB HANA DO BRASIL",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "759",
+  "descricao": "BANSUR JM SOCIEDADE DE CRÉDITO DIRETO S/A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "760",
+  "descricao": "EMCASH SERV FINANC SEP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "761",
+  "descricao": "URBANO S.A. SCFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "762",
+  "descricao": "OPPENS SEP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "763",
+  "descricao": "VUE IP S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "764",
+  "descricao": "INDEPENDÊNCIA CC",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "766",
+  "descricao": "LB PAY INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "767",
+  "descricao": "QORE DIST. DE TÍTULOS E VALORES MOBILIÁRIOS LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "768",
+  "descricao": "BECKER FINANCEIRA SA - CFI",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "769",
+  "descricao": "99PAY INSTITUIÇÃO DE PAGAMENTO S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "771",
+  "descricao": "WX INSTITUIÇÃO DE PAGAMENTOS LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "772",
+  "descricao": "CC MECUNP",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "773",
+  "descricao": "KIWIFY INSTITUIÇÃO DE PAGAMENTO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "790",
+  "descricao": "MAX INSTITUIÇÃO DE PAGAMNETO LTDA",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "800",
+  "descricao": "BCR BANCO DE CREDITO REAL S.A",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ },
+ {
+  "codigo": "901",
+  "descricao": "CORRETORA SOUZA BARROS CAMBIO E TITULOS S.A.",
+  "indicadores": {
+   "COL3": "N",
+   "COL4": "N"
+  }
+ }
+]

@@ -1,0 +1,13 @@
+# Ferramentas locais
+.memory-bank/
+.mcp.json
+
+# Programas da Receita Federal (binários de terceiros, não versionar)
+vendor/rfb/
+
+# Node e build
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+

@@ -1,0 +1,46 @@
+[
+ {
+  "codigo": "USDT",
+  "descricao": "Tether"
+ },
+ {
+  "codigo": "USDC",
+  "descricao": "USD Coin"
+ },
+ {
+  "codigo": "BRZ",
+  "descricao": "Brazilian Digital Token"
+ },
+ {
+  "codigo": "BUSD",
+  "descricao": "Binance USD"
+ },
+ {
+  "codigo": "DAI",
+  "descricao": "DAI"
+ },
+ {
+  "codigo": "TUSD",
+  "descricao": "True USD"
+ },
+ {
+  "codigo": "GUSD",
+  "descricao": "Gemini USD"
+ },
+ {
+  "codigo": "USDP",
+  "descricao": "Paxos USD"
+ },
+ {
+  "codigo": "PAXG",
+  "descricao": "Paxos Gold"
+ },
+ {
+  "codigo": "BTG DOL",
+  "descricao": "BTG Pactual USD"
+ },
+ {
+  "codigo": "999",
+  "descricao": "Outras Stablecoins"
+ }
+]

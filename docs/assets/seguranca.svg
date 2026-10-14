@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="t d">
+  <title id="t">Camadas de segurança do AutoIR</title>
+  <desc id="d">Todo pedido de escrita passa por validação de entrada, checagem da pasta autorizada, backup do arquivo anterior e escrita atômica. Entradas inválidas ou caminhos fora da pasta são recusados. O processo não usa rede.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#DC2626"/>
+    </marker>
+  </defs>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    .h{font-size:26px;font-weight:700}
+    .sub{font-size:16px;fill:#475569}
+    .b{font-size:17px;font-weight:700}
+    .s{font-size:14px;fill:#334155}
+    .xs{font-size:13px;fill:#475569}
+    .n{font-size:14px;font-weight:700;fill:#FFFFFF}
+    .ln{stroke:#475569;stroke-width:2;fill:none}
+    .st{fill:#F5F3FF;stroke:#8B5CF6;stroke-width:2}
+  </style>
+  <rect x="1" y="1" width="1198" height="618" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="40" y="52" class="h">Segurança: o que acontece antes de gravar</text>
+  <text x="40" y="78" class="sub">Toda escrita percorre as mesmas etapas, nesta ordem. Qualquer falha interrompe o processo sem alterar o arquivo.</text>
+
+  <text x="40" y="122" class="xs">pedido da ferramenta</text>
+  <path d="M40 205H64" class="ln" marker-end="url(#a)"/>
+
+  <g>
+    <rect x="70" y="130" width="200" height="150" rx="14" class="st"/>
+    <circle cx="98" cy="158" r="14" fill="#6D28D9"/><text x="98" y="163" class="n" text-anchor="middle">1</text>
+    <text x="120" y="164" class="b">Validação</text>
+    <text x="90" y="198" class="s">Esquema, tipos, CPF,</text>
+    <text x="90" y="218" class="s">datas e valores em</text>
+    <text x="90" y="238" class="s">centavos conferidos</text>
+    <text x="90" y="258" class="s">antes de qualquer uso.</text>
+
+    <rect x="310" y="130" width="200" height="150" rx="14" class="st"/>
+    <circle cx="338" cy="158" r="14" fill="#6D28D9"/><text x="338" y="163" class="n" text-anchor="middle">2</text>
+    <text x="360" y="164" class="b">Pasta autorizada</text>
+    <text x="330" y="198" class="s">O caminho é resolvido</text>
+    <text x="330" y="218" class="s">e precisa ficar dentro</text>
+    <text x="330" y="238" class="s">da pasta informada na</text>
+    <text x="330" y="258" class="s">inicialização.</text>
+
+    <rect x="550" y="130" width="180" height="150" rx="14" class="st"/>
+    <circle cx="578" cy="158" r="14" fill="#6D28D9"/><text x="578" y="163" class="n" text-anchor="middle">3</text>
+    <text x="600" y="164" class="b">Backup</text>
+    <text x="570" y="198" class="s">Se o arquivo já</text>
+    <text x="570" y="218" class="s">existe, uma cópia</text>
+    <text x="570" y="238" class="s">com data e hora é</text>
+    <text x="570" y="258" class="s">guardada antes.</text>
+
+    <rect x="770" y="130" width="200" height="150" rx="14" class="st"/>
+    <circle cx="798" cy="158" r="14" fill="#6D28D9"/><text x="798" y="163" class="n" text-anchor="middle">4</text>
+    <text x="820" y="164" class="b">Escrita atômica</text>
+    <text x="790" y="198" class="s">Grava em arquivo</text>
+    <text x="790" y="218" class="s">temporário e renomeia.</text>
+    <text x="790" y="238" class="s">Nunca sobra um .DBK</text>
+    <text x="790" y="258" class="s">pela metade.</text>
+
+    <rect x="1010" y="160" width="150" height="90" rx="14" fill="#F0FDF4" stroke="#22C55E" stroke-width="2"/>
+    <path d="M1036 205l7 7 13-15" fill="none" stroke="#15803D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1068" y="200" class="b" style="font-size:16px">.DBK</text>
+    <text x="1068" y="222" class="xs">salvo</text>
+  </g>
+  <path d="M270 205H304" class="ln" marker-end="url(#a)"/>
+  <path d="M510 205H544" class="ln" marker-end="url(#a)"/>
+  <path d="M730 205H764" class="ln" marker-end="url(#a)"/>
+  <path d="M970 205H1004" class="ln" marker-end="url(#a)"/>
+
+  
+  <path d="M170 280V340" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#r)"/>
+  <path d="M410 280V340" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#r)"/>
+  <text x="180" y="316" class="xs" style="fill:#991B1B">entrada inválida</text>
+  <text x="420" y="316" class="xs" style="fill:#991B1B">fora da pasta</text>
+  <rect x="70" y="346" width="440" height="66" rx="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="92" y="374" class="b" style="fill:#991B1B;font-size:16px">Recusado com mensagem clara</text>
+  <text x="92" y="396" class="s" style="fill:#7F1D1D">Nenhum arquivo é criado ou alterado.</text>
+
+  <text x="560" y="372" class="s">Se a escrita falhar no meio, o arquivo original</text>
+  <text x="560" y="394" class="s">continua intacto e o backup segue disponível.</text>
+
+  
+  <rect x="40" y="440" width="1120" height="140" rx="14" fill="#0F172A"/>
+  <g transform="translate(76 482)">
+    <circle cx="28" cy="28" r="26" fill="none" stroke="#C4B5FD" stroke-width="3"/>
+    <path d="M2 28h52M28 2c-10 12-10 40 0 52M28 2c10 12 10 40 0 52" fill="none" stroke="#C4B5FD" stroke-width="2.5"/>
+    <path d="M6 50L50 6" stroke="#F87171" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <text x="160" y="490" class="b" style="fill:#F8FAFC;font-size:19px">Sem rede</text>
+  <text x="160" y="520" class="s" style="fill:#CBD5E1;font-size:15px">O processo fala apenas por stdio com o cliente MCP. Não abre sockets, não envia telemetria</text>
+  <text x="160" y="544" class="s" style="fill:#CBD5E1;font-size:15px">e não baixa nada. Seus dados fiscais não saem da sua máquina pelo AutoIR.</text>
+</svg>

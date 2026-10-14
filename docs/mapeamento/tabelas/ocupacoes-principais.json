@@ -1,0 +1,592 @@
+[
+ {
+  "codigo": "000",
+  "descricao": "Outras ocupações não especificadas anteriormente",
+  "descricaoResumida": "Outras ocupações"
+ },
+ {
+  "codigo": "010",
+  "descricao": "Militar da Aeronáutica"
+ },
+ {
+  "codigo": "020",
+  "descricao": "Militar do Exército"
+ },
+ {
+  "codigo": "030",
+  "descricao": "Militar da Marinha"
+ },
+ {
+  "codigo": "040",
+  "descricao": "Policial Militar"
+ },
+ {
+  "codigo": "050",
+  "descricao": "Bombeiro Militar"
+ },
+ {
+  "codigo": "101",
+  "descricao": "Membro do Poder Executivo (Presidente da República, Vice-Presidente da República, Ministro de Estado, Governador, Vice-Governador, Prefeito, Vice-Prefeito",
+  "descricaoResumida": "Membro do Poder Executivo (Presidente da República, Vice-Pre"
+ },
+ {
+  "codigo": "102",
+  "descricao": "Membro do Poder Judiciário (Ministro, Juiz e Desembargador) e de Tribunal de Contas (Ministro e Conselheiro)",
+  "descricaoResumida": "Membro do Poder Judiciário (Ministro, Juiz e Desembargador)"
+ },
+ {
+  "codigo": "103",
+  "descricao": "Membro do Poder Legislativo (Senador, Deputado Federal, Deputado Estadual e Vereador)",
+  "descricaoResumida": "Membro do Poder Legislativo (Senador, Deputado Federal, Depu"
+ },
+ {
+  "codigo": "104",
+  "descricao": "Membro do Ministério Público (Procurador e Promotor)"
+ },
+ {
+  "codigo": "105",
+  "descricao": "Dirigente superior da administração pública (ocupante de cargo de direção, chefia, assessoria e de natureza especial), inclusive os das fundações públicas e autarquias",
+  "descricaoResumida": "Dirigente superior da administração pública (ocupante de car"
+ },
+ {
+  "codigo": "106",
+  "descricao": "Diplomata e afins"
+ },
+ {
+  "codigo": "107",
+  "descricao": "Servidor das carreiras do Poder Legislativo"
+ },
+ {
+  "codigo": "108",
+  "descricao": "Servidor das carreiras do Ministério Público"
+ },
+ {
+  "codigo": "109",
+  "descricao": "Servidor das carreiras do Poder Judiciário, Oficial de Justiça, Auxiliar, Assistente e Analista Judiciário",
+  "descricaoResumida": "Servidor das carreiras do Poder Judiciário, Oficial de Justi"
+ },
+ {
+  "codigo": "110",
+  "descricao": "Advogado do setor público, Procurador da Fazenda, Consultor Jurídico, Procurador de autarquias e fundações públicas, Defensor Público",
+  "descricaoResumida": "Advogado do setor público, Procurador da Fazenda, Consultor"
+ },
+ {
+  "codigo": "111",
+  "descricao": "Servidor das carreiras de auditoria fiscal e de fiscalização"
+ },
+ {
+  "codigo": "112",
+  "descricao": "Servidor das carreiras do Banco Central, CVM e Susep"
+ },
+ {
+  "codigo": "113",
+  "descricao": "Delegado de Polícia e outros servidores das carreiras de polícia, exceto militar",
+  "descricaoResumida": "Delegado de Polícia e outros servidores das carreiras de pol"
+ },
+ {
+  "codigo": "114",
+  "descricao": "Servidor das carreiras de gestão governamental, analista, gestor e técnico de planejamento",
+  "descricaoResumida": "Servidor das carreiras de gestão governamental, analista, ge"
+ },
+ {
+  "codigo": "115",
+  "descricao": "Servidor das carreiras de ciência e tecnologia"
+ },
+ {
+  "codigo": "116",
+  "descricao": "Servidor das demais carreiras da administração pública direta, autárquica e fundacional",
+  "descricaoResumida": "Servidor das demais carreiras da administração pública diret"
+ },
+ {
+  "codigo": "117",
+  "descricao": "Titular de Cartório"
+ },
+ {
+  "codigo": "118",
+  "descricao": "Dirigente ou administrador de partido político, organização patronal, sindical, filantrópica e religiosa",
+  "descricaoResumida": "Dirigente ou administrador de partido político, organização"
+ },
+ {
+  "codigo": "120",
+  "descricao": "Dirigente, presidente e diretor de empresa industrial, comercial ou prestadora de serviços",
+  "descricaoResumida": "Dirigente, presidente e diretor de empresa industrial, comer"
+ },
+ {
+  "codigo": "121",
+  "descricao": "Presidente e diretor de empresa pública e sociedade de economia mista",
+  "descricaoResumida": "Presidente e diretor de empresa pública e sociedade de econo"
+ },
+ {
+  "codigo": "130",
+  "descricao": "Gerente ou supervisor de empresa industrial, comercial ou prestadora de serviços",
+  "descricaoResumida": "Gerente ou supervisor de empresa industrial, comercial ou pr"
+ },
+ {
+  "codigo": "131",
+  "descricao": "Gerente ou supervisor de empresa pública e sociedade de economia mista",
+  "descricaoResumida": "Gerente ou supervisor de empresa pública e sociedade de econ"
+ },
+ {
+  "codigo": "140",
+  "descricao": "Presidente, diretor, gerente e supervisor de organismo internacional e de organização não-governamental",
+  "descricaoResumida": "Presidente, diretor, gerente e supervisor de organismo inter"
+ },
+ {
+  "codigo": "211",
+  "descricao": "Matemático, estatístico, atuário e afins"
+ },
+ {
+  "codigo": "212",
+  "descricao": "Analista de sistemas, desenvolvedor de software, administrador de redes e bancos de dados e outros especialistas em informática (exceto técnico)",
+  "descricaoResumida": "Analista de sistemas, desenvolvedor de software, administrad"
+ },
+ {
+  "codigo": "213",
+  "descricao": "Físico, químico, meteorologista, geólogo, oceanógrafo e afins",
+  "descricaoResumida": "Físico, químico, meteorologista, geólogo, oceanógrafo e afin"
+ },
+ {
+  "codigo": "214",
+  "descricao": "Engenheiro, arquiteto e afins"
+ },
+ {
+  "codigo": "215",
+  "descricao": "Piloto de aeronaves, comandante de embarcações e oficiais de máquinas",
+  "descricaoResumida": "Piloto de aeronaves, comandante de embarcações e oficiais de"
+ },
+ {
+  "codigo": "221",
+  "descricao": "Biólogo, biomédico e afins"
+ },
+ {
+  "codigo": "222",
+  "descricao": "Agrônomo e afins"
+ },
+ {
+  "codigo": "224",
+  "descricao": "Profissional da educação física (exceto professor)"
+ },
+ {
+  "codigo": "225",
+  "descricao": "Médico"
+ },
+ {
+  "codigo": "226",
+  "descricao": "Odontólogo"
+ },
+ {
+  "codigo": "227",
+  "descricao": "Enfermeiro de nível superior, nutricionista, farmacêutico e afins",
+  "descricaoResumida": "Enfermeiro de nível superior, nutricionista, farmacêutico e"
+ },
+ {
+  "codigo": "228",
+  "descricao": "Veterinário, patologista (veterinário) e zootecnista"
+ },
+ {
+  "codigo": "230",
+  "descricao": "Fonoaudiólogo"
+ },
+ {
+  "codigo": "231",
+  "descricao": "Fisioterapeuta"
+ },
+ {
+  "codigo": "232",
+  "descricao": "Terapeuta Ocupacional"
+ },
+ {
+  "codigo": "241",
+  "descricao": "Advogado"
+ },
+ {
+  "codigo": "250",
+  "descricao": "Sociólogo, cientista político"
+ },
+ {
+  "codigo": "251",
+  "descricao": "Antropólogo, arqueólogo"
+ },
+ {
+  "codigo": "252",
+  "descricao": "Economista, administrador, contador, auditor e afins"
+ },
+ {
+  "codigo": "253",
+  "descricao": "Profissional de marketing, de publicidade e de comercialização",
+  "descricaoResumida": "Profissional de marketing, de publicidade e de comercializaç"
+ },
+ {
+  "codigo": "254",
+  "descricao": "Psicanalista"
+ },
+ {
+  "codigo": "255",
+  "descricao": "Psicólogo"
+ },
+ {
+  "codigo": "256",
+  "descricao": "Geógrafo"
+ },
+ {
+  "codigo": "257",
+  "descricao": "Historiador"
+ },
+ {
+  "codigo": "258",
+  "descricao": "Assistente social e economista doméstico"
+ },
+ {
+  "codigo": "259",
+  "descricao": "Filósofo"
+ },
+ {
+  "codigo": "261",
+  "descricao": "Jornalista, repórter e afins"
+ },
+ {
+  "codigo": "263",
+  "descricao": "Sacerdote ou membro de ordens ou seitas religiosas"
+ },
+ {
+  "codigo": "264",
+  "descricao": "Tradutor, intérprete, filólogo"
+ },
+ {
+  "codigo": "265",
+  "descricao": "Bibliotecário, documentalista, arquivólogo, museólogo"
+ },
+ {
+  "codigo": "266",
+  "descricao": "Escritor, crítico, redator"
+ },
+ {
+  "codigo": "271",
+  "descricao": "Locutor, comentarista"
+ },
+ {
+  "codigo": "272",
+  "descricao": "Ator, diretor de espetáculos"
+ },
+ {
+  "codigo": "273",
+  "descricao": "Cantor, compositor e afins"
+ },
+ {
+  "codigo": "274",
+  "descricao": "Músico, arranjador, regente de orquestra ou coral"
+ },
+ {
+  "codigo": "275",
+  "descricao": "Desenhista industrial (designer), escultor, pintor artístico e afins",
+  "descricaoResumida": "Desenhista industrial (designer), escultor, pintor artístico"
+ },
+ {
+  "codigo": "276",
+  "descricao": "Cenógrafo, decorador de interiores"
+ },
+ {
+  "codigo": "277",
+  "descricao": "Empresário e produtor de espetáculos"
+ },
+ {
+  "codigo": "279",
+  "descricao": "Outros profissionais do espetáculo e das artes"
+ },
+ {
+  "codigo": "290",
+  "descricao": "Professor na educação infantil"
+ },
+ {
+  "codigo": "291",
+  "descricao": "Professor do ensino fundamental"
+ },
+ {
+  "codigo": "292",
+  "descricao": "Professor do ensino médio"
+ },
+ {
+  "codigo": "293",
+  "descricao": "Professor do ensino profissional"
+ },
+ {
+  "codigo": "294",
+  "descricao": "Professor do ensino superior"
+ },
+ {
+  "codigo": "295",
+  "descricao": "Instrutor e professor de escolas livres"
+ },
+ {
+  "codigo": "296",
+  "descricao": "Pedagogo, orientador educacional"
+ },
+ {
+  "codigo": "311",
+  "descricao": "Técnico em ciências físicas, químicas"
+ },
+ {
+  "codigo": "312",
+  "descricao": "Técnico em construção civil, de edificações e obras de infra-estrutura",
+  "descricaoResumida": "Técnico em construção civil, de edificações e obras de infra"
+ },
+ {
+  "codigo": "313",
+  "descricao": "Técnico em eletro-eletrônica, fotônica"
+ },
+ {
+  "codigo": "314",
+  "descricao": "Técnico em metalmecânica"
+ },
+ {
+  "codigo": "316",
+  "descricao": "Técnico em mineralogia, geologia"
+ },
+ {
+  "codigo": "317",
+  "descricao": "Técnico em informática"
+ },
+ {
+  "codigo": "318",
+  "descricao": "Desenhista técnico, modelista"
+ },
+ {
+  "codigo": "319",
+  "descricao": "Outros técnicos de nível médio das ciências físicas, químicas, engenharia e afins",
+  "descricaoResumida": "Outros técnicos de nível médio das ciências físicas, química"
+ },
+ {
+  "codigo": "320",
+  "descricao": "Técnico em biologia"
+ },
+ {
+  "codigo": "321",
+  "descricao": "Técnico da produção agropecuária"
+ },
+ {
+  "codigo": "322",
+  "descricao": "Técnico em enfermagem e da ciência da saúde humana"
+ },
+ {
+  "codigo": "323",
+  "descricao": "Técnico da ciência da saúde animal"
+ },
+ {
+  "codigo": "324",
+  "descricao": "Técnico de laboratório, Raios-X, outros equipamentos e instrumentos de diagnóstico",
+  "descricaoResumida": "Técnico de laboratório, Raios-X, outros equipamentos e inst"
+ },
+ {
+  "codigo": "325",
+  "descricao": "Técnico de bioquímica, da biotecnologia"
+ },
+ {
+  "codigo": "328",
+  "descricao": "Técnico de conservação, dissecação, empalhamento de corpos"
+ },
+ {
+  "codigo": "341",
+  "descricao": "Técnico em navegação aérea, marítima, fluvial, metroferroviária",
+  "descricaoResumida": "Técnico em navegação aérea, marítima, fluvial, metroferrovi"
+ },
+ {
+  "codigo": "342",
+  "descricao": "Técnico em transportes (logística)"
+ },
+ {
+  "codigo": "351",
+  "descricao": "Técnico das ciências administrativas, contábeis"
+ },
+ {
+  "codigo": "352",
+  "descricao": "Técnico de inspeção, fiscalização, coordenação administrativa",
+  "descricaoResumida": "Técnico de inspeção, fiscalização, coordenação administrati"
+ },
+ {
+  "codigo": "353",
+  "descricao": "Agente de Bolsa de Valores, câmbio, outros serviços financeiros",
+  "descricaoResumida": "Agente de Bolsa de Valores, câmbio, outros serviços finance"
+ },
+ {
+  "codigo": "354",
+  "descricao": "Agente e representante comercial, corretor, leiloeiro e afins",
+  "descricaoResumida": "Agente e representante comercial, corretor, leiloeiro e afin"
+ },
+ {
+  "codigo": "355",
+  "descricao": "Corretor, Administrador de Imóveis"
+ },
+ {
+  "codigo": "371",
+  "descricao": "Técnico de serviços culturais"
+ },
+ {
+  "codigo": "372",
+  "descricao": "Cinegrafista, fotógrafo e outros técnicos em operação de máquinas de tratamento de dados",
+  "descricaoResumida": "Cinegrafista, fotógrafo e outros técnicos em operação de máq"
+ },
+ {
+  "codigo": "373",
+  "descricao": "Técnico em operação de estações de rádio, televisão"
+ },
+ {
+  "codigo": "374",
+  "descricao": "Técnico em operação de aparelhos de sonorização, cenografia, projeção",
+  "descricaoResumida": "Técnico em operação de aparelhos de sonorização, cenografia"
+ },
+ {
+  "codigo": "375",
+  "descricao": "Decorador, vitrinista"
+ },
+ {
+  "codigo": "376",
+  "descricao": "Apresentador, artistas de artes populares, modelos"
+ },
+ {
+  "codigo": "377",
+  "descricao": "Atleta, desportista e afins"
+ },
+ {
+  "codigo": "391",
+  "descricao": "Outros técnicos de nível médio"
+ },
+ {
+  "codigo": "410",
+  "descricao": "Bancário, economiário, escriturário, secretário, assistente, auxiliar administrativo",
+  "descricaoResumida": "Bancário, economiário, escriturário, secretário, assistente"
+ },
+ {
+  "codigo": "420",
+  "descricao": "Trabalhador de atendimento ao público, caixa, despachante, recenseador e afins",
+  "descricaoResumida": "Trabalhador de atendimento ao público, caixa, despachante, r"
+ },
+ {
+  "codigo": "511",
+  "descricao": "Comissário de bordo, guia de turismo, agente de viagem e afins",
+  "descricaoResumida": "Comissário de bordo, guia de turismo, agente de viagem e afi"
+ },
+ {
+  "codigo": "512",
+  "descricao": "Trabalhador dos serviços domésticos em geral"
+ },
+ {
+  "codigo": "513",
+  "descricao": "Trabalhador dos serviços de hotelaria, alimentação"
+ },
+ {
+  "codigo": "514",
+  "descricao": "Trabalhador dos serviços de administração, conservação, manutenção de edifícios",
+  "descricaoResumida": "Trabalhador dos serviços de administração, conservação, man"
+ },
+ {
+  "codigo": "515",
+  "descricao": "Trabalhador dos serviços de saúde"
+ },
+ {
+  "codigo": "516",
+  "descricao": "Trabalhador dos serviços de embelezamento, cuidados pessoais",
+  "descricaoResumida": "Trabalhador dos serviços de embelezamento, cuidados pessoai"
+ },
+ {
+  "codigo": "517",
+  "descricao": "Trabalhador dos serviços de proteção, segurança (exceto militar)",
+  "descricaoResumida": "Trabalhador dos serviços de proteção, segurança (exceto mil"
+ },
+ {
+  "codigo": "518",
+  "descricao": "Motorista e condutor do transporte de passageiros (motorista de taxi, ônibus, pequena embarcação etc)",
+  "descricaoResumida": "Motorista e condutor do transporte de passageiros (motorista"
+ },
+ {
+  "codigo": "519",
+  "descricao": "Outros trabalhadores de serviços diversos"
+ },
+ {
+  "codigo": "529",
+  "descricao": "Vendedor e prestador de serviços do comércio, ambulante, caixeiro-viajante, camelô",
+  "descricaoResumida": "Vendedor e prestador de serviços do comércio, ambulante, cai"
+ },
+ {
+  "codigo": "610",
+  "descricao": "Produtor na exploração agropecuária"
+ },
+ {
+  "codigo": "620",
+  "descricao": "Trabalhador na exploração agropecuária"
+ },
+ {
+  "codigo": "630",
+  "descricao": "Pescador, caçador, extrativista florestal"
+ },
+ {
+  "codigo": "640",
+  "descricao": "Operador de máquina agropecuária, florestal"
+ },
+ {
+  "codigo": "710",
+  "descricao": "Trabalhador da indústria extrativa, da construção civil"
+ },
+ {
+  "codigo": "720",
+  "descricao": "Trabalhador da transformação de metais e compósitos"
+ },
+ {
+  "codigo": "730",
+  "descricao": "Trabalhador da fabricação e instalação eletroeletrônica"
+ },
+ {
+  "codigo": "740",
+  "descricao": "Montador de aparelhos e instrumentos de precisão e musicais"
+ },
+ {
+  "codigo": "750",
+  "descricao": "Joalheiro, vidreiro, ceramista e afins"
+ },
+ {
+  "codigo": "760",
+  "descricao": "Trabalhador das indústrias têxteis, do curtimento, do vestuário e das artes gráficas",
+  "descricaoResumida": "Trabalhador das indústrias têxteis, do curtimento, do vestuá"
+ },
+ {
+  "codigo": "770",
+  "descricao": "Trabalhador das indústrias de madeira e do mobiliário"
+ },
+ {
+  "codigo": "780",
+  "descricao": "Condutor e operador de robôs, veículos de equipamentos de movimentação de carga e afins",
+  "descricaoResumida": "Condutor e operador de robôs, veículos de equipamentos de mo"
+ },
+ {
+  "codigo": "810",
+  "descricao": "Trabalhador das indústrias química, petroquímica, borracha e plástico e afins",
+  "descricaoResumida": "Trabalhador das indústrias química, petroquímica, borracha e"
+ },
+ {
+  "codigo": "820",
+  "descricao": "Trabalhador de instalações siderúrgicas e de materiais de construção",
+  "descricaoResumida": "Trabalhador de instalações siderúrgicas e de materiais de co"
+ },
+ {
+  "codigo": "830",
+  "descricao": "Trabalhador de instalações e máquinas de fabricação de celulose e papel",
+  "descricaoResumida": "Trabalhador de instalações e máquinas de fabricação de celul"
+ },
+ {
+  "codigo": "840",
+  "descricao": "Trabalhador da fabricação de alimentos, bebidas, fumo e de agroindústrias",
+  "descricaoResumida": "Trabalhador da fabricação de alimentos, bebidas, fumo e de a"
+ },
+ {
+  "codigo": "860",
+  "descricao": "Operador de instalações de produção e distribuição de energia",
+  "descricaoResumida": "Operador de instalações de produção e distribuição de energi"
+ },
+ {
+  "codigo": "870",
+  "descricao": "Trabalhador de outras instalações agroindustriais"
+ },
+ {
+  "codigo": "900",
+  "descricao": "Trabalhador de reparação, manutenção"
+ }
+]

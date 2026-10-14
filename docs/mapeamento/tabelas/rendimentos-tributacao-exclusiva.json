@@ -1,0 +1,18 @@
+[
+ {
+  "codigo": "06",
+  "descricao": "Rendimentos de aplicações financeiras"
+ },
+ {
+  "codigo": "10",
+  "descricao": "Juros sobre capital próprio"
+ },
+ {
+  "codigo": "11",
+  "descricao": "Participação nos lucros ou resultados"
+ },
+ {
+  "codigo": "12",
+  "descricao": "Outros"
+ }
+]

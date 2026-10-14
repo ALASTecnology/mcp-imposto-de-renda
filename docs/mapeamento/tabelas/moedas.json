@@ -1,0 +1,190 @@
+[
+ {
+  "codigo": "VENEZUE",
+  "descricao": "Bolivar (Venezuela)"
+ },
+ {
+  "codigo": "BOLIVIA",
+  "descricao": "Boliviano (Bolívia)"
+ },
+ {
+  "codigo": "SUECIA",
+  "descricao": "Coroa (Suécia)"
+ },
+ {
+  "codigo": "DINAMAR",
+  "descricao": "Coroa Dinamarquesa (Dinamarca)"
+ },
+ {
+  "codigo": "ESLOVAQ",
+  "descricao": "Coroa Eslovaca (República Eslovaca)"
+ },
+ {
+  "codigo": "NORUEGA",
+  "descricao": "Coroa Norueguesa (Noruega)"
+ },
+ {
+  "codigo": "TCHECO",
+  "descricao": "Coroa Tcheca (República Theca)"
+ },
+ {
+  "codigo": "AUSTRAL",
+  "descricao": "Dólar (Austrália)"
+ },
+ {
+  "codigo": "CANADA",
+  "descricao": "Dólar (Canadá)"
+ },
+ {
+  "codigo": "USA",
+  "descricao": "Dólar (Estados Unidos)"
+ },
+ {
+  "codigo": "PORTUGA",
+  "descricao": "Escudo (Portugal)"
+ },
+ {
+  "codigo": "EURO",
+  "descricao": "Euro (União Européia)"
+ },
+ {
+  "codigo": "HUNGRIA",
+  "descricao": "Florim (Hungria)"
+ },
+ {
+  "codigo": "HOLANDA",
+  "descricao": "Florim Holandês (Holanda)"
+ },
+ {
+  "codigo": "BELGICA",
+  "descricao": "Franco (Bélgica)"
+ },
+ {
+  "codigo": "FRANCA",
+  "descricao": "Franco (França)"
+ },
+ {
+  "codigo": "LUXEMBU",
+  "descricao": "Franco (Luxemburgo)"
+ },
+ {
+  "codigo": "SUICA",
+  "descricao": "Franco (Suíça)"
+ },
+ {
+  "codigo": "PARAGUA",
+  "descricao": "Guarani (Paraguai)"
+ },
+ {
+  "codigo": "JAPAO",
+  "descricao": "Iene (Japão)"
+ },
+ {
+  "codigo": "CHINA",
+  "descricao": "Iuan Renmimbi (China)"
+ },
+ {
+  "codigo": "EGITO",
+  "descricao": "Libra (Egito)"
+ },
+ {
+  "codigo": "REINOU",
+  "descricao": "Libra Esterlina (Reino Unido)"
+ },
+ {
+  "codigo": "ITALIA",
+  "descricao": "Lira (Itália)"
+ },
+ {
+  "codigo": "ALEMANH",
+  "descricao": "Marco (Alemanha)"
+ },
+ {
+  "codigo": "FINLAND",
+  "descricao": "Marco Finlandês (Finlândia)"
+ },
+ {
+  "codigo": "PERU",
+  "descricao": "Novo Sol (Peru)"
+ },
+ {
+  "codigo": "OUTRA1",
+  "descricao": "Outra moeda 1"
+ },
+ {
+  "codigo": "OUTRA2",
+  "descricao": "Outra moeda 2"
+ },
+ {
+  "codigo": "OUTRA3",
+  "descricao": "Outra moeda 3"
+ },
+ {
+  "codigo": "OUTRA4",
+  "descricao": "Outra moeda 4"
+ },
+ {
+  "codigo": "OUTRA5",
+  "descricao": "Outra moeda 5"
+ },
+ {
+  "codigo": "ESPANHA",
+  "descricao": "Peseta (Espanha)"
+ },
+ {
+  "codigo": "ARGENTI",
+  "descricao": "Peso (Argentina)"
+ },
+ {
+  "codigo": "CHILE",
+  "descricao": "Peso (Chile)"
+ },
+ {
+  "codigo": "COLOMB",
+  "descricao": "Peso (Colômbia)"
+ },
+ {
+  "codigo": "FILIPIN",
+  "descricao": "Peso (Filipinas)"
+ },
+ {
+  "codigo": "MEXICO",
+  "descricao": "Peso (México)"
+ },
+ {
+  "codigo": "URUGUAI",
+  "descricao": "Peso (Uruguai)"
+ },
+ {
+  "codigo": "AFRICAS",
+  "descricao": "Rand (África do Sul)"
+ },
+ {
+  "codigo": "RUSSIA",
+  "descricao": "Rublo (Rússia)"
+ },
+ {
+  "codigo": "INDIA",
+  "descricao": "Rúpia (Índia)"
+ },
+ {
+  "codigo": "ISRAEL",
+  "descricao": "Shekel (Israel)"
+ },
+ {
+  "codigo": "EQUADOR",
+  "descricao": "Sucre (Equador)"
+ },
+ {
+  "codigo": "COREIAN",
+  "descricao": "Won (Coreia do Norte)"
+ },
+ {
+  "codigo": "COREIAS",
+  "descricao": "Won (Coreia do Sul)"
+ },
+ {
+  "codigo": "XELIM",
+  "descricao": "Xelim (Áustria)"
+ }
+]

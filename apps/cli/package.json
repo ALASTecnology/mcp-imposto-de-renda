@@ -1,0 +1,25 @@
+{
+  "name": "autoir-mcp",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Executável stdio do servidor MCP AutoIR.",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "autoir-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@autoir/mcp": "workspace:*",
+    "@modelcontextprotocol/sdk": "1.32.1"
+  }
+}

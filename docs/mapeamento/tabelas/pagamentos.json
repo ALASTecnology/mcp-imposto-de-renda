@@ -1,0 +1,188 @@
+[
+ {
+  "codigo": "01",
+  "descricao": "Despesas com instrução no Brasil.",
+  "descricaoResumida": "Instrução no Brasil."
+ },
+ {
+  "codigo": "02",
+  "descricao": "Despesas com instrução no exterior.",
+  "descricaoResumida": "Instrução no exterior."
+ },
+ {
+  "codigo": "09",
+  "descricao": "Fonoaudiólogos no Brasil."
+ },
+ {
+  "codigo": "10",
+  "descricao": "Médicos no Brasil."
+ },
+ {
+  "codigo": "11",
+  "descricao": "Dentistas no Brasil."
+ },
+ {
+  "codigo": "12",
+  "descricao": "Psicólogos no Brasil."
+ },
+ {
+  "codigo": "13",
+  "descricao": "Fisioterapeutas no Brasil."
+ },
+ {
+  "codigo": "14",
+  "descricao": "Terapeutas ocupacionais no Brasil."
+ },
+ {
+  "codigo": "15",
+  "descricao": "Médicos no exterior."
+ },
+ {
+  "codigo": "16",
+  "descricao": "Dentistas no exterior."
+ },
+ {
+  "codigo": "17",
+  "descricao": "Psicólogos no exterior."
+ },
+ {
+  "codigo": "18",
+  "descricao": "Fisioterapeutas no exterior."
+ },
+ {
+  "codigo": "19",
+  "descricao": "Terapeutas ocupacionais no exterior."
+ },
+ {
+  "codigo": "20",
+  "descricao": "Fonoaudiólogos no exterior."
+ },
+ {
+  "codigo": "21",
+  "descricao": "Hospitais, clínicas e laboratórios com saúde humana no Brasil.",
+  "descricaoResumida": "Hospitais, clínicas e lab. com saúde humana no Brasil."
+ },
+ {
+  "codigo": "22",
+  "descricao": "Hospitais, clínicas e laboratórios com saúde humana no exterior.",
+  "descricaoResumida": "Hospitais, clínicas e lab. com saúde humana no exterior."
+ },
+ {
+  "codigo": "26",
+  "descricao": "Planos de saúde no Brasil."
+ },
+ {
+  "codigo": "30",
+  "descricao": "Pensão alimentícia judicial paga a residente no Brasil.",
+  "descricaoResumida": "Pensão judicial paga a residente no Brasil."
+ },
+ {
+  "codigo": "31",
+  "descricao": "Pensão alimentícia judicial paga a não-residente no Brasil.",
+  "descricaoResumida": "Pensão judicial paga a não-residente no Brasil."
+ },
+ {
+  "codigo": "33",
+  "descricao": "Pensão alimentícia - separação/divórcio por escritura pública paga a residente no Brasil.",
+  "descricaoResumida": "Pensão, por escritura pública, a residente"
+ },
+ {
+  "codigo": "34",
+  "descricao": "Pensão alimentícia - separação/divórcio por escritura pública paga a não-residente no Brasil.",
+  "descricaoResumida": "Pensão, por escritura, a não residente"
+ },
+ {
+  "codigo": "36",
+  "descricao": "Previdência Complementar (inclusive FAPI).",
+  "descricaoResumida": "Previdência Complementar (inclusive FAPI)"
+ },
+ {
+  "codigo": "37",
+  "descricao": "Contribuições para as entidades de previdência complementar fechadas ou abertas de que trata o § 15 do art. 40 da Constituição Federal de 1988.",
+  "descricaoResumida": "Previdência complementar fechada ou abertas publica."
+ },
+ {
+  "codigo": "40",
+  "descricao": "Doações em 2025 - Estatuto da Criança e do Adolescente."
+ },
+ {
+  "codigo": "41",
+  "descricao": "Incentivo à cultura."
+ },
+ {
+  "codigo": "42",
+  "descricao": "Incentivo à atividade audiovisual."
+ },
+ {
+  "codigo": "43",
+  "descricao": "Incentivo ao desporto."
+ },
+ {
+  "codigo": "44",
+  "descricao": "Doações em 2025 - Fundos Controlados pelos Conselhos da Pessoa Idosa.",
+  "descricaoResumida": "Doações em 2025 - Fundos Cont. Conselhos da Pessoa Idosa"
+ },
+ {
+  "codigo": "45",
+  "descricao": "Incentivo ao Programa Nacional de Apoio à Atenção da Saúde da Pessoa com Deficiência (Pronas/PCD)",
+  "descricaoResumida": "Pronas/PCD"
+ },
+ {
+  "codigo": "46",
+  "descricao": "Incentivo ao Programa Nacional de Apoio à Atenção Oncológica (Pronon)",
+  "descricaoResumida": "Pronon"
+ },
+ {
+  "codigo": "47",
+  "descricao": "Apoio direto a projetos que estimulem a cadeia produtiva da reciclagem.",
+  "descricaoResumida": "Cadeia produtiva da reciclagem."
+ },
+ {
+  "codigo": "60",
+  "descricao": "Advogados (honorários relativos a ações judiciais, exceto trabalhistas).",
+  "descricaoResumida": "Advogados (exceto de ações trabalhistas)"
+ },
+ {
+  "codigo": "61",
+  "descricao": "Advogados (honorários relativos a ações judiciais trabalhistas).",
+  "descricaoResumida": "Advogados (relativos a ações trabalhistas)"
+ },
+ {
+  "codigo": "62",
+  "descricao": "Advogados (demais honorários)."
+ },
+ {
+  "codigo": "66",
+  "descricao": "Engenheiros, Arquitetos e demais profissionais liberais, exceto advogados, administrador de imóveis ou corretor de imóveis.",
+  "descricaoResumida": "Engenheiros, Arquitetos e outros autônomos"
+ },
+ {
+  "codigo": "70",
+  "descricao": "Aluguéis de imóveis."
+ },
+ {
+  "codigo": "71",
+  "descricao": "Administrador de imóveis."
+ },
+ {
+  "codigo": "72",
+  "descricao": "Corretor de imóveis."
+ },
+ {
+  "codigo": "76",
+  "descricao": "Arrendamento rural."
+ },
+ {
+  "codigo": "80",
+  "descricao": "Doações em espécie."
+ },
+ {
+  "codigo": "81",
+  "descricao": "Doações em bens e direitos."
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros Pagamentos e Doações",
+  "descricaoResumida": "Outros(as)"
+ }
+]

@@ -1,0 +1,130 @@
+[
+ {
+  "codigo": "001",
+  "descricao": "BANCO DO BRASIL S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "11"
+  }
+ },
+ {
+  "codigo": "003",
+  "descricao": "BANCO DA AMAZÔNIA S.A.",
+  "parametrosDV": {
+   "COL3": "3",
+   "COL4": "6"
+  }
+ },
+ {
+  "codigo": "004",
+  "descricao": "BANCO DO NORDESTE DO BRASIL S.A.",
+  "parametrosDV": {
+   "COL3": "3",
+   "COL4": "6"
+  }
+ },
+ {
+  "codigo": "021",
+  "descricao": "BANESTES S.A. BANCO DO ESTADO DO ESPÍRITO SANTO",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "9"
+  }
+ },
+ {
+  "codigo": "033",
+  "descricao": "BANCO SANTANDER (BRASIL) S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "11"
+  }
+ },
+ {
+  "codigo": "037",
+  "descricao": "BANCO DO ESTADO DO PARÁ S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "9"
+  }
+ },
+ {
+  "codigo": "041",
+  "descricao": "BANCO DO ESTADO DO RIO GRANDE DO SUL S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "9"
+  }
+ },
+ {
+  "codigo": "047",
+  "descricao": "BANCO DO ESTADO DE SERGIPE S.A.",
+  "parametrosDV": {
+   "COL3": "3",
+   "COL4": "8"
+  }
+ },
+ {
+  "codigo": "070",
+  "descricao": "BRB - BANCO DE BRASÍLIA S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "9"
+  }
+ },
+ {
+  "codigo": "104",
+  "descricao": "CAIXA ECONÔMICA FEDERAL",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "8"
+  }
+ },
+ {
+  "codigo": "237",
+  "descricao": "BANCO BRADESCO S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "7"
+  }
+ },
+ {
+  "codigo": "341",
+  "descricao": "BANCO ITAÚ S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "5"
+  }
+ },
+ {
+  "codigo": "389",
+  "descricao": "BANCO MERCANTIL DO BRASIL S.A.",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "8"
+  }
+ },
+ {
+  "codigo": "422",
+  "descricao": "BANCO SAFRA S.A.",
+  "parametrosDV": {
+   "COL3": "3",
+   "COL4": "6"
+  }
+ },
+ {
+  "codigo": "748",
+  "descricao": "BANCO COOPERATIVO SICREDI S.A. - BANSICREDI",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "11"
+  }
+ },
+ {
+  "codigo": "756",
+  "descricao": "BANCO COOPERATIVO DO BRASIL S.A. - BANCOOB",
+  "parametrosDV": {
+   "COL3": "4",
+   "COL4": "9"
+  }
+ }
+]

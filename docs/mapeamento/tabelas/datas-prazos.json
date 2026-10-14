@@ -1,0 +1,46 @@
+[
+ {
+  "codigo": "dataInicioRecepcao",
+  "descricao": "20260323"
+ },
+ {
+  "codigo": "horaInicioRecepcao",
+  "descricao": "080000"
+ },
+ {
+  "codigo": "dataQuartaCinzas",
+  "descricao": "20260218"
+ },
+ {
+  "codigo": "dataPenultimoDiaUtil",
+  "descricao": "20261230"
+ },
+ {
+  "codigo": "dataFimRecepcao",
+  "descricao": "20260529"
+ },
+ {
+  "codigo": "horaFimRecepcao",
+  "descricao": "235959"
+ },
+ {
+  "codigo": "dataLimiteDebitoAutomatico",
+  "descricao": "20260510"
+ },
+ {
+  "codigo": "dataReaberturaEntrega",
+  "descricao": "20260601"
+ },
+ {
+  "codigo": "quantidadeQuotas",
+  "descricao": "008"
+ },
+ {
+  "codigo": "dataPrimeiraCota",
+  "descricao": "20260529"
+ },
+ {
+  "codigo": "dataVencimentoQuota",
+  "descricao": "20260529;20260630;20260731;20260831;20260930;20261030;20261130;20261230"
+ }
+]

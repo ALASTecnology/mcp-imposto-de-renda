@@ -1,0 +1,402 @@
+[
+ {
+  "codigo": "01",
+  "descricao": "Prédio residencial",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Prédio comercial",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Galpão",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "11",
+  "descricao": "Apartamento",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "12",
+  "descricao": "Casa",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "13",
+  "descricao": "Terreno",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "14",
+  "descricao": "Imóvel rural",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "15",
+  "descricao": "Sala ou conjunto",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "16",
+  "descricao": "Construção",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "17",
+  "descricao": "Benfeitorias até 1988",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "18",
+  "descricao": "Loja",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "19",
+  "descricao": "Garagem Avulsa",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros bens imóveis",
+  "grupo": "01",
+  "grupoDescricao": "Bens Imóveis"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Veículo automotor terrestre: caminhão, automóvel, moto etc",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis",
+  "descricaoResumida": "Veículo automotor terrestre: caminhão, moto etc"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Aeronave",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Embarcação",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis"
+ },
+ {
+  "codigo": "04",
+  "descricao": "Bem relacionado com o exercício da atividade autônoma",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis"
+ },
+ {
+  "codigo": "05",
+  "descricao": "Quadro, objeto de arte, de coleção, antiguidade etc",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis",
+  "descricaoResumida": "Quadro,objeto de arte,antiguidade etc"
+ },
+ {
+  "codigo": "06",
+  "descricao": "Joia",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros bens móveis",
+  "grupo": "02",
+  "grupoDescricao": "Bens Móveis"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Ações (inclusive as listadas em bolsa)",
+  "grupo": "03",
+  "grupoDescricao": "Participações Societárias"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Quotas ou quinhões de capital",
+  "grupo": "03",
+  "grupoDescricao": "Participações Societárias"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Holding Patrimonial - ações ou quotas adquiridas por integralização de bens (já declarados) ao capital",
+  "grupo": "03",
+  "grupoDescricao": "Participações Societárias",
+  "descricaoResumida": "Holding Patrimonial - ações ou quotas integralização de bens"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outras participações societárias",
+  "grupo": "03",
+  "grupoDescricao": "Participações Societárias"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Depósito em conta poupança",
+  "grupo": "04",
+  "grupoDescricao": "Aplicações e Investimentos",
+  "descricaoResumida": "Depósito em conta poupança."
+ },
+ {
+  "codigo": "02",
+  "descricao": "Títulos públicos e privados sujeitos à tributação (Tesouro Direto, CDB, RDB e Outros)",
+  "grupo": "04",
+  "grupoDescricao": "Aplicações e Investimentos",
+  "descricaoResumida": "Títulos sujeitos à trib. (Tes. Direto, CDB, RDB...)"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Títulos isentos de tributação (LCI, LCA, LCD, CRI, CRA, LIG, Debêntures de Infraestrutura e outros)",
+  "grupo": "04",
+  "grupoDescricao": "Aplicações e Investimentos",
+  "descricaoResumida": "Títulos isentos de trib (LCI, LCA, LCD, RI, CRA, LIG)"
+ },
+ {
+  "codigo": "04",
+  "descricao": "Ativos negociados em bolsa no Brasil (BDRs, opções e outros - exceto ações e fundos)",
+  "grupo": "04",
+  "grupoDescricao": "Aplicações e Investimentos",
+  "descricaoResumida": "Ativos em bolsa (exceto ações e fundos)"
+ },
+ {
+  "codigo": "05",
+  "descricao": "Ouro, ativo financeiro",
+  "grupo": "04",
+  "grupoDescricao": "Aplicações e Investimentos"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outras aplicações e investimentos",
+  "grupo": "04",
+  "grupoDescricao": "Aplicações e Investimentos"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Empréstimos concedidos",
+  "grupo": "05",
+  "grupoDescricao": "Créditos"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Crédito decorrente de alienação",
+  "grupo": "05",
+  "grupoDescricao": "Créditos"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros créditos",
+  "grupo": "05",
+  "grupoDescricao": "Créditos"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Depósito em conta corrente ou conta pagamento",
+  "grupo": "06",
+  "grupoDescricao": "Depósito à Vista e Numerário"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Conta gráfica mantida em agente operador de loterias de apostas de quota fixa - Lei 14.790/2023",
+  "grupo": "06",
+  "grupoDescricao": "Depósito à Vista e Numerário",
+  "descricaoResumida": "Conta Gráfica - Lei 14.790/2023"
+ },
+ {
+  "codigo": "10",
+  "descricao": "Dinheiro em espécie - moeda nacional",
+  "grupo": "06",
+  "grupoDescricao": "Depósito à Vista e Numerário"
+ },
+ {
+  "codigo": "11",
+  "descricao": "Dinheiro em espécie - moeda estrangeira",
+  "grupo": "06",
+  "grupoDescricao": "Depósito à Vista e Numerário"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros depósitos à vista",
+  "grupo": "06",
+  "grupoDescricao": "Depósito à Vista e Numerário"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Fundos de Investimentos sujeitos à tributação periódica (come-cotas) - Lei 14.754/2023",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "FI sujeitos à trib periódica (come-cotas)."
+ },
+ {
+  "codigo": "02",
+  "descricao": "Fundos de Investimento nas Cadeias Produtivas Agroindustriais (Fiagro) - Lei 8.668/1993",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "FI Cadeias Produtivas Agroindustriais (Fiagro)."
+ },
+ {
+  "codigo": "03",
+  "descricao": "Fundos de Investimento Imobiliário (FII) - Lei 8.668/1993",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "Fundos de Investimento Imobiliário (FII)"
+ },
+ {
+  "codigo": "04",
+  "descricao": "Fundos de Investimento em Ações (Lei 14.754/2023) e Fundos Mútuos de Privatização - FGTS (Lei 8.036/1990)",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "FI Ações e Fundos Mútuos de Privatização - FGTS"
+ },
+ {
+  "codigo": "06",
+  "descricao": "FIP - Entidade de investimento, FIDC - Entidade de investimento sem tributação periódica (come-cotas), ETF - Entidade de investimento - Lei 14.754/2023",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "FIP - Entidade de investimento, FIDC (come-cotas) e ETF"
+ },
+ {
+  "codigo": "07",
+  "descricao": "Fundos de Investimento em Participações em Infraestrutura (FIP-IE) e Fundos de Investimento em Participação na Produção Econômica Intensiva em Pesquisa, Desenvolvimento e Inovação (FIP-PD&I) - Lei 11.478/2007",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "FIP- IE e FIP-PD&I."
+ },
+ {
+  "codigo": "08",
+  "descricao": "Fundos de Índice de Renda Fixa (ETFs) - Lei 13.043/2014, art. 2º",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "Fundos de Índice de Renda Fixa - Lei 13.043/14"
+ },
+ {
+  "codigo": "10",
+  "descricao": "Fundos de Infraestrutura, FIDC e outros Fundos de Investimento (alíquota 0%) - Lei 12.431/2011 arts. 2º e 3º",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "Fundo de Invest. em Direitos Creditórios (FIDC)"
+ },
+ {
+  "codigo": "12",
+  "descricao": "Fundos de Investimentos em Empresas Emergente - FIEE Lei 11.312/2006, art 2º",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "Fundos de Invest. em Empresas Emergente - FIEE"
+ },
+ {
+  "codigo": "13",
+  "descricao": "Fundo multimercado Lei 14.754/2023, art. 25 combinado com o art. 40",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "Fundo multimercado Lei 14.754/23, art 25 comb com art 40"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Fundos de Investimento no Exterior - Lei 14.754/2023, arts. 2º a 14",
+  "grupo": "07",
+  "grupoDescricao": "Fundos",
+  "descricaoResumida": "Fundos de Investimento no Exterior - Lei 14.754/2023"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Criptoativo Bitcoin - BTC",
+  "grupo": "08",
+  "grupoDescricao": "Criptoativos"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Outras criptomoedas, conhecidas como altcoins, por exemplo, Ether (ETH), Ripple (XRP), Bitcoin Cash (BCH) e Litecoin (LTC)",
+  "grupo": "08",
+  "grupoDescricao": "Criptoativos",
+  "descricaoResumida": "Outras criptomoedas, conhecidas como altcoins"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Criptoativos conhecidos como stablecoins, por exemplo, Tether (USDT), USD Coin (USDC), Brazilian Digital Token (BRZ), Binance USD (BUSD), DAI, True USD (TUSD), Gemini USD (GUSD, Paxos USD (PAX), Paxos Gold (PAXG), etc",
+  "grupo": "08",
+  "grupoDescricao": "Criptoativos",
+  "descricaoResumida": "Criptoativos conhecidos como stablecoins"
+ },
+ {
+  "codigo": "10",
+  "descricao": "Criptoativos conhecidos como NFTs (Non-Fungible Tokens)",
+  "grupo": "08",
+  "grupoDescricao": "Criptoativos"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros criptoativos",
+  "grupo": "08",
+  "grupoDescricao": "Criptoativos"
+ },
+ {
+  "codigo": "01",
+  "descricao": "Licença e concessão especiais",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "02",
+  "descricao": "Título de clube e assemelhado",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "03",
+  "descricao": "Direito de autor, de inventor e patente",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "04",
+  "descricao": "Direito de lavra e assemelhado",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "05",
+  "descricao": "Consórcio não contemplado",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "06",
+  "descricao": "VGBL - Vida Gerador de Benefício Livre",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "07",
+  "descricao": "Juros Sobre Capital Próprio a receber",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ },
+ {
+  "codigo": "08",
+  "descricao": "Leasing com opção de compra a ser exercida no final do contrato",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos",
+  "descricaoResumida": "Leasing opção de compra a ser exercida no final do contrato"
+ },
+ {
+  "codigo": "99",
+  "descricao": "Outros bens e direitos",
+  "grupo": "99",
+  "grupoDescricao": "Outros Bens e Direitos"
+ }
+]

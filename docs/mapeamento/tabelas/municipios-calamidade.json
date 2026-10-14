@@ -1,0 +1,1997 @@
+[
+ {
+  "codigo": "8501",
+  "descricao": "Agudo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1118",
+  "descricao": "Aceguá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8507",
+  "descricao": "Alegrete",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8497",
+  "descricao": "Alegria",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8509",
+  "descricao": "Alpestre",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8495",
+  "descricao": "Alto Alegre",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6045",
+  "descricao": "Alto Feliz",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8511",
+  "descricao": "Alvorada",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8493",
+  "descricao": "Amaral Ferrador",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5969",
+  "descricao": "Ametista do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8491",
+  "descricao": "André da Rocha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8513",
+  "descricao": "Anta Gorda",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8515",
+  "descricao": "Antônio Prado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5779",
+  "descricao": "Arambaré",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0952",
+  "descricao": "Araricá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8517",
+  "descricao": "Aratiba",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8519",
+  "descricao": "Arroio do Meio",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8523",
+  "descricao": "Arroio do Tigre",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8521",
+  "descricao": "Arroio dos Ratos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8525",
+  "descricao": "Arroio Grande",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8527",
+  "descricao": "Arvorezinha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8529",
+  "descricao": "Augusto Pestana",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8487",
+  "descricao": "Áurea",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0954",
+  "descricao": "Balneário Pinhal",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8485",
+  "descricao": "Barão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8533",
+  "descricao": "Barão de Cotegipe",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6069",
+  "descricao": "Barra do Guarita",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8537",
+  "descricao": "Barra do Ribeiro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5959",
+  "descricao": "Barra do Rio Azul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5943",
+  "descricao": "Barra Funda",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8539",
+  "descricao": "Barros Cassal",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0958",
+  "descricao": "Benjamin Constant do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8541",
+  "descricao": "Bento Gonçalves",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5981",
+  "descricao": "Boa Vista Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8543",
+  "descricao": "Boa Vista do Buricá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0960",
+  "descricao": "Boa Vista do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8545",
+  "descricao": "Bom Jesus",
+  "uf": "RS"
+ },
+ {
+  "codigo": "9823",
+  "descricao": "Bom Princípio",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8547",
+  "descricao": "Bom Retiro do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8483",
+  "descricao": "Boqueirão do Leão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8449",
+  "descricao": "Brochier",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8553",
+  "descricao": "Butiá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8555",
+  "descricao": "Caçapava do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8557",
+  "descricao": "Cacequi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8559",
+  "descricao": "Cachoeira do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8561",
+  "descricao": "Cachoeirinha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8563",
+  "descricao": "Cacique Doble",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8567",
+  "descricao": "Caiçara",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8569",
+  "descricao": "Camaquã",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8447",
+  "descricao": "Camargo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6013",
+  "descricao": "Campestre da Serra",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8573",
+  "descricao": "Campina Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8575",
+  "descricao": "Campinas do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8577",
+  "descricao": "Campo Bom",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8445",
+  "descricao": "Campos Borges",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8581",
+  "descricao": "Candelária",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8583",
+  "descricao": "Cândido Godói",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8585",
+  "descricao": "Canela",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8587",
+  "descricao": "Canguçu",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8589",
+  "descricao": "Canoas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1130",
+  "descricao": "Canudos do Vale",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1132",
+  "descricao": "Capão Bonito do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8915",
+  "descricao": "Capão da Canoa",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1134",
+  "descricao": "Capão do Cipó",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8443",
+  "descricao": "Capela de Santana",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6025",
+  "descricao": "Capitão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0964",
+  "descricao": "Caraá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8591",
+  "descricao": "Carazinho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8593",
+  "descricao": "Carlos Barbosa",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5961",
+  "descricao": "Carlos Gomes",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8441",
+  "descricao": "Caseiros",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8597",
+  "descricao": "Catuípe",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8599",
+  "descricao": "Caxias do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5963",
+  "descricao": "Centenário",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8439",
+  "descricao": "Cerro Branco",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8437",
+  "descricao": "Cerro Grande",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8435",
+  "descricao": "Cerro Grande do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8603",
+  "descricao": "Chapada",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8693",
+  "descricao": "Charqueadas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5965",
+  "descricao": "Charrua",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8605",
+  "descricao": "Chiapetta",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8607",
+  "descricao": "Ciríaco",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6029",
+  "descricao": "Colinas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8609",
+  "descricao": "Colorado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8613",
+  "descricao": "Constantina",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1136",
+  "descricao": "Coqueiro Baixo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8615",
+  "descricao": "Coronel Bicaco",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1138",
+  "descricao": "Coronel Pilar",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8977",
+  "descricao": "Cotiporã",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8617",
+  "descricao": "Crissiumal",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8431",
+  "descricao": "Cristal",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0972",
+  "descricao": "Cristal do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8619",
+  "descricao": "Cruz Alta",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1140",
+  "descricao": "Cruzaltense",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8621",
+  "descricao": "Cruzeiro do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8623",
+  "descricao": "David Canabarro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8429",
+  "descricao": "Dezesseis de Novembro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0974",
+  "descricao": "Dilermando de Aguiar",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8625",
+  "descricao": "Dois Irmãos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5971",
+  "descricao": "Dois Irmãos Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8427",
+  "descricao": "Dois Lajeados",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8627",
+  "descricao": "Dom Feliciano",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8631",
+  "descricao": "Dona Francisca",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8425",
+  "descricao": "Doutor Maurício Cardoso",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0978",
+  "descricao": "Doutor Ricardo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8423",
+  "descricao": "Eldorado do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8633",
+  "descricao": "Encantado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8635",
+  "descricao": "Encruzilhada do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5947",
+  "descricao": "Engenho Velho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8421",
+  "descricao": "Entre Rios do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8417",
+  "descricao": "Erebango",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8637",
+  "descricao": "Erechim",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8641",
+  "descricao": "Erval Grande",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8643",
+  "descricao": "Erval Seco",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8647",
+  "descricao": "Espumoso",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7301",
+  "descricao": "Estação",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8649",
+  "descricao": "Estância Velha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8651",
+  "descricao": "Esteio",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8653",
+  "descricao": "Estrela",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0982",
+  "descricao": "Estrela Velha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8413",
+  "descricao": "Eugênio de Castro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8411",
+  "descricao": "Fagundes Varela",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8655",
+  "descricao": "Farroupilha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8657",
+  "descricao": "Faxinal do Soturno",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8409",
+  "descricao": "Faxinalzinho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0984",
+  "descricao": "Fazenda Vilanova",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8659",
+  "descricao": "Feliz",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8661",
+  "descricao": "Flores da Cunha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8663",
+  "descricao": "Fontoura Xavier",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8665",
+  "descricao": "Formigueiro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1142",
+  "descricao": "Forquetinha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "9827",
+  "descricao": "Fortaleza Dos Valos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8667",
+  "descricao": "Frederico Westphalen",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8669",
+  "descricao": "Garibaldi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8673",
+  "descricao": "General Câmara",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5799",
+  "descricao": "Gentil",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8681",
+  "descricao": "Gramado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5949",
+  "descricao": "Gramado Dos Loureiros",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5763",
+  "descricao": "Gramado Xavier",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8683",
+  "descricao": "Gravataí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8405",
+  "descricao": "Guabiju",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8685",
+  "descricao": "Guaíba",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8687",
+  "descricao": "Guaporé",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8403",
+  "descricao": "Harmonia",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8639",
+  "descricao": "Herval",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0988",
+  "descricao": "Herveiras",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8691",
+  "descricao": "Horizontina",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8695",
+  "descricao": "Humaitá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8401",
+  "descricao": "Ibarama",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8697",
+  "descricao": "Ibiaçá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7299",
+  "descricao": "Ibirapuitã",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8701",
+  "descricao": "Ibirubá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8703",
+  "descricao": "Igrejinha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8707",
+  "descricao": "Ilópolis",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7295",
+  "descricao": "Imigrante",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8709",
+  "descricao": "Independência",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6051",
+  "descricao": "Inhacorá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8399",
+  "descricao": "Ipê",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7399",
+  "descricao": "Ipiranga do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8711",
+  "descricao": "Iraí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0990",
+  "descricao": "Itaara",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6027",
+  "descricao": "Itapuca",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8713",
+  "descricao": "Itaqui",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1144",
+  "descricao": "Itati",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8715",
+  "descricao": "Itatiba do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7395",
+  "descricao": "Ivorá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7393",
+  "descricao": "Jaboticaba",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1146",
+  "descricao": "Jacuizinho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8721",
+  "descricao": "Jaguarão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8723",
+  "descricao": "Jaguari",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0992",
+  "descricao": "Jari",
+  "uf": "RS"
+ },
+ {
+  "codigo": "9829",
+  "descricao": "Jóia",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8725",
+  "descricao": "Júlio de Castilhos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1148",
+  "descricao": "Lagoa Bonita do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5951",
+  "descricao": "Lagoa Dos Três Cantos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8727",
+  "descricao": "Lagoa Vermelha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7389",
+  "descricao": "Lagoão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8729",
+  "descricao": "Lajeado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5983",
+  "descricao": "Lajeado do Bugre",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8731",
+  "descricao": "Lavras do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8733",
+  "descricao": "Liberato Salzano",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6017",
+  "descricao": "Lindolfo Collor",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0996",
+  "descricao": "Mampituba",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6079",
+  "descricao": "Manoel Viana",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5783",
+  "descricao": "Maquiné",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6039",
+  "descricao": "Maratá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8737",
+  "descricao": "Marau",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8739",
+  "descricao": "Marcelino Ramos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5759",
+  "descricao": "Mariana Pimentel",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8741",
+  "descricao": "Mariano Moro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "0998",
+  "descricao": "Marques de Souza",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8743",
+  "descricao": "Mata",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6031",
+  "descricao": "Mato Leitão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8745",
+  "descricao": "Maximiliano de Almeida",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5773",
+  "descricao": "Minas do Leão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8747",
+  "descricao": "Miraguaí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7387",
+  "descricao": "Montauri",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1000",
+  "descricao": "Monte Alegre Dos Campos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5993",
+  "descricao": "Monte Belo do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8749",
+  "descricao": "Montenegro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5933",
+  "descricao": "Mormaço",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5775",
+  "descricao": "Morrinhos do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6019",
+  "descricao": "Morro Reuter",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8751",
+  "descricao": "Mostardas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8753",
+  "descricao": "Muçum",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8755",
+  "descricao": "Não-Me-Toque",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8757",
+  "descricao": "Nonoai",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7383",
+  "descricao": "Nova Alvorada",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8761",
+  "descricao": "Nova Bassano",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5953",
+  "descricao": "Nova Boa Vista",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8763",
+  "descricao": "Nova Bréscia",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7381",
+  "descricao": "Nova Esperança do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8765",
+  "descricao": "Nova Palma",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8767",
+  "descricao": "Nova Petrópolis",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8769",
+  "descricao": "Nova Prata",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1006",
+  "descricao": "Nova Ramada",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7377",
+  "descricao": "Nova Roma do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5757",
+  "descricao": "Nova Santa Rita",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5985",
+  "descricao": "Novo Barreiro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1008",
+  "descricao": "Novo Cabrais",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8771",
+  "descricao": "Novo Hamburgo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6057",
+  "descricao": "Novo Machado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5973",
+  "descricao": "Novo Tiradentes",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1152",
+  "descricao": "Novo Xingu",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8775",
+  "descricao": "Paim Filho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8967",
+  "descricao": "Palmares do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8777",
+  "descricao": "Palmeira Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8779",
+  "descricao": "Palmitinho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8781",
+  "descricao": "Panambi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7375",
+  "descricao": "Pantano Grande",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8783",
+  "descricao": "Paraí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7373",
+  "descricao": "Paraíso do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6041",
+  "descricao": "Pareci Novo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "9825",
+  "descricao": "Parobé",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1010",
+  "descricao": "Passa Sete",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5765",
+  "descricao": "Passo do Sobrado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8785",
+  "descricao": "Passo Fundo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1154",
+  "descricao": "Paulo Bento",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7371",
+  "descricao": "Paverama",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1156",
+  "descricao": "Pedras Altas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8789",
+  "descricao": "Pejuçara",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8791",
+  "descricao": "Pelotas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6021",
+  "descricao": "Picada Café",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7369",
+  "descricao": "Pinhal",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5787",
+  "descricao": "Pinhal Grande",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8793",
+  "descricao": "Pinheiro Machado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1160",
+  "descricao": "Pinto Bandeira",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8795",
+  "descricao": "Piratini",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8797",
+  "descricao": "Planalto",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7365",
+  "descricao": "Poço Das Antas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5939",
+  "descricao": "Pontão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5967",
+  "descricao": "Ponte Preta",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8799",
+  "descricao": "Portão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8801",
+  "descricao": "Porto Alegre",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8803",
+  "descricao": "Porto Lucena",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6065",
+  "descricao": "Porto Mauá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6067",
+  "descricao": "Porto Vera Cruz",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8805",
+  "descricao": "Porto Xavier",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7363",
+  "descricao": "Pouso Novo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6023",
+  "descricao": "Presidente Lucena",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7361",
+  "descricao": "Progresso",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7359",
+  "descricao": "Protásio Alves",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8807",
+  "descricao": "Putinga",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8809",
+  "descricao": "Quaraí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5789",
+  "descricao": "Quevedos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7357",
+  "descricao": "Quinze de Novembro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8811",
+  "descricao": "Redentora",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7355",
+  "descricao": "Relvado",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8813",
+  "descricao": "Restinga Seca",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8815",
+  "descricao": "Rio Grande",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8817",
+  "descricao": "Rio Pardo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7353",
+  "descricao": "Riozinho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8819",
+  "descricao": "Roca Sales",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8821",
+  "descricao": "Rodeio Bonito",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8823",
+  "descricao": "Rolante",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8825",
+  "descricao": "Ronda Alta",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8827",
+  "descricao": "Rondinha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8829",
+  "descricao": "Roque Gonzales",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8831",
+  "descricao": "Rosário do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5987",
+  "descricao": "Sagrada Família",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8975",
+  "descricao": "Salto do Jacuí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8833",
+  "descricao": "Salvador do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6033",
+  "descricao": "Santa Clara do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8839",
+  "descricao": "Santa Cruz do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1168",
+  "descricao": "Santa Margarida do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8841",
+  "descricao": "Santa Maria",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7337",
+  "descricao": "Santa Maria do Herval",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8847",
+  "descricao": "Santa Rosa",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5995",
+  "descricao": "Santa Tereza",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8849",
+  "descricao": "Santa Vitória do Palmar",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8843",
+  "descricao": "Santana da Boa Vista",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8851",
+  "descricao": "Santiago",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8853",
+  "descricao": "Santo Ângelo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8855",
+  "descricao": "Santo Antônio da Patrulha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8857",
+  "descricao": "Santo Antônio Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5941",
+  "descricao": "Santo Antônio do Palma",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8859",
+  "descricao": "Santo Augusto",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8861",
+  "descricao": "Santo Cristo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5977",
+  "descricao": "Santo Expedito do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8863",
+  "descricao": "São Borja",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7351",
+  "descricao": "São Domingos do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8865",
+  "descricao": "São Francisco de Assis",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8867",
+  "descricao": "São Francisco de Paula",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8869",
+  "descricao": "São Gabriel",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8871",
+  "descricao": "São Jerônimo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7349",
+  "descricao": "São João da Urtiga",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5791",
+  "descricao": "São João do Polêsine",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7347",
+  "descricao": "São Jorge",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5989",
+  "descricao": "São José Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7345",
+  "descricao": "São José do Herval",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7343",
+  "descricao": "São José do Hortêncio",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6059",
+  "descricao": "São José do Inhacorá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8873",
+  "descricao": "São José do Norte",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1170",
+  "descricao": "São José do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6015",
+  "descricao": "São José Dos Ausentes",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8877",
+  "descricao": "São Leopoldo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8879",
+  "descricao": "São Lourenço do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8883",
+  "descricao": "São Marcos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5793",
+  "descricao": "São Martinho da Serra",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7341",
+  "descricao": "São Miguel Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8889",
+  "descricao": "São Paulo Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6043",
+  "descricao": "São Pedro da Serra",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1172",
+  "descricao": "São Pedro Das Missões",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6063",
+  "descricao": "São Pedro do Butiá",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8891",
+  "descricao": "São Pedro do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8893",
+  "descricao": "São Sebastião do Caí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8895",
+  "descricao": "São Sepé",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8897",
+  "descricao": "São Valentim",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5997",
+  "descricao": "São Valentim do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7293",
+  "descricao": "São Vendelino",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8675",
+  "descricao": "São Vicente do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8899",
+  "descricao": "Sapiranga",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8901",
+  "descricao": "Sapucaia do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8903",
+  "descricao": "Sarandi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8905",
+  "descricao": "Seberi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7335",
+  "descricao": "Sede Nova",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7317",
+  "descricao": "Segredo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8907",
+  "descricao": "Selbach",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1012",
+  "descricao": "Senador Salgado Filho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5781",
+  "descricao": "Sentinela do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8909",
+  "descricao": "Serafina Corrêa",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6035",
+  "descricao": "Sério",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8911",
+  "descricao": "Sertão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8913",
+  "descricao": "Severiano de Almeida",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7315",
+  "descricao": "Silveira Martins",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5767",
+  "descricao": "Sinimbu",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8917",
+  "descricao": "Sobradinho",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8919",
+  "descricao": "Soledade",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1016",
+  "descricao": "Tabaí",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8923",
+  "descricao": "Tapera",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8925",
+  "descricao": "Tapes",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8927",
+  "descricao": "Taquara",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8929",
+  "descricao": "Taquari",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7313",
+  "descricao": "Taquaruçu do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8931",
+  "descricao": "Tenente Portela",
+  "uf": "RS"
+ },
+ {
+  "codigo": "9821",
+  "descricao": "Teutônia",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1174",
+  "descricao": "Tio Hugo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6077",
+  "descricao": "Tiradentes do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1018",
+  "descricao": "Toropi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8933",
+  "descricao": "Torres",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6037",
+  "descricao": "Travesseiro",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7331",
+  "descricao": "Três Arroios",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8937",
+  "descricao": "Três Coroas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5777",
+  "descricao": "Três Forquilhas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7327",
+  "descricao": "Três Palmeiras",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8941",
+  "descricao": "Três Passos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7325",
+  "descricao": "Trindade do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8943",
+  "descricao": "Triunfo",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8945",
+  "descricao": "Tucunduva",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7323",
+  "descricao": "Tunas",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5979",
+  "descricao": "Tupanci do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8947",
+  "descricao": "Tupanciretã",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7321",
+  "descricao": "Tupandi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8949",
+  "descricao": "Tuparendi",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1022",
+  "descricao": "Ubiretama",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5999",
+  "descricao": "União da Serra",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1024",
+  "descricao": "Unistalda",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8951",
+  "descricao": "Uruguaiana",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8953",
+  "descricao": "Vacaria",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5769",
+  "descricao": "Vale do Sol",
+  "uf": "RS"
+ },
+ {
+  "codigo": "6049",
+  "descricao": "Vale Real",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1026",
+  "descricao": "Vale Verde",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7319",
+  "descricao": "Vanini",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8955",
+  "descricao": "Venâncio Aires",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8957",
+  "descricao": "Vera Cruz",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8959",
+  "descricao": "Veranópolis",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1028",
+  "descricao": "Vespasiano Correa",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8961",
+  "descricao": "Viadutos",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8963",
+  "descricao": "Viamão",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8965",
+  "descricao": "Vicente Dutra",
+  "uf": "RS"
+ },
+ {
+  "codigo": "8969",
+  "descricao": "Victor Graeff",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7311",
+  "descricao": "Vila Flores",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7309",
+  "descricao": "Vila Maria",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5795",
+  "descricao": "Vila Nova do Sul",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7307",
+  "descricao": "Vista Alegre",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7305",
+  "descricao": "Vista Alegre do Prata",
+  "uf": "RS"
+ },
+ {
+  "codigo": "7303",
+  "descricao": "Vista Gaúcha",
+  "uf": "RS"
+ },
+ {
+  "codigo": "1176",
+  "descricao": "Westfalia",
+  "uf": "RS"
+ },
+ {
+  "codigo": "5785",
+  "descricao": "Xangri-Lá",
+  "uf": "RS"
+ }
+]

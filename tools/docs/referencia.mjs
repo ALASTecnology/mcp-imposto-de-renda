@@ -390,6 +390,7 @@ function paginaIndice() {
     "- **Modelo JSON da declaração:** valores em centavos (inteiro), datas `AAAA-MM-DD`, CPF e CNPJ só com dígitos. É o formato devolvido por `converter_dbk_para_modelo` e aceito por `converter_modelo_para_dbk`.",
     "- **Arquivos:** sempre nome relativo à pasta autorizada (`--dir`). Caminhos absolutos, `..`, links e arquivos ocultos são recusados.",
     "- **Resposta:** toda ferramenta devolve um texto legível (`content`) e os mesmos dados estruturados (`structuredContent`), validados pelo `outputSchema`. Erros voltam com `isError: true` e mensagem em pt-BR.",
+    "- **Perfis:** com `--perfil essencial` o servidor expõe só a declaração inteira sem os atalhos `editar_*`, `remover_*` e `listar_*` por ficha (cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e sem as calculadoras; com `--perfil consulta`, só leitura e cálculo. `--grupos` e `--sem-grupos` recortam por grupo. Veja `mcp-imposto-de-renda --ajuda`.",
     "- **Anotações:** ferramentas que só leem são `readOnlyHint: true` e `idempotentHint: true`; as que gravam são `destructiveHint: true`, para o cliente pedir confirmação. Nenhuma acessa a rede (`openWorldHint: false`).",
     "- **Exemplos:** cada exemplo foi executado de verdade, em pasta temporária com relógio fixo e com as [declarações de exemplo](../../exemplos/README.md). Respostas longas aparecem cortadas.",
     "",

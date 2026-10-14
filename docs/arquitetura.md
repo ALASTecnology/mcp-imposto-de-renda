@@ -248,6 +248,10 @@ O `RegistroFerramentas` (`ferramentas/registrador.ts`) faz o que é comum a toda
   `destructiveHint: true`, para o cliente pedir confirmação. Todas: `openWorldHint: false`.
 - **Somente leitura.** Ferramentas com `escreve: true` não são registradas quando o servidor sobe
   com `--somente-leitura` (restam 59).
+- **Perfis e grupos.** `ferramentas/perfis.ts` define recortes do catálogo para clientes que
+  limitam a quantidade de ferramentas: `essencial` (78, sem os atalhos por ficha e sem as
+  calculadoras) e `consulta` (37, só leitura e cálculo). O CLI escolhe com `--perfil`, `--grupos` e
+  `--sem-grupos`.
 - **Resposta dupla.** Texto legível em pt-BR mais `structuredContent` validado pelo `outputSchema`.
   Dados vindos de arquivo ou de texto colado pelo usuário vão dentro de um bloco
   `<dados_do_arquivo>` marcado como dado, não instrução.

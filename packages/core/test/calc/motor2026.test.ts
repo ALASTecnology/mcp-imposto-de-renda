@@ -241,19 +241,19 @@ describe("modelo completo", () => {
 
 describe("doações diretamente na declaração (ECA e Idoso)", () => {
   it("limita cada uma a 3% e o conjunto a 6% do imposto", () => {
-    // Imposto do caso completo = 616.551. 3% = 18.496,53 -> 18.497.
-    // ECA 50.000 -> 18.497; Idoso 10.000 -> 10.000. Soma 28.497 (< 6% = 36.993).
+    // Imposto do caso completo = 616.551. 3% = 18.496,53 -> 18.496 (truncado).
+    // ECA 50.000 -> 18.496; Idoso 10.000 -> 10.000. Soma 28.496 (< 6% = 36.993).
     const r = calcularCompleto({
       ...CASO_COMPLETO,
       doacoesDiretas: { eca: "50000", idoso: "10000" },
     });
-    expect(r.deducaoIncentivo).toBe(28497n);
-    expect(r.impostoDevido).toBe(616551n - 28497n);
+    expect(r.deducaoIncentivo).toBe(28496n);
+    expect(r.impostoDevido).toBe(616551n - 28496n);
   });
 
   it("aplica o limite global de 6% quando há doações do ano-calendário", () => {
-    // ECA direto 18.497 + idoso direto 18.497 + doação ECA em 2025 (40) 50.000
-    // = 86.994 > 6% (36.993) -> 36.993.
+    // ECA direto 18.496 + idoso direto 18.496 + doação ECA em 2025 (40) 50.000
+    // = 86.992 > 6% (36.993,06 -> 36.993) -> 36.993.
     const r = calcularCompleto({
       ...CASO_COMPLETO,
       doacoesDiretas: { eca: "50000", idoso: "50000" },
@@ -263,7 +263,7 @@ describe("doações diretamente na declaração (ECA e Idoso)", () => {
   });
 
   it("incentivo ao desporto amplia o teto global para 7%", () => {
-    // 6% = 36.993; 7% = 616.551 x 7% = 43.158,57 -> 43.159.
+    // 6% = 36.993; 7% = 616.551 x 7% = 43.158,57 -> 43.158 (truncado).
     const r = calcularCompleto({
       ...CASO_COMPLETO,
       doacoesEfetuadas: [
@@ -271,7 +271,7 @@ describe("doações diretamente na declaração (ECA e Idoso)", () => {
         { codigo: "43", valor: "100000" },
       ],
     });
-    expect(r.deducaoIncentivo).toBe(43159n);
+    expect(r.deducaoIncentivo).toBe(43158n);
   });
 });
 
@@ -371,5 +371,59 @@ describe("registro de motores por exercício", () => {
 
   it("falha com mensagem clara para exercício sem motor", () => {
     expect(() => obterMotor(2019)).toThrow(/2019/);
+  });
+});
+
+describe("regras confirmadas em casos de referência do programa oficial", () => {
+  it("trunca o desconto simplificado de 20% (arredondamento-percentuais-01)", () => {
+    // 5.000.008 x 20% = 1.000.001,6 -> 1.000.001 (truncado, não 1.000.002).
+    const r = calcularSimplificado(entradaPJ("5000008"));
+    expect(r.desconto).toBe(1000001n);
+    expect(r.baseCalculo).toBe(4000007n);
+  });
+
+  it("trunca o limite de 12% da previdência complementar (arredondamento-percentuais-01)", () => {
+    // 5.000.008 x 12% = 600.000,96 -> 600.000 (truncado, não 600.001).
+    const r = calcular2026(
+      entradaPJ("5000008", {
+        pagamentos: [
+          { codigo: "36", cpfCnpj: "11222333000181", valor: "700000", beneficiario: "T" },
+        ],
+      }),
+    );
+    expect(r.deducoesCompleto).toBe("600000");
+    expect(r.baseCalculoCompleto).toBe("4400008");
+  });
+
+  it("trunca o limite de 3% das doações diretas (doacoes-acima-limite-01)", () => {
+    // Base 9.000.000: imposto 2.475.000 - 1.085.378 = 1.389.622. 3% = 41.688,66 -> 41.688
+    // para cada fundo; 1.389.622 - 2 x 41.688 = 1.306.246.
+    const r = calcularCompleto({
+      titular: TITULAR,
+      rendimentosPJ: [
+        {
+          cnpj: "11222333000181",
+          nome: "EMPRESA",
+          rendimento: "10000000",
+          previdenciaOficial: "1000000",
+          beneficiario: "T",
+        },
+      ],
+      doacoesDiretas: { eca: "100000", idoso: "100000" },
+    });
+    expect(r.impostoDevido).toBe(1306246n);
+  });
+
+  it("impostoRetidoTotal é o total do completo, mesmo com o simplificado escolhido (exterior-limite-01)", () => {
+    // Completo: diferença de imposto atribuível ao exterior 894.622 - 564.622 = 330.000.
+    // Simplificado: 498.622 - 274.503 = 224.119. O campo traz o do completo.
+    const meses = [1, 2].map((mes) => ({ mes, exterior: "600000" }));
+    const r = calcular2026(
+      entradaPJ("6000000", { rendimentosPF: { meses }, impostoPago: { exterior: "1000000" } }),
+    );
+    expect(r.modeloMaisVantajoso).toBe("simplificado");
+    expect(r.impostoRetidoTotal).toBe("330000");
+    expect(r.restituirSimplificado).toBe("0");
+    expect(r.saldoPagarSimplificado).toBe("274503");
   });
 });

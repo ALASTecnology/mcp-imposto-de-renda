@@ -196,7 +196,7 @@ function apurarCompleto(e: EntradaCalculo2026, t: Totais, comExterior: boolean):
     }
   });
 
-  const limite12 = percentual(rendimentos, P.previdenciaComplementarPercentual, 100n);
+  const limite12 = percentualTruncado(rendimentos, P.previdenciaComplementarPercentual, 100n);
   const previdenciaComplementar = minimo(complementarInformada, limite12);
   mem.push(
     linha(
@@ -307,7 +307,7 @@ interface ApuracaoSimplificado {
 
 function apurarSimplificado(t: Totais, comExterior: boolean): ApuracaoSimplificado {
   const rendimentos = rendimentosTributaveis(t, comExterior);
-  const vinte = percentual(rendimentos, P.descontoSimplificadoPercentual, 100n);
+  const vinte = percentualTruncado(rendimentos, P.descontoSimplificadoPercentual, 100n);
   const desconto = minimo(vinte, P.descontoSimplificadoTeto);
   const base = naoNegativo(centavos(rendimentos - desconto));
   const impostoTabela = impostoTabelaAnual(base);
@@ -348,7 +348,7 @@ function deducaoIncentivo(
   e: EntradaCalculo2026,
   imposto: Centavos,
 ): { valor: Centavos; memoria: LinhaMemoria[] } {
-  const pct = (n: bigint) => percentual(imposto, n, 100n);
+  const pct = (n: bigint) => percentualTruncado(imposto, n, 100n);
   const eca = lerCentavos(e.doacoesDiretas?.eca, "doacoesDiretas.eca");
   const idoso = lerCentavos(e.doacoesDiretas?.idoso, "doacoesDiretas.idoso");
   let grupoBase = ZERO;
@@ -704,7 +704,8 @@ export function calcular2026(e: EntradaCalculo2026): ResultadoCalculo2026 {
     descontoSimplificado: s.desconto.toString(),
     baseCalculoSimplificado: s.baseCalculo.toString(),
     impostoDevidoSimplificado: s.impostoDevido.toString(),
-    impostoRetidoTotal: escolhido.impostoPago.total.toString(),
+    // Total de imposto pago do modelo completo, como no programa oficial (exterior-limite-01).
+    impostoRetidoTotal: c.impostoPago.total.toString(),
     saldoPagarCompleto: c.saldoPagar.toString(),
     restituirCompleto: c.restituir.toString(),
     saldoPagarSimplificado: s.saldoPagar.toString(),

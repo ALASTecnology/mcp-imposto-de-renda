@@ -133,7 +133,7 @@ Calcula o imposto do RRA pela tabela progressiva acumulada (tabela mensal do mê
 | `impostoExclusivo` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `saldoExclusivo` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `impostoAjusteAnual` | texto ou inteiro ou nulo |   |
-| `maisVantajosa` | `"exclusivaNaFonte"` \\| `"ajusteAnual"` ou nulo |   |
+| `maisVantajosa` | `"exclusivaNaFonte"` \| `"ajusteAnual"` ou nulo |   |
 
 ### Exemplo
 
@@ -197,7 +197,7 @@ Calcula o custo médio ponderado por ativo e o resultado de cada venda a partir 
 | `operacoes` | lista de objeto | **sim** | (até 5000 itens) |
 | `operacoes[].data` | texto | **sim** | (formato `^\d{4}-\d{2}-\d{2}$`) |
 | `operacoes[].ativo` | texto | **sim** | (até 20 caracteres) |
-| `operacoes[].tipo` | `"compra"` \\| `"venda"` | **sim** |   |
+| `operacoes[].tipo` | `"compra"` \| `"venda"` | **sim** |   |
 | `operacoes[].quantidade` | inteiro | **sim** |   |
 | `operacoes[].valor` | valor monetário | **sim** | Valor total da operação, sem custos. |
 | `operacoes[].custos` | valor monetário | não | Corretagem, emolumentos e taxas. |
@@ -420,7 +420,7 @@ Simulador de orientação para alienação de imóvel, móvel ou participação:
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `tipo` | `"imovel"` \\| `"movel"` \\| `"participacao"` | **sim** |   |
+| `tipo` | `"imovel"` \| `"movel"` \| `"participacao"` | **sim** |   |
 | `valor_alienacao` | valor monetário | **sim** | Valor de alienação. |
 | `custo_corretagem` | valor monetário | não | Corretagem paga pelo vendedor. |
 | `custo_aquisicao` | valor monetário | **sim** | Custo de aquisição (com reformas). |
@@ -511,7 +511,7 @@ Orientação e cálculo da atualização do custo de bem ou direito com os valor
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `metodo` | `"ufir"` \\| `"fator"` \\| `"lei14973"` | **sim** |   |
+| `metodo` | `"ufir"` \| `"fator"` \| `"lei14973"` | **sim** |   |
 | `valor_original` | valor monetário | não | Custo de aquisição (métodos fator e lei14973). |
 | `quantidade_ufir` | texto | não | Quantidade de UFIR do custo (método ufir), com vírgula ("12345,6789"). (até 24 caracteres) |
 | `fator` | texto | não | Coeficiente de atualização informado pelo usuário (método fator), "1,234567". (até 24 caracteres) |
@@ -663,7 +663,7 @@ Determina a data em que a pessoa passa a residente ou não residente no Brasil (
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `evento` | `"saida_definitiva"` \\| `"ausencia_temporaria"` \\| `"retorno"` \\| `"visto_permanente"` \\| `"visto_temporario"` | **sim** |   |
+| `evento` | `"saida_definitiva"` \| `"ausencia_temporaria"` \| `"retorno"` \| `"visto_permanente"` \| `"visto_temporario"` | **sim** |   |
 | `data` | texto | **sim** | Data da saída ou da chegada. (formato `^\d{4}-\d{2}-\d{2}$`) |
 | `dias_no_pais` | inteiro (0 a 366) | não | Visto temporário: dias já passados no país nos 12 meses anteriores à chegada. |
 
@@ -671,7 +671,7 @@ Determina a data em que a pessoa passa a residente ou não residente no Brasil (
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `condicao` | `"residente"` \\| `"naoResidente"` |   |
+| `condicao` | `"residente"` \| `"naoResidente"` |   |
 | `desde` | texto |   |
 | `fundamento` | texto |   |
 
@@ -815,7 +815,7 @@ Converte um valor em moeda estrangeira para reais pela cotação informada pelo 
 | --- | --- | --- | --- |
 | `valor` | texto | **sim** | Valor na moeda estrangeira ("1.234,56"). (até 32 caracteres) |
 | `cotacao` | texto | **sim** | Cotação em reais por unidade ("5,1234"). (até 16 caracteres) |
-| `finalidade` | `"rendimento"` \\| `"imposto_exterior"` \\| `"deducao"` \\| `"bem"` \\| `"aplicacao"` | **sim** |   |
+| `finalidade` | `"rendimento"` \| `"imposto_exterior"` \| `"deducao"` \| `"bem"` \| `"aplicacao"` | **sim** |   |
 
 ### Resposta estruturada
 

@@ -29,7 +29,7 @@ Calcula os dados do Darf (código de receita, período de apuração, vencimento
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `tipo` | `"imposto"` \\| `"eca"` \\| `"idoso"` \\| `"carne_leao"` \\| `"renda_variavel"` \\| `"ganho_capital"` | não | (padrão: `"imposto"`) |
+| `tipo` | `"imposto"` \| `"eca"` \| `"idoso"` \| `"carne_leao"` \| `"renda_variavel"` \| `"ganho_capital"` | não | (padrão: `"imposto"`) |
 | `arquivo` | texto | não | DBK/DEC da pasta (opcional). Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
 | `declaracao` | objeto livre | não | Declaração no modelo do MCP Imposto de Renda (mesma forma devolvida por converter_dbk_para_modelo): valores monetários em centavos (número inteiro), datas AAAA-MM-DD, CPF/CNPJ só dígitos. |
 | `saldo` | valor monetário | não | Valor a pagar, se não vier da declaração. |

@@ -9260,7 +9260,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
 | `beneficiario` | objeto | **sim** | A quem pertence: {"tipo":"titular"} ou {"tipo":"dependente","cpf":"..."}. |
-| `beneficiario.tipo` | `"titular"` \\| `"dependente"` | **sim** |   |
+| `beneficiario.tipo` | `"titular"` \| `"dependente"` | **sim** |   |
 | `beneficiario.cpf` | texto | não | CPF do dependente (só dígitos). (até 14 caracteres) |
 | `mes` | inteiro (1 a 12) | não |   |
 | `valores` | objeto livre | não |   |
@@ -9367,7 +9367,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
 | `beneficiario` | objeto | **sim** | A quem pertence: {"tipo":"titular"} ou {"tipo":"dependente","cpf":"..."}. |
-| `beneficiario.tipo` | `"titular"` \\| `"dependente"` | **sim** |   |
+| `beneficiario.tipo` | `"titular"` \| `"dependente"` | **sim** |   |
 | `beneficiario.cpf` | texto | não | CPF do dependente (só dígitos). (até 14 caracteres) |
 | `mes` | inteiro (1 a 12) | não |   |
 | `dados_mes` | objeto livre | não | Campos do mês (sem 'mes'). Campos (? = opcional; valor = valor monetário): { mes: número, comuns?: { mercadoVistaAcoes?: valor, mercadoVistaOuro?: valor, mercadoVistaOuroForaBolsa?: valor, opcoesAcoes?: valor, opcoesOuro?: valor, opcoesOuroForaBolsa?: valor, opcoesOutros?: valor, futuroDolar?: valor, futuroIndices?: valor, futuroJuros?: valor, futuroOutros?: valor, termoAcoesOuro?: valor, termoOutros?: valor }, dayTrade?: { mercadoVistaAcoes?: valor, mercadoVistaOuro?: valor, mercadoVistaOuroForaBolsa?: valor, opcoesAcoes?: valor, opcoesOuro?: valor, opcoesOuroForaBolsa?: valor, opcoesOutros?: valor, futuroDolar?: valor, futuroIndices?: valor, futuroJuros?: valor, futuroOutros?: valor, termoAcoesOuro?: valor, termoOutros?: valor }, irFonteDayTrade?: valor, irFonteLei11033?: valor, impostoPago?: valor } |
@@ -9471,7 +9471,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
 | `beneficiario` | objeto | **sim** | A quem pertence: {"tipo":"titular"} ou {"tipo":"dependente","cpf":"..."}. |
-| `beneficiario.tipo` | `"titular"` \\| `"dependente"` | **sim** |   |
+| `beneficiario.tipo` | `"titular"` \| `"dependente"` | **sim** |   |
 | `beneficiario.cpf` | texto | não | CPF do dependente (só dígitos). (até 14 caracteres) |
 | `mes` | inteiro (1 a 12) | não |   |
 | `dados_mes` | objeto livre | não | Campos do mês (sem 'mes'). Campos (? = opcional; valor = valor monetário): { mes: número, resultadoLiquido?: valor, impostoRetidoFonte?: valor, impostoPago?: valor } |
@@ -9570,7 +9570,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | --- | --- | --- | --- |
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
-| `tipo` | `"ajuste"` \\| `"final"` | **sim** |   |
+| `tipo` | `"ajuste"` \| `"final"` | **sim** |   |
 | `dados` | objeto livre | não | Campos da ficha (mesclados aos atuais). |
 | `remover` | booleano | não |   |
 
@@ -9880,7 +9880,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | --- | --- | --- | --- |
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
-| `aba` | `"brasil"` \\| `"exterior"` | **sim** |   |
+| `aba` | `"brasil"` \| `"exterior"` | **sim** |   |
 | `itens` | lista de objeto livre | **sim** | (até 300 itens) |
 | `substituir_tudo` | booleano | não |   |
 
@@ -9979,7 +9979,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | --- | --- | --- | --- |
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
-| `aba` | `"brasil"` \\| `"exterior"` | **sim** |   |
+| `aba` | `"brasil"` \| `"exterior"` | **sim** |   |
 | `dados` | objeto livre | **sim** | Campos da apuração. Campos (? = opcional; valor = valor monetário): { prejuizoAnterior?: valor, opcao?: "resultado"\|"limite20"\|"naoInformada", compensacaoPrejuizo?: valor, adiantamentosRecebidos?: valor, adiantamentosAnterioresEntregues?: valor, limite20Reais?: valor, resultadoTotalReaisInformado?: valor } |
 
 ### Resposta estruturada
@@ -10073,7 +10073,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | --- | --- | --- | --- |
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
-| `aba` | `"brasil"` \\| `"exterior"` | **sim** |   |
+| `aba` | `"brasil"` \| `"exterior"` | **sim** |   |
 | `dados` | objeto livre | **sim** | Movimentação da espécie (com 'especie'). Campos (? = opcional; valor = valor monetário): { especie: texto, estoqueInicial: número, aquisicoes?: número, nascimentos?: número, consumoPerdas?: número, vendas?: número } |
 
 ### Resposta estruturada
@@ -10286,7 +10286,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
 | `indice` | inteiro (1 a 10000) | **sim** | Posição do item, a partir de 1, como em listar_*. |
-| `caso` | `"usufruto"` \\| `"bemAInventariar"` \\| `"atualizacaoLei14973"` \\| `"custodiante"` | **sim** |   |
+| `caso` | `"usufruto"` \| `"bemAInventariar"` \| `"atualizacaoLei14973"` \| `"custodiante"` | **sim** |   |
 | `proprietarios` | lista de texto | não | (até 50 itens) |
 | `desfazer` | booleano | não |   |
 

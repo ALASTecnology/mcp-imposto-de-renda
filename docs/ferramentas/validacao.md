@@ -33,7 +33,7 @@ Confere os dígitos verificadores de um CPF (11 dígitos) ou CNPJ (14 dígitos).
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `tipo` | `"cpf"` \\| `"cnpj"` \\| `"desconhecido"` |   |
+| `tipo` | `"cpf"` \| `"cnpj"` \| `"desconhecido"` |   |
 | `valido` | booleano |   |
 | `normalizado` | texto |   |
 

@@ -77,7 +77,7 @@ function rotuloTipo(s) {
     const v = s.enum.map((x) => `\`${JSON.stringify(x)}\``);
     return v.length > 8
       ? `um de ${v.length} valores (${v.slice(0, 6).join(", ")}, ...)`
-      : v.join(" \\| ");
+      : v.join(" | ");
   }
   if (s.const !== undefined) return `\`${JSON.stringify(s.const)}\``;
   if (s.anyOf || s.oneOf) {

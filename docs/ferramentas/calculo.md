@@ -49,7 +49,7 @@ Calcula o imposto da declaração (exercício 2026, ano-calendário 2025) nos mo
 | `rendimentosPJ[].irrf` | valor monetário | não | Imposto de renda retido na fonte. |
 | `rendimentosPJ[].decimoTerceiro` | valor monetário | não | 13º salário (tributação exclusiva, só informativo). |
 | `rendimentosPJ[].irrfDecimoTerceiro` | valor monetário | não | IRRF sobre o 13º salário. |
-| `rendimentosPJ[].beneficiario` | `"T"` \\| `"D"` | não | T = titular (padrão), D = dependente. |
+| `rendimentosPJ[].beneficiario` | `"T"` \| `"D"` | não | T = titular (padrão), D = dependente. |
 | `rendimentosPJ[].cpfDependente` | texto | não | CPF do dependente quando beneficiario = D. Com ou sem pontuação. (até 20 caracteres) |
 | `rendimentosPF` | objeto | não | Rendimentos de pessoa física e do exterior (carnê-leão), por mês. |
 | `rendimentosPF.meses` | lista de objeto | não | (até 12 itens) |
@@ -64,7 +64,7 @@ Calcula o imposto da declaração (exercício 2026, ano-calendário 2025) nos mo
 | `pagamentos[].cpfCnpj` | texto | não | CPF/CNPJ de quem recebeu o pagamento. Com ou sem pontuação. (até 20 caracteres) |
 | `pagamentos[].valor` | valor monetário | não | Valor pago. |
 | `pagamentos[].parcelaNaoDedutivel` | valor monetário | não | Parcela não dedutível ou valor reembolsado. |
-| `pagamentos[].beneficiario` | `"T"` \\| `"D"` \\| `"A"` | não | Para quem foi a despesa: T titular, D dependente, A alimentando. |
+| `pagamentos[].beneficiario` | `"T"` \| `"D"` \| `"A"` | não | Para quem foi a despesa: T titular, D dependente, A alimentando. |
 | `pagamentos[].cpfDependente` | texto | não | CPF do dependente ou alimentando. Com ou sem pontuação. (até 20 caracteres) |
 | `rendimentosIsentos` | lista de objeto | não | (até 500 itens) |
 | `rendimentosIsentos[].codigo` | texto | não | Código do rendimento isento (10 = parcela isenta 65+). (formato `^\d{1,2}$`) |
@@ -101,7 +101,7 @@ Calcula o imposto da declaração (exercício 2026, ano-calendário 2025) nos mo
 | `restituirCompleto` | texto | Inteiro de centavos em texto (123456 = R$ 1.234,56). |
 | `saldoPagarSimplificado` | texto | Inteiro de centavos em texto (123456 = R$ 1.234,56). |
 | `restituirSimplificado` | texto | Inteiro de centavos em texto (123456 = R$ 1.234,56). |
-| `modeloMaisVantajoso` | `"completo"` \\| `"simplificado"` |   |
+| `modeloMaisVantajoso` | `"completo"` \| `"simplificado"` |   |
 | `aliquotaEfetiva` | texto | Centésimos de ponto percentual (617 = 6,17%). |
 | `avisos` | lista de texto |   |
 
@@ -240,7 +240,7 @@ Compara as deduções legais (modelo completo) com o desconto simplificado de 20
 | `rendimentosPJ[].irrf` | valor monetário | não | Imposto de renda retido na fonte. |
 | `rendimentosPJ[].decimoTerceiro` | valor monetário | não | 13º salário (tributação exclusiva, só informativo). |
 | `rendimentosPJ[].irrfDecimoTerceiro` | valor monetário | não | IRRF sobre o 13º salário. |
-| `rendimentosPJ[].beneficiario` | `"T"` \\| `"D"` | não | T = titular (padrão), D = dependente. |
+| `rendimentosPJ[].beneficiario` | `"T"` \| `"D"` | não | T = titular (padrão), D = dependente. |
 | `rendimentosPJ[].cpfDependente` | texto | não | CPF do dependente quando beneficiario = D. Com ou sem pontuação. (até 20 caracteres) |
 | `rendimentosPF` | objeto | não | Rendimentos de pessoa física e do exterior (carnê-leão), por mês. |
 | `rendimentosPF.meses` | lista de objeto | não | (até 12 itens) |
@@ -255,7 +255,7 @@ Compara as deduções legais (modelo completo) com o desconto simplificado de 20
 | `pagamentos[].cpfCnpj` | texto | não | CPF/CNPJ de quem recebeu o pagamento. Com ou sem pontuação. (até 20 caracteres) |
 | `pagamentos[].valor` | valor monetário | não | Valor pago. |
 | `pagamentos[].parcelaNaoDedutivel` | valor monetário | não | Parcela não dedutível ou valor reembolsado. |
-| `pagamentos[].beneficiario` | `"T"` \\| `"D"` \\| `"A"` | não | Para quem foi a despesa: T titular, D dependente, A alimentando. |
+| `pagamentos[].beneficiario` | `"T"` \| `"D"` \| `"A"` | não | Para quem foi a despesa: T titular, D dependente, A alimentando. |
 | `pagamentos[].cpfDependente` | texto | não | CPF do dependente ou alimentando. Com ou sem pontuação. (até 20 caracteres) |
 | `rendimentosIsentos` | lista de objeto | não | (até 500 itens) |
 | `rendimentosIsentos[].codigo` | texto | não | Código do rendimento isento (10 = parcela isenta 65+). (formato `^\d{1,2}$`) |
@@ -279,7 +279,7 @@ Compara as deduções legais (modelo completo) com o desconto simplificado de 20
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `modeloMaisVantajoso` | `"completo"` \\| `"simplificado"` |   |
+| `modeloMaisVantajoso` | `"completo"` \| `"simplificado"` |   |
 | `diferenca` | texto | Diferença de resultado final entre os modelos. |
 | `completo` | objeto |   |
 | `simplificado` | objeto |   |
@@ -446,7 +446,7 @@ Devolve a memória de cálculo linha a linha, em pt-BR, com a conta feita e a re
 | `rendimentosPJ[].irrf` | valor monetário | não | Imposto de renda retido na fonte. |
 | `rendimentosPJ[].decimoTerceiro` | valor monetário | não | 13º salário (tributação exclusiva, só informativo). |
 | `rendimentosPJ[].irrfDecimoTerceiro` | valor monetário | não | IRRF sobre o 13º salário. |
-| `rendimentosPJ[].beneficiario` | `"T"` \\| `"D"` | não | T = titular (padrão), D = dependente. |
+| `rendimentosPJ[].beneficiario` | `"T"` \| `"D"` | não | T = titular (padrão), D = dependente. |
 | `rendimentosPJ[].cpfDependente` | texto | não | CPF do dependente quando beneficiario = D. Com ou sem pontuação. (até 20 caracteres) |
 | `rendimentosPF` | objeto | não | Rendimentos de pessoa física e do exterior (carnê-leão), por mês. |
 | `rendimentosPF.meses` | lista de objeto | não | (até 12 itens) |
@@ -461,7 +461,7 @@ Devolve a memória de cálculo linha a linha, em pt-BR, com a conta feita e a re
 | `pagamentos[].cpfCnpj` | texto | não | CPF/CNPJ de quem recebeu o pagamento. Com ou sem pontuação. (até 20 caracteres) |
 | `pagamentos[].valor` | valor monetário | não | Valor pago. |
 | `pagamentos[].parcelaNaoDedutivel` | valor monetário | não | Parcela não dedutível ou valor reembolsado. |
-| `pagamentos[].beneficiario` | `"T"` \\| `"D"` \\| `"A"` | não | Para quem foi a despesa: T titular, D dependente, A alimentando. |
+| `pagamentos[].beneficiario` | `"T"` \| `"D"` \| `"A"` | não | Para quem foi a despesa: T titular, D dependente, A alimentando. |
 | `pagamentos[].cpfDependente` | texto | não | CPF do dependente ou alimentando. Com ou sem pontuação. (até 20 caracteres) |
 | `rendimentosIsentos` | lista de objeto | não | (até 500 itens) |
 | `rendimentosIsentos[].codigo` | texto | não | Código do rendimento isento (10 = parcela isenta 65+). (formato `^\d{1,2}$`) |
@@ -480,13 +480,13 @@ Devolve a memória de cálculo linha a linha, em pt-BR, com a conta feita e a re
 | `doacoesEfetuadas[].codigo` | texto | não | Código da doação (40 a 47). (formato `^\d{1,2}$`) |
 | `doacoesEfetuadas[].valor` | valor monetário | não | Valor doado. |
 | `doacoesEfetuadas[].parcelaNaoDedutivel` | valor monetário | não | Parcela não dedutível. |
-| `modelo` | `"completo"` \\| `"simplificado"` \\| `"ambos"` | não | Qual modelo explicar; 'ambos' inclui também a comparação. (padrão: `"ambos"`) |
+| `modelo` | `"completo"` \| `"simplificado"` \| `"ambos"` | não | Qual modelo explicar; 'ambos' inclui também a comparação. (padrão: `"ambos"`) |
 
 ### Resposta estruturada
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `modeloMaisVantajoso` | `"completo"` \\| `"simplificado"` |   |
+| `modeloMaisVantajoso` | `"completo"` \| `"simplificado"` |   |
 | `linhas` | lista de objeto |   |
 
 ### Exemplo

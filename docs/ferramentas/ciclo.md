@@ -43,7 +43,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
 | `identificacao` | objeto livre | **sim** | Identificação do contribuinte. Campos (? = opcional; valor = valor monetário): { cpf: texto, nome: texto, dataNascimento: texto, tipoDeclaracao: { tipo: "ajusteAnual"\|"saidaDefinitiva"\|"finalEspolio", retificadora?: booleano, reciboExercicioAnterior?: texto, reciboRetificada?: texto }, doencaGraveOuDeficiencia?: booleano, racaCor: texto, alteracaoCadastral?: booleano, conjuge?: { possui: booleano, cpf?: texto }, retornoAoPais?: { retornou: booleano, data?: texto }, endereco: { local: "brasil", tipoLogradouro: texto, logradouro: texto, numero: texto, complemento?: texto, bairro: texto, uf: texto, municipio: texto, cep: texto, telefone?: { ddd: texto, numero: texto }, celular?: { ddd: texto, numero: texto }, email?: texto } OU { local: "exterior", cpfProcurador?: texto, logradouro: texto, numero: texto, complemento?: texto, bairro?: texto, pais: texto, codigoExterior?: texto, cidade: texto, codigoPostal?: texto, telefone?: texto, email?: texto }, ocupacao: { natureza: texto, ocupacaoPrincipal?: texto, registroProfissional?: texto }, nitPisPasep?: texto, processoAtualizacaoBemLei14973?: texto, prejuizoAnteriorLei14754?: valor } |
-| `opcao_tributacao` | `"completa"` \\| `"simplificada"` | não |   |
+| `opcao_tributacao` | `"completa"` \| `"simplificada"` | não |   |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
 | `sobrescrever` | booleano | não |   |
 
@@ -600,7 +600,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | --- | --- | --- | --- |
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
-| `opcao` | `"completa"` \\| `"simplificada"` \\| `"mais_vantajosa"` | **sim** |   |
+| `opcao` | `"completa"` \| `"simplificada"` \| `"mais_vantajosa"` | **sim** |   |
 
 ### Resposta estruturada
 
@@ -704,7 +704,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `agencia` | texto | não | (até 5 caracteres) |
 | `conta` | texto | não | (até 20 caracteres) |
 | `dv` | texto | não | (até 2 caracteres) |
-| `tipo_conta` | `"corrente"` \\| `"poupanca"` \\| `"pagamento"` | não |   |
+| `tipo_conta` | `"corrente"` \| `"poupanca"` \| `"pagamento"` | não |   |
 | `operacao` | texto | não | (até 4 caracteres) |
 | `remover_conta` | booleano | não |   |
 | `pix` | booleano | não |   |

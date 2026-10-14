@@ -23,7 +23,7 @@
     "typecheck": "pnpm -r --parallel run typecheck",
     "test": "vitest run",
     "build": "pnpm -r run build",
-    "docs:catalogo": "vitest run --config tools/docs/vitest.config.mts && node tools/docs/catalogo.mjs && node tools/docs/inserir.mjs && node tools/docs/referencia.mjs",
+    "docs:catalogo": "vitest run --config tools/docs/vitest.config.mts listar exemplos && node tools/docs/catalogo.mjs && node tools/docs/inserir.mjs && node tools/docs/referencia.mjs && vitest run --config tools/docs/vitest.config.mts markdown",
     "exemplos": "vitest run exemplos --mode gravar",
     "docs:links": "node tools/docs/links.mjs"
   },

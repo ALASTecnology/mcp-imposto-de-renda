@@ -666,7 +666,7 @@ export const grupoCiclo: GrupoFerramentas = {
       r,
       "repetir_valores_bens",
       "Repetir a situação dos bens",
-      "Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens) ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor.",
+      "Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens ou de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor.",
       {
         indices: z.array(z.number().int().min(1)).max(1000).optional(),
         forcar: z.boolean().optional(),

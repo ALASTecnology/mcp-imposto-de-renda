@@ -30,6 +30,14 @@ export {
 } from "./conversao/dbk-modelo.js";
 export { EntradaInvalidaError, ErroFerramenta, mensagemDeErro } from "./erros.js";
 export { DESCRICAO_VALOR, normalizarValor, zEntradaCalculo, zValorMonetario } from "./esquemas.js";
+export {
+  ehNomePerfil,
+  type InfoFerramenta,
+  NOMES_PERFIS,
+  type NomePerfil,
+  PERFIS,
+  type Perfil,
+} from "./ferramentas/perfis.js";
 export { ANOTACOES_ESCRITA, ANOTACOES_LEITURA } from "./ferramentas/registrador.js";
 export { GRUPOS } from "./ferramentas/registro.js";
 export type {
@@ -44,9 +52,11 @@ export type {
 export { AVISO_LEGAL, URI_AVISO_LEGAL } from "./recursos.js";
 export { type Json, objetoJson, paraJson } from "./serializacao.js";
 export {
+  catalogoFerramentas,
   createServer,
   MAX_ELEMENTOS_ENTRADA,
   NOME_SERVIDOR,
+  type OpcoesCatalogo,
   type OpcoesServidor,
   VERSAO_SERVIDOR,
 } from "./servidor.js";

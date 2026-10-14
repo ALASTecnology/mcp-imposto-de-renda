@@ -251,6 +251,7 @@ function registrarFichasLista(r: RegistroFerramentas): void {
         titulo: `Alterar item de ${f.nome}`,
         descricao: `Altera um item da ficha ${f.nome}: os campos informados em 'alteracoes' são mesclados ao item (null remove o campo); valida e grava com cópia de segurança.${dica}`,
         escreve: true,
+        atalho: true,
         entrada: {
           arquivo: zArquivoEdicao,
           arquivo_destino: zArquivoDestino,
@@ -270,6 +271,7 @@ function registrarFichasLista(r: RegistroFerramentas): void {
         titulo: `Remover item de ${f.nome}`,
         descricao: `Remove um item da ficha ${f.nome}, valida e grava com cópia de segurança.${f.vinculos ? " Se houver lançamentos vinculados (rendimentos, pagamentos, bens, pensões), recusa, a menos que cascata seja true." : ""}`,
         escreve: true,
+        atalho: true,
         entrada: {
           arquivo: zArquivoEdicao,
           arquivo_destino: zArquivoDestino,
@@ -294,6 +296,7 @@ function registrarFichasLista(r: RegistroFerramentas): void {
         descricao: `Lista os itens da ficha ${f.nome} de um DBK/DEC da pasta autorizada, com a posição usada em editar_* e remover_* (valores em centavos).`,
         entrada: { arquivo: zNomeArquivo("Arquivo .DBK ou .DEC.") },
         saida: SAIDA_LISTA,
+        atalho: true,
       },
       async ({ arquivo }) => {
         const x = await listar(r, f, arquivo);

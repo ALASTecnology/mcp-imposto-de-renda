@@ -48,6 +48,11 @@ export interface DefinicaoFerramenta<I extends z.ZodRawShape, O extends z.ZodRaw
   readonly saida: O;
   /** Grava no disco: recebe as anotações de escrita e some no modo somente leitura. */
   readonly escreve?: boolean;
+  /**
+   * Atalho de uma ficha que repete uma ferramenta genérica (por exemplo `editar_bem`, coberto por
+   * `editar_lancamento`). Some nos perfis enxutos (ver `perfis.ts`).
+   */
+  readonly atalho?: boolean;
   /** Ajustes finos sobre as anotações padrão (leitura ou escrita). */
   readonly anotacoes?: Partial<ToolAnnotations>;
 }

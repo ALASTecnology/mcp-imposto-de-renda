@@ -9,9 +9,15 @@ import {
   type OpcoesPasta,
   type PastaAutorizada,
 } from "./arquivos/index.js";
+import { type InfoFerramenta, type NomePerfil, PERFIS } from "./ferramentas/perfis.js";
 import { criarRegistroFerramentas } from "./ferramentas/registrador.js";
 import { GRUPOS } from "./ferramentas/registro.js";
-import type { ContextoFerramentas, GrupoFerramentas } from "./ferramentas/tipos.js";
+import type {
+  ContextoFerramentas,
+  DefinicaoFerramenta,
+  GrupoFerramentas,
+  RegistroFerramentas,
+} from "./ferramentas/tipos.js";
 import { registrarPrompts } from "./prompts.js";
 import { registrarRecursos } from "./recursos.js";
 
@@ -37,6 +43,8 @@ export interface OpcoesServidor {
   readonly maxBackups?: number;
   /** Grupos de ferramentas a registrar. Padrão: todos (`GRUPOS`). */
   readonly grupos?: readonly GrupoFerramentas[];
+  /** Recorte predefinido do catálogo (ver `PERFIS`). Padrão: `completo`. */
+  readonly perfil?: NomePerfil;
   /** Observa falhas das ferramentas (recebe o nome da ferramenta e o erro; não registre conteúdo). */
   readonly registrarErro?: (ferramenta: string, erro: unknown) => void;
 }
@@ -96,12 +104,67 @@ export function createServer(opcoes: OpcoesServidor = {}): McpServer {
     ...(opcoes.registrarErro ? { registrarErro: opcoes.registrarErro } : {}),
   };
   const nomes: string[] = [];
-  const registro = criarRegistroFerramentas(server, ctx, nomes);
+  const perfil = PERFIS[opcoes.perfil ?? "completo"];
   for (const grupo of opcoes.grupos ?? GRUPOS) {
     if (grupo.exigePasta && !pasta) continue;
-    grupo.registrar(registro);
+    grupo.registrar(
+      criarRegistroFerramentas(server, ctx, nomes, (nome, def) =>
+        perfil.inclui(info(nome, grupo, def)),
+      ),
+    );
   }
   registrarPrompts(server);
   registrarRecursos(server);
   return server;
+}
+
+function info(
+  nome: string,
+  grupo: GrupoFerramentas,
+  def: DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>,
+): InfoFerramenta {
+  return { nome, grupo: grupo.nome, escreve: def.escreve ?? false, atalho: def.atalho ?? false };
+}
+
+/** Opções que definem quais ferramentas o servidor registra. */
+export interface OpcoesCatalogo {
+  readonly perfil?: NomePerfil;
+  readonly grupos?: readonly GrupoFerramentas[];
+  readonly somenteLeitura?: boolean;
+  /** Considera os grupos que exigem pasta autorizada. Padrão: true (como no CLI). */
+  readonly comPasta?: boolean;
+}
+
+/**
+ * Ferramentas que `createServer` registraria com estas opções, na ordem de `tools/list`, sem
+ * criar servidor nem tocar no disco. Usado no `--ajuda` do CLI para mostrar a conta de cada perfil.
+ */
+export function catalogoFerramentas(opcoes: OpcoesCatalogo = {}): InfoFerramenta[] {
+  const perfil = PERFIS[opcoes.perfil ?? "completo"];
+  const somenteLeitura = opcoes.somenteLeitura ?? false;
+  const comPasta = opcoes.comPasta ?? true;
+  const ctx: ContextoFerramentas = {
+    // As ferramentas só usam a pasta ao executar; o registro não a toca.
+    pasta: comPasta ? ({} as PastaAutorizada) : undefined,
+    somenteLeitura,
+    relogio: () => new Date(),
+  };
+  const saida: InfoFerramenta[] = [];
+  for (const grupo of opcoes.grupos ?? GRUPOS) {
+    if (grupo.exigePasta && !comPasta) continue;
+    const registro: RegistroFerramentas = {
+      ctx,
+      ferramenta(nome, def) {
+        const i = info(
+          nome,
+          grupo,
+          def as unknown as DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>,
+        );
+        if (i.escreve && somenteLeitura) return;
+        if (perfil.inclui(i)) saida.push(i);
+      },
+    };
+    grupo.registrar(registro);
+  }
+  return saida;
 }

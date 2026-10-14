@@ -36,6 +36,9 @@ export function criarRegistroFerramentas(
   server: McpServer,
   ctx: ContextoFerramentas,
   nomesRegistrados: string[],
+  /** Decide, além do modo somente leitura, se a ferramenta entra (perfis, ver `perfis.ts`). */
+  incluir: (nome: string, def: DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>) => boolean = () =>
+    true,
 ): RegistroFerramentas {
   return {
     ctx,
@@ -45,6 +48,8 @@ export function criarRegistroFerramentas(
       executar: Executor<I>,
     ): void {
       if (def.escreve && ctx.somenteLeitura) return;
+      if (!incluir(nome, def as unknown as DefinicaoFerramenta<z.ZodRawShape, z.ZodRawShape>))
+        return;
       const anotacoes: ToolAnnotations = {
         ...(def.escreve ? ANOTACOES_ESCRITA : ANOTACOES_LEITURA),
         ...def.anotacoes,

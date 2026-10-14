@@ -322,6 +322,25 @@ export const mapeadorIdentificacao: Mapeador = {
         NR_CELULAR: "",
       });
     }
+    // Maior fonte pagadora PJ do titular.
+    const fontes = new Map<string, bigint>();
+    for (const p of dec.rendimentosPJ) {
+      if (p.beneficiario.tipo !== "titular") continue;
+      fontes.set(p.fonte.ni, (fontes.get(p.fonte.ni) ?? 0n) + p.rendimentos);
+    }
+    let principal = "";
+    let maior = -1n;
+    for (const [ni, valor] of fontes) {
+      if (valor > maior) {
+        principal = ni;
+        maior = valor;
+      }
+    }
+    v.NR_FONTE_PRINCIPAL = principal;
+    if (ctx.baseDoTipo("16").length === 0) {
+      // Arquivo novo: valores iniciais do programa (1º dia útil depois do prazo de entrega).
+      Object.assign(v, { IN_GERADO: "S", IN_PREPREENCHIDA: "0", DT_DIA_UTIL_RECIBO: "01062026" });
+    }
     ctx.adicionar("16", v);
 
     if (dec.espolio) {

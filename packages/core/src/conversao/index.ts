@@ -182,11 +182,38 @@ function valoresHeader(dec: Declaracao, leiaute: Leiaute, semBase: boolean): Val
     NR_PROCESSO_ATUALIZACAO_BEM: id.processoAtualizacaoBemLei14973 ?? "",
   };
   if (semBase) {
+    // Arquivo novo: valores iniciais iguais aos que o programa grava em uma declaração
+    // iniciada nele. Dados do ambiente (sistema operacional, Java, endereço de rede) ficam em
+    // branco; o programa os preenche ao gravar.
     Object.assign(v, {
       EXERCICIO: BigInt(leiaute.exercicio),
       ANO_BASE: BigInt(leiaute.exercicio - 1),
       CODIGO_RECNET: codigoReceitanet(dec, leiaute.exercicio),
       TIPO_NI: 1n,
+      NR_VERSAO: 150n,
+      IN_GERADA: "S",
+      IN_SEGURANCA: "1",
+      IN_CONFIABILIDADE: "0",
+      TP_INICIADA: "01",
+      IN_TRANSMITIDA: "01",
+      IN_CPF_TRANSMISSAO_PERFIL: "0",
+      IN_UTILIZOU_PGD: "1",
+      IN_UTILIZOU_APP: "0",
+      IN_UTILIZOU_ONLINE: "0",
+      IN_UTILIZOU_RASCUNHO: "0",
+      IN_UTILIZOU_PREPREENCHIDA: "0",
+      IN_UTILIZOU_ASSISTIDA_FONTES_PAGADORAS: "0",
+      IN_UTILIZOU_ASSISTIDA_PLANO_SAUDE: "0",
+      IN_UTILIZOU_SALVAR_RECUPERAR_ONLINE: "0",
+      IN_SOCIAL: "0",
+      IN_CLWEB: "0",
+      IN_ISENCAO_GCAP_TITULAR: "0",
+      IN_ISENCAO_GCAP_MAIOR: "0",
+      IN_ISENCAO_GCAP_DOIS: "0",
+      IN_ISENCAO_GCAP_TRES: "0",
+      IN_ISENCAO_GCAP_QUATRO: "0",
+      IN_ISENCAO_GCAP_CINCO: "0",
+      IN_ISENCAO_GCAP_SEIS: "0",
     });
   }
   return v;
@@ -223,7 +250,11 @@ export function modeloParaRegistros(
   for (const m of MAPEADORES) m.gravar(ctx, dec);
   const header = gravarTotais(ctx, dec, calculados);
   const semBaseIr = ctx.baseDoTipo("IR").length === 0;
-  ctx.adicionar("IR", { ...valoresHeader(dec, leiaute, semBaseIr), ...header });
+  ctx.adicionar("IR", {
+    ...valoresHeader(dec, leiaute, semBaseIr),
+    ...(semBaseIr && calculados ? calculados.headerArquivoNovo : {}),
+    ...header,
+  });
 
   const tratados = tiposTratados();
   // Uma cópia de segurança (DBK) não leva o recibo de entrega de um DEC.

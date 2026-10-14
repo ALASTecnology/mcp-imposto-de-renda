@@ -6,7 +6,9 @@
  */
 import { listar, NOMES_TABELAS } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
-import { buscarAjuda, TOPICOS_AJUDA } from "../ajuda/index.js";
+import { ATALHOS_PROGRAMA, buscarAjuda, TOPICOS_AJUDA } from "../ajuda/index.js";
+import { EntradaInvalidaError } from "../erros.js";
+import { avaliarExpressao, ExpressaoInvalidaError } from "./expressao.js";
 import type { GrupoFerramentas } from "./tipos.js";
 
 /** Versão do programa oficial de que as tabelas embarcadas foram extraídas. */
@@ -39,7 +41,7 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
     passos: [
       "No programa oficial, entre com a conta gov.br e crie a declaração a partir da pré-preenchida.",
       "Salve a declaração e use Ferramentas > Gravar Cópia de Segurança para gerar o .DBK.",
-      "Coloque o .DBK na pasta autorizada e abra com abrir_declaracao para conferir e completar.",
+      "Coloque o .DBK na pasta autorizada e use importar_pre_preenchida para criar a declaração com o nome padrão (ou abrir_declaracao para só conferir).",
     ],
     trazer: "O arquivo .DBK gravado pelo programa.",
   },
@@ -240,6 +242,100 @@ export const grupoOrientacao: GrupoFerramentas = {
             .map((t) => `- ${t.tabela}: ${t.registros}`)
             .join("\n")}`,
           dados: { programa: VERSAO_TABELAS.programa, versao: VERSAO_TABELAS.versao, tabelas },
+        };
+      },
+    );
+
+    r.ferramenta(
+      "calcular_expressao",
+      {
+        titulo: "Calculadora",
+        descricao:
+          'Calculadora do MCP Imposto de Renda, equivalente a Ferramentas > Calculadora do programa oficial: avalia expressões com +, -, *, /, parênteses e porcentagem ("27,5% * 10.000,00") em aritmética decimal exata, sem erro de arredondamento binário, e arredonda o resultado (metade para cima) nas casas pedidas. Aceita "1.234,56" ou "1234.56"; "1.234" sem vírgula é recusado por ser ambíguo. Use para conferir somas de comprovantes, limites e parcelas antes de lançar.',
+        entrada: {
+          expressao: z.string().min(1).max(500).describe('Expressão, por exemplo "1.903,98 * 13".'),
+          casas: z
+            .number()
+            .int()
+            .min(0)
+            .max(10)
+            .default(2)
+            .describe("Casas decimais do resultado."),
+        },
+        saida: {
+          resultado: z.string().describe("Formato brasileiro: 1.234,56."),
+          decimal: z.string().describe("Com ponto decimal: 1234.56."),
+          exato: z.boolean(),
+          fracao: z.string().describe("Valor exato como fração n/d."),
+        },
+      },
+      ({ expressao, casas }) => {
+        try {
+          const r = avaliarExpressao(expressao, casas);
+          return {
+            texto: `${expressao} = ${r.resultado}${r.exato ? "" : ` (arredondado em ${casas} casas; exato: ${r.fracao})`}`,
+            dados: { ...r },
+          };
+        } catch (e) {
+          if (e instanceof ExpressaoInvalidaError) throw new EntradaInvalidaError(e.message);
+          throw e;
+        }
+      },
+    );
+
+    r.ferramenta(
+      "consultar_atalhos",
+      {
+        titulo: "Atalhos e botões do programa oficial",
+        descricao:
+          'Explica os atalhos de teclado e os botões do programa oficial (barra de ferramentas, menus por Alt, F1, F5, F11 de acessibilidade, Ctrl+P, Ctrl+Shift+G e outros) e diz qual ferramenta do MCP Imposto de Renda faz a mesma coisa, com o status de cobertura. Busca por tecla ("Ctrl+P", "F5") ou por palavras da função ("pendências", "imprimir"); sem consulta, lista todos. Útil quando o usuário segue um tutorial do programa ou vai concluir a entrega nele.',
+        entrada: {
+          consulta: z.string().max(100).optional(),
+        },
+        saida: {
+          total: z.number(),
+          atalhos: z.array(
+            z.object({
+              tecla: z.string(),
+              id: z.string(),
+              funcao: z.string(),
+              status: z.string(),
+              ferramentas: z.array(z.string()),
+            }),
+          ),
+        },
+      },
+      ({ consulta }) => {
+        const norm = (t: string) =>
+          t
+            .normalize("NFD")
+            .replace(/\p{Diacritic}/gu, "")
+            .toLowerCase();
+        const q = consulta ? norm(consulta.trim()) : "";
+        const porTecla = ATALHOS_PROGRAMA.filter((a) => norm(a.tecla) === q);
+        const palavras = q.split(/\s+/).filter((p) => p.length > 1);
+        const lista = !q
+          ? ATALHOS_PROGRAMA
+          : porTecla.length > 0
+            ? porTecla
+            : ATALHOS_PROGRAMA.filter((a) =>
+                palavras.every((p) => norm(`${a.tecla} ${a.funcao} ${a.id}`).includes(p)),
+              );
+        const texto =
+          lista.length === 0
+            ? "Nenhum atalho encontrado; tente outra tecla ou palavra da função."
+            : lista
+                .map(
+                  (a) =>
+                    `- ${a.tecla}: ${a.funcao} (${a.id}). No MCP: ${a.ferramentas.length > 0 ? a.ferramentas.join(", ") : "sem ferramenta equivalente"} (${a.status}).`,
+                )
+                .join("\n");
+        return {
+          texto,
+          dados: {
+            total: lista.length,
+            atalhos: lista.map((a) => ({ ...a, ferramentas: [...a.ferramentas] })),
+          },
         };
       },
     );

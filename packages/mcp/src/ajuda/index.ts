@@ -3,11 +3,11 @@
  * identificador exato (F-IDENT) ou por palavras, sem diferenciar acentos e maiúsculas: cada
  * palavra no nome do tópico vale 3 pontos e no texto dos itens, 1.
  */
-import { TOPICOS_AJUDA } from "./dados.js";
+import { ATALHOS_PROGRAMA, TOPICOS_AJUDA } from "./dados.js";
 import type { TopicoAjuda } from "./tipos.js";
 
-export type { TopicoAjuda } from "./tipos.js";
-export { TOPICOS_AJUDA };
+export type { AtalhoPrograma, TopicoAjuda } from "./tipos.js";
+export { ATALHOS_PROGRAMA, TOPICOS_AJUDA };
 
 const normalizar = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 

@@ -1,6 +1,6 @@
 // Arquivo gerado por tools/mapeamento/gera_ajuda.mjs a partir de docs/mapeamento/notas.
 // Não edite à mão: altere as notas e rode o gerador.
-import type { TopicoAjuda } from "./tipos.js";
+import type { AtalhoPrograma, TopicoAjuda } from "./tipos.js";
 
 export const TOPICOS_AJUDA: readonly TopicoAjuda[] = [
  {
@@ -8328,6 +8328,598 @@ export const TOPICOS_AJUDA: readonly TopicoAjuda[] = [
     "campo": "Onde",
     "texto": "`informe_fontes_pagadoras.xsd`, `informe_planos_saude.xsd`, `informe_tipos.xsd`, `mapeamentoXml.xml`, `mapeamentoTxt.xml`, `mapeamentoXmlGCAP.xml`"
    }
+  ]
+ }
+];
+
+export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
+ {
+  "tecla": "Alt+I",
+  "id": "F-PAG",
+  "funcao": "Pagamentos Efetuados (ficha)",
+  "status": "implementada",
+  "ferramentas": [
+   "adicionar_pagamento",
+   "editar_lancamento",
+   "remover_lancamento"
+  ]
+ },
+ {
+  "tecla": "Alt+I",
+  "id": "F-PAG-IMPPS",
+  "funcao": "Botão \"Importar arquivo do plano de saúde\"",
+  "status": "implementada",
+  "ferramentas": [
+   "importar_informe_plano_saude"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+I",
+  "id": "F-PAG-IMPPS",
+  "funcao": "Botão \"Importar arquivo do plano de saúde\"",
+  "status": "implementada",
+  "ferramentas": [
+   "importar_informe_plano_saude"
+  ]
+ },
+ {
+  "tecla": "Ctrl+W",
+  "id": "F-DDD",
+  "funcao": "Doações Diretamente na Declaração (ficha)",
+  "status": "implementada",
+  "ferramentas": [
+   "adicionar_doacao_direta_declaracao",
+   "gerar_darf"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Y",
+  "id": "F-DDD",
+  "funcao": "Doações Diretamente na Declaração (ficha)",
+  "status": "implementada",
+  "ferramentas": [
+   "adicionar_doacao_direta_declaracao",
+   "gerar_darf"
+  ]
+ },
+ {
+  "tecla": "Alt+R",
+  "id": "F-BENS",
+  "funcao": "Bens e Direitos (ficha, Declaração de Ajuste Anual)",
+  "status": "implementada",
+  "ferramentas": [
+   "adicionar_bem",
+   "editar_lancamento",
+   "remover_lancamento",
+   "repetir_valores_bens"
+  ]
+ },
+ {
+  "tecla": "Alt+D",
+  "id": "M-MENU-DECLARACAO",
+  "funcao": "Menu Declaração",
+  "status": "implementada",
+  "ferramentas": [
+   "abrir_declaracao",
+   "criar_declaracao",
+   "criar_retificadora",
+   "excluir_declaracao"
+  ]
+ },
+ {
+  "tecla": "Alt+P",
+  "id": "M-MENU-IMPORTACOES",
+  "funcao": "Menu Importações",
+  "status": "parcial",
+  "ferramentas": [
+   "abrir_declaracao",
+   "definir_receitas_despesas_rurais",
+   "definir_rendimentos_pf_exterior",
+   "importar_informe_plano_saude",
+   "importar_informe_rendimentos",
+   "orientar_servico_externo"
+  ]
+ },
+ {
+  "tecla": "Alt+F",
+  "id": "M-MENU-FICHAS",
+  "funcao": "Menu Fichas e navegação",
+  "status": "implementada",
+  "ferramentas": [
+   "listar_fichas"
+  ]
+ },
+ {
+  "tecla": "Shift+Tab",
+  "id": "M-MENU-FICHAS",
+  "funcao": "Menu Fichas e navegação",
+  "status": "implementada",
+  "ferramentas": [
+   "listar_fichas"
+  ]
+ },
+ {
+  "tecla": "Alt+PgUp/PgDn",
+  "id": "M-MENU-FICHAS",
+  "funcao": "Menu Fichas e navegação",
+  "status": "implementada",
+  "ferramentas": [
+   "listar_fichas"
+  ]
+ },
+ {
+  "tecla": "Alt+T",
+  "id": "M-MENU-FERRAMENTAS",
+  "funcao": "Menu Ferramentas",
+  "status": "implementada",
+  "ferramentas": [
+   "gravar_copia_seguranca",
+   "listar_copias_seguranca",
+   "restaurar_copia_seguranca"
+  ]
+ },
+ {
+  "tecla": "Alt+J",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+Shift+C",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+Shift+I",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+Shift+F",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+Shift+G",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+Shift+R",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+Shift+S",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "F11",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Alt+F4",
+  "id": "M-MENU-AJUDA",
+  "funcao": "Menu Ajuda",
+  "status": "implementada",
+  "ferramentas": [
+   "obter_ajuda"
+  ]
+ },
+ {
+  "tecla": "Ctrl+N",
+  "id": "M-DECL-NOVA",
+  "funcao": "Declaração > Nova",
+  "status": "implementada",
+  "ferramentas": [
+   "criar_declaracao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+B",
+  "id": "M-DECL-ABRIR",
+  "funcao": "Declaração > Abrir",
+  "status": "implementada",
+  "ferramentas": [
+   "abrir_declaracao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+F",
+  "id": "M-DECL-FECHAR",
+  "funcao": "Declaração > Fechar",
+  "status": "não se aplica",
+  "ferramentas": []
+ },
+ {
+  "tecla": "Ctrl+E",
+  "id": "M-DECL-EXCLUIR",
+  "funcao": "Declaração > Excluir",
+  "status": "implementada",
+  "ferramentas": [
+   "excluir_declaracao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+G",
+  "id": "M-DECL-RETIFICAR",
+  "funcao": "Declaração > Retificar",
+  "status": "implementada",
+  "ferramentas": [
+   "criar_retificadora"
+  ]
+ },
+ {
+  "tecla": "F5",
+  "id": "M-DECL-PENDENCIAS",
+  "funcao": "Declaração > Verificar Pendências",
+  "status": "implementada",
+  "ferramentas": [
+   "validar_declaracao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+I",
+  "id": "M-DECL-ENTREGAR",
+  "funcao": "Declaração > Entregar Declaração",
+  "status": "implementada",
+  "ferramentas": [
+   "converter_modelo_para_dbk",
+   "gerar_arquivo_entrega",
+   "instruir_transmissao",
+   "validar_declaracao",
+   "verificar_integridade_arquivo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+B",
+  "id": "M-DECL-ENTREGAR",
+  "funcao": "Declaração > Entregar Declaração",
+  "status": "implementada",
+  "ferramentas": [
+   "converter_modelo_para_dbk",
+   "gerar_arquivo_entrega",
+   "instruir_transmissao",
+   "validar_declaracao",
+   "verificar_integridade_arquivo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+E",
+  "id": "M-DECL-ENTREGAR",
+  "funcao": "Declaração > Entregar Declaração",
+  "status": "implementada",
+  "ferramentas": [
+   "converter_modelo_para_dbk",
+   "gerar_arquivo_entrega",
+   "instruir_transmissao",
+   "validar_declaracao",
+   "verificar_integridade_arquivo"
+  ]
+ },
+ {
+  "tecla": "F6",
+  "id": "M-DECL-SALVAR-ONLINE",
+  "funcao": "Declaração > Salvar On-line (F6)",
+  "status": "implementada",
+  "ferramentas": [
+   "gravar_copia_seguranca",
+   "orientar_servico_externo"
+  ]
+ },
+ {
+  "tecla": "F7",
+  "id": "M-DECL-RECUPERAR-ONLINE",
+  "funcao": "Declaração > Recuperar On-line (F7)",
+  "status": "implementada",
+  "ferramentas": [
+   "listar_copias_seguranca",
+   "orientar_servico_externo",
+   "restaurar_copia_seguranca"
+  ]
+ },
+ {
+  "tecla": "Alt+F4",
+  "id": "M-DECL-SAIR",
+  "funcao": "Declaração > Sair do Programa",
+  "status": "não se aplica",
+  "ferramentas": []
+ },
+ {
+  "tecla": "Ctrl+P",
+  "id": "M-IMPR-DECLARACAO",
+  "funcao": "Imprimir Declaração",
+  "status": "parcial",
+  "ferramentas": [
+   "gerar_relatorio_declaracao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+F",
+  "id": "M-IMPR-REND-PF",
+  "funcao": "Imprimir Rendimentos Recebidos de PF",
+  "status": "parcial",
+  "ferramentas": [
+   "gerar_relatorio_declaracao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+R",
+  "id": "M-IMPR-RECIBO",
+  "funcao": "Imprimir Recibo de Entrega",
+  "status": "implementada",
+  "ferramentas": [
+   "criar_retificadora",
+   "instruir_transmissao",
+   "registrar_recibo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+D",
+  "id": "M-IMPR-DARF",
+  "funcao": "Imprimir Darf do IRPF",
+  "status": "implementada",
+  "ferramentas": [
+   "calcular_quotas",
+   "gerar_darf"
+  ]
+ },
+ {
+  "tecla": "Ctrl+U",
+  "id": "M-IMPR-DARF-MAED",
+  "funcao": "Imprimir Darf de Multa por Atraso na Entrega",
+  "status": "implementada",
+  "ferramentas": [
+   "calcular_multa_atraso",
+   "gerar_darf"
+  ]
+ },
+ {
+  "tecla": "Ctrl+W",
+  "id": "M-IMPR-DARF-ECA",
+  "funcao": "Imprimir Darf, Doações Diretamente na Declaração, ECA",
+  "status": "implementada",
+  "ferramentas": [
+   "gerar_darf"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Y",
+  "id": "M-IMPR-DARF-IDOSO",
+  "funcao": "Imprimir Darf, Doações Diretamente na Declaração, Pessoa Idosa",
+  "status": "implementada",
+  "ferramentas": [
+   "gerar_darf"
+  ]
+ },
+ {
+  "tecla": "Ctrl+L",
+  "id": "M-IMPR-RELACAO",
+  "funcao": "Imprimir Relação de Declarações",
+  "status": "parcial",
+  "ferramentas": [
+   "listar_arquivos"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+S",
+  "id": "M-IMPR-COMUNICACAO-SAIDA",
+  "funcao": "Imprimir Comunicação à Fonte Pagadora de Saída do País",
+  "status": "implementada",
+  "ferramentas": [
+   "gerar_comunicacao_saida"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Alt+R",
+  "id": "M-IMPR-INFORME-REND",
+  "funcao": "Imprimir Informe de Rendimentos (arquivo XML da fonte)",
+  "status": "implementada",
+  "ferramentas": [
+   "ler_informe"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Alt+I",
+  "id": "M-IMPR-INFORME-PS",
+  "funcao": "Imprimir Informe de Plano de Saúde",
+  "status": "implementada",
+  "ferramentas": [
+   "ler_informe"
+  ]
+ },
+ {
+  "tecla": "Alt+I",
+  "id": "M-IMP-INFORME-REND",
+  "funcao": "Importar Informe de Rendimentos",
+  "status": "implementada",
+  "ferramentas": [
+   "importar_informe_rendimentos"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+R",
+  "id": "M-IMP-INFORME-REND",
+  "funcao": "Importar Informe de Rendimentos",
+  "status": "implementada",
+  "ferramentas": [
+   "importar_informe_rendimentos"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+I",
+  "id": "M-IMP-INFORME-PS",
+  "funcao": "Importar Informe de Plano de Saúde",
+  "status": "implementada",
+  "ferramentas": [
+   "importar_informe_plano_saude"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+C",
+  "id": "M-IMP-CARNE-LEAO",
+  "funcao": "Importar Carnê-Leão 2025",
+  "status": "parcial",
+  "ferramentas": [
+   "definir_rendimentos_pf_exterior",
+   "orientar_servico_externo"
+  ]
+ },
+ {
+  "tecla": "Alt+I",
+  "id": "M-IMP-CARNE-LEAO",
+  "funcao": "Importar Carnê-Leão 2025",
+  "status": "parcial",
+  "ferramentas": [
+   "definir_rendimentos_pf_exterior",
+   "orientar_servico_externo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+A",
+  "id": "M-IMP-AR",
+  "funcao": "Importar Atividade Rural 2025",
+  "status": "parcial",
+  "ferramentas": [
+   "definir_receitas_despesas_rurais",
+   "orientar_servico_externo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+G",
+  "id": "M-IMP-GCAP",
+  "funcao": "Importar Ganhos de Capital 2025",
+  "status": "parcial",
+  "ferramentas": [
+   "abrir_declaracao",
+   "orientar_servico_externo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+K",
+  "id": "M-FERR-COPIA-GRAVAR",
+  "funcao": "Gravar Cópia de Segurança",
+  "status": "implementada",
+  "ferramentas": [
+   "converter_modelo_para_dbk",
+   "gerar_arquivo_entrega",
+   "gravar_copia_seguranca",
+   "verificar_integridade_arquivo"
+  ]
+ },
+ {
+  "tecla": "Ctrl+T",
+  "id": "M-FERR-COPIA-RESTAURAR",
+  "funcao": "Restaurar Cópia de Segurança",
+  "status": "parcial",
+  "ferramentas": [
+   "converter_dbk_para_modelo",
+   "listar_copias_seguranca",
+   "restaurar_copia_seguranca"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Alt+A",
+  "id": "M-FERR-CALCULADORA",
+  "funcao": "Calculadora",
+  "status": "não se aplica",
+  "ferramentas": []
+ },
+ {
+  "tecla": "Alt, T, V",
+  "id": "M-FERR-ATUALIZACOES",
+  "funcao": "Verificar Atualizações",
+  "status": "implementada",
+  "ferramentas": [
+   "verificar_versao_tabelas"
+  ]
+ },
+ {
+  "tecla": "Alt, T, R, T",
+  "id": "M-FERR-RECNOMES",
+  "funcao": "Recuperação de Nomes (Ativar/Desativar, Limpar)",
+  "status": "parcial",
+  "ferramentas": [
+   "buscar_nome_por_documento"
+  ]
+ },
+ {
+  "tecla": "Alt, T, R, L",
+  "id": "M-FERR-RECNOMES",
+  "funcao": "Recuperação de Nomes (Ativar/Desativar, Limpar)",
+  "status": "parcial",
+  "ferramentas": [
+   "buscar_nome_por_documento"
+  ]
+ },
+ {
+  "tecla": "F1",
+  "id": "M-AJUDA-CONTEXTUAL",
+  "funcao": "Ajuda de campo (F1) e textos em azul",
+  "status": "implementada",
+  "ferramentas": [
+   "comparar_modelos",
+   "explicar_calculo",
+   "obter_ajuda",
+   "simular_imposto"
+  ]
+ },
+ {
+  "tecla": "F11",
+  "id": "M-AJUDA-ACESSIBILIDADE",
+  "funcao": "Acessibilidade (F11) e leitura de tela",
+  "status": "não se aplica",
+  "ferramentas": []
+ },
+ {
+  "tecla": "Ctrl+Shift+B",
+  "id": "S-TRANSMISSAO",
+  "funcao": "Transmissão (Receitanet incorporado)",
+  "status": "implementada",
+  "ferramentas": [
+   "instruir_transmissao"
+  ]
+ },
+ {
+  "tecla": "Ctrl+Shift+E",
+  "id": "S-TRANSMISSAO",
+  "funcao": "Transmissão (Receitanet incorporado)",
+  "status": "implementada",
+  "ferramentas": [
+   "instruir_transmissao"
   ]
  }
 ];

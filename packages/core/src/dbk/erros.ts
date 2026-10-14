@@ -74,3 +74,8 @@ export class CampoDesconhecidoError extends ArquivoDeclaracaoError {
 export class ExercicioNaoSuportadoError extends ArquivoDeclaracaoError {
   override readonly name = "ExercicioNaoSuportadoError";
 }
+
+/** Arquivo maior que o tamanho máximo aceito pela leitura (`TAMANHO_MAXIMO_ARQUIVO`). */
+export class ArquivoGrandeDemaisError extends ArquivoDeclaracaoError {
+  override readonly name = "ArquivoGrandeDemaisError";
+}

@@ -22,6 +22,7 @@ export {
   type OpcoesGravacao,
   type OpcoesLeitura,
   type Registro,
+  TAMANHO_MAXIMO_ARQUIVO,
   type ValorCampo,
 } from "./codec.js";
 export {
@@ -48,6 +49,7 @@ export {
 } from "./controle.js";
 export {
   ArquivoDeclaracaoError,
+  ArquivoGrandeDemaisError,
   CampoDesconhecidoError,
   CampoInvalidoError,
   CaractereInvalidoError,

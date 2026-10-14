@@ -162,10 +162,14 @@ function hashDoRecibo(linhas: readonly { tipo: string; texto: string }[]): bigin
   return BigInt(crc);
 }
 
-/** CPF do header, se o leiaute tiver o campo `NR_CPF` e ele estiver preenchido. */
+/**
+ * CPF do header, se o leiaute tiver o campo `NR_CPF`. O valor é usado como está, mesmo fora do
+ * formato: exigir 8 dígitos aqui fazia `verificarControles` pular a conferência do header
+ * quando um dígito do CPF era trocado por outro caractere, e a alteração passava em silêncio.
+ */
 function cpfDoHeader(header: Registro | undefined): string | undefined {
   const cpf = header?.campos.NR_CPF;
-  return typeof cpf === "string" && /^\d{8}/.test(cpf) ? cpf : undefined;
+  return typeof cpf === "string" ? cpf : undefined;
 }
 
 /** `NR_HASH` do `R9` calculado sobre os registros como estão; `undefined` sem `R9`. */

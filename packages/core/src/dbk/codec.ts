@@ -16,6 +16,7 @@
 import { type Centavos, centavos } from "../centavos.js";
 import {
   ArquivoDeclaracaoError,
+  ArquivoGrandeDemaisError,
   CampoDesconhecidoError,
   CampoInvalidoError,
   CaractereInvalidoError,
@@ -50,7 +51,16 @@ export interface ArquivoDeclaracao {
 export interface OpcoesLeitura {
   /** Leiaute a usar; se omitido, vem do exercício gravado no header `IR`. */
   readonly leiaute?: Leiaute;
+  /** Tamanho máximo aceito, em bytes. Padrão: `TAMANHO_MAXIMO_ARQUIVO`. */
+  readonly tamanhoMaximo?: number;
 }
+
+/**
+ * Tamanho máximo de um arquivo da declaração aceito por `lerArquivo`: 20 MB, o mesmo limite
+ * da camada de arquivos do servidor. Os maiores arquivos reais têm poucas dezenas de KB; o
+ * limite existe para que uma entrada hostil seja recusada antes de qualquer decodificação.
+ */
+export const TAMANHO_MAXIMO_ARQUIVO = 20 * 1024 * 1024;
 
 export interface OpcoesGravacao {
   /** Leiaute a usar; se omitido, vem do campo `EXERCICIO` do registro `IR`. */
@@ -63,14 +73,25 @@ const CR = 13;
 const LF = 10;
 const ESPACO = " ";
 
-/** Converte bytes ISO-8859-1 em texto (cada byte vira o caractere de mesmo código). */
+/**
+ * Converte bytes ISO-8859-1 em texto (cada byte vira o caractere de mesmo código).
+ *
+ * Cada byte é alargado para uma unidade UTF-16 e decodificado em blocos por `TextDecoder`. O
+ * rótulo `latin1` do `TextDecoder` não serve: pelo padrão WHATWG ele é windows-1252, que troca
+ * os bytes 0x80 a 0x9F. A versão anterior, com `String.fromCharCode(...bloco)` e concatenação,
+ * levava cerca de 2 s para 20 MB; esta leva menos de 100 ms.
+ */
 export function decodificarLatin1(bytes: Uint8Array): string {
-  let resultado = "";
-  const bloco = 0x8000;
+  const bloco = 0x10000;
+  const largo = new Uint16Array(Math.min(bloco, bytes.length));
+  const decodificador = new TextDecoder("utf-16le");
+  const partes: string[] = [];
   for (let i = 0; i < bytes.length; i += bloco) {
-    resultado += String.fromCharCode(...bytes.subarray(i, i + bloco));
+    const pedaco = bytes.subarray(i, i + bloco);
+    largo.set(pedaco);
+    partes.push(decodificador.decode(largo.subarray(0, pedaco.length)));
   }
-  return resultado;
+  return partes.join("");
 }
 
 /** Converte texto em bytes ISO-8859-1; lança `CaractereInvalidoError` fora da faixa. */
@@ -129,9 +150,22 @@ function dataValida(texto: string, campo: CampoLeiaute): boolean {
   return dia <= (dias[mes - 1] ?? 0);
 }
 
+/**
+ * Remove os espaços (0x20) do fim. Laço linear de propósito: `/ +$/` é quadrático num campo de
+ * 512 posições com espaços seguidos de um caractere (o motor tenta o fim a partir de cada
+ * espaço), cerca de 1 ms por linha num arquivo hostil.
+ */
+function semEspacosFinais(texto: string): string {
+  let fim = texto.length;
+  while (fim > 0 && texto.charCodeAt(fim - 1) === 0x20) fim--;
+  return texto.slice(0, fim);
+}
+
 function decodificarCampo(bruto: string, campo: CampoLeiaute, ctx: ContextoErroArquivo) {
-  if (campo.formato !== "N") return bruto.replace(/ +$/, "");
-  if (bruto.trim() === "") return null;
+  if (campo.formato !== "N") return semEspacosFinais(bruto);
+  // Em branco é só espaço (0x20). `trim()` aceitaria TAB, VT, FF e NBSP (0xA0), que seriam
+  // lidos como campo vazio e regravados como espaços, alterando o arquivo sem aviso.
+  if (bruto === ESPACO.repeat(bruto.length)) return null;
   if (campo.data !== undefined) {
     if (!dataValida(bruto, campo)) {
       throw new CampoInvalidoError(`data inválida ${JSON.stringify(bruto)} (${campo.data})`, ctx);
@@ -144,6 +178,11 @@ function decodificarCampo(bruto: string, campo: CampoLeiaute, ctx: ContextoErroA
   const padrao = campo.decimais !== undefined ? /^-?\d+$/ : /^\d+$/;
   if (!padrao.test(bruto)) {
     throw new CampoInvalidoError(`numérico com conteúdo inválido ${JSON.stringify(bruto)}`, ctx);
+  }
+  // "-000000000000" viraria 0n e seria regravado sem o sinal: a linha regravada não seria a
+  // lida, e os controles, calculados sobre a linha regravada, deixariam a alteração passar.
+  if (bruto.startsWith("-") && /^-0+$/.test(bruto)) {
+    throw new CampoInvalidoError("zero com sinal de menos", ctx);
   }
   return BigInt(bruto);
 }
@@ -308,31 +347,36 @@ export function centavosDoCampo(
   return centavos(valor);
 }
 
-function dividirLinhas(texto: string): { linhas: string[]; terminadorFinal: boolean } {
-  const linhas: string[] = [];
+/**
+ * Percorre as linhas separadas por CRLF, entregando cada uma a `aoLer` assim que termina.
+ * Decodificar linha a linha faz um arquivo hostil falhar na primeira linha ruim, sem antes
+ * montar a lista inteira (20 MB de CRLF seriam 10 milhões de linhas vazias).
+ */
+function percorrerLinhas(texto: string, aoLer: (linha: string, numero: number) => void): boolean {
   let inicio = 0;
+  let numero = 0;
   for (let i = 0; i < texto.length; i++) {
     const c = texto.charCodeAt(i);
     if (c === CR) {
       if (texto.charCodeAt(i + 1) !== LF) {
         throw new TerminadorLinhaInvalidoError("CR sem LF; o arquivo usa CRLF", {
-          linha: linhas.length + 1,
+          linha: numero + 1,
         });
       }
-      linhas.push(texto.slice(inicio, i));
+      aoLer(texto.slice(inicio, i), ++numero);
       i++;
       inicio = i + 1;
     } else if (c === LF) {
       throw new TerminadorLinhaInvalidoError("LF sem CR; o arquivo usa CRLF", {
-        linha: linhas.length + 1,
+        linha: numero + 1,
       });
     }
   }
   if (inicio < texto.length) {
-    linhas.push(texto.slice(inicio));
-    return { linhas, terminadorFinal: false };
+    aoLer(texto.slice(inicio), ++numero);
+    return false;
   }
-  return { linhas, terminadorFinal: true };
+  return true;
 }
 
 /** Exercício gravado no header (`IRPF    AAAA...`, posições 9 a 12). */
@@ -353,9 +397,22 @@ function exercicioDoHeader(primeira: string | undefined): number {
 /** Lê o arquivo da declaração (DEC ou DBK). */
 export function lerArquivo(conteudo: Uint8Array, opcoes: OpcoesLeitura = {}): ArquivoDeclaracao {
   if (conteudo.length === 0) throw new ArquivoDeclaracaoError("arquivo vazio");
-  const { linhas, terminadorFinal } = dividirLinhas(decodificarLatin1(conteudo));
-  const leiaute = opcoes.leiaute ?? obterLeiaute(exercicioDoHeader(linhas[0]));
-  const registros = linhas.map((linha, i) => decodificarRegistro(linha, leiaute, i + 1));
+  const limite = opcoes.tamanhoMaximo ?? TAMANHO_MAXIMO_ARQUIVO;
+  if (conteudo.length > limite) {
+    throw new ArquivoGrandeDemaisError(
+      `arquivo com ${conteudo.length} bytes, acima do limite de ${limite} bytes`,
+    );
+  }
+  let leiaute = opcoes.leiaute;
+  const registros: Registro[] = [];
+  const terminadorFinal = percorrerLinhas(decodificarLatin1(conteudo), (linha, numero) => {
+    leiaute ??= obterLeiaute(exercicioDoHeader(linha));
+    registros.push(decodificarRegistro(linha, leiaute, numero));
+  });
+  // Só chega aqui sem leiaute se o arquivo não tiver nenhuma linha, o que o teste de vazio
+  // acima já impede; a verificação mantém o tipo sem asserção.
+  if (!leiaute)
+    throw new ArquivoDeclaracaoError("o arquivo não começa pelo header IR", { linha: 1 });
   return { exercicio: leiaute.exercicio, registros, terminadorFinal };
 }
 

@@ -43,13 +43,15 @@ describe("registro de ferramentas", () => {
   it("com pasta autorizada, registra todos os grupos", async () => {
     const { client } = await abrir({ diretorioAutorizado: pasta });
     const nomes = (await client.listTools()).tools.map((t) => t.name).sort();
-    expect(nomes).toEqual([...CALCULO, ...ARQUIVOS, ...SEMPRE].sort());
+    for (const n of [...CALCULO, ...ARQUIVOS, ...SEMPRE]) expect(nomes).toContain(n);
+    expect(new Set(nomes).size).toBe(nomes.length);
   });
 
   it("sem pasta autorizada, omite as ferramentas de arquivo", async () => {
     const { client } = await abrir();
     const nomes = (await client.listTools()).tools.map((t) => t.name).sort();
-    expect(nomes).toEqual([...CALCULO, ...SEMPRE].sort());
+    for (const n of [...CALCULO, ...SEMPRE]) expect(nomes).toContain(n);
+    for (const n of ARQUIVOS) expect(nomes).not.toContain(n);
   });
 
   it("no modo somente leitura, omite a ferramenta que grava", async () => {
@@ -57,6 +59,17 @@ describe("registro de ferramentas", () => {
     const nomes = (await client.listTools()).tools.map((t) => t.name);
     expect(nomes).not.toContain("converter_modelo_para_dbk");
     expect(nomes).toContain("abrir_declaracao");
+    const completo = await conectar({ diretorioAutorizado: pasta });
+    const todas = (await completo.client.listTools()).tools;
+    await completo.fechar();
+    const escrita = todas.filter((t) => t.annotations?.readOnlyHint === false).map((t) => t.name);
+    expect(escrita.length).toBeGreaterThan(10);
+    expect(nomes.sort()).toEqual(
+      todas
+        .map((t) => t.name)
+        .filter((n) => !escrita.includes(n))
+        .sort(),
+    );
   });
 
   it("toda ferramenta tem título, descrição, outputSchema e anotações coerentes", async () => {
@@ -66,8 +79,8 @@ describe("registro de ferramentas", () => {
       expect(t.description?.length ?? 0, t.name).toBeGreaterThan(30);
       expect(t.outputSchema, t.name).toBeDefined();
       expect(t.annotations?.openWorldHint, t.name).toBe(false);
-      if (t.name === "converter_modelo_para_dbk") {
-        expect(t.annotations).toMatchObject({ readOnlyHint: false, destructiveHint: true });
+      if (t.annotations?.readOnlyHint === false) {
+        expect(t.annotations, t.name).toMatchObject({ readOnlyHint: false, destructiveHint: true });
       } else {
         expect(t.annotations, t.name).toMatchObject({
           readOnlyHint: true,

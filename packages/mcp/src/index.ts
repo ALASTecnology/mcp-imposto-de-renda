@@ -1,58 +1,50 @@
-import { validarDocumento } from "@autoir/core";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
-
-export const NOME_SERVIDOR = "autoir";
-export const VERSAO_SERVIDOR = "0.0.0";
-
-export interface OpcoesServidor {
-  /** Pasta autorizada para leitura e escrita de arquivos da declaração. */
-  readonly diretorio?: string;
-}
-
 /**
- * Cria o servidor MCP do AutoIR com todas as tools registradas.
- * Não abre transporte: quem chama decide (stdio no CLI, memória nos testes).
+ * @autoir/mcp: servidor MCP do AutoIR.
+ *
+ * Pontos de extensão:
+ * - `GrupoFerramentas` e `RegistroFerramentas` (`ferramentas/tipos.ts`): contrato de um grupo;
+ * - `GRUPOS` (`ferramentas/registro.ts`): lista central dos grupos registrados;
+ * - `PastaAutorizada` (`arquivos/`): única porta de acesso ao disco.
  */
-export function createServer(_opcoes: OpcoesServidor = {}): McpServer {
-  const server = new McpServer(
-    { name: NOME_SERVIDOR, version: VERSAO_SERVIDOR },
-    {
-      instructions:
-        "AutoIR roda localmente e apoia o preenchimento da declaração de IRPF. " +
-        "Não é serviço oficial da Receita Federal.",
-    },
-  );
-
-  server.registerTool(
-    "validar_documento",
-    {
-      title: "Validar CPF ou CNPJ",
-      description:
-        "Confere os dígitos verificadores de um CPF (11 dígitos) ou CNPJ (14 dígitos). " +
-        "Aceita o número com ou sem pontuação. Não consulta a situação cadastral.",
-      inputSchema: {
-        documento: z.string().min(1).max(32).describe("CPF ou CNPJ, com ou sem pontuação"),
-      },
-      outputSchema: {
-        tipo: z.enum(["cpf", "cnpj", "desconhecido"]),
-        valido: z.boolean(),
-        normalizado: z.string(),
-      },
-      annotations: { readOnlyHint: true, openWorldHint: false },
-    },
-    async ({ documento }) => {
-      const resultado = validarDocumento(documento);
-      const texto =
-        resultado.tipo === "desconhecido"
-          ? "Documento não reconhecido: informe 11 dígitos (CPF) ou 14 dígitos (CNPJ)."
-          : `${resultado.tipo.toUpperCase()} ${resultado.valido ? "válido" : "inválido"}.`;
-      return {
-        content: [{ type: "text", text: texto }],
-        structuredContent: { ...resultado },
-      };
-    },
-  );
-
-  return server;
-}
+export {
+  abrirPastaAutorizada,
+  type CodigoErroArquivo,
+  ErroArquivo,
+  type GanchosEscrita,
+  type ItemArquivo,
+  LIMITE_PADRAO_BYTES,
+  MAX_BACKUPS_PADRAO,
+  type OpcoesPasta,
+  PASTA_BACKUPS,
+  type PastaAutorizada,
+  type ResultadoEscrita,
+} from "./arquivos/index.js";
+export {
+  FICHAS_CONVERTIDAS,
+  interpretarDeclaracao,
+  modeloParaRegistros,
+  registrosParaModelo,
+  TIPOS_CONVERTIDOS,
+} from "./conversao/dbk-modelo.js";
+export { EntradaInvalidaError, ErroFerramenta, mensagemDeErro } from "./erros.js";
+export { DESCRICAO_VALOR, normalizarValor, zEntradaCalculo, zValorMonetario } from "./esquemas.js";
+export { ANOTACOES_ESCRITA, ANOTACOES_LEITURA } from "./ferramentas/registrador.js";
+export { GRUPOS } from "./ferramentas/registro.js";
+export type {
+  ContextoFerramentas,
+  DefinicaoFerramenta,
+  Executor,
+  GrupoFerramentas,
+  NomeGrupo,
+  RegistroFerramentas,
+  ResultadoFerramenta,
+} from "./ferramentas/tipos.js";
+export { AVISO_LEGAL, URI_AVISO_LEGAL } from "./recursos.js";
+export { type Json, objetoJson, paraJson } from "./serializacao.js";
+export {
+  createServer,
+  MAX_ELEMENTOS_ENTRADA,
+  NOME_SERVIDOR,
+  type OpcoesServidor,
+  VERSAO_SERVIDOR,
+} from "./servidor.js";

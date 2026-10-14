@@ -1,0 +1,21 @@
+/**
+ * Registro central dos grupos de ferramentas. A ordem aqui é a ordem em `tools/list`.
+ *
+ * Novo grupo: implemente `GrupoFerramentas` (ver `tipos.ts`) e acrescente-o a `GRUPOS`.
+ */
+import { grupoArquivos } from "./arquivos.js";
+import { grupoCalculo } from "./calculo.js";
+import { grupoDeclaracao } from "./declaracao.js";
+import { grupoFichas } from "./fichas.js";
+import { grupoTabelas } from "./tabelas.js";
+import type { GrupoFerramentas } from "./tipos.js";
+import { grupoValidacao } from "./validacao.js";
+
+export const GRUPOS: readonly GrupoFerramentas[] = Object.freeze([
+  grupoCalculo,
+  grupoDeclaracao,
+  grupoFichas,
+  grupoValidacao,
+  grupoTabelas,
+  grupoArquivos,
+]);

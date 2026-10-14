@@ -245,7 +245,34 @@ describe("NR_CONTROLE do header e tipo de arquivo", () => {
     expect(converterTipoArquivo(dec, "DEC")).toEqual(dec);
   });
 
-  it("não converte DBK em DEC: o recibo (HR, DR, R9) não está no DBK", () => {
-    expect(() => converterTipoArquivo(registros, "DEC")).toThrow(ArquivoDeclaracaoError);
+  it("converte DBK em DEC montando HR, DR e R9 a partir do header e da ficha 16", () => {
+    const dec = converterTipoArquivo(registros, "DEC");
+    expect(dec.slice(0, registros.length).map((r) => r.tipo)).toEqual(registros.map((r) => r.tipo));
+    expect(dec.slice(registros.length).map((r) => r.tipo)).toEqual(["HR", "DR", "R9"]);
+    const dr = dec.find((r) => r.tipo === "DR");
+    expect(dr?.campos).toMatchObject({
+      NR_CPF: CPF_TESTE,
+      IN_COMPLETA: "S",
+      NM_NOME: "FULANA DE TESTE SINTÉTICA",
+      NM_LOGRA: "RUA DAS ACÁCIAS",
+      NM_MUNICIP: "SÃO PAULO",
+      CD_MUNICIP: 7107n,
+      SG_UF: "SP",
+      VR_IMPDEV: 1234567n,
+      VR_IMPREST: 0n,
+    });
+    expect(dec.find((r) => r.tipo === "HR")?.campos.NR_CPF).toBe(CPF_TESTE);
+    expect(verificarControles(dec, { tipoArquivo: "DEC" }).valido).toBe(true);
+    expect(converterTipoArquivo(dec, "DBK")).toEqual(registros);
+  });
+
+  it("não converte em DEC um arquivo sem header ou sem a ficha 16", () => {
+    expect(() => converterTipoArquivo(registros.slice(1), "DEC")).toThrow(ArquivoDeclaracaoError);
+    expect(() =>
+      converterTipoArquivo(
+        registros.filter((r) => r.tipo !== "16"),
+        "DEC",
+      ),
+    ).toThrow(/ficha 16/);
   });
 });

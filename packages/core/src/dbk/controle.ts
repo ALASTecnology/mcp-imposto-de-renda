@@ -18,8 +18,8 @@
  */
 
 import { codificarRegistro, leiauteDosRegistros, type Registro, type ValorCampo } from "./codec.js";
-import { ArquivoDeclaracaoError } from "./erros.js";
 import { type Leiaute, tipoDoLeiaute } from "./leiaute.js";
+import { montarRecibo } from "./recibo.js";
 
 /** Tipos do recibo de entrega e do complemento do recibo, emitidos pela Receita Federal. */
 export const TIPOS_RECIBO: ReadonlySet<string> = new Set([
@@ -280,9 +280,9 @@ export function recalcularControles(
  * salvo o `NR_CONTROLE` do header; o DEC traz, além disso, os registros `HR`, `DR` e `R9`.
  *
  * - Para `DBK`: retira os registros do recibo e recalcula os controles como DBK.
- * - Para `DEC`: só a partir de registros que já têm o recibo (recalcula como DEC). Um DBK
- *   não traz `HR`, `DR` e `R9`, e o `DR` repete dados de cadastro e do resumo que o AutoIR
- *   ainda não monta; por isso a conversão de DBK em DEC falha com erro explícito.
+ * - Para `DEC`: se os registros já trazem o recibo, só recalcula os controles como DEC; senão,
+ *   monta `HR`, `DR` e `R9` com `montarRecibo` (header e ficha 16 obrigatórios) e recalcula.
+ *   Nos 37 pares do programa oficial o resultado é igual à DEC byte a byte.
  */
 export function converterTipoArquivo(
   registros: readonly Registro[],
@@ -294,12 +294,14 @@ export function converterTipoArquivo(
     const declaracao = registros.filter((r) => !TIPOS_RECIBO.has(r.tipo));
     return recalcularControles(declaracao, { leiaute, tipoArquivo: "DBK" });
   }
-  if (!registros.some((r) => r.tipo === "R9")) {
-    throw new ArquivoDeclaracaoError(
-      "conversão para DEC exige os registros do recibo (HR, DR e R9), que o DBK não traz",
-    );
+  if (registros.some((r) => r.tipo === "R9")) {
+    return recalcularControles(registros, { leiaute, tipoArquivo: "DEC" });
   }
-  return recalcularControles(registros, { leiaute, tipoArquivo: "DEC" });
+  const declaracao = registros.filter((r) => !TIPOS_RECIBO.has(r.tipo));
+  return recalcularControles([...declaracao, ...montarRecibo(declaracao, leiaute)], {
+    leiaute,
+    tipoArquivo: "DEC",
+  });
 }
 
 /** Um campo de controle cujo valor gravado difere do calculado. */

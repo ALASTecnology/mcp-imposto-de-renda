@@ -78,4 +78,15 @@ describe("casos de referência do programa oficial (2026)", () => {
     });
     expect(Buffer.compare(Buffer.from(convertido), Buffer.from(dbk))).toBe(0);
   });
+
+  it.each(pares)("%s: o DBK convertido em DEC é igual, byte a byte, à DEC do programa", (nome) => {
+    const dec = new Uint8Array(readFileSync(join(PASTA, nome)));
+    const dbk = lerArquivo(
+      new Uint8Array(readFileSync(join(PASTA, nome.replace(/\.dec$/i, ".DBK")))),
+    );
+    const convertido = gravarArquivo(converterTipoArquivo(dbk.registros, "DEC"), {
+      terminadorFinal: dbk.terminadorFinal,
+    });
+    expect(Buffer.from(convertido).toString("latin1")).toBe(Buffer.from(dec).toString("latin1"));
+  });
 });

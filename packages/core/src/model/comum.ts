@@ -40,16 +40,19 @@ export const zCpfOuCnpj = z
   .string()
   .regex(/^(\d{11}|\d{14})$/, "CPF/CNPJ deve ter 11 ou 14 dígitos sem pontuação");
 
-/** Verifica se `AAAA-MM-DD` é uma data real do calendário gregoriano. */
+/** Verifica se `AAAA-MM-DD` é uma data real do calendário gregoriano (ano de 0001 em diante). */
 export function dataIsoValida(texto: string): boolean {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(texto);
   if (!m) return false;
   const ano = Number(m[1]);
   const mes = Number(m[2]);
   const dia = Number(m[3]);
-  if (mes < 1 || mes > 12 || dia < 1) return false;
-  const ultimo = new Date(Date.UTC(ano, mes, 0)).getUTCDate();
-  return dia <= ultimo;
+  // O ano 0000 não existe no calendário (de 1 a.C. passa-se a 1 d.C.). O número de dias é
+  // calculado sem `Date.UTC`, que trata os anos 0 a 99 como 1900 a 1999.
+  if (ano < 1 || mes < 1 || mes > 12 || dia < 1) return false;
+  const bissexto = (ano % 4 === 0 && ano % 100 !== 0) || ano % 400 === 0;
+  const dias = [31, bissexto ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return dia <= (dias[mes - 1] ?? 0);
 }
 
 /** Data no formato ISO `AAAA-MM-DD`, validada contra o calendário. */

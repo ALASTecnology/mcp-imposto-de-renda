@@ -109,7 +109,8 @@ const arquivos = [...arquivosTs(join(SRC, "calc")), join(SRC, "centavos.ts")];
 
 describe("cálculo sem ponto flutuante", () => {
   it("o removedor de comentários e strings preserva o código e as expressões de template", () => {
-    const fonte = 'const a = "1.5"; // 2.5\n/* 3.5 */ const b = `x ${Number(c)} 4.5`;';
+    // O placeholder do template é montado por partes para não ser lido como um.
+    const fonte = `const a = "1.5"; // 2.5\n/* 3.5 */ const b = \`x $${"{"}Number(c)} 4.5\`;`;
     const codigo = somenteCodigo(fonte);
     expect(codigo).not.toMatch(/\d\.\d/);
     expect(codigo).toContain("Number(c)");

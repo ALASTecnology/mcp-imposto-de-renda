@@ -31,12 +31,33 @@ export function normalizarTexto(texto: string): string {
 }
 
 /**
+ * Verdadeiro se o texto só tem caracteres imprimíveis do ISO-8859-1, o conjunto que o arquivo
+ * da declaração grava: ASCII de 0x20 a 0x7E e a faixa acentuada de 0xA1 a 0xFF, menos o hífen
+ * suave (0xAD), que é invisível. Ficam de fora controles (inclusive TAB e quebras de linha),
+ * espaço sem quebra (0xA0), caracteres de largura zero, de controle de direção (bidi), BOM e
+ * qualquer caractere acima de 0xFF.
+ */
+export function caracteresDeNomeValidos(texto: string): boolean {
+  for (let i = 0; i < texto.length; i++) {
+    const c = texto.charCodeAt(i);
+    const imprimivel = (c >= 0x20 && c <= 0x7e) || (c >= 0xa1 && c <= 0xff && c !== 0xad);
+    if (!imprimivel) return false;
+  }
+  return true;
+}
+
+/**
  * Regras de nome da Ajuda (pág. 43, nota 02 F-IDENT-NOME): de 1 a 15 partes;
  * nenhuma parte com mais de 20 caracteres; proibidos 3 caracteres iguais e
  * consecutivos, exceto o numeral romano "III" na última parte. Devolve a
  * mensagem do problema ou `undefined` se o nome está correto.
  */
 export function problemaNome(nome: string): string | undefined {
+  // Primeiro o conjunto de caracteres, e sem repetir o nome na mensagem: um caractere de
+  // controle de direção (bidi) ecoado faria a mensagem exibir outro texto.
+  if (!caracteresDeNomeValidos(nome)) {
+    return "O nome tem caractere invisível, de controle ou fora do conjunto aceito pelo programa (ISO-8859-1 imprimível).";
+  }
   const partes = nome.trim().split(/\s+/).filter(Boolean);
   if (partes.length === 0 || partes.length > 15) return "O nome deve ter de 1 a 15 partes.";
   const longa = partes.find((p) => p.length > 20);

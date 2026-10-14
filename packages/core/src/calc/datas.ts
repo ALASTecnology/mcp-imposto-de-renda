@@ -9,8 +9,10 @@ export interface DataCivil {
   readonly dia: number;
 }
 
+/** Dias do mês, sem `Date.UTC`, que trata os anos 0 a 99 como 1900 a 1999. */
 function diasNoMes(ano: number, mes: number): number {
-  return new Date(Date.UTC(ano, mes, 0)).getUTCDate();
+  const bissexto = (ano % 4 === 0 && ano % 100 !== 0) || ano % 400 === 0;
+  return [31, bissexto ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mes - 1] ?? 0;
 }
 
 /** Aceita "AAAA-MM-DD" ou "DDMMAAAA" e valida o dia do calendário. */
@@ -31,7 +33,8 @@ export function lerData(texto: string): DataCivil {
     mes = Number(m[2]);
     ano = Number(m[3]);
   }
-  if (mes < 1 || mes > 12 || dia < 1 || dia > diasNoMes(ano, mes)) {
+  // O ano 0000 não existe no calendário.
+  if (ano < 1 || mes < 1 || mes > 12 || dia < 1 || dia > diasNoMes(ano, mes)) {
     throw new CalculoInvalidoError(`Data inválida: "${texto}"`);
   }
   return { ano, mes, dia };
@@ -61,7 +64,9 @@ export function mesDoIndice(i: number): { ano: number; mes: number } {
 export function ultimoDiaUtilSemFeriados(ano: number, mes: number): DataCivil {
   let dia = diasNoMes(ano, mes);
   for (;;) {
-    const semana = new Date(Date.UTC(ano, mes - 1, dia)).getUTCDay();
+    const data = new Date(0);
+    data.setUTCFullYear(ano, mes - 1, dia); // aceita anos 0 a 99 sem somar 1900
+    const semana = data.getUTCDay();
     if (semana !== 0 && semana !== 6) return { ano, mes, dia };
     dia -= 1;
   }

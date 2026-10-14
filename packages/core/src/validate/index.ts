@@ -15,7 +15,7 @@ export {
   type ProblemaConta,
   validarContaBancaria,
 } from "./conta-bancaria.js";
-export { REGRAS, validarDeclaracao } from "./declaracao.js";
+export { REGRA_FORMA_MODELO, REGRAS, validarDeclaracao } from "./declaracao.js";
 export * from "./documento.js";
 export {
   type Gravidade,

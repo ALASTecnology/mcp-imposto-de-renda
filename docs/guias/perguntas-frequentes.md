@@ -35,7 +35,7 @@ privacidade do provedor.
 ### Como reduzir o que é compartilhado?
 
 - Use uma pasta só com os arquivos da declaração.
-- Use `--somente-leitura` quando só quiser simular e validar.
+- Use `--perfil consulta` (ou `--somente-leitura`) quando só quiser simular e validar.
 - Para simulações, você pode informar valores sem nomes reais (`simular_imposto` aceita qualquer
   nome) e trocar por dados reais só no programa oficial.
 

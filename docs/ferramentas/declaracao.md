@@ -94,7 +94,7 @@ Aparece em 21 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 
 **Converter DBK/DEC para o modelo**. Não grava nada. Exige `--dir`.
 
-Converte um DBK/DEC da pasta autorizada no modelo JSON do MCP Imposto de Renda (identificação, dependentes, rendimentos de PJ, pagamentos, bens e dívidas). Valores em centavos (número inteiro). O resultado pode ser editado e gravado com converter_modelo_para_dbk.
+Converte um DBK/DEC da pasta autorizada no modelo JSON do MCP Imposto de Renda (identificação, dependentes, rendimentos de PJ, pagamentos, bens e dívidas). Valores em centavos (número inteiro). O resultado pode ser editado e convertido de volta em DBK pela ferramenta de conversão do modelo para DBK.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |

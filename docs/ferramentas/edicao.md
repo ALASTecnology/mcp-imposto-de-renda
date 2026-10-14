@@ -8749,7 +8749,7 @@ Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#ma
 
 **Listar as fichas da declaração**. Não grava nada. Exige `--dir`.
 
-Mostra todas as fichas do modelo com a quantidade de itens preenchidos em um DBK/DEC, e quais são editáveis por listar_lancamentos, editar_lancamento e remover_lancamento.
+Mostra todas as fichas do modelo com a quantidade de itens preenchidos em um DBK/DEC, e quais estão em lista, consultáveis por listar_lancamentos e editáveis pelas ferramentas genéricas de lançamento.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -10149,7 +10149,7 @@ Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#ma
 
 **Definir a partilha de um bem**. Grava na pasta autorizada. Exige `--dir`.
 
-Na Declaração Final de Espólio, define para um bem (posição em listar_bens) se ainda está a inventariar, a situação na data da partilha, o valor de transferência e os percentuais por herdeiro (centésimos: 100,00% = 10000; herdeiros cadastrados em adicionar_herdeiro). Valida a declaração e grava o DBK com cópia de segurança, devolvendo as pendências.
+Na Declaração Final de Espólio, define para um bem (posição em listar_lancamentos com ficha 'bens') se ainda está a inventariar, a situação na data da partilha, o valor de transferência e os percentuais por herdeiro (centésimos: 100,00% = 10000; herdeiros cadastrados em adicionar_herdeiro). Valida a declaração e grava o DBK com cópia de segurança, devolvendo as pendências.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -10271,7 +10271,7 @@ Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Aplicar caso especial a um bem**. Grava na pasta autorizada. Exige `--dir`.
 
-Aplica a um bem (posição em listar_bens) um caso especial: usufruto (com os CPF/CNPJ dos proprietários ou usufrutuários), bem a inventariar, atualização pela Lei 14.973/2024 ou criptoativo em custodiante; 'desfazer': true desmarca. Valida a declaração e grava o DBK com cópia de segurança, devolvendo as pendências.
+Aplica a um bem (posição em listar_lancamentos com ficha 'bens') um caso especial: usufruto (com os CPF/CNPJ dos proprietários ou usufrutuários), bem a inventariar, atualização pela Lei 14.973/2024 ou criptoativo em custodiante; 'desfazer': true desmarca. Valida a declaração e grava o DBK com cópia de segurança, devolvendo as pendências.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |

@@ -501,7 +501,7 @@ Aparece em 5 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Atualizar o custo de um bem**. Não grava nada.
 
-Orientação e cálculo da atualização do custo de bem ou direito com os valores informados pelo usuário: 'ufir' (bens adquiridos até 31/12/1995, quantidade de UFIR vezes R$ 0,8287, Lei 9.249/1995, art. 17), 'fator' (valor vezes um coeficiente informado) ou 'lei14973' (atualização de imóvel a valor de mercado com imposto de 4% sobre a diferença, Lei 14.973/2024). Não grava: para registrar, use editar_bem ou aplicar_caso_especial_bem.
+Orientação e cálculo da atualização do custo de bem ou direito com os valores informados pelo usuário: 'ufir' (bens adquiridos até 31/12/1995, quantidade de UFIR vezes R$ 0,8287, Lei 9.249/1995, art. 17), 'fator' (valor vezes um coeficiente informado) ou 'lei14973' (atualização de imóvel a valor de mercado com imposto de 4% sobre a diferença, Lei 14.973/2024). Não grava: para registrar, altere o bem na ficha Bens e Direitos ou marque o caso especial do bem.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |

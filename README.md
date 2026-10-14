@@ -316,7 +316,7 @@ Demais ferramentas do grupo:
 
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
-| `listar_fichas` | Mostra todas as fichas do modelo com a quantidade de itens preenchidos em um DBK/DEC, e quais são editáveis por listar_lancamentos, editar_lancamento e remover_lancamento. | não |
+| `listar_fichas` | Mostra todas as fichas do modelo com a quantidade de itens preenchidos em um DBK/DEC, e quais estão em lista, consultáveis por listar_lancamentos e editáveis pelas ferramentas genéricas de lançamento. | não |
 | `listar_lancamentos` | Lista os itens de qualquer ficha em lista, com a posição de cada um. | não |
 | `editar_lancamento` | Altera um item de qualquer ficha em lista (campos mesclados; null remove), valida e grava com cópia de segurança. | **sim** |
 | `remover_lancamento` | Remove um item de qualquer ficha em lista, valida e grava com cópia de segurança (dependente ou alimentando com vínculos exige cascata: true). | **sim** |
@@ -330,8 +330,8 @@ Demais ferramentas do grupo:
 | `definir_receitas_despesas_rurais` | Grava as receitas e despesas da atividade rural: na aba brasil, itens { mes, receitaBruta, despesa }; na aba exterior, itens { pais, receitaBrutaMoedaOriginal, despesaMoedaOriginal, resultadoDolar }. | **sim** |
 | `definir_apuracao_rural` | Grava os campos digitados da apuração da atividade rural (prejuízo anterior, opção resultado ou limite20, compensação, adiantamentos, limite de 20% no exterior). | **sim** |
 | `definir_rebanho` | Grava a movimentação de uma espécie do rebanho (1 a 4 conforme o programa, 5 = outros): estoque inicial, aquisições, nascimentos, consumo e perdas, vendas. | **sim** |
-| `definir_partilha_bem` | Na Declaração Final de Espólio, define para um bem (posição em listar_bens) se ainda está a inventariar, a situação na data da partilha, o valor de transferência e os percentuais por herdeiro (centésimos: 100,00% = 10000; herdeiros cadastrados em adicionar_herdeiro). | **sim** |
-| `aplicar_caso_especial_bem` | Aplica a um bem (posição em listar_bens) um caso especial: usufruto (com os CPF/CNPJ dos proprietários ou usufrutuários), bem a inventariar, atualização pela Lei 14.973/2024 ou criptoativo em custodiante; 'desfazer': true desmarca. | **sim** |
+| `definir_partilha_bem` | Na Declaração Final de Espólio, define para um bem (posição em listar_lancamentos com ficha 'bens') se ainda está a inventariar, a situação na data da partilha, o valor de transferência e os percentuais por herdeiro (centésimos: 100,00% = 10000; herdeiros cadastrados em adicionar_herdeiro). | **sim** |
+| `aplicar_caso_especial_bem` | Aplica a um bem (posição em listar_lancamentos com ficha 'bens') um caso especial: usufruto (com os CPF/CNPJ dos proprietários ou usufrutuários), bem a inventariar, atualização pela Lei 14.973/2024 ou criptoativo em custodiante; 'desfazer': true desmarca. | **sim** |
 | `buscar_nome_por_documento` | Procura, nos DBK/DEC da pasta autorizada, o nome já informado para um CPF ou CNPJ (fontes pagadoras, dependentes, beneficiários de pagamentos e doações). | não |
 
 ### ciclo
@@ -350,7 +350,7 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | `definir_opcao_tributacao` | Escolhe deduções legais (completa) ou desconto simplificado, preservando as deduções informadas, e devolve a comparação dos dois modelos com a recomendação. | **sim** |
 | `definir_informacoes_bancarias` | Grava a conta para restituição ou débito (banco, agência sem DV, conta, DV, tipo e operação da Caixa), Pix pela chave CPF, número de quotas (1 a 8) e débito automático, validando banco, agência, conta e DV pela regra de cada banco. | **sim** |
 | `definir_imposto_pago` | Grava as linhas digitadas da ficha Imposto Pago/Retido: imposto complementar (Darf 0246), imposto pago no exterior e imposto retido na fonte da Lei 11.033/2004. | **sim** |
-| `repetir_valores_bens` | Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens ou de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. | **sim** |
+| `repetir_valores_bens` | Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. | **sim** |
 | `importar_informe_rendimentos` | Lança na declaração o comprovante de rendimentos de PJ colado pelo usuário, em texto ou JSON (sem OCR e sem rede): fonte e CNPJ, quadro 3 (rendimentos, previdência oficial, IRRF), quadro 4 (isentos como parcela de 65 anos, indenizações, lucros), quadro 5 (13º e IRRF do 13º, PLR, aplicações) e plano de saúde do quadro 7. | **sim** |
 | `importar_informe_plano_saude` | Lança em Pagamentos Efetuados (código 26) o informe de plano de saúde colado em texto ou JSON: operadora (CNPJ e nome), valor pago por beneficiário e reembolsos. | **sim** |
 | `ler_informe` | Lê o comprovante de rendimentos de PJ colado em 'texto' ou num arquivo .txt da pasta autorizada e devolve os campos extraídos por regras fixas (fonte e CNPJ, rendimentos, previdência oficial, IRRF, 13º e IRRF do 13º, isentos e exclusivos), sem gravar nada, sem OCR e sem rede. | não |

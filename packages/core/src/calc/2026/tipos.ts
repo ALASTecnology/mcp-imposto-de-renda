@@ -9,7 +9,7 @@
 import type { Centavos } from "../../centavos.js";
 
 /** "T" titular, "D" dependente, "A" alimentando (só em pagamentos). */
-export type Beneficiario = "T" | "D" | "A";
+export type BeneficiarioCalculo = "T" | "D" | "A";
 
 export interface PessoaEntrada {
   cpf: string;
@@ -55,7 +55,7 @@ export interface PagamentoEntrada {
   cpfCnpj?: string;
   valor?: string;
   parcelaNaoDedutivel?: string;
-  beneficiario?: Beneficiario;
+  beneficiario?: BeneficiarioCalculo;
   cpfDependente?: string;
 }
 
@@ -101,7 +101,7 @@ export interface LinhaMemoria {
   regra: string;
 }
 
-export interface ImpostoPago {
+export interface ImpostoPagoCalculo {
   irrf: Centavos;
   carneLeao: Centavos;
   complementar: Centavos;
@@ -130,7 +130,7 @@ interface ResultadoModeloBase {
   deducaoIncentivo: Centavos;
   /** Imposto devido final do modelo. */
   impostoDevido: Centavos;
-  impostoPago: ImpostoPago;
+  impostoPago: ImpostoPagoCalculo;
   saldoPagar: Centavos;
   restituir: Centavos;
   /** Alíquota efetiva em centésimos de ponto percentual (617 = 6,17%). */

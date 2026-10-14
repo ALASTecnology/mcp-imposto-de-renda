@@ -26,7 +26,7 @@ import type {
   ComparacaoModelos,
   DeducoesCompleto,
   EntradaCalculo2026,
-  ImpostoPago,
+  ImpostoPagoCalculo,
   LinhaMemoria,
   PagamentoEntrada,
   ResultadoCalculo2026,
@@ -447,10 +447,10 @@ function deducaoIncentivo(
 function apurarImpostoPago(
   t: Totais,
   limiteExterior: Centavos,
-): { pago: ImpostoPago; memoria: LinhaMemoria[] } {
+): { pago: ImpostoPagoCalculo; memoria: LinhaMemoria[] } {
   const exterior = minimo(t.exteriorPago, naoNegativo(limiteExterior));
   const total = somaCentavos(t.irrf, t.carneLeao, t.complementar, exterior, t.irrfLei11033);
-  const pago: ImpostoPago = {
+  const pago: ImpostoPagoCalculo = {
     irrf: t.irrf,
     carneLeao: t.carneLeao,
     complementar: t.complementar,

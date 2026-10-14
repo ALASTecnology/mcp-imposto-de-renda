@@ -11,7 +11,6 @@ import {
   lerCentavos,
   minimo,
   naoNegativo,
-  percentual,
   percentualTruncado,
   ZERO,
 } from "../aritmetica.js";

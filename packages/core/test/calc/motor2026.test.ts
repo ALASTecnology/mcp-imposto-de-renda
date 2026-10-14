@@ -40,27 +40,35 @@ describe("tabela progressiva anual 2026 (Lei 15.191/2025 aplicada ao ano-calend�
     ["0", 0n, "base zero"],
     ["2846720", 0n, "R$ 28.467,20 é o teto da faixa isenta"],
     ["2846721", 0n, "2.846.721 x 7,5% = 213.504,075 -> 213.504; menos 213.504 = 0"],
-    [
-      "2846727",
-      0n,
-      "2.846.727 x 7,5% = 213.504,525 -> 213.504 (truncado); menos 213.504 = 0",
-    ],
+    ["2846727", 0n, "2.846.727 x 7,5% = 213.504,525 -> 213.504 (truncado); menos 213.504 = 0"],
     ["2846734", 1n, "2.846.734 x 7,5% = 213.505,05 -> 213.505; menos 213.504 = 1"],
-    ["3391980", 40894n, "3.391.980 x 7,5% = 254.398,5 -> 254.398 (truncado); menos 213.504 = 40.894"],
+    [
+      "3391980",
+      40894n,
+      "3.391.980 x 7,5% = 254.398,5 -> 254.398 (truncado); menos 213.504 = 40.894",
+    ],
     // Com o truncamento, o teto da faixa de 7,5% e o primeiro centavo da faixa de
     // 15% dão o mesmo imposto; o motor mantém a fórmula oficial (base x alíquota,
     // truncada, menos a parcela), sem suavizar a transição.
     ["3391981", 40894n, "3.391.981 x 15% = 508.797,15 -> 508.797; menos 467.903 = 40.894"],
     // Regressão dos casos de referência (ex.: simplificado-acima-limite-01): na
     // faixa de 27,5% a fração ,65 de centavo é descartada, não arredondada.
-    ["8324566", 1203877n, "8.324.566 x 27,5% = 2.289.255,65 -> 2.289.255; menos 1.085.378 = 1.203.877"],
+    [
+      "8324566",
+      1203877n,
+      "8.324.566 x 27,5% = 2.289.255,65 -> 2.289.255; menos 1.085.378 = 1.203.877",
+    ],
   ])("base %s", (base, esperado, _conta) => {
     expect(impostoTabelaAnual(centavos(BigInt(base)))).toBe(esperado);
   });
 
   it.each([
     ["4501260", 207286n, "4.501.260 x 15% = 675.189; menos 467.903 = 207.286"],
-    ["5597616", 453966n, "5.597.616 x 22,5% = 1.259.463,6 -> 1.259.463 (truncado); menos 805.497 = 453.966"],
+    [
+      "5597616",
+      453966n,
+      "5.597.616 x 22,5% = 1.259.463,6 -> 1.259.463 (truncado); menos 805.497 = 453.966",
+    ],
     ["10000000", 1664622n, "10.000.000 x 27,5% = 2.750.000; menos 1.085.378 = 1.664.622"],
   ])("faixas superiores: base %s", (base, esperado) => {
     expect(impostoTabelaAnual(centavos(BigInt(base)))).toBe(esperado);

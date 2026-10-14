@@ -93,7 +93,13 @@ Resumo; detalhes em [`docs/seguranca.md`](docs/seguranca.md) e [`docs/testes.md`
 - Pasta autorizada com recusa de caminhos absolutos, `..`, links e nomes perigosos; escrita
   atômica e backup antes de sobrescrever.
 - Limite de 20 MB por arquivo, aplicado também pelo codec antes de decodificar.
-- Fuzzing determinístico do codec, detecção de alteração de um byte nas 74 fixtures do programa
+- Fuzzing determinístico do codec, detecção de alteração de um byte nas 96 fixtures do programa
   oficial e testes de propriedade do cálculo.
 - CI com CodeQL, auditoria de dependências, Dependabot semanal, permissões mínimas e actions
   fixadas por SHA de commit.
+- Empacotamento: o executável `autoir-mcp` leva o núcleo e o servidor (`@autoir/core` e
+  `@autoir/mcp`, privados) dentro do próprio bundle, sem source maps; o pacote publicado
+  depende do registro só para `@modelcontextprotocol/sdk` e `zod`, com versões fixas. O SDK
+  traz em tempo de execução dependências de transportes HTTP (express, hono, cors, jose,
+  eventsource, cross-spawn) que o AutoIR não usa: só o transporte stdio é carregado, e o teste
+  de ausência de rede confere que o código do AutoIR não importa módulos de rede.

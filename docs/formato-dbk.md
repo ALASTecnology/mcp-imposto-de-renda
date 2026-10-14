@@ -4,9 +4,15 @@ Este documento descreve o arquivo gravado pelo programa da declaração do IRPF 
 codec do AutoIR (`packages/core/src/dbk`) o lê e grava. Vale para o exercício 2026; os demais
 exercícios seguem a mesma estrutura com leiautes próprios.
 
-- **DEC**: arquivo da declaração gravado para entrega. Depois da transmissão pode trazer, ao
-  final, os registros do recibo (`HR`, `DR`, `R9`).
-- **DBK**: cópia de segurança. Mesma estrutura de registros da DEC, sem o recibo.
+- **DEC**: arquivo da declaração gravado para entrega. O programa já o grava com os registros
+  `HR`, `DR` e `R9` ao final (o "recibo"); depois da transmissão pode trazer também o
+  complemento do recibo.
+- **DBK**: cópia de segurança. Mesmos registros da DEC até o `T9`, sem `HR`, `DR` e `R9`.
+
+Comparando os 37 pares DBK/DEC gravados pelo programa (`packages/core/test/fixtures/dbk/2026`),
+as únicas diferenças são: o `NR_CONTROLE` do header (o tipo de arquivo entra no cálculo, ver
+abaixo) e os registros `HR`, `DR` e `R9`, presentes só na DEC. Header, fichas e `T9` são
+idênticos byte a byte.
 
 ## Estrutura geral
 
@@ -25,7 +31,7 @@ Ordem dos registros (leiautes oficiais publicados):
 IR                        header, uma ocorrência
 16, 17, 18 ... 99         fichas, conforme o caso, em ordem crescente de tipo
 T9                        fechamento com totais de controle, uma ocorrência
-HR, DR, R9                recibo de entrega (somente na DEC já transmitida)
+HR, DR, R9                recibo de entrega (somente na DEC)
 ```
 
 ### Formatos de campo
@@ -35,7 +41,7 @@ HR, DR, R9                recibo de entrega (somente na DEC já transmitida)
 | `C` caractere | alinhado à esquerda, completado com espaços | `string` sem os espaços finais |
 | `A` alfabético | idem `C` | `string` |
 | `I` indicador | idem `C` (por exemplo `S`/`N`) | `string` |
-| `N` numérico | alinhado à direita, completado com zeros, sem sinal | `bigint` |
+| `N` numérico | alinhado à direita, completado com zeros; valor monetário negativo leva `-` na primeira posição (`-000000300000`) | `bigint` |
 | `N` de data | 8 dígitos `DDMMAAAA` (4 campos usam `AAAAMMDD`) | `string` de 8 dígitos |
 | qualquer, em branco | só espaços | `null` |
 
@@ -45,9 +51,16 @@ R$ 1.234,56 e vira `123456n`, ou seja, centavos (`Centavos`). Nada passa por pon
 casas (cotações, percentuais e quantidades); o número de casas fica em `decimais` no leiaute.
 
 O codec rejeita, com erro tipado e número da linha: linha com tamanho diferente do tipo,
-tipo desconhecido, terminador que não seja CRLF, número com caractere não numérico ou sinal,
-data impossível, caractere fora do ISO-8859-1, quebra de linha dentro de campo, valor
-negativo, valor ou texto maior que o campo e registro com campo ausente ou desconhecido.
+tipo desconhecido, terminador que não seja CRLF, número com caractere não numérico, sinal
+fora da primeira posição ou sinal em campo sem casas decimais, data impossível, caractere fora
+do ISO-8859-1, quebra de linha dentro de campo, valor negativo em campo sem casas decimais,
+valor ou texto maior que o campo e registro com campo ausente ou desconhecido.
+
+Valores negativos: o programa grava, por exemplo, a base de cálculo mensal do carnê-leão
+negativa (registro 22, `VR_BASECALCULO`, quando o livro-caixa supera a receita do mês) como
+`-000000300000`, ou seja, o sinal ocupa a primeira posição e os dígitos restantes vêm com zeros
+à esquerda. Observado no fixture `livro-caixa-excesso-01`. O codec aceita e grava esse formato
+em campos `N` com casas decimais.
 
 ## Tipos de registro do exercício 2026
 
@@ -126,8 +139,8 @@ oficial com dados sintéticos (`packages/core/test/fixtures/dbk/2026`).
 | Contagens `QT_R<tipo>` do `T9` | quantidade de registros de cada tipo | confirmado |
 | `QT_TOTAL` do `T9` | registros da declaração antes do `T9`, header incluído | confirmado |
 | `NR_HASH` do header | CRC-32 das linhas seguintes ao header, `T9` incluído | confirmado |
-| `NR_CONTROLE` do header | desconhecido | não determinado |
-| `NR_HASH` do `R9` | desconhecido | não determinado |
+| `NR_CONTROLE` do header | CRC-32 de `<8 primeiros dígitos do CPF>.<DBK ou DEC>` seguido da linha do header sem o controle | confirmado |
+| `NR_HASH` do `R9` | CRC-32 das linhas entre o header e o `R9` (fichas, `T9`, `HR` e `DR`) | confirmado |
 
 ### Número de controle de registro
 
@@ -151,18 +164,51 @@ linha, das linhas completas (com os respectivos `NR_CONTROLE`) que vêm depois d
 `T9`, inclusive. Os registros do recibo não entram. Por isso a ordem de cálculo é: contagens
 do `T9`, `NR_CONTROLE` de cada registro, `NR_HASH` do header.
 
-### O que não foi determinado
+### Número de controle do header
 
-- **`NR_CONTROLE` do header.** Não é o CRC-32 da linha do header. Um DBK e uma DEC da mesma
-  declaração têm a linha do header idêntica e, ainda assim, controles diferentes; logo o
-  valor depende de algo que não está na linha (foram testadas, sem sucesso, combinações de
-  CRC-32, Adler-32 e hash de texto Java sobre o header, os demais registros, o recibo, o nome
-  do arquivo e variações de um ou dois caracteres do header). `recalcularControles` preserva
-  esse campo por padrão (`controleHeader: "preservar"`); com `controleHeader: "crc"` grava o
-  CRC-32 da linha, que **não** reproduz o valor do programa oficial. `verificarControles` não
-  o trata como divergência e apenas informa `controleHeaderConfereComCrc`.
-- **`NR_HASH` do `R9`.** O recibo é emitido pela Receita Federal e nunca é recalculado pelo
-  AutoIR; só o `NR_CONTROLE` de cada linha do recibo é conferido.
+O `NR_CONTROLE` do header (últimos 10 caracteres da linha `IR`) é o CRC-32 do texto
+`<8 primeiros dígitos do CPF>.<EXTENSÃO>` seguido da linha do header sem esses 10 caracteres,
+com a extensão em maiúsculas: `DBK` na cópia de segurança e `DEC` no arquivo de entrega. Por
+exemplo, para o CPF `10011265566` o prefixo é `10011265.DBK` ou `10011265.DEC`; por isso um DBK
+e uma DEC com a mesma linha de header têm controles diferentes. O valor não depende de caminho,
+do nome real do arquivo, de data ou de hora. A fórmula foi observada no harness de referência
+(`tools/referencia`, que chama o método público do programa e compara) e confere nos 74
+arquivos de `packages/core/test/fixtures/dbk/2026` (37 DBK e 37 DEC).
+
+`recalcularControles(registros, { tipoArquivo })` grava esse valor por padrão
+(`controleHeader: "programa"`). Sem `tipoArquivo`, o tipo é inferido: `DEC` se houver registros
+do recibo, senão `DBK` (`inferirTipoArquivo`); ao ler de disco, `tipoArquivoPorNome(nome)` usa
+a extensão. `controleHeader: "preservar"` mantém o valor atual e `controleHeader: "crc"` grava o
+CRC-32 só da linha (não reproduz o programa). `verificarControles(registros, { tipoArquivo })`
+acusa divergência no `NR_CONTROLE` do header e informa `controleHeaderConfere` e o
+`tipoArquivo` usado. Sem o campo `NR_CPF` no header (leiautes de teste), o controle do header
+não é calculado nem conferido.
+
+### Hash do recibo (R9)
+
+O `NR_HASH` do `R9` (posições 17 a 26) é o CRC-32 da concatenação, sem terminadores, das linhas
+completas entre o header e o `R9`: fichas, `T9`, `HR` e `DR`, cada uma com o seu `NR_CONTROLE`.
+Confere nas 37 DEC dos fixtures. A ordem de cálculo, portanto, é: contagens do `T9`,
+`NR_CONTROLE` de cada registro (inclusive `HR` e `DR`), `NR_HASH` do `R9`, `NR_CONTROLE` do `R9`,
+`NR_HASH` do header e, por último, `NR_CONTROLE` do header. `recalcularControles` segue essa
+ordem e `verificarControles` confere o `NR_HASH` do `R9`. O complemento do recibo (`HC`, `RC`,
+`NC`, `VC`, `MC`, `TC`), emitido pela Receita Federal na transmissão, não tem hash recalculado.
+
+### Conversão entre DBK e DEC
+
+`converterTipoArquivo(registros, "DBK")` retira `HR`, `DR`, `R9` (e qualquer complemento do
+recibo) e recalcula os controles como DBK; aplicada às 37 DEC dos fixtures, produz o DBK do
+programa byte a byte. `converterTipoArquivo(registros, "DEC")` só funciona quando os registros
+já trazem o recibo (recalcula os controles como DEC). A conversão de DBK em DEC não é feita
+porque não basta trocar o header: a DEC exige os registros `HR` (CPF e controle), `DR` e `R9`.
+O `DR` repete dados que estão em outras fichas, observados nos fixtures: `NR_CPF`,
+`IN_COMPLETA`, `NM_NOME` e `SG_UF` do header ou da ficha 16; endereço (`TIP_LOGRA`, `NM_LOGRA`,
+`NR_NUMERO`, `NM_BAIRRO`, `NR_CEP`, `CD_MUNICIP`, `NM_MUNICIP`) da ficha 16; `VR_TOTTRIB`
+(`VR_TOTAL_RENDTRIB_PFPJ_TITDEP` do header), `VR_IMPDEV` (`VR_IMPDEVIDO`), `VR_IMPPAGAR` e
+`VR_QUOTA` (`VR_SOMA_IMPOSTO_PAGAR`), `NR_QUOTAS` (ficha 16). `VR_IMPREST`, banco, agência, conta,
+e-mail e telefone não tiveram a origem determinada com os fixtures atuais (todos sem conta
+bancária, e-mail ou telefone). Montar o `DR` fica como pendência; com ele, o `R9` sai da regra
+acima.
 
 ### Diagnóstico
 
@@ -196,7 +242,10 @@ const saida = gravarArquivo(novos, { terminadorFinal: arquivo.terminadorFinal })
 - `criarRegistro(leiaute, tipo, campos?)` monta um registro com identificador preenchido,
   textos vazios, números zerados e datas em branco.
 - `decodificarRegistro` e `codificarRegistro` trabalham com uma linha isolada.
-- `recalcularControles(registros, { controleHeader? })` e `verificarControles(registros)`.
+- `recalcularControles(registros, { tipoArquivo?, controleHeader? })` e
+  `verificarControles(registros, { tipoArquivo? })`, com `TipoArquivo = "DBK" | "DEC"`.
+- `calcularControleHeader(linhaSemControle, cpf, tipoArquivo)`, `calcularHashRecibo`,
+  `inferirTipoArquivo`, `tipoArquivoPorNome` e `converterTipoArquivo(registros, destino)`.
 - Erros: `ArquivoDeclaracaoError` e subclasses (`TipoRegistroDesconhecidoError`,
   `TamanhoLinhaInvalidoError`, `TerminadorLinhaInvalidoError`, `CampoInvalidoError`,
   `CaractereInvalidoError`, `ValorNegativoError`, `ValorExcedeTamanhoError`,

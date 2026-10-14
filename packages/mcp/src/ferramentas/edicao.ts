@@ -29,7 +29,7 @@ import {
 import { z } from "zod";
 import { EntradaInvalidaError } from "../erros.js";
 import { objetoJson, type paraJson } from "../serializacao.js";
-import { EXT_DECLARACAO, exigirPasta, zNomeArquivo } from "./comum.js";
+import { blocoDeDados, EXT_DECLARACAO, exigirPasta, zNomeArquivo } from "./comum.js";
 import {
   mesclar,
   validarLancamento,
@@ -95,6 +95,15 @@ function obterItem(f: FichaLista, dec: Declaracao, indice: number): Item {
   return item;
 }
 
+/** Texto do item com as chaves em ordem, para comparar itens iguais vindos de caminhos diferentes. */
+function canonico(item: Item): string {
+  return JSON.stringify(itemJson(item), (_, v) =>
+    v && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
+      : v,
+  );
+}
+
 async function adicionar(
   r: RegistroFerramentas,
   f: FichaLista,
@@ -106,7 +115,11 @@ async function adicionar(
     novo = validarLancamento(f.item, args.item, f.nome) as Item;
     const itens = [...f.ler(dec), novo];
     f.gravar(dec, itens);
-    indice = itens.length;
+    // Em listas compostas (por exemplo, doações ECA e pessoa idosa) o item fica no fim do seu
+    // grupo, não no fim da lista: a posição é a da última ocorrência igual depois de gravar.
+    const chave = canonico(novo);
+    const relidos = f.ler(dec).map(canonico);
+    indice = relidos.lastIndexOf(chave) + 1 || itens.length;
     return dec;
   });
   return {
@@ -199,7 +212,7 @@ async function listar(r: RegistroFerramentas, f: FichaLista, arquivo: string) {
   const { declaracao } = await abrirDeclaracao(r.ctx, arquivo);
   const itens = f.ler(declaracao).map((item, i) => ({ indice: i + 1, item: itemJson(item) }));
   return {
-    texto: `${f.nome}: ${itens.length} item(ns).\n${JSON.stringify(itens, null, 2)}`,
+    texto: `${f.nome}: ${itens.length} item(ns).\n${blocoDeDados(arquivo, JSON.stringify(itens, null, 2))}`,
     dados: { arquivo, ficha: f.id, nome: f.nome, total: itens.length, itens },
   };
 }
@@ -928,7 +941,10 @@ export const grupoEdicao: GrupoFerramentas = {
         }
         return {
           texto: encontrados.length
-            ? encontrados.map((e) => `- ${e.nome} (${e.ficha}, ${e.arquivo})`).join("\n")
+            ? blocoDeDados(
+                "pasta autorizada",
+                encontrados.map((e) => `- ${e.nome} (${e.ficha}, ${e.arquivo})`).join("\n"),
+              )
             : `Nenhum nome encontrado para o documento em ${lidos} arquivo(s).`,
           dados: { documento: ni, encontrados, arquivosLidos: lidos },
         };

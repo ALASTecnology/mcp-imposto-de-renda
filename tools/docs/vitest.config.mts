@@ -25,7 +25,7 @@ export default defineConfig({
   },
   test: {
     root: fileURLToPath(new URL(".", import.meta.url)),
-    include: ["listar.test.ts", "exemplos.test.ts", "markdown.test.ts"],
+    include: ["listar.test.ts", "exemplos.test.ts", "markdown.test.ts", "readme.test.ts"],
     environment: "node",
   },
 });

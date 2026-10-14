@@ -14,7 +14,7 @@
   <img alt="Node.js 22 ou superior" src="https://img.shields.io/badge/node-%3E%3D22-339933">
   <img alt="Transporte MCP stdio" src="https://img.shields.io/badge/MCP-stdio-5a4fcf">
   <img alt="Exercício 2026" src="https://img.shields.io/badge/exerc%C3%ADcio-2026-informational">
-  <a href="docs/testes.md"><img alt="1.147 testes" src="https://img.shields.io/badge/testes-1.147-brightgreen"></a>
+  <a href="docs/testes.md"><img alt="mais de 1.100 testes" src="https://img.shields.io/badge/testes-mais_de_1.100-brightgreen"></a>
 </p>
 
 <p align="center">
@@ -206,7 +206,7 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 | Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
 | Tabelas de códigos do exercício | **31** | [tabelas](docs/mapeamento/tabelas/README.md) |
 | Funções do programa oficial mapeadas | **416**: 328 atendidas, 76 parciais, 12 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
-| Testes automatizados | **1.147**, em Vitest | [estratégia de testes](docs/testes.md) |
+| Testes automatizados | **mais de 1.100 testes**, em Vitest (o total exato sai de `pnpm test`) | [estratégia de testes](docs/testes.md) |
 | Declarações de exemplo regeneradas a cada teste | **4** | [exemplos](exemplos/README.md) |
 | Chamadas de rede | **nenhuma** (verificado por teste) | [segurança](docs/seguranca.md) |
 

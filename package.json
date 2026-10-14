@@ -22,6 +22,7 @@
     "format": "biome format --write .",
     "typecheck": "pnpm -r --parallel run typecheck",
     "test": "vitest run",
+    "test:docs": "vitest run --config tools/docs/vitest.config.mts",
     "build": "pnpm -r run build",
     "docs:catalogo": "vitest run --config tools/docs/vitest.config.mts listar exemplos && node tools/docs/catalogo.mjs && node tools/docs/inserir.mjs && node tools/docs/referencia.mjs && vitest run --config tools/docs/vitest.config.mts markdown",
     "exemplos": "vitest run exemplos --mode gravar",

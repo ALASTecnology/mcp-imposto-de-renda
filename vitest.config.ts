@@ -22,7 +22,15 @@ export default defineConfig({
     ],
   },
   test: {
-    include: ["packages/*/test/**/*.test.ts", "apps/*/test/**/*.test.ts", "exemplos/**/*.test.ts"],
+    include: [
+      "packages/*/test/**/*.test.ts",
+      "apps/*/test/**/*.test.ts",
+      "exemplos/**/*.test.ts",
+      // Conferências de documentação que só leem arquivos. As que geram o catálogo (listar e
+      // exemplos) rodam com tools/docs/vitest.config.mts, no job de documentação do CI.
+      "tools/docs/markdown.test.ts",
+      "tools/docs/readme.test.ts",
+    ],
     environment: "node",
   },
 });

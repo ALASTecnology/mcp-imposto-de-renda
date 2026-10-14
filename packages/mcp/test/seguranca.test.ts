@@ -1,7 +1,9 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ArquivoGrandeDemaisError } from "@autoir/core";
 import { describe, expect, it } from "vitest";
+import { mensagemDeErro } from "../src/erros.js";
 
 const PASTAS = [
   fileURLToPath(new URL("../src", import.meta.url)),
@@ -34,5 +36,14 @@ describe("nenhuma chamada de rede", () => {
       }
     }
     expect(achados).toEqual([]);
+  });
+});
+
+describe("mensagens de erro do codec", () => {
+  it("arquivo grande demais tem mensagem própria, sem detalhes internos", () => {
+    const m = mensagemDeErro(new ArquivoGrandeDemaisError("arquivo com 99 bytes"), "abrir");
+    expect(m).toContain("Arquivo grande demais");
+    expect(m).toContain("20 MB");
+    expect(m).not.toContain("99 bytes");
   });
 });

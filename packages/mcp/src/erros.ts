@@ -7,11 +7,13 @@
  */
 import {
   ArquivoDeclaracaoError,
+  ArquivoGrandeDemaisError,
   CalculoInvalidoError,
   CampoDesconhecidoError,
   CampoInvalidoError,
   CaractereInvalidoError,
   ExercicioNaoSuportadoError,
+  TAMANHO_MAXIMO_ARQUIVO,
   TamanhoLinhaInvalidoError,
   TerminadorLinhaInvalidoError,
   TipoRegistroDesconhecidoError,
@@ -35,6 +37,13 @@ export class EntradaInvalidaError extends ErroFerramenta {
 
 /** Descrição em pt-BR de cada erro do codec do arquivo, sem repetir o conteúdo do arquivo. */
 function descreverErroArquivo(e: ArquivoDeclaracaoError): string {
+  if (e instanceof ArquivoGrandeDemaisError) {
+    const mb = Math.floor(TAMANHO_MAXIMO_ARQUIVO / (1024 * 1024));
+    return (
+      `Arquivo grande demais: o limite de leitura é ${mb} MB e uma declaração real fica bem abaixo disso. ` +
+      "Confira se escolheu o DBK ou DEC certo, gravado pelo programa oficial."
+    );
+  }
   let causa = "o arquivo não segue o leiaute da declaração";
   if (e instanceof ExercicioNaoSuportadoError) {
     causa = "o exercício do arquivo não é suportado (apenas 2026)";

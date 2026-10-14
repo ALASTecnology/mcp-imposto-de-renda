@@ -16,6 +16,7 @@ export {
   LIMITE_PADRAO_BYTES,
   MAX_BACKUPS_PADRAO,
   type OpcoesPasta,
+  type OpcoesTransacao,
   PASTA_BACKUPS,
   type PastaAutorizada,
   type ResultadoEscrita,

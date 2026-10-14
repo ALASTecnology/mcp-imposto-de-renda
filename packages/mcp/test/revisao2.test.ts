@@ -5,6 +5,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readdirSync,
+  readFileSync,
   realpathSync,
   rmSync,
   symlinkSync,
@@ -121,5 +122,68 @@ describe("temporários interrompidos (achado 8)", () => {
     await abrirPastaAutorizada(pasta);
     expect(readdirSync(fora)).toContain(tmp);
     expect(readdirSync(fundo)).toContain(tmp);
+  });
+});
+
+describe("cancelamento (achado 6)", () => {
+  it("a gravação cancelada antes do rename desiste sem gravar", async () => {
+    const p = await abrirPastaAutorizada(pasta);
+    const original = readFileSync(join(pasta, "pj.DBK"));
+    const controle = new AbortController();
+    const tentativa = p.transacao(
+      ["pj.DBK"],
+      async () => {
+        const lido = await p.ler("pj.DBK", [".DBK"]);
+        return p.escrever("pj.DBK", lido.slice(0, 10), [".DBK"], {
+          antesDeRenomear: () => controle.abort(),
+        });
+      },
+      { signal: controle.signal },
+    );
+    await expect(tentativa).rejects.toMatchObject({ codigo: "CANCELADO" });
+    expect(readFileSync(join(pasta, "pj.DBK"))).toEqual(original);
+    expect(readdirSync(pasta).filter((n) => n.endsWith(".tmp"))).toEqual([]);
+  });
+
+  it("ferramenta cancelada pelo cliente enquanto esperava a vez não grava", async () => {
+    const original = readFileSync(join(pasta, "pj.DBK"));
+    const p = await abrirPastaAutorizada(pasta);
+    let liberar = () => {};
+    const segurando = new Promise<void>((ok) => {
+      liberar = ok;
+    });
+    // Ocupa a fila de pj.DBK (as filas valem para o processo inteiro).
+    const ocupada = p.transacao(["pj.DBK"], () => segurando);
+    const erros: string[] = [];
+    const c2 = await conectar({
+      diretorioAutorizado: pasta,
+      registrarErro: (f, e) => erros.push(`${f}:${(e as { codigo?: string }).codigo}`),
+    });
+    try {
+      const modelo = (
+        (await c2.chamar("listar_rendimentos_pj", { arquivo: "pj.DBK" })).structuredContent as {
+          itens: { item: object }[];
+        }
+      ).itens[0]?.item;
+      const controle = new AbortController();
+      const chamada = c2.client.callTool(
+        { name: "adicionar_rendimento_pj", arguments: { arquivo: "pj.DBK", item: modelo } },
+        undefined,
+        { signal: controle.signal },
+      );
+      await new Promise((ok) => setTimeout(ok, 50));
+      controle.abort("teste");
+      await expect(chamada).rejects.toThrow();
+      liberar();
+      await ocupada;
+      for (let i = 0; i < 50 && erros.length === 0; i++) {
+        await new Promise((ok) => setTimeout(ok, 20));
+      }
+      expect(erros).toEqual(["adicionar_rendimento_pj:CANCELADO"]);
+      expect(readFileSync(join(pasta, "pj.DBK"))).toEqual(original);
+    } finally {
+      liberar();
+      await c2.fechar();
+    }
   });
 });

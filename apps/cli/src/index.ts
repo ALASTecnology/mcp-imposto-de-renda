@@ -85,15 +85,25 @@ async function main(): Promise<void> {
   await server.connect(transport);
   // Instrumenta o transporte depois de conectado (o servidor já instalou o seu onmessage).
   const receber = transport.onmessage;
+  const concluir = (id: string | number) => {
+    if (pendentes.delete(id) && pendentes.size === 0) aoEsvaziar?.();
+  };
   transport.onmessage = (msg: JSONRPCMessage) => {
     if ("method" in msg && "id" in msg) pendentes.add(msg.id);
     receber?.(msg);
+    // Requisição cancelada pelo cliente não recebe resposta (o SDK só aborta o sinal): sem isto,
+    // o id ficava em `pendentes` e o encerramento esperava o prazo inteiro. As ferramentas que
+    // gravam conferem o sinal antes do rename e desistem sem gravar (revisão 2, achado 6).
+    if ("method" in msg && msg.method === "notifications/cancelled" && !("id" in msg)) {
+      const id = (msg.params as { requestId?: unknown } | undefined)?.requestId;
+      if (typeof id === "string" || typeof id === "number") concluir(id);
+    }
   };
   const enviar = transport.send.bind(transport);
   transport.send = async (msg: JSONRPCMessage) => {
     await enviar(msg);
     const id = !("method" in msg) && "id" in msg ? msg.id : undefined;
-    if (id !== undefined && pendentes.delete(id) && pendentes.size === 0) aoEsvaziar?.();
+    if (id !== undefined) concluir(id);
   };
   transport.onclose = () => void encerrar("transporte fechado");
   const total = ferramentasRegistradas(server).length;

@@ -71,14 +71,22 @@ export function criarRegistroFerramentas(
         title: def.titulo,
       };
       const rodar = async (args: unknown) => executar(args as z.output<z.ZodObject<I>>);
-      const executarSeguro = async (args: unknown): Promise<CallToolResult> => {
+      const executarSeguro = async (
+        args: unknown,
+        extra?: { signal?: AbortSignal },
+      ): Promise<CallToolResult> => {
         try {
           // Ferramenta que grava roda inteira (ler, alterar e gravar) na fila dos arquivos que
           // cita: duas chamadas simultâneas no mesmo DBK não perdem alteração (revisão 2, achado 1).
           const pasta = ctx.pasta;
           const r =
             def.escreve && pasta
-              ? await pasta.transacao(nomesCitados(args), () => rodar(args))
+              ? await pasta.transacao(
+                  nomesCitados(args),
+                  () => rodar(args),
+                  // Cancelada pelo cliente, a gravação desiste antes do rename (achado 6).
+                  extra?.signal ? { signal: extra.signal } : {},
+                )
               : await rodar(args);
           return { content: [{ type: "text", text: r.texto }], structuredContent: r.dados };
         } catch (e) {

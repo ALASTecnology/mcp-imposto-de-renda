@@ -58,7 +58,8 @@ export type CodigoErroArquivo =
   | "MUITO_GRANDE"
   | "PASTA_INVALIDA"
   | "FALHA_ESCRITA"
-  | "ARQUIVO_ALTERADO";
+  | "ARQUIVO_ALTERADO"
+  | "CANCELADO";
 
 /** Erro de acesso a arquivo, com código estável e mensagem segura para o LLM. */
 export class ErroArquivo extends ErroFerramenta {
@@ -143,8 +144,19 @@ export interface PastaAutorizada {
    * operação os recusa). Arquivos tocados pela operação e não listados em `nomes` entram na fila
    * quando usados, se isso não puder causar espera circular; em qualquer caso, a gravação confere
    * antes do `rename` se o arquivo mudou desde que a operação o leu e, se mudou, recusa.
+   * Com `signal`, a gravação e a remoção conferem o cancelamento logo antes do `rename` (ou do
+   * `unlink`) e, se a operação foi cancelada, desistem sem gravar, com erro `CANCELADO`.
    */
-  transacao<T>(nomes: readonly string[], operacao: () => Promise<T>): Promise<T>;
+  transacao<T>(
+    nomes: readonly string[],
+    operacao: () => Promise<T>,
+    opcoes?: OpcoesTransacao,
+  ): Promise<T>;
+}
+
+export interface OpcoesTransacao {
+  /** Sinal de cancelamento da requisição (`extra.signal` do SDK). */
+  readonly signal?: AbortSignal;
 }
 
 export interface CopiaSeguranca {
@@ -309,6 +321,7 @@ interface Transacao {
   readonly liberar: (() => void)[];
   /** Assinatura de cada arquivo na primeira vez em que a transação o viu. */
   readonly vistos: Map<string, Assinatura>;
+  readonly signal: AbortSignal | undefined;
 }
 
 const transacaoAtual = new AsyncLocalStorage<Transacao>();
@@ -366,14 +379,27 @@ function alterado(nome: string): ErroArquivo {
   );
 }
 
-/** Confere, antes de gravar ou remover, se o arquivo continua como a transação o viu. */
-async function conferirAssinatura(
+function cancelado(nome?: string): ErroArquivo {
+  return new ErroArquivo(
+    "CANCELADO",
+    nome === undefined
+      ? "A operação foi cancelada pelo cliente; nada foi gravado."
+      : `A operação foi cancelada pelo cliente antes de gravar "${nome}"; o arquivo ficou como estava.`,
+  );
+}
+
+/**
+ * Última conferência antes de gravar ou remover: a requisição não foi cancelada e o arquivo
+ * continua como a transação o viu.
+ */
+async function conferirAntesDeGravar(
   tx: Transacao | undefined,
   chave: string,
   caminho: string,
   nome: string,
 ): Promise<void> {
   if (!tx) return;
+  if (tx.signal?.aborted) throw cancelado(nome);
   const visto = tx.vistos.get(chave);
   if (visto === undefined) return;
   if (!mesmaAssinatura(visto, assinatura(await lstatOuNada(caminho)))) throw alterado(nome);
@@ -445,17 +471,28 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     return join(pai, basename(alvo));
   }
 
-  async transacao<T>(nomes: readonly string[], operacao: () => Promise<T>): Promise<T> {
+  async transacao<T>(
+    nomes: readonly string[],
+    operacao: () => Promise<T>,
+    opcoes: OpcoesTransacao = {},
+  ): Promise<T> {
     const atual = transacaoAtual.getStore();
     const chaves = await this.chavesDe(nomes);
     if (atual) {
       for (const k of chaves) await garantirTrava(atual, k);
       return operacao();
     }
-    const tx: Transacao = { chaves: new Set(), maior: "", liberar: [], vistos: new Map() };
+    const tx: Transacao = {
+      chaves: new Set(),
+      maior: "",
+      liberar: [],
+      vistos: new Map(),
+      signal: opcoes.signal,
+    };
     try {
       // Em ordem crescente: duas transações nunca esperam uma pela outra em ciclo.
       for (const k of chaves) await garantirTrava(tx, k);
+      if (tx.signal?.aborted) throw cancelado();
       return await transacaoAtual.run(tx, operacao);
     } finally {
       for (const liberar of tx.liberar.reverse()) liberar();
@@ -542,7 +579,7 @@ class PastaAutorizadaImpl implements PastaAutorizada {
       }
       await ganchos.antesDeRenomear?.();
       // Defesa além da fila: se outro processo mudou o arquivo desde a leitura, não sobrescreve.
-      await conferirAssinatura(tx, chave, destino, nome);
+      await conferirAntesDeGravar(tx, chave, destino, nome);
       await rename(temporario, destino);
     } catch (e) {
       await unlink(temporario).catch(() => undefined);
@@ -569,7 +606,7 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     if (!atual.isFile())
       throw new ErroArquivo("NAO_E_ARQUIVO", `"${nome}" não é um arquivo comum.`);
     const backup = await this.fazerBackup(nome);
-    await conferirAssinatura(tx, chave, caminho, nome);
+    await conferirAntesDeGravar(tx, chave, caminho, nome);
     try {
       await unlink(caminho);
     } catch {

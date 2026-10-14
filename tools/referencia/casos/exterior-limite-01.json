@@ -1,0 +1,52 @@
+{
+  "id": "exterior-limite-01",
+  "descricao": "Imposto pago no exterior maior que a diferença de imposto atribuível aos rendimentos do exterior: isola o limite de compensação em cada modelo.",
+  "entrada": {
+    "titular": {
+      "cpf": "10399415670",
+      "nome": "ELISA FICTICIA EXTERIOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "48674097000144",
+        "nome": "EMPRESA FICTICIA 306 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "600000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": 1,
+          "pessoaFisica": "0",
+          "exterior": "600000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 2,
+          "pessoaFisica": "0",
+          "exterior": "600000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        }
+      ]
+    },
+    "impostoPago": {
+      "complementar": "0",
+      "exterior": "1000000",
+      "irrfLei11033": "0"
+    }
+  }
+}

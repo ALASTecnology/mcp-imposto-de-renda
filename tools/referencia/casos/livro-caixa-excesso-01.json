@@ -1,0 +1,47 @@
+{
+  "id": "livro-caixa-excesso-01",
+  "descricao": "Livro-caixa maior que a receita do trabalho não assalariado (no mês e no ano): isola se o programa limita a dedução no Resumo.",
+  "entrada": {
+    "titular": {
+      "cpf": "10388150882",
+      "nome": "DANIEL FICTICIO AUTONOMO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "33188234000163",
+        "nome": "EMPRESA FICTICIA 305 LTDA",
+        "rendimento": "4000000",
+        "previdenciaOficial": "0",
+        "irrf": "200000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": 1,
+          "pessoaFisica": "200000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "500000",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 2,
+          "pessoaFisica": "100000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        }
+      ]
+    }
+  }
+}

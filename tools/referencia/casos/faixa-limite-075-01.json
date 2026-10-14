@@ -1,0 +1,23 @@
+{
+  "id": "faixa-limite-075-01",
+  "descricao": "Base do completo exatamente no teto da faixa de 7,5% (R$ 33.919,80), em que a multiplicação dá meio centavo: confirma o truncamento do imposto da tabela.",
+  "entrada": {
+    "titular": {
+      "cpf": "10410680427",
+      "nome": "FABIO FICTICIO LIMITE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "64159960000181",
+        "nome": "EMPRESA FICTICIA 307 LTDA",
+        "rendimento": "3591980",
+        "previdenciaOficial": "200000",
+        "irrf": "100000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

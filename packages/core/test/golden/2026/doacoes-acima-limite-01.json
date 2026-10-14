@@ -1,0 +1,43 @@
+{
+  "id": "doacoes-acima-limite-01",
+  "descricao": "Doações diretas ao ECA e à pessoa idosa acima de 3% do imposto devido, com 3% gerando fração de centavo: isola o limite aplicado pelo programa e o arredondamento.",
+  "entrada": {
+    "titular": {
+      "cpf": "10365621234",
+      "nome": "BRUNO FICTICIO DOADOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "02216508000157",
+        "nome": "EMPRESA FICTICIA 303 LTDA",
+        "rendimento": "10000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "1500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "doacoesDiretas": {
+      "eca": "100000",
+      "idoso": "100000"
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "10000000",
+    "deducoesCompleto": "1000000",
+    "baseCalculoCompleto": "9000000",
+    "impostoDevidoCompleto": "1306246",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "8324566",
+    "impostoDevidoSimplificado": "1203877",
+    "impostoRetidoTotal": "1500000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "193754",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "296123",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "1203"
+  }
+}

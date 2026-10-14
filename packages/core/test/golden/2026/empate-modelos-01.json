@@ -1,0 +1,39 @@
+{
+  "id": "empate-modelos-01",
+  "descricao": "Deduções do completo exatamente iguais ao desconto simplificado: isola qual modelo o programa indica em empate.",
+  "entrada": {
+    "titular": {
+      "cpf": "10376886005",
+      "nome": "CARLA FICTICIA EMPATE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "17702371000118",
+        "nome": "EMPRESA FICTICIA 304 LTDA",
+        "rendimento": "5000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "300000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "5000000",
+    "deducoesCompleto": "1000000",
+    "baseCalculoCompleto": "4000000",
+    "impostoDevidoCompleto": "132097",
+    "descontoSimplificado": "1000000",
+    "baseCalculoSimplificado": "4000000",
+    "impostoDevidoSimplificado": "132097",
+    "impostoRetidoTotal": "300000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "167903",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "167903",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "264"
+  }
+}

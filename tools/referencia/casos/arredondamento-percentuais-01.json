@@ -1,0 +1,32 @@
+{
+  "id": "arredondamento-percentuais-01",
+  "descricao": "Rendimento com centavos para que 20% (desconto simplificado) e 12% (limite do PGBL) gerem fração de centavo acima de meio: isola arredondamento ou truncamento desses percentuais.",
+  "entrada": {
+    "titular": {
+      "cpf": "10331826801",
+      "nome": "ANA FICTICIA ARREDONDA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "55758919000130",
+        "nome": "EMPRESA FICTICIA 300 LTDA",
+        "rendimento": "5000008",
+        "previdenciaOficial": "0",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "36",
+        "cpfCnpj": "86730645000103",
+        "valor": "700000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

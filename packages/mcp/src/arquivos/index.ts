@@ -101,6 +101,18 @@ export interface PastaAutorizada {
     ganchos?: GanchosEscrita,
   ): Promise<ResultadoEscrita>;
   listar(extensoes: readonly string[]): Promise<ItemArquivo[]>;
+  /**
+   * Remove um arquivo da pasta autorizada, guardando antes uma cópia em `.autoir-backups`.
+   * Recusa links simbólicos e o que não for arquivo comum.
+   */
+  remover(nome: string, extensoes: readonly string[]): Promise<ResultadoRemocao>;
+}
+
+export interface ResultadoRemocao {
+  /** Nome relativo do arquivo removido. */
+  readonly arquivo: string;
+  /** Caminho relativo da cópia de segurança do conteúdo removido. */
+  readonly backup: string;
 }
 
 const DISPOSITIVO = /^(con|prn|aux|nul|clock\$|conin\$|conout\$|com[0-9¹²³]|lpt[0-9¹²³])(\..*)?$/i;
@@ -314,6 +326,26 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     }
     await this.sincronizarPasta(dirname(destino));
     return { arquivo: nome, bytes: dados.length, ...(backup ? { backup } : {}) };
+  }
+
+  async remover(nome: string, extensoes: readonly string[]): Promise<ResultadoRemocao> {
+    const caminho = await this.resolver(nome, extensoes);
+    const atual = await lstatOuNada(caminho);
+    if (!atual) throw naoEncontrado(nome);
+    if (atual.isSymbolicLink()) throw link(nome);
+    if (!atual.isFile())
+      throw new ErroArquivo("NAO_E_ARQUIVO", `"${nome}" não é um arquivo comum.`);
+    const backup = await this.fazerBackup(nome);
+    try {
+      await unlink(caminho);
+    } catch {
+      throw new ErroArquivo(
+        "FALHA_ESCRITA",
+        `Não foi possível remover "${nome}". A cópia de segurança ficou em ${backup}.`,
+      );
+    }
+    await this.sincronizarPasta(dirname(caminho));
+    return { arquivo: nome, backup };
   }
 
   async listar(extensoes: readonly string[]): Promise<ItemArquivo[]> {

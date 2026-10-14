@@ -57,6 +57,7 @@ function pastaSobDemanda(diretorio: string, opcoes: OpcoesPasta): PastaAutorizad
     escrever: async (nome, dados, ext, ganchos) =>
       (await obter()).escrever(nome, dados, ext, ganchos),
     listar: async (ext) => (await obter()).listar(ext),
+    remover: async (nome, ext) => (await obter()).remover(nome, ext),
   };
 }
 

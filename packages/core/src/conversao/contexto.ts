@@ -73,16 +73,15 @@ function agrupar(registros: readonly Registro[]): Map<string, Registro[]> {
 
 export class LeituraRegistros implements ContextoLeitura {
   readonly avisos: string[] = [];
+  readonly leiaute: Leiaute;
   readonly cpfTitular: string;
   private readonly porTipo: Map<string, Registro[]>;
   private readonly dependentes: Map<bigint, string>;
   private readonly alimentandos: Map<bigint, string>;
   private readonly herdeiros: Map<bigint, string>;
 
-  constructor(
-    readonly leiaute: Leiaute,
-    registros: readonly Registro[],
-  ) {
+  constructor(leiaute: Leiaute, registros: readonly Registro[]) {
+    this.leiaute = leiaute;
     this.porTipo = agrupar(registros);
     const r16 = this.doTipo("16")[0];
     const ir = this.doTipo("IR")[0];
@@ -122,6 +121,8 @@ export class GravacaoRegistros implements ContextoGravacao {
   readonly avisos: string[] = [];
   readonly produzidos: Registro[] = [];
   saldoAPagar = 0n;
+  readonly leiaute: Leiaute;
+  readonly cpfTitular: string;
   private readonly base: Map<string, Registro[]>;
   private readonly usados = new Set<Registro>();
   private readonly dependentes: Map<string, bigint>;
@@ -129,11 +130,13 @@ export class GravacaoRegistros implements ContextoGravacao {
   private readonly herdeiros: Map<string, bigint>;
 
   constructor(
-    readonly leiaute: Leiaute,
-    readonly cpfTitular: string,
+    leiaute: Leiaute,
+    cpfTitular: string,
     dec: Declaracao,
     base: readonly Registro[] | undefined,
   ) {
+    this.leiaute = leiaute;
+    this.cpfTitular = cpfTitular;
     this.base = agrupar(base ?? []);
     const seq = (itens: readonly string[]) =>
       new Map(itens.map((ni, i) => [ni, BigInt(i + 1)] as const));

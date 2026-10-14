@@ -12,7 +12,18 @@ import type { z } from "zod";
 import type { PastaAutorizada } from "../arquivos/index.js";
 import type { Json } from "../serializacao.js";
 
-export type NomeGrupo = "calculo" | "declaracao" | "fichas" | "validacao" | "tabelas" | "arquivos";
+export type NomeGrupo =
+  | "calculo"
+  | "declaracao"
+  | "fichas"
+  | "edicao"
+  | "ciclo"
+  | "validacao"
+  | "tabelas"
+  | "arquivos"
+  | "saidas"
+  | "calculadoras"
+  | "orientacao";
 
 /** O que as ferramentas recebem do servidor. */
 export interface ContextoFerramentas {

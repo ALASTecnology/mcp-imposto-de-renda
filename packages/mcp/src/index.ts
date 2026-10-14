@@ -18,6 +18,7 @@ export {
   PASTA_BACKUPS,
   type PastaAutorizada,
   type ResultadoEscrita,
+  type ResultadoRemocao,
 } from "./arquivos/index.js";
 export {
   FICHAS_CONVERTIDAS,

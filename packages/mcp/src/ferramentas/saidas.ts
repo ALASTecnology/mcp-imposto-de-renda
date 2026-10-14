@@ -29,6 +29,12 @@ import { DESCRICAO_VALOR, zValorMonetario } from "../esquemas.js";
 import { objetoJson } from "../serializacao.js";
 import { blocoDeDados, carregarDeclaracao, zDeclaracaoJson, zNomeArquivo } from "./comum.js";
 import { pendenciasDe } from "./fluxo.js";
+import {
+  documentoParaHtml,
+  PARTES_RELATORIO,
+  relatorioDetalhado,
+  textoParaDocumento,
+} from "./relatorio.js";
 import type { GrupoFerramentas, RegistroFerramentas } from "./tipos.js";
 
 const brl = (v: bigint) => `R$ ${formatCentavos(v as Centavos)}`;
@@ -155,7 +161,8 @@ async function declaracaoComOrigem(
   return { declaracao: c.declaracao, origem: c.origem };
 }
 
-function relatorio(dec: Declaracao): string {
+/** Relatório resumido (identificação, fichas preenchidas, totais e resultado simulado). */
+export function relatorioResumo(dec: Declaracao): string {
   const id = dec.identificacao;
   const s = saldoDaDeclaracao(dec);
   const linhas = [
@@ -499,21 +506,32 @@ export const grupoSaidas: GrupoFerramentas = {
       {
         titulo: "Relatório da declaração",
         descricao:
-          "Monta um relatório em Markdown da declaração (identificação, fichas preenchidas, totais e resultado simulado) para conferência. Só devolve o texto; nada é gravado.",
+          "Monta o relatório da declaração para conferência ou impressão, com layout próprio. Sem `partes`, devolve o resumo (identificação, fichas preenchidas, totais e resultado simulado). Com `partes`, detalha cada lançamento das fichas pedidas: 'todas' (declaração inteira), 'rendimentos_pf' (Rendimentos Recebidos de PF e do Exterior) ou o nome de qualquer ficha (por exemplo 'bens', 'rendimentosPJ', 'ganhosCapital'). `formato` 'markdown' (padrão) ou 'html'. Só devolve o conteúdo; para gravar em PDF ou HTML na pasta use gravar_relatorio.",
         entrada: {
           arquivo: zNomeArquivo("DBK/DEC/JSON da pasta.").optional(),
           declaracao: zDeclaracaoJson.optional(),
+          partes: z
+            .array(z.enum(PARTES_RELATORIO))
+            .min(1)
+            .max(40)
+            .optional()
+            .describe("Partes da declaração a detalhar; omita para o resumo."),
+          formato: z.enum(["markdown", "html"]).default("markdown"),
         },
-        saida: { relatorio: z.string() },
+        saida: { relatorio: z.string(), formato: z.enum(["markdown", "html"]) },
       },
       async (a) => {
         const carregada = await declaracaoComOrigem(r, a);
         if (!carregada) throw new EntradaInvalidaError("Informe 'arquivo' ou 'declaracao'.");
-        const conteudo = relatorio(carregada.declaracao);
+        const markdown = a.partes
+          ? relatorioDetalhado(carregada.declaracao, a.partes)
+          : relatorioResumo(carregada.declaracao);
+        const conteudo =
+          a.formato === "html" ? documentoParaHtml(textoParaDocumento(markdown)) : markdown;
         // Nome do contribuinte e demais dados vêm do arquivo: vão delimitados (achado 2).
         return {
           texto: blocoDeDados(carregada.origem, conteudo),
-          dados: { relatorio: conteudo },
+          dados: { relatorio: conteudo, formato: a.formato },
         };
       },
     );

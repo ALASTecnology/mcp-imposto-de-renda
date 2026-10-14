@@ -4,15 +4,26 @@
 import { lerArquivo, verificarControles } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { interpretarDeclaracao, registrosParaModelo } from "../conversao/dbk-modelo.js";
+import { EntradaInvalidaError } from "../erros.js";
 import { lerReciboRegistrado } from "./ciclo-recibo.js";
 import {
   blocoDeDados,
+  carregarDeclaracao,
   EXT_DECLARACAO,
   EXT_LISTAGEM,
   exigirPasta,
   lerDeclaracaoArquivo,
+  zDeclaracaoJson,
   zNomeArquivo,
 } from "./comum.js";
+import {
+  documentoParaHtml,
+  documentoParaPdf,
+  PARTES_RELATORIO,
+  relatorioDetalhado,
+  textoParaDocumento,
+} from "./relatorio.js";
+import { relatorioResumo } from "./saidas.js";
 import type { GrupoFerramentas } from "./tipos.js";
 
 const MAX_DIVERGENCIAS = 50;
@@ -205,6 +216,67 @@ export const grupoArquivos: GrupoFerramentas = {
             : []),
         ].join("\n");
         return { texto, dados: { declaracoes: filtrados, total: filtrados.length } };
+      },
+    );
+
+    r.ferramenta(
+      "gravar_relatorio",
+      {
+        titulo: "Gravar relatório em PDF ou HTML",
+        descricao:
+          "Grava na pasta autorizada, em PDF (A4) ou HTML, com layout próprio: o relatório da declaração (`arquivo` ou `declaracao`, resumo ou `partes` como em gerar_relatorio_declaracao, inclusive 'todas' e 'rendimentos_pf') ou um `texto` em Markdown simples devolvido por outra ferramenta (Darf, comunicação de saída, relação de declarações). Equivale a Visualizar e salvar em PDF do programa oficial. O arquivo não leva metadados de autor nem de ferramenta.",
+        entrada: {
+          arquivo: zNomeArquivo("DBK/DEC/JSON da pasta.").optional(),
+          declaracao: zDeclaracaoJson.optional(),
+          texto: z
+            .string()
+            .min(1)
+            .max(200_000)
+            .optional()
+            .describe("Markdown simples (#, ##, ###, itens com '- ' e parágrafos)."),
+          partes: z.array(z.enum(PARTES_RELATORIO)).min(1).max(40).optional(),
+          formato: z.enum(["pdf", "html"]),
+          arquivo_destino: z
+            .string()
+            .min(5)
+            .max(200)
+            .describe("Nome do arquivo a gravar na pasta, terminado em .pdf ou .html."),
+        },
+        saida: { arquivo: z.string(), formato: z.enum(["pdf", "html"]), bytes: z.number() },
+        escreve: true,
+      },
+      async (a) => {
+        const extensao = a.formato === "pdf" ? ".pdf" : ".html";
+        if (!a.arquivo_destino.toLowerCase().endsWith(extensao)) {
+          throw new EntradaInvalidaError(
+            `Para o formato ${a.formato}, o arquivo_destino deve terminar em ${extensao}.`,
+          );
+        }
+        const fontes = [a.arquivo, a.declaracao, a.texto].filter((x) => x !== undefined).length;
+        if (fontes !== 1) {
+          throw new EntradaInvalidaError(
+            "Informe exatamente um entre 'arquivo', 'declaracao' e 'texto'.",
+          );
+        }
+        let markdown: string;
+        if (a.texto !== undefined) {
+          markdown = a.texto;
+        } else {
+          const { declaracao } = await carregarDeclaracao(r.ctx, a);
+          markdown = a.partes
+            ? relatorioDetalhado(declaracao, a.partes)
+            : relatorioResumo(declaracao);
+        }
+        const doc = textoParaDocumento(markdown);
+        const bytes =
+          a.formato === "pdf"
+            ? documentoParaPdf(doc)
+            : new TextEncoder().encode(documentoParaHtml(doc));
+        await exigirPasta(r.ctx).escrever(a.arquivo_destino, bytes, [extensao]);
+        return {
+          texto: `Relatório gravado em ${a.arquivo_destino} (${a.formato.toUpperCase()}, ${bytes.length} bytes). Abra o arquivo para visualizar ou imprimir.`,
+          dados: { arquivo: a.arquivo_destino, formato: a.formato, bytes: bytes.length },
+        };
       },
     );
 

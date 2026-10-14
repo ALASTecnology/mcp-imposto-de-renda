@@ -35,7 +35,7 @@ export const ANOTACOES_ESCRITA: ToolAnnotations = {
 };
 
 /** Extensões dos arquivos que as ferramentas leem e gravam na pasta (ver `EXT_LISTAGEM`). */
-const ARQUIVO_DA_PASTA = /\.(?:dbk|dec|json|txt)$/i;
+const ARQUIVO_DA_PASTA = /\.(?:dbk|dec|json|txt|pdf|html)$/i;
 
 /**
  * Textos de primeiro nível dos argumentos com cara de arquivo da pasta (`arquivo`,

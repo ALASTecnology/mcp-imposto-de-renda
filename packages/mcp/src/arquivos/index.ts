@@ -114,8 +114,17 @@ export interface PastaAutorizada {
    * Recusa links simbólicos e o que não for arquivo comum.
    */
   remover(nome: string, extensoes: readonly string[]): Promise<ResultadoRemocao>;
-  /** Cópias de segurança em `.mcp-imposto-de-renda-backups`, da mais recente para a mais antiga. */
-  listarCopias(): Promise<CopiaSeguranca[]>;
+  /**
+   * Cópias de segurança em `.mcp-imposto-de-renda-backups`, da mais recente para a mais antiga
+   * (data do carimbo e, no mesmo segundo, a sequência), até `MAX_ITENS_LISTAGEM`. Com `arquivo`,
+   * só as cópias desse arquivo de origem (o filtro vem antes do corte).
+   */
+  listarCopias(arquivo?: string): Promise<CopiaSeguranca[]>;
+  /**
+   * Localiza uma cópia pelo nome direto no disco, sem depender do corte da listagem. Lança
+   * `NAO_ENCONTRADO` se ela não existir.
+   */
+  localizarCopia(copia: string): Promise<CopiaSeguranca>;
   /**
    * Restaura uma cópia (pelo nome devolvido em `listarCopias`) sobre `destino`, que também
    * ganha backup antes de ser sobrescrito. O nome da cópia é conferido contra o padrão.
@@ -238,6 +247,17 @@ function carimbo(d: Date): string {
 }
 
 const PADRAO_BACKUP = /^(.*)\.(\d{8}T\d{6}Z)(?:-(\d+))?\.bak$/;
+
+/** Descrição de uma cópia a partir do nome (já conferido com `PADRAO_BACKUP`). */
+function descreverCopia(copia: string, m: RegExpExecArray, tamanho: number): CopiaSeguranca {
+  const c = m[2] ?? "";
+  return {
+    copia,
+    arquivo: nomeDoPrefixo(m[1] ?? ""),
+    criadaEm: `${c.slice(0, 4)}-${c.slice(4, 6)}-${c.slice(6, 8)}T${c.slice(9, 11)}:${c.slice(11, 13)}:${c.slice(13, 15)}Z`,
+    tamanho,
+  };
+}
 
 /**
  * Prefixo da cópia de segurança a partir do nome relativo, reversível e sem colisão: `%` vira
@@ -404,8 +424,8 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     return { arquivo: nome, backup };
   }
 
-  async listarCopias(): Promise<CopiaSeguranca[]> {
-    const copias: CopiaSeguranca[] = [];
+  async listarCopias(arquivo?: string): Promise<CopiaSeguranca[]> {
+    const copias: (CopiaSeguranca & { seq: number })[] = [];
     const vistas = new Set<string>();
     for (const nomePasta of PASTAS_BACKUPS_LEITURA) {
       const pasta = join(this.raiz, nomePasta);
@@ -419,27 +439,41 @@ class PastaAutorizadaImpl implements PastaAutorizada {
       for (const nome of await readdir(pasta)) {
         const m = PADRAO_BACKUP.exec(nome);
         if (!m || CONTROLE.test(nome) || vistas.has(nome)) continue;
+        const origem = nomeDoPrefixo(m[1] ?? "");
+        if (arquivo !== undefined && origem !== arquivo) continue;
         const info = await lstatOuNada(join(pasta, nome));
         if (!info?.isFile()) continue;
         vistas.add(nome);
-        const c = m[2] ?? "";
-        copias.push({
-          copia: nome,
-          arquivo: nomeDoPrefixo(m[1] ?? ""),
-          criadaEm: `${c.slice(0, 4)}-${c.slice(4, 6)}-${c.slice(6, 8)}T${c.slice(9, 11)}:${c.slice(11, 13)}:${c.slice(13, 15)}Z`,
-          tamanho: info.size,
-        });
+        copias.push({ ...descreverCopia(nome, m, info.size), seq: Number(m[3] ?? 0) });
       }
     }
-    copias.sort((a, b) => (a.copia < b.copia ? 1 : a.copia > b.copia ? -1 : 0));
-    return copias.slice(0, MAX_ITENS_LISTAGEM);
+    // Da mais recente para a mais antiga: carimbo, depois sequência no mesmo segundo, depois nome
+    // (só para a ordem ser estável). Antes a ordem era pelo nome, que começa pelo arquivo de origem.
+    copias.sort((a, b) =>
+      a.criadaEm !== b.criadaEm
+        ? a.criadaEm < b.criadaEm
+          ? 1
+          : -1
+        : a.seq !== b.seq
+          ? b.seq - a.seq
+          : a.copia < b.copia
+            ? -1
+            : a.copia > b.copia
+              ? 1
+              : 0,
+    );
+    return copias.slice(0, MAX_ITENS_LISTAGEM).map(({ seq: _, ...c }) => c);
   }
 
-  async restaurarCopia(
-    copia: string,
-    destino: string,
-    extensoes: readonly string[],
-  ): Promise<ResultadoEscrita> {
+  async localizarCopia(copia: string): Promise<CopiaSeguranca> {
+    const { caminho, st } = await this.acharCopia(copia);
+    const m = PADRAO_BACKUP.exec(basename(caminho));
+    if (!m) throw naoEncontrado(copia);
+    return descreverCopia(copia, m, st.size);
+  }
+
+  /** Confere o nome da cópia e a procura nas pastas de cópias, da atual para a antiga. */
+  private async acharCopia(copia: string): Promise<{ caminho: string; st: Stats }> {
     if (
       typeof copia !== "string" ||
       !PADRAO_BACKUP.test(copia) ||
@@ -463,6 +497,15 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     if (!st) throw naoEncontrado(copia);
     if (st.isSymbolicLink()) throw link(copia);
     if (!st.isFile()) throw new ErroArquivo("NAO_E_ARQUIVO", `"${copia}" não é um arquivo comum.`);
+    return { caminho, st };
+  }
+
+  async restaurarCopia(
+    copia: string,
+    destino: string,
+    extensoes: readonly string[],
+  ): Promise<ResultadoEscrita> {
+    const { caminho, st } = await this.acharCopia(copia);
     if (st.size > this.limiteBytes) throw muitoGrande(this.limiteBytes);
     const h = await open(caminho, constants.O_RDONLY | O_NOFOLLOW);
     let dados: Uint8Array;

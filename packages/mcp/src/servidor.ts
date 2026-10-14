@@ -81,7 +81,8 @@ function pastaSobDemanda(diretorio: string, opcoes: OpcoesPasta): PastaAutorizad
       (await obter()).escrever(nome, dados, ext, ganchos),
     listar: async (ext) => (await obter()).listar(ext),
     remover: async (nome, ext) => (await obter()).remover(nome, ext),
-    listarCopias: async () => (await obter()).listarCopias(),
+    listarCopias: async (arquivo) => (await obter()).listarCopias(arquivo),
+    localizarCopia: async (copia) => (await obter()).localizarCopia(copia),
     restaurarCopia: async (copia, destino, ext) =>
       (await obter()).restaurarCopia(copia, destino, ext),
   };

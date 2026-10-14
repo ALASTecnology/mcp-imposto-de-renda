@@ -22,6 +22,7 @@ import {
   zRendimentoPJ,
 } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
+import { ErroArquivo } from "../arquivos/index.js";
 import { interpretarDeclaracao } from "../conversao/dbk-modelo.js";
 import { EntradaInvalidaError } from "../erros.js";
 import { normalizarValor } from "../esquemas.js";
@@ -477,9 +478,8 @@ export const grupoCiclo: GrupoFerramentas = {
         },
       },
       async ({ arquivo }) => {
-        const copias = (await exigirPasta(r.ctx).listarCopias()).filter(
-          (c) => !arquivo || c.arquivo === arquivo,
-        );
+        // O filtro vai para a listagem, antes do corte em 500 itens.
+        const copias = await exigirPasta(r.ctx).listarCopias(arquivo || undefined);
         return {
           texto: copias.length
             ? copias.map((c) => `- ${c.copia} (${c.arquivo}, ${c.criadaEm})`).join("\n")
@@ -504,9 +504,13 @@ export const grupoCiclo: GrupoFerramentas = {
       },
       async ({ copia, arquivo_destino }) => {
         const pasta = exigirPasta(r.ctx);
-        const origem = (await pasta.listarCopias()).find((c) => c.copia === copia);
-        if (!origem)
-          throw new EntradaInvalidaError("Cópia não encontrada; use listar_copias_seguranca.");
+        // Procura a cópia direto no disco: a listagem é cortada em 500 itens e poderia escondê-la.
+        const origem = await pasta.localizarCopia(copia).catch((e: unknown) => {
+          if (e instanceof ErroArquivo && e.codigo === "NAO_ENCONTRADO") {
+            throw new EntradaInvalidaError("Cópia não encontrada; use listar_copias_seguranca.");
+          }
+          throw e;
+        });
         const destino = arquivo_destino ?? origem.arquivo;
         // Só grava cópia de segurança (.DBK): o .DEC de entrega nunca é sobrescrito por restauração.
         const e = await pasta.restaurarCopia(copia, destino, EXT_GRAVACAO);

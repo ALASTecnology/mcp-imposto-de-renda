@@ -1,52 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" fill="#071D41" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="t d">
   <title id="t">Suíte de referência do motor de cálculo</title>
   <desc id="d">Casos sintéticos passam pelo programa oficial rodando localmente no desenvolvimento. O resultado vira um golden JSON versionado. Os testes do motor comparam o cálculo próprio com o golden e falham com qualquer diferença de um centavo.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+      <path d="M0 0L10 5L0 10z" fill="#555555"/>
     </marker>
   </defs>
   <style>
-    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    text{font-family:Rawline,Raleway,"Avenir Next","Segoe UI",Helvetica,Arial,sans-serif}
     .h{font-size:26px;font-weight:700}
-    .sub{font-size:16px;fill:#475569}
+    .sub{font-size:16px;fill:#555555}
     .b{font-size:18px;font-weight:700}
-    .s{font-size:14px;fill:#334155}
+    .s{font-size:14px;fill:#333333}
     .n{font-size:14px;font-weight:700;fill:#FFFFFF}
     .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    .ln{stroke:#475569;stroke-width:2;fill:none}
+    .ln{stroke:#555555;stroke-width:2;fill:none}
   </style>
-  <rect x="1" y="1" width="1198" height="558" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="558" rx="18" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="2"/>
   <text x="40" y="52" class="h">Suíte de referência: o motor precisa bater ao centavo</text>
   <text x="40" y="78" class="sub">O programa oficial serve de oráculo. Ele roda só na máquina de desenvolvimento, nunca no pacote publicado.</text>
 
   <g>
-    <rect x="45" y="110" width="240" height="180" rx="14" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
-    <circle cx="75" cy="140" r="14" fill="#475569"/><text x="75" y="145" class="n" text-anchor="middle">1</text>
+    <rect x="45" y="110" width="240" height="180" rx="14" fill="#F0F0F0" stroke="#CCCCCC" stroke-width="1.5"/>
+    <circle cx="75" cy="140" r="14" fill="#555555"/><text x="75" y="145" class="n" text-anchor="middle">1</text>
     <text x="98" y="146" class="b">Casos sintéticos</text>
     <text x="65" y="182" class="s">Contribuintes fictícios,</text>
     <text x="65" y="202" class="s">sem nenhum dado real.</text>
     <text x="65" y="230" class="s">Cobrem faixas, deduções</text>
     <text x="65" y="250" class="s">e casos de borda.</text>
 
-    <rect x="335" y="110" width="240" height="180" rx="14" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
-    <circle cx="365" cy="140" r="14" fill="#475569"/><text x="365" y="145" class="n" text-anchor="middle">2</text>
-    <text x="388" y="146" class="b">Programa oficial</text>
+    <rect x="335" y="110" width="240" height="180" rx="14" fill="#E0F2FD" stroke="#3E98C7" stroke-width="1.5"/>
+    <circle cx="365" cy="140" r="14" fill="#043171"/><text x="365" y="145" class="n" text-anchor="middle">2</text>
+    <text x="388" y="146" class="b" fill="#043171">Programa oficial</text>
     <text x="355" y="182" class="s">Executado localmente,</text>
     <text x="355" y="202" class="s">só no desenvolvimento.</text>
     <text x="355" y="230" class="s">Importa cada caso e</text>
     <text x="355" y="250" class="s">calcula o resultado.</text>
 
-    <rect x="625" y="110" width="240" height="180" rx="14" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
-    <circle cx="655" cy="140" r="14" fill="#B45309"/><text x="655" y="145" class="n" text-anchor="middle">3</text>
+    <rect x="625" y="110" width="240" height="180" rx="14" fill="#FFF5C2" stroke="#FFCD07" stroke-width="1.5"/>
+    <circle cx="655" cy="140" r="14" fill="#776017"/><text x="655" y="145" class="n" text-anchor="middle">3</text>
     <text x="678" y="146" class="b">Golden JSON</text>
     <text x="645" y="182" class="s">Valores esperados por</text>
     <text x="645" y="202" class="s">caso, em centavos.</text>
     <text x="645" y="230" class="s">Versionado no repositório</text>
     <text x="645" y="250" class="s">e revisado em PR.</text>
 
-    <rect x="915" y="110" width="240" height="180" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
-    <circle cx="945" cy="140" r="14" fill="#6D28D9"/><text x="945" y="145" class="n" text-anchor="middle">4</text>
+    <rect x="915" y="110" width="240" height="180" rx="14" fill="#EDF5FF" stroke="#1351B4" stroke-width="2"/>
+    <circle cx="945" cy="140" r="14" fill="#1351B4"/><text x="945" y="145" class="n" text-anchor="middle">4</text>
     <text x="968" y="146" class="b">Testes do motor</text>
     <text x="935" y="182" class="s">O motor próprio calcula</text>
     <text x="935" y="202" class="s">o mesmo caso e compara</text>
@@ -60,20 +60,20 @@
   <text x="600" y="342" class="s" text-anchor="middle">os mesmos casos de entrada alimentam o motor</text>
 
   
-  <rect x="45" y="370" width="1110" height="160" rx="14" fill="#0F172A"/>
-  <text x="75" y="404" class="b" style="fill:#F1F5F9;font-size:16px">Exemplo de comparação (caso fictício)</text>
+  <rect x="45" y="370" width="1110" height="160" rx="14" fill="#071D41"/>
+  <text x="75" y="404" class="b" style="fill:#F0F0F0;font-size:16px">Exemplo de comparação (caso fictício)</text>
   <g class="m" font-size="16">
-    <text x="75" y="446" fill="#CBD5E1">imposto devido</text>
-    <text x="300" y="446" fill="#CBD5E1">motor <tspan fill="#F8FAFC">R$ 4.218,37</tspan></text>
-    <text x="560" y="446" fill="#CBD5E1">golden <tspan fill="#F8FAFC">R$ 4.218,37</tspan></text>
-    <rect x="860" y="426" width="120" height="28" rx="14" fill="#14532D"/>
-    <text x="920" y="446" fill="#BBF7D0" text-anchor="middle" font-weight="700">passa</text>
+    <text x="75" y="446" fill="#CCCCCC">imposto devido</text>
+    <text x="300" y="446" fill="#CCCCCC">motor <tspan fill="#F8F8F8">R$ 4.218,37</tspan></text>
+    <text x="560" y="446" fill="#CCCCCC">golden <tspan fill="#F8F8F8">R$ 4.218,37</tspan></text>
+    <rect x="860" y="426" width="120" height="28" rx="14" fill="#154C21"/>
+    <text x="920" y="446" fill="#B7F5BD" text-anchor="middle" font-weight="700">passa</text>
 
-    <text x="75" y="494" fill="#CBD5E1">imposto devido</text>
-    <text x="300" y="494" fill="#CBD5E1">motor <tspan fill="#F8FAFC">R$ 4.218,36</tspan></text>
-    <text x="560" y="494" fill="#CBD5E1">golden <tspan fill="#F8FAFC">R$ 4.218,37</tspan></text>
-    <rect x="860" y="474" width="120" height="28" rx="14" fill="#7F1D1D"/>
-    <text x="920" y="494" fill="#FECACA" text-anchor="middle" font-weight="700">falha</text>
-    <text x="1000" y="494" fill="#FCA5A5" font-size="14">diferença 0,01</text>
+    <text x="75" y="494" fill="#CCCCCC">imposto devido</text>
+    <text x="300" y="494" fill="#CCCCCC">motor <tspan fill="#F8F8F8">R$ 4.218,36</tspan></text>
+    <text x="560" y="494" fill="#CCCCCC">golden <tspan fill="#F8F8F8">R$ 4.218,37</tspan></text>
+    <rect x="860" y="474" width="120" height="28" rx="14" fill="#8B0A03"/>
+    <text x="920" y="494" fill="#FDE0DB" text-anchor="middle" font-weight="700">falha</text>
+    <text x="1000" y="494" fill="#FDB8AE" font-size="14">diferença 0,01</text>
   </g>
 </svg>

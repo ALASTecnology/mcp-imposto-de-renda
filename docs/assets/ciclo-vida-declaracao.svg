@@ -1,38 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" fill="#071D41" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="t d">
   <title id="t">Ciclo de vida da declaração</title>
   <desc id="d">No servidor local: criar ou abrir a declaração, preencher as fichas, validar, calcular e escolher o modelo, gravar o .DBK e, se quiser conferir, gerar o .DEC. No programa oficial: restaurar o .DBK, verificar pendências, transmitir e guardar o recibo. De volta ao servidor, o número do recibo é registrado e serve de base para uma retificadora.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+      <path d="M0 0L10 5L0 10z" fill="#555555"/>
     </marker>
     <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#7C3AED"/>
+      <path d="M0 0L10 5L0 10z" fill="#1351B4"/>
     </marker>
   </defs>
   <style>
-    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    text{font-family:Rawline,Raleway,"Avenir Next","Segoe UI",Helvetica,Arial,sans-serif}
     .h{font-size:26px;font-weight:700}
-    .sub{font-size:16px;fill:#475569}
+    .sub{font-size:16px;fill:#555555}
     .b{font-size:16px;font-weight:700}
-    .xs{font-size:12.5px;fill:#475569}
-    .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;fill:#5B21B6}
+    .xs{font-size:12.5px;fill:#555555}
+    .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;fill:#1351B4}
     .n{font-size:12px;font-weight:700;fill:#FFFFFF}
-    .ln{stroke:#475569;stroke-width:2;fill:none}
-    .lp{stroke:#7C3AED;stroke-width:2;fill:none;stroke-dasharray:7 5}
-    .box{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.5}
-    .of{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.5}
+    .ln{stroke:#555555;stroke-width:2;fill:none}
+    .lp{stroke:#1351B4;stroke-width:2;fill:none;stroke-dasharray:7 5}
+    .box{fill:#FFFFFF;stroke:#CCCCCC;stroke-width:1.5}
+    .of{fill:#FFFFFF;stroke:#3E98C7;stroke-width:1.5}
   </style>
-  <rect x="1" y="1" width="1198" height="718" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="718" rx="18" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="2"/>
   <text x="40" y="52" class="h">Ciclo de vida da declaração</text>
   <text x="40" y="78" class="sub">O servidor prepara e confere o arquivo. A entrega é sempre feita por você, no programa oficial.</text>
 
   
-  <rect x="24" y="100" width="1152" height="236" rx="16" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="8 6"/>
-  <text x="44" y="128" class="b" style="fill:#5B21B6;font-size:15px">No MCP Imposto de Renda, na sua máquina</text>
+  <rect x="24" y="100" width="1152" height="236" rx="16" fill="#EDF5FF" stroke="#1351B4" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="44" y="128" class="b" style="fill:#1351B4;font-size:15px">No MCP Imposto de Renda, na sua máquina</text>
 
   <g>
     <rect x="40" y="146" width="165" height="150" rx="12" class="box"/>
-    <circle cx="62" cy="168" r="11" fill="#7C3AED"/><text x="62" y="172" class="n" text-anchor="middle">1</text>
+    <circle cx="62" cy="168" r="11" fill="#1351B4"/><text x="62" y="172" class="n" text-anchor="middle">1</text>
     <text x="80" y="173" class="b">Criar ou abrir</text>
     <text x="54" y="204" class="m">criar_declaracao</text>
     <text x="54" y="222" class="m">abrir_declaracao</text>
@@ -42,7 +42,7 @@
   </g>
   <g>
     <rect x="231" y="146" width="165" height="150" rx="12" class="box"/>
-    <circle cx="253" cy="168" r="11" fill="#7C3AED"/><text x="253" y="172" class="n" text-anchor="middle">2</text>
+    <circle cx="253" cy="168" r="11" fill="#1351B4"/><text x="253" y="172" class="n" text-anchor="middle">2</text>
     <text x="271" y="173" class="b">Preencher</text>
     <text x="245" y="204" class="m">adicionar_*, editar_*</text>
     <text x="245" y="222" class="m">definir_*</text>
@@ -52,7 +52,7 @@
   </g>
   <g>
     <rect x="422" y="146" width="165" height="150" rx="12" class="box"/>
-    <circle cx="444" cy="168" r="11" fill="#7C3AED"/><text x="444" y="172" class="n" text-anchor="middle">3</text>
+    <circle cx="444" cy="168" r="11" fill="#1351B4"/><text x="444" y="172" class="n" text-anchor="middle">3</text>
     <text x="462" y="173" class="b">Validar</text>
     <text x="436" y="204" class="m">validar_declaracao</text>
     <text x="436" y="222" class="m">validar_documento</text>
@@ -61,18 +61,18 @@
   </g>
   <g>
     <rect x="613" y="146" width="165" height="150" rx="12" class="box"/>
-    <circle cx="635" cy="168" r="11" fill="#7C3AED"/><text x="635" y="172" class="n" text-anchor="middle">4</text>
+    <circle cx="635" cy="168" r="11" fill="#1351B4"/><text x="635" y="172" class="n" text-anchor="middle">4</text>
     <text x="653" y="173" class="b">Calcular</text>
     <text x="627" y="200" class="m">comparar_modelos</text>
     <text x="627" y="216" class="m">explicar_calculo</text>
     <text x="627" y="232" class="m">definir_opcao_</text>
     <text x="627" y="248" class="m">tributacao</text>
-    <text x="627" y="272" class="xs">completo ou simplificado,</text>
+    <text x="627" y="272" class="xs" style="font-size:12px">completo ou simplificado,</text>
     <text x="627" y="288" class="xs">quotas e conta</text>
   </g>
   <g>
-    <rect x="804" y="146" width="165" height="150" rx="12" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
-    <circle cx="826" cy="168" r="11" fill="#7C3AED"/><text x="826" y="172" class="n" text-anchor="middle">5</text>
+    <rect x="804" y="146" width="165" height="150" rx="12" fill="#EDF5FF" stroke="#1351B4" stroke-width="2"/>
+    <circle cx="826" cy="168" r="11" fill="#1351B4"/><text x="826" y="172" class="n" text-anchor="middle">5</text>
     <text x="844" y="173" class="b">Gravar .DBK</text>
     <text x="818" y="204" class="xs">a cada lançamento,</text>
     <text x="818" y="220" class="xs">atômico e com backup</text>
@@ -80,8 +80,8 @@
     <text x="818" y="262" class="m">integridade_arquivo</text>
   </g>
   <g>
-    <rect x="995" y="146" width="165" height="150" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5"/>
-    <circle cx="1017" cy="168" r="11" fill="#7C3AED"/><text x="1017" y="172" class="n" text-anchor="middle">6</text>
+    <rect x="995" y="146" width="165" height="150" rx="12" fill="#FFFFFF" stroke="#888888" stroke-width="1.5" stroke-dasharray="6 5"/>
+    <circle cx="1017" cy="168" r="11" fill="#1351B4"/><text x="1017" y="172" class="n" text-anchor="middle">6</text>
     <text x="1035" y="173" class="b">Gerar .DEC</text>
     <text x="1009" y="204" class="m">gerar_arquivo_entrega</text>
     <text x="1009" y="236" class="xs">opcional, só para</text>
@@ -96,15 +96,15 @@
   <path d="M969 221H989" class="lp" marker-end="url(#p)"/>
   
   <path d="M504 296V318H313V302" class="lp" marker-end="url(#p)"/>
-  <text x="408" y="332" class="xs" text-anchor="middle" style="fill:#5B21B6">pendências: corrigir e repetir</text>
+  <text x="408" y="332" class="xs" text-anchor="middle" style="fill:#1351B4">pendências: corrigir e repetir</text>
 
   
-  <rect x="24" y="384" width="1152" height="236" rx="16" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
-  <text x="44" y="412" class="b" style="fill:#334155;font-size:15px">No programa oficial do IRPF, conduzido por você</text>
+  <rect x="24" y="384" width="1152" height="236" rx="16" fill="#E0F2FD" stroke="#3E98C7" stroke-width="2"/>
+  <text x="280" y="412" class="b" style="fill:#043171;font-size:15px">No programa oficial do IRPF, conduzido por você</text>
 
   <g>
     <rect x="995" y="430" width="165" height="150" rx="12" class="of"/>
-    <circle cx="1017" cy="452" r="11" fill="#475569"/><text x="1017" y="456" class="n" text-anchor="middle">7</text>
+    <circle cx="1017" cy="452" r="11" fill="#043171"/><text x="1017" y="456" class="n" text-anchor="middle">7</text>
     <text x="1035" y="457" class="b">Restaurar</text>
     <text x="1009" y="488" class="xs">Ferramentas &gt; Cópia de</text>
     <text x="1009" y="504" class="xs">Segurança &gt; Restaurar</text>
@@ -113,7 +113,7 @@
   </g>
   <g>
     <rect x="804" y="430" width="165" height="150" rx="12" class="of"/>
-    <circle cx="826" cy="452" r="11" fill="#475569"/><text x="826" y="456" class="n" text-anchor="middle">8</text>
+    <circle cx="826" cy="452" r="11" fill="#043171"/><text x="826" y="456" class="n" text-anchor="middle">8</text>
     <text x="844" y="457" class="b">Conferir</text>
     <text x="818" y="488" class="xs">cada ficha e o Resumo;</text>
     <text x="818" y="504" class="xs">Verificar Pendências</text>
@@ -121,7 +121,7 @@
   </g>
   <g>
     <rect x="613" y="430" width="165" height="150" rx="12" class="of"/>
-    <circle cx="635" cy="452" r="11" fill="#475569"/><text x="635" y="456" class="n" text-anchor="middle">9</text>
+    <circle cx="635" cy="452" r="11" fill="#043171"/><text x="635" y="456" class="n" text-anchor="middle">9</text>
     <text x="653" y="457" class="b">Transmitir</text>
     <text x="627" y="488" class="xs">pelo próprio programa,</text>
     <text x="627" y="504" class="xs">com ou sem certificado</text>
@@ -129,7 +129,7 @@
   </g>
   <g>
     <rect x="422" y="430" width="165" height="150" rx="12" class="of"/>
-    <circle cx="444" cy="452" r="11" fill="#475569"/><text x="444" y="456" class="n" text-anchor="middle">10</text>
+    <circle cx="444" cy="452" r="11" fill="#043171"/><text x="444" y="456" class="n" text-anchor="middle">10</text>
     <text x="462" y="457" class="b">Recibo e Darf</text>
     <text x="436" y="488" class="xs">guardar o recibo;</text>
     <text x="436" y="504" class="xs">pagar o Darf, se houver</text>
@@ -137,8 +137,8 @@
     <text x="436" y="556" class="m">calcular_quotas</text>
   </g>
   <g>
-    <rect x="40" y="430" width="356" height="150" rx="12" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
-    <circle cx="62" cy="452" r="11" fill="#7C3AED"/><text x="62" y="456" class="n" text-anchor="middle">11</text>
+    <rect x="40" y="430" width="356" height="150" rx="12" fill="#EDF5FF" stroke="#1351B4" stroke-width="2"/>
+    <circle cx="62" cy="452" r="11" fill="#1351B4"/><text x="62" y="456" class="n" text-anchor="middle">11</text>
     <text x="80" y="457" class="b">Registrar e, se precisar, retificar</text>
     <text x="54" y="488" class="xs">de volta ao servidor: o número do recibo fica ao</text>
     <text x="54" y="504" class="xs">lado do .DBK e preenche a retificadora</text>
@@ -154,8 +154,8 @@
   <path d="M613 505H593" class="ln" marker-end="url(#a)"/>
   <path d="M422 505H402" class="ln" marker-end="url(#a)"/>
   <path d="M260 430V362H290V302" class="lp" marker-end="url(#p)"/>
-  <text x="300" y="358" class="xs" style="fill:#5B21B6">retificadora: volta a preencher</text>
+  <text x="300" y="358" class="xs" style="fill:#1351B4">retificadora: volta a preencher</text>
 
-  <text x="40" y="660" class="xs" style="font-size:14px;fill:#334155">Toda gravação guarda a versão anterior em .mcp-imposto-de-renda-backups (10 por arquivo); listar_copias_seguranca</text>
-  <text x="40" y="682" class="xs" style="font-size:14px;fill:#334155">e restaurar_copia_seguranca desfazem uma alteração. O servidor nunca transmite, nunca usa certificado e nunca acessa a rede.</text>
+  <text x="40" y="660" class="xs" style="font-size:14px;fill:#333333">Toda gravação guarda a versão anterior em .mcp-imposto-de-renda-backups (10 por arquivo); listar_copias_seguranca</text>
+  <text x="40" y="682" class="xs" style="font-size:14px;fill:#333333">e restaurar_copia_seguranca desfazem uma alteração. O servidor nunca transmite, nunca usa certificado e nunca acessa a rede.</text>
 </svg>

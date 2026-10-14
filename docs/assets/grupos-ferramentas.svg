@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" fill="#071D41" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="t d">
   <title id="t">Mapa dos 11 grupos de ferramentas</title>
   <desc id="d">As 154 ferramentas do servidor organizadas em 11 grupos, na ordem em que costumam ser usadas: começar e abrir (ciclo, declaracao, arquivos, fichas), preencher e conferir (edicao, tabelas, validacao) e calcular e concluir (calculo, calculadoras, saidas, orientacao). Grupos que exigem a pasta autorizada têm faixa roxa; os que funcionam sem pasta têm faixa verde. Os que gravam arquivos levam a marca grava.</desc>
   <style>
-    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    text{font-family:Rawline,Raleway,"Avenir Next","Segoe UI",Helvetica,Arial,sans-serif}
     .h{font-size:26px;font-weight:700}
-    .sub{font-size:16px;fill:#475569}
-    .band{font-size:15px;font-weight:700;fill:#5B21B6;letter-spacing:.3px}
+    .sub{font-size:16px;fill:#555555}
+    .band{font-size:15px;font-weight:700;fill:#1351B4;letter-spacing:.3px}
     .g{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:19px;font-weight:700}
-    .c{font-size:14px;fill:#334155}
-    .t{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;fill:#475569}
-    .xs{font-size:13px;fill:#475569}
-    .pill{font-size:11.5px;font-weight:700;fill:#92400E}
-    .box{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.5}
+    .c{font-size:14px;fill:#333333}
+    .t{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;fill:#555555}
+    .xs{font-size:13px;fill:#555555}
+    .pill{font-size:11.5px;font-weight:700;fill:#776017}
+    .box{fill:#FFFFFF;stroke:#CCCCCC;stroke-width:1.5}
   </style>
-  <rect x="1" y="1" width="1198" height="798" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="798" rx="18" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="2"/>
   <text x="40" y="52" class="h">154 ferramentas em 11 grupos</text>
   <text x="40" y="78" class="sub">Na ordem em que costumam aparecer numa conversa. 95 gravam na pasta autorizada; com --somente-leitura restam 59.</text>
 
@@ -21,9 +21,9 @@
   <text x="40" y="128" class="band">1. COMEÇAR E ABRIR</text>
   <g>
     <rect x="40" y="140" width="265" height="140" rx="12" class="box"/>
-    <rect x="40" y="140" width="265" height="7" rx="3" fill="#8B5CF6"/>
+    <rect x="40" y="140" width="265" height="7" rx="3" fill="#1351B4"/>
     <text x="60" y="178" class="g">ciclo</text>
-    <rect x="232" y="160" width="56" height="22" rx="11" fill="#FEF3C7" stroke="#F59E0B"/>
+    <rect x="232" y="160" width="56" height="22" rx="11" fill="#FFF5C2" stroke="#FFCD07"/>
     <text x="260" y="175" class="pill" text-anchor="middle">grava</text>
     <text x="60" y="202" class="c">15 ferramentas, 13 gravam</text>
     <text x="60" y="228" class="t">criar_declaracao</text>
@@ -32,9 +32,9 @@
   </g>
   <g>
     <rect x="325" y="140" width="265" height="140" rx="12" class="box"/>
-    <rect x="325" y="140" width="265" height="7" rx="3" fill="#8B5CF6"/>
+    <rect x="325" y="140" width="265" height="7" rx="3" fill="#1351B4"/>
     <text x="345" y="178" class="g">declaracao</text>
-    <rect x="517" y="160" width="56" height="22" rx="11" fill="#FEF3C7" stroke="#F59E0B"/>
+    <rect x="517" y="160" width="56" height="22" rx="11" fill="#FFF5C2" stroke="#FFCD07"/>
     <text x="545" y="175" class="pill" text-anchor="middle">grava</text>
     <text x="345" y="202" class="c">4 ferramentas, 2 gravam</text>
     <text x="345" y="228" class="t">abrir_declaracao</text>
@@ -43,7 +43,7 @@
   </g>
   <g>
     <rect x="610" y="140" width="265" height="140" rx="12" class="box"/>
-    <rect x="610" y="140" width="265" height="7" rx="3" fill="#8B5CF6"/>
+    <rect x="610" y="140" width="265" height="7" rx="3" fill="#1351B4"/>
     <text x="630" y="178" class="g">arquivos</text>
     <text x="630" y="202" class="c">2 ferramentas, só leitura</text>
     <text x="630" y="228" class="t">listar_arquivos</text>
@@ -51,7 +51,7 @@
   </g>
   <g>
     <rect x="895" y="140" width="265" height="140" rx="12" class="box"/>
-    <rect x="895" y="140" width="265" height="7" rx="3" fill="#8B5CF6"/>
+    <rect x="895" y="140" width="265" height="7" rx="3" fill="#1351B4"/>
     <text x="915" y="178" class="g">fichas</text>
     <text x="915" y="202" class="c">1 ferramenta, só leitura</text>
     <text x="915" y="228" class="t">ler_ficha</text>
@@ -60,10 +60,10 @@
   
   <text x="40" y="320" class="band">2. PREENCHER E CONFERIR</text>
   <g>
-    <rect x="40" y="332" width="550" height="140" rx="12" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="2"/>
-    <rect x="40" y="332" width="550" height="7" rx="3" fill="#8B5CF6"/>
+    <rect x="40" y="332" width="550" height="140" rx="12" fill="#EDF5FF" stroke="#1351B4" stroke-width="2"/>
+    <rect x="40" y="332" width="550" height="7" rx="3" fill="#1351B4"/>
     <text x="60" y="370" class="g">edicao</text>
-    <rect x="517" y="352" width="56" height="22" rx="11" fill="#FEF3C7" stroke="#F59E0B"/>
+    <rect x="517" y="352" width="56" height="22" rx="11" fill="#FFF5C2" stroke="#FFCD07"/>
     <text x="545" y="367" class="pill" text-anchor="middle">grava</text>
     <text x="60" y="394" class="c">105 ferramentas, 80 gravam: 22 fichas em lista com incluir, alterar,</text>
     <text x="60" y="412" class="c">remover e listar, mais 17 para fichas únicas e lançamentos genéricos</text>
@@ -74,7 +74,7 @@
   </g>
   <g>
     <rect x="610" y="332" width="265" height="140" rx="12" class="box"/>
-    <rect x="610" y="332" width="265" height="7" rx="3" fill="#059669"/>
+    <rect x="610" y="332" width="265" height="7" rx="3" fill="#168821"/>
     <text x="630" y="370" class="g">tabelas</text>
     <text x="630" y="394" class="c">2 ferramentas, 31 tabelas</text>
     <text x="630" y="420" class="t">listar_tabela</text>
@@ -82,7 +82,7 @@
   </g>
   <g>
     <rect x="895" y="332" width="265" height="140" rx="12" class="box"/>
-    <rect x="895" y="332" width="265" height="7" rx="3" fill="#059669"/>
+    <rect x="895" y="332" width="265" height="7" rx="3" fill="#168821"/>
     <text x="915" y="370" class="g">validacao</text>
     <text x="915" y="394" class="c">2 ferramentas, 108 regras</text>
     <text x="915" y="420" class="t">validar_declaracao</text>
@@ -93,7 +93,7 @@
   <text x="40" y="512" class="band">3. CALCULAR E CONCLUIR</text>
   <g>
     <rect x="40" y="524" width="265" height="140" rx="12" class="box"/>
-    <rect x="40" y="524" width="265" height="7" rx="3" fill="#059669"/>
+    <rect x="40" y="524" width="265" height="7" rx="3" fill="#168821"/>
     <text x="60" y="562" class="g">calculo</text>
     <text x="60" y="586" class="c">6 ferramentas, só leitura</text>
     <text x="60" y="612" class="t">simular_imposto</text>
@@ -102,7 +102,7 @@
   </g>
   <g>
     <rect x="325" y="524" width="265" height="140" rx="12" class="box"/>
-    <rect x="325" y="524" width="265" height="7" rx="3" fill="#059669"/>
+    <rect x="325" y="524" width="265" height="7" rx="3" fill="#168821"/>
     <text x="345" y="562" class="g">calculadoras</text>
     <text x="345" y="586" class="c">10 ferramentas, só leitura</text>
     <text x="345" y="612" class="t">calcular_carne_leao</text>
@@ -111,7 +111,7 @@
   </g>
   <g>
     <rect x="610" y="524" width="265" height="140" rx="12" class="box"/>
-    <rect x="610" y="524" width="265" height="7" rx="3" fill="#059669"/>
+    <rect x="610" y="524" width="265" height="7" rx="3" fill="#168821"/>
     <text x="630" y="562" class="g">saidas</text>
     <text x="630" y="586" class="c">4 ferramentas, só leitura</text>
     <text x="630" y="612" class="t">gerar_darf</text>
@@ -120,7 +120,7 @@
   </g>
   <g>
     <rect x="895" y="524" width="265" height="140" rx="12" class="box"/>
-    <rect x="895" y="524" width="265" height="7" rx="3" fill="#059669"/>
+    <rect x="895" y="524" width="265" height="7" rx="3" fill="#168821"/>
     <text x="915" y="562" class="g">orientacao</text>
     <text x="915" y="586" class="c">3 ferramentas, só leitura</text>
     <text x="915" y="612" class="t">obter_ajuda</text>
@@ -129,12 +129,12 @@
   </g>
 
   
-  <rect x="40" y="696" width="1120" height="76" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
-  <rect x="64" y="722" width="34" height="7" rx="3" fill="#8B5CF6"/>
+  <rect x="40" y="696" width="1120" height="76" rx="12" fill="#F8F8F8" stroke="#E6E6E6"/>
+  <rect x="64" y="722" width="34" height="7" rx="3" fill="#1351B4"/>
   <text x="110" y="730" class="xs">exige a pasta autorizada (--dir): sem ela, o grupo não é registrado</text>
-  <rect x="64" y="748" width="34" height="7" rx="3" fill="#059669"/>
+  <rect x="64" y="748" width="34" height="7" rx="3" fill="#168821"/>
   <text x="110" y="756" class="xs">funciona sem pasta, só com o que vem na conversa</text>
-  <rect x="640" y="715" width="56" height="22" rx="11" fill="#FEF3C7" stroke="#F59E0B"/>
+  <rect x="640" y="715" width="56" height="22" rx="11" fill="#FFF5C2" stroke="#FFCD07"/>
   <text x="668" y="730" class="pill" text-anchor="middle">grava</text>
   <text x="710" y="730" class="xs">tem ferramentas que gravam: somem com --somente-leitura</text>
   <text x="640" y="756" class="xs">Referência completa, com parâmetros e exemplos: docs/ferramentas/</text>

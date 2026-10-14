@@ -103,7 +103,14 @@ function tags(texto: string, nome: string): { atributos: string; fim: number; in
 }
 
 function semComentarios(xml: string): string {
-  return xml.replace(/<!--[\s\S]*?-->/g, "");
+  let anterior: string;
+  let atual = xml;
+  // Repete até estabilizar: uma remoção pode juntar pedaços e formar um novo "<!--".
+  do {
+    anterior = atual;
+    atual = atual.replace(/<!--[\s\S]*?-->/g, "");
+  } while (atual !== anterior);
+  return atual;
 }
 
 function inteiro(valor: string | undefined, contexto: string): number {

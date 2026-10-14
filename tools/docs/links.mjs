@@ -37,12 +37,22 @@ function arquivosPadrao() {
     .filter((a) => !a.startsWith("vendor/") && existsSync(resolve(RAIZ, a)));
 }
 
+/** Remove tags HTML repetindo até estabilizar e descarta os sinais que sobrarem. */
+const semTags = (texto) => {
+  let anterior;
+  let atual = texto;
+  do {
+    anterior = atual;
+    atual = atual.replace(/<[^<>]*>/g, "");
+  } while (atual !== anterior);
+  return atual.replace(/[<>]/g, "");
+};
+
 /** Âncora no padrão do GitHub: minúsculas, sem pontuação (mantém _ e -), espaços viram hífens. */
 const slug = (titulo) =>
-  titulo
+  semTags(titulo)
     .trim()
     .toLowerCase()
-    .replace(/<[^>]+>/g, "")
     .replace(/[^\p{L}\p{N}\s_-]/gu, "")
     .replace(/\s/g, "-");
 

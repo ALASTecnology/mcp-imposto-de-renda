@@ -254,7 +254,8 @@ describe("importações e excedente de 65 anos", () => {
       indice: 1,
       alteracoes: { valor: 2_475_174 + 100_000 },
     });
-    const soma = (x: ReturnType<typeof modelo>) => x.rendimentosPJ.reduce((t, p) => t + p.rendimentos, 0n);
+    const soma = (x: ReturnType<typeof modelo>) =>
+      x.rendimentosPJ.reduce((t, p) => t + p.rendimentos, 0n);
     const pjAntes = soma(modelo("idoso.DBK"));
     const s = await ok("transferir_excedente_isencao_65", { arquivo: "idoso.DBK" });
     expect((s.transferencias as { excedente: string }[])[0]?.excedente).toBe("100000");

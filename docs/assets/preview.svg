@@ -1,70 +1,108 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="t d">
   <title id="t">MCP Imposto de Renda</title>
-  <desc id="d">Servidor MCP local para a declaração do Imposto de Renda. 100% local, código aberto AGPL-3.0, calculado ao centavo.</desc>
+  <desc id="d">Projeto independente, não oficial. Servidor MCP local para a declaração do IRPF, com o exemplo fictício do assalariado simples: 100% local, código aberto e cálculo ao centavo. Comando npx mcp-imposto-de-renda.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0B1020"/>
-      <stop offset="1" stop-color="#161233"/>
+    <linearGradient id="ceu" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#AFE0FA"/>
+      <stop offset="1" stop-color="#E0F2FD"/>
     </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
-    </pattern>
-    <radialGradient id="glow" cx="0.85" cy="0.2" r="0.6">
-      <stop offset="0" stop-color="#7C3AED" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#7C3AED" stop-opacity="0"/>
-    </radialGradient>
   </defs>
   <style>
-    .f{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    .f{font-family:Rawline,Raleway,"Avenir Next","Segoe UI",Helvetica,Arial,sans-serif}
     .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
   </style>
-  <rect width="1280" height="640" fill="url(#bg)"/>
-  <rect width="1280" height="640" fill="url(#grid)"/>
-  <rect width="1280" height="640" fill="url(#glow)"/>
 
-  <g transform="translate(96 96) scale(1.5)">
-    <rect width="64" height="64" rx="14" fill="#7C3AED"/>
-    <path d="M20 13h17l10 10v27a3 3 0 0 1-3 3H20a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3z" fill="#FFFFFF"/>
-    <path d="M37 13v7a3 3 0 0 0 3 3h7z" fill="#C4B5FD"/>
-    <path d="M24 37l6 6 11-13" fill="none" stroke="#7C3AED" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="1280" height="640" fill="#FFFFFF"/>
+
+  <rect x="760" y="0" width="520" height="640" fill="url(#ceu)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="2">
+    <path d="M760 210C900 120 1080 110 1280 190"/>
+    <path d="M760 560C930 470 1110 470 1280 540"/>
+    <path d="M840 640C900 520 1060 420 1280 400"/>
   </g>
 
-  <g transform="translate(780 96)">
-    <rect width="404" height="196" rx="16" fill="#0F172A" stroke="#334155"/>
-    <circle cx="26" cy="26" r="6" fill="#475569"/>
-    <circle cx="46" cy="26" r="6" fill="#475569"/>
-    <circle cx="66" cy="26" r="6" fill="#475569"/>
-    <text x="26" y="78" class="m" font-size="20" fill="#C4B5FD">$ <tspan fill="#F1F5F9">npx mcp-imposto-de-renda</tspan></text>
-    <g class="m" font-size="18" fill="#CBD5E1">
-      <path d="M28 108l5 5 9-10" fill="none" stroke="#86EFAC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="54" y="114">pasta autorizada</text>
-      <path d="M28 140l5 5 9-10" fill="none" stroke="#86EFAC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="54" y="146">declaração 2026 lida</text>
-      <path d="M28 172l5 5 9-10" fill="none" stroke="#86EFAC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="54" y="178">imposto conferido</text>
+  <rect x="0" y="0" width="900" height="10" fill="#1351B4"/>
+  <rect x="900" y="0" width="190" height="10" fill="#FFCD07"/>
+  <rect x="1090" y="0" width="190" height="10" fill="#168821"/>
+
+  <g class="f">
+    <g transform="translate(80 56)">
+      <rect width="372" height="42" rx="21" fill="#FFF5C2" stroke="#B38C00" stroke-width="1.5"/>
+      <circle cx="26" cy="21" r="10" fill="#071D41"/>
+      <rect x="24.5" y="19" width="3" height="8" rx="1" fill="#FFFFFF"/>
+      <circle cx="26" cy="15" r="1.8" fill="#FFFFFF"/>
+      <text x="46" y="28" font-size="19" font-weight="700" fill="#333333">Projeto independente, não oficial</text>
+    </g>
+
+    <g transform="translate(80 128) scale(1.25)">
+      <rect width="64" height="64" rx="14" fill="#1351B4"/>
+      <path d="M18 10h18l11 11v31a3 3 0 0 1-3 3H18a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z" fill="#FFFFFF"/>
+      <path d="M36 10v8a3 3 0 0 0 3 3h8z" fill="#ADCDFF"/>
+      <rect x="20" y="25" width="17" height="3.5" rx="1.75" fill="#1351B4"/>
+      <rect x="20" y="32" width="12" height="3.5" rx="1.75" fill="#1351B4"/>
+      <circle cx="44" cy="45" r="11.5" fill="#FFCD07" stroke="#1351B4" stroke-width="3"/>
+      <path d="M38.8 45.2l3.6 3.6 6.6-7.2" fill="none" stroke="#071D41" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <text x="76" y="300" font-size="76" font-weight="700" letter-spacing="-1" fill="#071D41"><tspan fill="#1351B4">MCP</tspan> Imposto</text>
+    <text x="76" y="380" font-size="76" font-weight="700" letter-spacing="-1" fill="#071D41">de Renda</text>
+    <text x="80" y="432" font-size="25" font-weight="500" fill="#333333">Servidor MCP local para a declaração do IRPF</text>
+
+    <g font-size="19" font-weight="700" fill="#0C326F">
+      <g transform="translate(80 466)">
+        <rect width="164" height="46" rx="23" fill="#EDF5FF" stroke="#1351B4" stroke-width="1.5"/>
+        <path d="M20 23l5 5 9-10" fill="none" stroke="#168821" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="44" y="30">100% local</text>
+      </g>
+      <g transform="translate(256 466)">
+        <rect width="198" height="46" rx="23" fill="#EDF5FF" stroke="#1351B4" stroke-width="1.5"/>
+        <path d="M20 23l5 5 9-10" fill="none" stroke="#168821" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="44" y="30">Código aberto</text>
+      </g>
+      <g transform="translate(468 466)">
+        <rect width="232" height="46" rx="23" fill="#EDF5FF" stroke="#1351B4" stroke-width="1.5"/>
+        <path d="M20 23l5 5 9-10" fill="none" stroke="#168821" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="44" y="30">Cálculo ao centavo</text>
+      </g>
+    </g>
+
+    <text x="80" y="584" font-size="18" fill="#555555">Seus dados ficam no seu computador.</text>
+    <text x="80" y="610" font-size="18" fill="#555555">Você revisa e transmite pelo programa oficial.</text>
+  </g>
+
+  <g transform="translate(812 74)">
+    <rect x="0" y="6" width="408" height="378" rx="16" fill="#0C326F" fill-opacity="0.10"/>
+    <rect width="408" height="378" rx="16" fill="#FFFFFF" stroke="#81AEFC" stroke-width="1.5"/>
+    <path d="M0 16a16 16 0 0 1 16-16h376a16 16 0 0 1 16 16v44H0z" fill="#1351B4"/>
+    <text x="24" y="38" class="f" font-size="21" font-weight="700" fill="#FFFFFF">Declaração IRPF 2026</text>
+    <text x="384" y="38" class="f" font-size="14" fill="#D4E5FF" text-anchor="end">exemplo fictício</text>
+
+    <g class="f" font-size="17" fill="#555555">
+      <text x="24" y="100">Rendimentos tributáveis</text>
+      <text x="24" y="146">Desconto simplificado</text>
+      <text x="24" y="192">Imposto devido</text>
+      <text x="24" y="238">Imposto retido</text>
+    </g>
+    <g class="m" font-size="18" fill="#071D41" text-anchor="end">
+      <text x="384" y="100">96.000,00</text>
+      <text x="384" y="146">16.754,34</text>
+      <text x="384" y="192">10.938,77</text>
+      <text x="384" y="238">11.400,00</text>
+    </g>
+    <g stroke="#E6E6E6" stroke-width="1.5">
+      <path d="M24 118H384M24 164H384M24 210H384"/>
+    </g>
+    <rect x="16" y="262" width="376" height="56" rx="10" fill="#E3F5E1"/>
+    <text x="34" y="297" class="f" font-size="19" font-weight="700" fill="#154C21">Saldo a restituir</text>
+    <text x="376" y="297" class="m" font-size="20" font-weight="700" fill="#154C21" text-anchor="end">R$ 461,23</text>
+    <g transform="translate(24 336)">
+      <path d="M2 10l5 5 9-10" fill="none" stroke="#168821" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="26" y="16" class="f" font-size="15" fill="#555555">conferido campo a campo, em centavos</text>
     </g>
   </g>
 
-  <text x="92" y="384" class="f" font-size="88" font-weight="800" letter-spacing="-2" fill="#F8FAFC"><tspan fill="#C4B5FD">MCP</tspan> Imposto de Renda</text>
-  <text x="96" y="440" class="f" font-size="34" font-weight="500" fill="#CBD5E1">Servidor MCP local para a declaração do Imposto de Renda</text>
-
-  <g class="f" font-size="25" font-weight="600" fill="#F1F5F9">
-    <g transform="translate(96 486)">
-      <rect width="196" height="56" rx="28" fill="#1E1B3A" stroke="#6D28D9" stroke-width="2"/>
-      <circle cx="30" cy="28" r="7" fill="#A78BFA"/>
-      <text x="48" y="37">100% local</text>
-    </g>
-    <g transform="translate(312 486)">
-      <rect width="346" height="56" rx="28" fill="#1E1B3A" stroke="#6D28D9" stroke-width="2"/>
-      <circle cx="30" cy="28" r="7" fill="#A78BFA"/>
-      <text x="48" y="37">Código aberto AGPL-3.0</text>
-    </g>
-    <g transform="translate(678 486)">
-      <rect width="306" height="56" rx="28" fill="#1E1B3A" stroke="#6D28D9" stroke-width="2"/>
-      <circle cx="30" cy="28" r="7" fill="#A78BFA"/>
-      <text x="48" y="37">Calculado ao centavo</text>
-    </g>
+  <g transform="translate(812 486)">
+    <rect width="408" height="64" rx="12" fill="#071D41"/>
+    <text x="24" y="40" class="m" font-size="21" fill="#FFFFFF"><tspan fill="#FFCD07">$</tspan> npx mcp-imposto-de-renda</text>
   </g>
-
-  <text x="96" y="596" class="f" font-size="22" fill="#94A3B8">Seus dados ficam no seu computador. Você revisa e transmite pelo programa oficial.</text>
 </svg>

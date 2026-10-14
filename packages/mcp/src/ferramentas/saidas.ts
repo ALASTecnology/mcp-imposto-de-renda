@@ -55,7 +55,8 @@ const INSTRUCOES_DARF = [
 
 /** Percentual "1,10" (ou número 1.1) em centésimos de ponto: 110. */
 function percentual(v: string | number): bigint {
-  const t = typeof v === "number" ? v.toFixed(2) : v.replace(".", ",");
+  // Número (1.1) e texto ("1,10") seguem o mesmo caminho (revisão B4).
+  const t = (typeof v === "number" ? v.toFixed(2) : v).replace(".", ",");
   const m = /^(\d{1,3})(?:,(\d{1,2}))?$/.exec(t.trim());
   if (!m) throw new EntradaInvalidaError('Percentual inválido: use "1,10" para 1,10%.');
   return BigInt(m[1] ?? "0") * 100n + BigInt((m[2] ?? "").padEnd(2, "0"));

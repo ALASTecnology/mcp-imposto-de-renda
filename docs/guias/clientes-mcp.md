@@ -1,150 +1,89 @@
 # Configuração nos clientes MCP
 
-Todo cliente MCP inicia o MCP Imposto de Renda da mesma forma: um comando, uma lista de argumentos e, no
-argumento `--dir`, a pasta da declaração. Só muda o arquivo de configuração e o nome da chave.
+O MCP Imposto de Renda é um servidor MCP **local, só por stdio**: o cliente inicia o processo na sua
+máquina, passa a pasta da declaração em `--dir` e conversa com ele pela entrada e saída padrão. Não
+há modo HTTP ([ADR 0001](../adr/0001-mcp-local-sem-servidor.md)).
 
-Nos exemplos abaixo, troque `/Users/voce/Documentos/IR-2026` pela sua pasta. No Windows, use
-barras duplas no JSON (`"C:\\Users\\voce\\Documentos\\IR-2026"`) ou barras normais
-(`"C:/Users/voce/Documentos/IR-2026"`).
+![Como cada cliente se conecta](../assets/clientes-conexao.svg)
 
-## Comando: npm ou código-fonte
+## Clientes
+
+Níveis de suporte: **completo** (o cliente inicia o servidor por stdio), **com ponte** (o cliente só
+aceita URL e precisa de uma [ponte local](clientes/ponte-stdio-http.md) em `127.0.0.1`) e **não
+suportado** (o cliente roda na nuvem e exigiria expor a pasta na internet).
+
+| Cliente | Transporte suportado | Suporte | Plano | Guia |
+| --- | --- | --- | --- | --- |
+| Claude Desktop | stdio | Completo | Qualquer conta Claude | [claude-desktop.md](clientes/claude-desktop.md) |
+| Claude Code (CLI, IDE e desktop) | stdio, HTTP | Completo | Pro, Max, Team, Enterprise ou chave de API | [claude-code.md](clientes/claude-code.md) |
+| ChatGPT, aplicativo de desktop (Codex) | stdio | Completo | Conta com acesso ao Codex | [chatgpt.md](clientes/chatgpt.md) |
+| ChatGPT na web | HTTPS público ou Secure MCP Tunnel | Com ponte, não recomendado | Conforme plano e workspace | [chatgpt.md](clientes/chatgpt.md#chatgpt-na-web) |
+| OpenAI Codex CLI e extensão de IDE | stdio, HTTP | Completo | Conta com Codex ou chave de API | [codex.md](clientes/codex.md) |
+| Gemini CLI | stdio, HTTP, SSE | Completo | Chave paga ou licença empresarial (contas pessoais migraram em 18/06/2026) | [gemini-cli.md](clientes/gemini-cli.md) |
+| Antigravity CLI, app e IDE | stdio, HTTP, SSE | Completo | Conta Antigravity | [gemini-cli.md](clientes/gemini-cli.md#antigravity-cli) |
+| App Gemini e Google AI Studio | sem servidor local | Não suportado | Qualquer | [gemini-app-e-ai-studio.md](clientes/gemini-app-e-ai-studio.md) |
+| Gemini Enterprise | Streamable HTTP com TLS público | Não suportado | Edições pagas | [gemini-app-e-ai-studio.md](clientes/gemini-app-e-ai-studio.md) |
+| GitHub Copilot no VS Code | stdio, HTTP | Completo (limite de 128 ferramentas) | Qualquer plano do Copilot | [vscode-copilot.md](clientes/vscode-copilot.md) |
+| Cursor | stdio, SSE, HTTP | Completo | Qualquer plano | [cursor.md](clientes/cursor.md) |
+| Windsurf (Devin Desktop) | stdio, HTTP, SSE | Completo (limite de 100 ferramentas no Cascade) | Qualquer plano | [windsurf.md](clientes/windsurf.md) |
+| Zed | stdio, HTTP | Completo (sem recursos MCP) | Gratuito ou plano do Zed | [zed.md](clientes/zed.md) |
+| JetBrains AI Assistant e Junie | stdio, HTTP, SSE | Completo | Acesso ao JetBrains AI | [jetbrains.md](clientes/jetbrains.md) |
+| Cline | stdio, HTTP, SSE | Completo | Gratuito (paga o modelo) | [cline.md](clientes/cline.md) |
+| Roo Code | stdio, HTTP, SSE | Completo, projeto descontinuado | Gratuito (paga o modelo) | [roo-code.md](clientes/roo-code.md) |
+| Continue | stdio, HTTP, SSE | Completo (modo agente) | Gratuito (paga o modelo) | [continue.md](clientes/continue.md) |
+| goose | stdio, HTTP | Completo | Gratuito | [goose.md](clientes/goose.md) |
+| LM Studio | stdio, HTTP | Completo, modelo local | Gratuito | [lm-studio.md](clientes/lm-studio.md) |
+| Ollama | não é cliente MCP | Completo via ollmcp, goose, Continue ou Cline | Gratuito | [ollama.md](clientes/ollama.md) |
+| Open WebUI | Streamable HTTP; OpenAPI via mcpo | Com ponte | Gratuito (admin adiciona) | [open-webui.md](clientes/open-webui.md) |
+| Microsoft Copilot Studio | Streamable HTTP pela nuvem | Não suportado | Licença organizacional | [copilot-studio.md](clientes/copilot-studio.md) |
+| Kiro CLI (antigo Amazon Q Developer CLI) | stdio, HTTP | Completo | Conta Kiro | [kiro-amazon-q.md](clientes/kiro-amazon-q.md) |
+
+Os dados de cada linha foram conferidos na documentação oficial de cada cliente em 14/10/2026; cada
+guia traz no rodapé as URLs consultadas. Planos e telas mudam com frequência: em caso de divergência,
+vale a documentação do fornecedor.
+
+## O que todo cliente precisa
 
 | Instalação | `command` | `args` |
 | --- | --- | --- |
 | npm (depois da publicação) | `npx` | `["-y", "mcp-imposto-de-renda", "--dir", "<pasta>"]` |
-| código-fonte | `node` | `["/caminho/para/mcp-imposto-de-renda/apps/cli/dist/index.js", "--dir", "<pasta>"]` |
+| código-fonte (hoje) | `node` | `["/caminho/para/mcp-imposto-de-renda/apps/cli/dist/index.js", "--dir", "<pasta>"]` |
 
-Para usar só consulta e simulação, acrescente `"--somente-leitura"` ao fim de `args`.
+O pacote ainda não está publicado no npm. Até lá, compile a partir do código
+([instalação](instalacao.md)) e use a segunda linha. Para só consultar e simular, acrescente
+`"--somente-leitura"` ao fim de `args`.
 
-Depois de editar a configuração, reinicie o cliente (ou recarregue os servidores MCP) e confira se
-as ferramentas do MCP Imposto de Renda aparecem na lista.
+Nos exemplos dos guias, troque `/Users/voce/Documentos/IR-2026` pela sua pasta. No Windows, use barras
+normais (`"C:/Users/voce/Documentos/IR-2026"`) ou duplas (`"C:\\Users\\voce\\Documentos\\IR-2026"`) no
+JSON.
 
-## Claude Desktop
+## Quantidade de ferramentas
 
-Arquivo `claude_desktop_config.json`:
-
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-A partir do código:
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "node",
-      "args": [
-        "/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js",
-        "--dir",
-        "/Users/voce/Documentos/IR-2026"
-      ]
-    }
-  }
-}
-```
-
-## Claude Code
-
-Pela linha de comando (escopo do usuário ou do projeto):
-
-```sh
-claude mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026
-# ou, a partir do código
-claude mcp add mcp-imposto-de-renda -- node /Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js --dir /Users/voce/Documentos/IR-2026
-```
-
-Ou num arquivo `.mcp.json` na raiz do projeto:
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-O `.mcp.json` com o caminho da sua pasta é pessoal; não o versione em repositório público.
-
-## Cursor
-
-Arquivo `~/.cursor/mcp.json` (global) ou `.cursor/mcp.json` (por projeto):
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-## VS Code
-
-Arquivo `.vscode/mcp.json` no espaço de trabalho (ou o comando **MCP: Add Server**). A chave é
-`servers` e cada servidor declara `type`:
-
-```json
-{
-  "servers": {
-    "mcp-imposto-de-renda": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-## Windsurf
-
-Arquivo `~/.codeium/windsurf/mcp_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "mcp-imposto-de-renda": {
-      "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
-    }
-  }
-}
-```
-
-## Outros clientes
-
-Qualquer cliente compatível com MCP via stdio funciona. Procure na documentação dele onde ficam os
-servidores locais e preencha:
-
-- comando: `npx` (ou `node`);
-- argumentos: `-y mcp-imposto-de-renda --dir <pasta>` (ou o caminho do `dist/index.js` e `--dir <pasta>`);
-- transporte: stdio. O MCP Imposto de Renda não oferece HTTP
-  ([ADR 0001](../adr/0001-mcp-local-sem-servidor.md)).
+O servidor completo registra **154 ferramentas** (95 gravam). Com `--somente-leitura`, ficam **59**.
+Alguns clientes limitam a lista: o VS Code aceita até 128 ferramentas por pedido e o Cascade do
+Windsurf, 100. Modelos locais também sofrem com listas longas. Os guias desses clientes explicam como
+contornar.
 
 ## Boas práticas
 
 - **Confirmação antes de gravar.** Deixe o cliente pedir aprovação para ferramentas com
-  `destructiveHint: true` (as de inclusão, alteração, remoção e gravação do `.DBK`). Não aprove
-  gravações em lote sem ler.
+  `destructiveHint: true` (inclusão, alteração, remoção e gravação do `.DBK`). Não use aprovação
+  automática para este servidor.
 - **Um servidor por pasta.** Para separar declarações de pessoas diferentes, configure dois
-  servidores com nomes distintos (`mcp-imposto-de-renda-ana`, `mcp-imposto-de-renda-bruno`), cada um com a sua pasta.
+  servidores com nomes distintos (`mcp-imposto-de-renda-ana`, `mcp-imposto-de-renda-bruno`), cada um
+  com a sua pasta.
+- **Configuração pessoal fora do git.** Arquivos de projeto (`.mcp.json`, `.cursor/mcp.json`,
+  `.vscode/mcp.json` e semelhantes) levam o caminho da sua pasta; prefira o escopo de usuário.
+- **Ponte só em 127.0.0.1.** Se precisar de HTTP, siga a [ponte local](clientes/ponte-stdio-http.md).
 - **Privacidade.** O provedor de LLM configurado no cliente recebe tudo o que as ferramentas
-  devolvem. Escolha o provedor e o plano conforme a política de dados que você aceita.
+  devolvem. Com modelo local ([LM Studio](clientes/lm-studio.md), [Ollama](clientes/ollama.md)), nada
+  sai da máquina.
+
+## Prompt para começar em qualquer cliente
+
+> Use o MCP Imposto de Renda para criar minha declaração 2026 a partir destes informes de rendimentos.
+> Liste os arquivos da pasta autorizada, abra o DBK que gravei no programa oficial, mostre o que vai
+> preencher em cada ficha e só grave depois da minha confirmação.
 
 Problemas comuns (comando `npx` não encontrado no Windows, caminho com espaços, servidor que não
 aparece) estão em [solucao-de-problemas.md](solucao-de-problemas.md).

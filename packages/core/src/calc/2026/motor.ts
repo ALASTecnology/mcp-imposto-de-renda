@@ -290,7 +290,7 @@ function apurarCompleto(e: EntradaCalculo2026, t: Totais, comExterior: boolean):
       "imposto.tabela",
       `Imposto pela tabela anual (${descreverFaixa(base)}): ${brl(impostoTabela)}`,
       impostoTabela,
-      `Tabela progressiva anual do exercício 2026 (${FONTES_2026.tabelas2025}). Frações de centavo arredondadas ao centavo mais próximo, meio para cima.`,
+      `Tabela progressiva anual do exercício 2026 (${FONTES_2026.tabelas2025}). A fração de centavo de base x alíquota é descartada (truncamento), como no programa oficial.`,
     ),
   );
   return { rendimentos, deducoes, total, base, impostoTabela, memoria: mem };

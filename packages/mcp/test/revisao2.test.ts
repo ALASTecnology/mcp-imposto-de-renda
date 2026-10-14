@@ -1,7 +1,15 @@
 /**
  * Regressões da revisão 2: cada bloco reproduz um defeito comprovado e confere a correção.
  */
-import { mkdirSync, mkdtempSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  realpathSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -84,5 +92,34 @@ describe("cópias de segurança (achado 7)", () => {
     });
     expect(nada.isError).toBe(true);
     expect(textoDe(nada)).toContain("Cópia não encontrada");
+  });
+});
+
+describe("temporários interrompidos (achado 8)", () => {
+  const tmp = ".mcp-imposto-de-renda-00000000-0000-0000-0000-000000000000.tmp";
+
+  it("apaga os temporários da raiz e das subpastas na abertura", async () => {
+    mkdirSync(join(pasta, "2026", "fundo"), { recursive: true });
+    writeFileSync(join(pasta, tmp), "dados pessoais");
+    writeFileSync(join(pasta, "2026", tmp), "dados pessoais");
+    writeFileSync(join(pasta, "2026", "fundo", tmp), "dados pessoais");
+    writeFileSync(join(pasta, "2026", "mantido.txt"), "fica");
+    await abrirPastaAutorizada(pasta);
+    expect(readdirSync(pasta)).not.toContain(tmp);
+    expect(readdirSync(join(pasta, "2026")).sort()).toEqual(["fundo", "mantido.txt"]);
+    expect(readdirSync(join(pasta, "2026", "fundo"))).toEqual([]);
+  });
+
+  it("não segue link simbólico para pasta de fora nem passa do limite de profundidade", async () => {
+    const fora = join(base, "fora");
+    mkdirSync(fora);
+    writeFileSync(join(fora, tmp), "de fora");
+    symlinkSync(fora, join(pasta, "atalho"));
+    const fundo = join(pasta, ...Array.from({ length: 10 }, (_, i) => `n${i}`));
+    mkdirSync(fundo, { recursive: true });
+    writeFileSync(join(fundo, tmp), "fundo demais");
+    await abrirPastaAutorizada(pasta);
+    expect(readdirSync(fora)).toContain(tmp);
+    expect(readdirSync(fundo)).toContain(tmp);
   });
 });

@@ -16,7 +16,7 @@
  * Mensagens de erro citam só o nome relativo informado, nunca o caminho absoluto da máquina.
  */
 import { randomUUID } from "node:crypto";
-import { constants, type Stats } from "node:fs";
+import { constants, type Dirent, type Stats } from "node:fs";
 import {
   type FileHandle,
   lstat,
@@ -629,20 +629,38 @@ export async function abrirPastaAutorizada(
   return new PastaAutorizadaImpl(real, opcoes);
 }
 
+/** Profundidade máxima de subpastas varridas atrás de temporários (a raiz é a profundidade 0). */
+export const PROFUNDIDADE_LIMPEZA = 8;
+/** Quantas pastas, no máximo, a limpeza visita, para não atrasar a abertura de pastas enormes. */
+export const MAX_PASTAS_LIMPEZA = 2_000;
+
 /**
  * Apaga temporários de escrita deixados por um encerramento no meio de uma gravação (podem ter
- * dados pessoais). Só os que seguem o padrão do MCP Imposto de Renda, na raiz da pasta autorizada.
+ * dados pessoais). Só os que seguem o padrão do MCP Imposto de Renda, na raiz e nas subpastas
+ * (o temporário fica na pasta do destino, e o destino pode estar numa subpasta). Links simbólicos
+ * não são seguidos, pastas ocultas são puladas (nenhum destino pode estar nelas) e a varredura
+ * para em `PROFUNDIDADE_LIMPEZA` níveis e `MAX_PASTAS_LIMPEZA` pastas.
  */
 async function limparTemporarios(raiz: string): Promise<void> {
-  let nomes: string[];
-  try {
-    nomes = await readdir(raiz);
-  } catch {
-    return;
-  }
-  for (const n of nomes) {
-    if (!PADRAO_TEMPORARIO.test(n)) continue;
-    const st = await lstatOuNada(join(raiz, n));
-    if (st?.isFile()) await unlink(join(raiz, n)).catch(() => undefined);
+  const fila: { pasta: string; nivel: number }[] = [{ pasta: raiz, nivel: 0 }];
+  let visitadas = 0;
+  for (let item = fila.shift(); item; item = fila.shift()) {
+    if (++visitadas > MAX_PASTAS_LIMPEZA) return;
+    let entradas: Dirent[];
+    try {
+      entradas = await readdir(item.pasta, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const d of entradas) {
+      const caminho = join(item.pasta, d.name);
+      // `Dirent` vem do lstat: um link simbólico nunca é pasta nem arquivo aqui.
+      if (d.isFile() && PADRAO_TEMPORARIO.test(d.name)) {
+        const st = await lstatOuNada(caminho);
+        if (st?.isFile()) await unlink(caminho).catch(() => undefined);
+      } else if (d.isDirectory() && !d.name.startsWith(".") && item.nivel < PROFUNDIDADE_LIMPEZA) {
+        fila.push({ pasta: caminho, nivel: item.nivel + 1 });
+      }
+    }
   }
 }

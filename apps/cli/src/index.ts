@@ -1,4 +1,9 @@
-import { createServer, VERSAO_SERVIDOR } from "@mcp-imposto-de-renda/mcp";
+import {
+  catalogoFerramentas,
+  createServer,
+  GRUPOS,
+  VERSAO_SERVIDOR,
+} from "@mcp-imposto-de-renda/mcp";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type { JSONRPCMessage } from "@modelcontextprotocol/sdk/types.js";
 import { AJUDA, interpretarArgs } from "./args.js";
@@ -33,9 +38,16 @@ async function main(): Promise<void> {
       break;
   }
 
-  const server = createServer({
-    diretorioAutorizado: args.diretorio,
+  const escolhidos = args.grupos;
+  const grupos = escolhidos ? GRUPOS.filter((g) => escolhidos.includes(g.nome)) : undefined;
+  const selecao = {
+    perfil: args.perfil,
     somenteLeitura: args.somenteLeitura,
+    ...(grupos ? { grupos } : {}),
+  };
+  const server = createServer({
+    ...selecao,
+    diretorioAutorizado: args.diretorio,
     registrarErro: (ferramenta, erro) => log(`falha em ${ferramenta} (${classeDoErro(erro)})`),
   });
   const transport = new StdioServerTransport();
@@ -87,7 +99,10 @@ async function main(): Promise<void> {
     if (id !== undefined && pendentes.delete(id) && pendentes.size === 0) aoEsvaziar?.();
   };
   transport.onclose = () => void encerrar("transporte fechado");
-  log(`pronto (versão ${VERSAO_SERVIDOR}${args.somenteLeitura ? ", somente leitura" : ""})`);
+  const total = catalogoFerramentas(selecao).length;
+  log(
+    `pronto (versão ${VERSAO_SERVIDOR}, perfil ${args.perfil}, ${total} ferramentas${args.somenteLeitura ? ", somente leitura" : ""})`,
+  );
 }
 
 main().catch((e: unknown) => {

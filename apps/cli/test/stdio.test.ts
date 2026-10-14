@@ -185,6 +185,28 @@ describe("mcp-imposto-de-renda via stdio", () => {
     expect(await p.saida()).toEqual({ codigo: 0, sinal: null });
   }, 30_000);
 
+  it("com --perfil essencial anuncia o recorte que cabe nos clientes com limite", async () => {
+    const p = iniciar(["--dir", pasta, "--perfil", "essencial"]);
+    await inicializar(p);
+    p.enviar({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} });
+    const nomes = ((await p.resposta(2)).result as { tools: { name: string }[] }).tools.map(
+      (t) => t.name,
+    );
+    expect(nomes).toHaveLength(78);
+    expect(nomes).toContain("adicionar_bem");
+    expect(nomes).toContain("editar_lancamento");
+    expect(nomes).not.toContain("editar_bem");
+    p.filho.stdin.end();
+    expect(await p.saida()).toEqual({ codigo: 0, sinal: null });
+    expect(p.stderr()).toContain("perfil essencial, 78 ferramentas");
+  }, 30_000);
+
+  it("com perfil inválido explica o erro e sai com código 2", async () => {
+    const p = iniciar(["--dir", pasta, "--perfil", "tudo"]);
+    expect((await p.saida()).codigo).toBe(2);
+    expect(p.stderr()).toContain('--perfil: perfil desconhecido "tudo"');
+  }, 30_000);
+
   it("encerra limpo com SIGINT", async () => {
     const p = iniciar(["--dir", pasta]);
     await inicializar(p);

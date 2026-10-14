@@ -26,6 +26,7 @@ describe("interpretarArgs", () => {
       acao: "iniciar",
       diretorio: pasta,
       somenteLeitura: false,
+      perfil: "completo",
     });
     expect(interpretarArgs(["--dir", "."], pasta)).toMatchObject({ diretorio: pasta });
   });
@@ -63,5 +64,73 @@ describe("interpretarArgs", () => {
     expect(interpretarArgs(["--versao"])).toEqual({ acao: "versao" });
     expect(interpretarArgs(["-v"])).toEqual({ acao: "versao" });
     expect(AJUDA).toContain("--somente-leitura");
+  });
+
+  it("aceita --perfil e a variável MCP_IMPOSTO_DE_RENDA_PERFIL, com a opção valendo mais", () => {
+    expect(interpretarArgs(["--dir", pasta, "--perfil", "essencial"])).toMatchObject({
+      acao: "iniciar",
+      perfil: "essencial",
+    });
+    const env = { MCP_IMPOSTO_DE_RENDA_PERFIL: "consulta" };
+    expect(interpretarArgs(["--dir", pasta], pasta, env)).toMatchObject({ perfil: "consulta" });
+    expect(interpretarArgs(["--dir", pasta, "--perfil", "completo"], pasta, env)).toMatchObject({
+      perfil: "completo",
+    });
+    expect(
+      interpretarArgs(["--dir", pasta], pasta, { MCP_IMPOSTO_DE_RENDA_PERFIL: " " }),
+    ).toMatchObject({
+      perfil: "completo",
+    });
+  });
+
+  it("rejeita perfil desconhecido com a lista dos válidos", () => {
+    expect(interpretarArgs(["--dir", pasta, "--perfil", "minimo"])).toEqual({
+      acao: "erro",
+      mensagem: '--perfil: perfil desconhecido "minimo"; use completo, essencial ou consulta',
+    });
+    const r = interpretarArgs(["--dir", pasta], pasta, { MCP_IMPOSTO_DE_RENDA_PERFIL: "x" });
+    expect(r.acao === "erro" ? r.mensagem : "").toMatch(
+      /^MCP_IMPOSTO_DE_RENDA_PERFIL: perfil desconhecido "x"/,
+    );
+  });
+
+  it("seleciona e tira grupos, validando os nomes", () => {
+    expect(interpretarArgs(["--dir", pasta, "--grupos", "calculo, validacao"])).toMatchObject({
+      grupos: ["calculo", "validacao"],
+    });
+    const sem = interpretarArgs(["--dir", pasta, "--sem-grupos", "calculadoras,orientacao"]);
+    expect(sem.acao === "iniciar" ? sem.grupos : []).not.toContain("calculadoras");
+    expect(sem.acao === "iniciar" ? sem.grupos?.length : 0).toBe(9);
+    expect(
+      interpretarArgs(["--dir", pasta, "--grupos", "calculo,edicao", "--sem-grupos", "edicao"]),
+    ).toMatchObject({ grupos: ["calculo"] });
+    const r = interpretarArgs(["--dir", pasta, "--grupos", "calculo,impostos"]);
+    expect(r.acao).toBe("erro");
+    expect(r.acao === "erro" ? r.mensagem : "").toMatch(
+      /^--grupos: grupo desconhecido "impostos"; grupos válidos: calculo, declaracao, /,
+    );
+    expect(interpretarArgs(["--dir", pasta, "--grupos", " , "])).toMatchObject({
+      acao: "erro",
+      mensagem: "--grupos: informe ao menos um grupo",
+    });
+    expect(
+      interpretarArgs(["--dir", pasta, "--grupos", "calculo", "--sem-grupos", "calculo"]),
+    ).toMatchObject({
+      acao: "erro",
+      mensagem: "nenhum grupo de ferramentas restou depois de --grupos e --sem-grupos",
+    });
+  });
+
+  it.skipIf(process.getuid?.() === 0)("o perfil consulta dispensa pasta gravável", () => {
+    expect(interpretarArgs(["--dir", somenteLeitura, "--perfil", "consulta"]).acao).toBe("iniciar");
+  });
+
+  it("mostra na ajuda quantas ferramentas cada perfil expõe e os grupos", () => {
+    expect(AJUDA).toMatch(/completo\s+154 ferramentas/);
+    expect(AJUDA).toMatch(/essencial\s+78 ferramentas/);
+    expect(AJUDA).toMatch(/consulta\s+37 ferramentas/);
+    expect(AJUDA).toContain("MCP_IMPOSTO_DE_RENDA_PERFIL");
+    expect(AJUDA).toContain("--sem-grupos");
+    expect(AJUDA).toContain("calculadoras (10)");
   });
 });

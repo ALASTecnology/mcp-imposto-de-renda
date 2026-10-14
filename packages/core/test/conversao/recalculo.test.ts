@@ -10,6 +10,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { modeloParaRegistros, registrosParaModelo } from "../../src/conversao/index.js";
+import { indicadorImpostoPago } from "../../src/conversao/recalculo.js";
 import { lerArquivo, verificarControles } from "../../src/dbk/index.js";
 import { zDeclaracao } from "../../src/model/index.js";
 
@@ -25,14 +26,13 @@ const IGNORAR = new Set(["NR_CONTROLE", "NR_HASH"]);
 
 /**
  * Campos que, sem o arquivo base, não são reproduzidos: dados do ambiente em que o programa
- * rodou (sistema operacional, Java, endereço de rede e um controle interno em FILLER3), o
- * indicador IN_IMPOSTO_PAGO (regra do programa não determinada) e as doações diretas que o
+ * rodou (sistema operacional, Java, endereço de rede e um controle interno em FILLER3) e as
+ * doações diretas que o
  * programa mantém no header de uma declaração simplificada sem os registros 91 e 92.
  */
 const CAMPOS_FORA_DO_MODELO: readonly string[] = [
   "IR.ENDERECO_MAC",
   "IR.FILLER3",
-  "IR.IN_IMPOSTO_PAGO",
   "IR.NOME_SO",
   "IR.VERSAO_JVM",
   "IR.VERSAO_SO",
@@ -100,4 +100,24 @@ describe("recálculo dos totais do Resumo e do header", () => {
     }
     expect([...porCampo.keys()].sort()).toEqual([...CAMPOS_FORA_DO_MODELO].sort());
   });
+});
+
+describe("IN_IMPOSTO_PAGO", () => {
+  // Valores observados no harness: combinações de IRRF, carnê-leão e complementar.
+  it.each([
+    [0n, 0n, 0n, false, 0n],
+    [1n, 0n, 0n, false, 1n],
+    [0n, 1n, 0n, false, 6n],
+    [0n, 0n, 1n, false, 6n],
+    [1n, 1n, 1n, false, 7n],
+    [1n, 0n, 0n, true, 1n],
+    [0n, 1n, 0n, true, 2n],
+    [1n, 1n, 0n, true, 3n],
+    [0n, 0n, 1n, true, 4n],
+  ])(
+    "IRRF %s, carnê %s, complementar %s, completa %s: %s",
+    (irrf, carneLeao, complementar, completa, esperado) => {
+      expect(indicadorImpostoPago({ irrf, carneLeao, complementar }, completa)).toBe(esperado);
+    },
+  );
 });

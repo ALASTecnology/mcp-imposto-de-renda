@@ -255,7 +255,6 @@ export const CAMPOS_NAO_RECALCULADOS: Readonly<Record<string, readonly string[]>
     "VR_IMPOSTO_DEVIDO_LEI_14754",
   ],
   IR: [
-    "IN_IMPOSTO_PAGO",
     "IN_IMPOSTO_ANTECIPADO",
     "IN_OBRIGAT_ENTREGA",
     "IN_CRIT_OBRIGAT",
@@ -480,6 +479,7 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
     VR_TOTISENTOS: soma(t.isentos),
     VR_TOTEXCLUSIVO: soma(t.exclusivos),
     VR_TOTAL_PAGAMENTOS: dec.pagamentos.reduce((a, p) => a + p.valorPago, 0n),
+    IN_IMPOSTO_PAGO: indicadorImpostoPago(escolhido.impostoPago, completa),
   };
   // Doações diretas: o programa mantém o valor no header mesmo quando a declaração simplificada
   // não grava os registros 91 e 92; sem doação no modelo, o valor do arquivo base fica.
@@ -601,6 +601,28 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
     saldoAPagar: pagar,
     comparacao,
   };
+}
+
+/**
+ * `IN_IMPOSTO_PAGO` do header: soma de indicadores do imposto pago no modelo escolhido. Na
+ * completa, 1 para IRRF (titular e dependentes, sem o do 13º), 2 para carnê-leão e 4 para
+ * imposto complementar; na simplificada, que apresenta carnê-leão e complementar numa linha só,
+ * qualquer um dos dois soma 6. Imposto pago no exterior não entra. Determinado com casos
+ * sintéticos do harness (combinações de IRRF, carnê-leão, complementar e exterior nos dois
+ * modelos); ver docs/regras/irpf-2026.md.
+ */
+export function indicadorImpostoPago(
+  pago: { irrf: bigint; carneLeao: bigint; complementar: bigint },
+  completa: boolean,
+): bigint {
+  let v = pago.irrf > 0n ? 1n : 0n;
+  if (completa) {
+    if (pago.carneLeao > 0n) v += 2n;
+    if (pago.complementar > 0n) v += 4n;
+  } else if (pago.carneLeao + pago.complementar > 0n) {
+    v += 6n;
+  }
+  return v;
 }
 
 function minimoBig(a: bigint, b: bigint): bigint {

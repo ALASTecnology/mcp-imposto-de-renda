@@ -877,7 +877,7 @@ Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Repetir a situação dos bens**. Grava na pasta autorizada. Exige `--dir`.
 
-Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens) ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. Valida a declaração e grava o DBK com cópia de segurança, devolvendo as pendências.
+Copia a situação em 31/12/2024 para 31/12/2025 nos bens escolhidos (posições de listar_bens ou de listar_lancamentos com ficha 'bens') ou, sem 'indices', em todos os bens com situação atual zerada; forcar: true copia mesmo quando já há valor. Valida a declaração e grava o DBK com cópia de segurança, devolvendo as pendências.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |

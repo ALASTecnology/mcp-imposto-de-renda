@@ -14,7 +14,7 @@
   <img alt="Node.js 22 ou superior" src="https://img.shields.io/badge/node-%3E%3D22-339933">
   <img alt="Transporte MCP stdio" src="https://img.shields.io/badge/MCP-stdio-5a4fcf">
   <img alt="Exercício 2026" src="https://img.shields.io/badge/exerc%C3%ADcio-2026-informational">
-  <a href="docs/testes.md"><img alt="1.140 testes" src="https://img.shields.io/badge/testes-1.140-brightgreen"></a>
+  <a href="docs/testes.md"><img alt="1.147 testes" src="https://img.shields.io/badge/testes-1.147-brightgreen"></a>
 </p>
 
 <p align="center">
@@ -154,8 +154,15 @@ Desktop, por exemplo, em `claude_desktop_config.json`:
 }
 ```
 
-Depois da publicação no npm, o comando vira `npx -y mcp-imposto-de-renda --dir <pasta>`. Use
-`--somente-leitura` para só consultar, sem nenhuma ferramenta que grave.
+Depois da publicação no npm, o comando vira `npx -y mcp-imposto-de-renda --dir <pasta>`. Opções
+úteis:
+
+| Opção | Efeito |
+| --- | --- |
+| `--perfil essencial` | 78 ferramentas: a declaração inteira, sem os atalhos repetidos por ficha. Use em clientes com limite de ferramentas (VS Code: 128; Windsurf: 100). |
+| `--perfil consulta` | 37 ferramentas: só leitura e cálculo, nada grava. |
+| `--grupos` e `--sem-grupos` | Expõem ou tiram grupos inteiros, por nome. |
+| `--somente-leitura` | Desliga todas as ferramentas que gravam arquivos. |
 
 **3. Converse.** Peça "Vamos preparar a minha declaração do IRPF 2026" ou acione o prompt
 `preparar_declaracao`. Para partir do que você já tem, grave a cópia de segurança no programa
@@ -192,14 +199,14 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 
 | Indicador | Valor | Onde conferir |
 | --- | --- | --- |
-| Ferramentas MCP | **154** em 11 grupos; 95 gravam, 59 com `--somente-leitura` | [referência das ferramentas](docs/ferramentas/README.md) |
+| Ferramentas MCP | **154** em 11 grupos; 95 gravam, 59 com `--somente-leitura`; perfis `essencial` (78) e `consulta` (37) | [referência das ferramentas](docs/ferramentas/README.md) |
 | Casos de referência (golden) reproduzidos ao centavo | **48 de 48** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [regras do IRPF 2026](docs/regras/irpf-2026.md) |
 | Arquivos do programa oficial relidos e regravados byte a byte | **96** (48 `.DBK` e 48 `.DEC`) | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
 | Tipos de registro do `.DBK` convertidos para o modelo | **57**, em 26 fichas | [formato do DBK](docs/formato-dbk.md) |
 | Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
 | Tabelas de códigos do exercício | **31** | [tabelas](docs/mapeamento/tabelas/README.md) |
 | Funções do programa oficial mapeadas | **416**: 328 atendidas, 76 parciais, 12 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
-| Testes automatizados | **1.140**, em Vitest | [estratégia de testes](docs/testes.md) |
+| Testes automatizados | **1.147**, em Vitest | [estratégia de testes](docs/testes.md) |
 | Declarações de exemplo regeneradas a cada teste | **4** | [exemplos](exemplos/README.md) |
 | Chamadas de rede | **nenhuma** (verificado por teste) | [segurança](docs/seguranca.md) |
 
@@ -550,7 +557,7 @@ T9, hash e controle do header), está em [docs/formato-dbk.md](docs/formato-dbk.
   ficam com os valores do arquivo. Ganho de capital e renda variável são de tributação definitiva e
   não mudam o ajuste.
 - **Limite de ferramentas de alguns clientes.** Clientes que aceitam menos de 154 ferramentas
-  exigem desligar parte delas; o guia de cada cliente explica como.
+  precisam de `--perfil essencial` (78) ou de `--grupos`; o guia de cada cliente explica como.
 - Pendências documentadas em [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md), como a
   contribuição do ente patrocinador no código 37 e os limites de 6%, 7% e 1% das doações, ainda não
   confirmados por caso de referência.

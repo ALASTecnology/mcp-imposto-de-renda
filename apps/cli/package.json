@@ -1,15 +1,24 @@
 {
-  "name": "autoir-mcp",
+  "name": "mcp-imposto-de-renda",
   "version": "0.0.0",
   "private": true,
-  "description": "Executável stdio do servidor MCP AutoIR.",
+  "description": "Executável stdio do servidor MCP Imposto de Renda.",
   "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/ALASTecnology/mcp-imposto-de-renda#readme",
+  "bugs": {
+    "url": "https://github.com/ALASTecnology/mcp-imposto-de-renda/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALASTecnology/mcp-imposto-de-renda.git",
+    "directory": "apps/cli"
+  },
   "type": "module",
   "engines": {
     "node": ">=22"
   },
   "bin": {
-    "autoir-mcp": "./dist/index.js"
+    "mcp-imposto-de-renda": "./dist/index.js"
   },
   "files": [
     "dist/index.js"
@@ -23,7 +32,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@autoir/core": "workspace:*",
-    "@autoir/mcp": "workspace:*"
+    "@mcp-imposto-de-renda/core": "workspace:*",
+    "@mcp-imposto-de-renda/mcp": "workspace:*"
   }
 }

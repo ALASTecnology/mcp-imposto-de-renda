@@ -18,7 +18,7 @@ import serpro.ppgd.negocio.Pendencia;
 import serpro.ppgd.negocio.Valor;
 
 /**
- * Harness de referência do AutoIR.
+ * Harness de referência do MCP Imposto de Renda.
  *
  * Usa as classes do programa oficial IRPF 2026, baixado pelo desenvolvedor, como biblioteca:
  * monta declarações sintéticas a partir de casos JSON, executa o cálculo oficial, extrai o
@@ -117,7 +117,7 @@ public final class Referencia {
         p.finalizar(entrada);
         facade.salvarDeclaracao(d);
 
-        File tmp = Files.createTempDirectory("autoir-ref-saida").toFile();
+        File tmp = Files.createTempDirectory("mcp-imposto-de-renda-ref-saida").toFile();
         GravadorTXT.copiarDeclaracao(id, tmp.getAbsolutePath());
         GravadorTXT.gravarDeclaracao(id, tmp.getAbsolutePath());
         dirFixtures.mkdirs();

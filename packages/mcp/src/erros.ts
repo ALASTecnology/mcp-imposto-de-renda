@@ -1,5 +1,5 @@
 /**
- * Erros padronizados das ferramentas MCP do AutoIR.
+ * Erros padronizados das ferramentas do MCP Imposto de Renda.
  *
  * Toda falha que chega ao cliente MCP vira um resultado com `isError: true` e uma mensagem em
  * pt-BR pensada para o LLM corrigir a chamada: diz o que deu errado e o que fazer. A mensagem
@@ -20,7 +20,7 @@ import {
   ValorExcedeTamanhoError,
   ValorMonetarioInvalidoError,
   ValorNegativoError,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 
 /**
  * Erro cuja mensagem já é segura e útil para o LLM. Lance esta classe (ou uma subclasse) dentro

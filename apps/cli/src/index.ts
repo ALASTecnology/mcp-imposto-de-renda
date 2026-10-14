@@ -1,4 +1,4 @@
-import { createServer, VERSAO_SERVIDOR } from "@autoir/mcp";
+import { createServer, VERSAO_SERVIDOR } from "@mcp-imposto-de-renda/mcp";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type { JSONRPCMessage } from "@modelcontextprotocol/sdk/types.js";
 import { AJUDA, interpretarArgs } from "./args.js";
@@ -6,7 +6,7 @@ import { AJUDA, interpretarArgs } from "./args.js";
 // stdout é exclusivo do protocolo MCP: qualquer mensagem humana vai para stderr. Os logs nunca
 // levam conteúdo da declaração: só eventos do processo, nome de ferramenta e classe do erro.
 function log(mensagem: string): void {
-  process.stderr.write(`autoir-mcp: ${mensagem}\n`);
+  process.stderr.write(`mcp-imposto-de-renda: ${mensagem}\n`);
 }
 
 /** Tempo máximo de espera pelas chamadas em andamento ao encerrar. */
@@ -26,7 +26,7 @@ async function main(): Promise<void> {
       process.stderr.write(`${VERSAO_SERVIDOR}\n`);
       return;
     case "erro":
-      process.stderr.write(`autoir-mcp: ${args.mensagem}\n\n${AJUDA}`);
+      process.stderr.write(`mcp-imposto-de-renda: ${args.mensagem}\n\n${AJUDA}`);
       process.exitCode = 2;
       return;
     case "iniciar":

@@ -1,7 +1,7 @@
 /**
  * Valores monetários em centavos inteiros.
  *
- * Nenhum cálculo do AutoIR usa ponto flutuante para dinheiro: todo valor é um
+ * Nenhum cálculo do MCP Imposto de Renda usa ponto flutuante para dinheiro: todo valor é um
  * inteiro de centavos, representado como `bigint` com marca nominal para que o
  * compilador não aceite um número qualquer no lugar de um valor monetário.
  */

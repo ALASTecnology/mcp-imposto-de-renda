@@ -6,7 +6,7 @@
  * - número inteiro: sempre em CENTAVOS (123456 = R$ 1.234,56).
  * Tudo é normalizado para inteiro de centavos com `parseCentavos` do core.
  */
-import { type EntradaCalculo2026, parseCentavos } from "@autoir/core";
+import { type EntradaCalculo2026, parseCentavos } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 
 export const DESCRICAO_VALOR =

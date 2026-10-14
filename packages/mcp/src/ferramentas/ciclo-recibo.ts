@@ -1,23 +1,28 @@
 /**
- * Recibo de entrega da declaração transmitida pelo programa oficial. O AutoIR não transmite e
- * não recebe o recibo: o usuário informa o número (12 dígitos) que o programa mostrou, e o
- * AutoIR o guarda num arquivo `<declaração>.recibo.json` ao lado da declaração, para preencher a
- * retificadora depois (`criar_retificadora` sem `recibo`).
+ * Recibo de entrega da declaração transmitida pelo programa oficial. O MCP Imposto de Renda não
+ * transmite e não recebe o recibo: o usuário informa o número (12 dígitos) que o programa mostrou,
+ * e o servidor o guarda num arquivo `<declaração>.recibo.json` ao lado da declaração, para
+ * preencher a retificadora depois (`criar_retificadora` sem `recibo`).
  */
-import type { Declaracao } from "@autoir/core";
+import type { Declaracao } from "@mcp-imposto-de-renda/core";
 import { EntradaInvalidaError } from "../erros.js";
 import { EXT_MODELO, exigirPasta } from "./comum.js";
 import type { ContextoFerramentas } from "./tipos.js";
 
 /** Conteúdo do arquivo de recibo. */
 export interface ReciboRegistrado {
-  readonly tipo: "recibo-autoir";
+  readonly tipo: typeof TIPO_RECIBO;
   readonly cpf: string;
   readonly exercicio: number;
   readonly arquivo: string;
   readonly recibo: string;
   readonly registradoEm: string;
 }
+
+/** Tipo gravado no arquivo de recibo. */
+export const TIPO_RECIBO = "recibo-mcp-imposto-de-renda";
+/** Tipo gravado pelas versões com o nome antigo do projeto; continua aceito na leitura. */
+const TIPO_RECIBO_ANTIGO = "recibo-autoir";
 
 /** Nome do arquivo de recibo de uma declaração: `X.DBK` vira `X.recibo.json`. */
 export function arquivoDoRecibo(arquivo: string): string {
@@ -38,7 +43,7 @@ export async function registrarRecibo(
   recibo: string,
 ) {
   const conteudo: ReciboRegistrado = {
-    tipo: "recibo-autoir",
+    tipo: TIPO_RECIBO,
     cpf: dec.identificacao.cpf,
     exercicio: dec.exercicio,
     arquivo,
@@ -66,11 +71,16 @@ export async function lerReciboRegistrado(
     const j = JSON.parse(
       new TextDecoder("utf-8", { fatal: true }).decode(bytes),
     ) as Partial<ReciboRegistrado>;
-    if (j.tipo !== "recibo-autoir" || j.cpf !== cpf || typeof j.recibo !== "string") {
+    const tipo: string | undefined = j.tipo;
+    if (
+      (tipo !== TIPO_RECIBO && tipo !== TIPO_RECIBO_ANTIGO) ||
+      j.cpf !== cpf ||
+      typeof j.recibo !== "string"
+    ) {
       return undefined;
     }
     validarNumeroRecibo(j.recibo);
-    return j as ReciboRegistrado;
+    return { ...j, tipo: TIPO_RECIBO } as ReciboRegistrado;
   } catch {
     return undefined;
   }

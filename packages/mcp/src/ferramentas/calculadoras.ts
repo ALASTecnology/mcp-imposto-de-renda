@@ -7,7 +7,7 @@ import {
   formatCentavos,
   impostoTabelaAnual,
   centavos as paraCentavos,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import {
   AVISO_FERIADOS,
@@ -42,7 +42,7 @@ const zTexto = z
 const zData = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use AAAA-MM-DD");
 
 const AVISO =
-  "Cálculo de orientação do AutoIR; confira no programa oficial, no GCAP ou no Carnê-Leão Web.";
+  "Cálculo de orientação do MCP Imposto de Renda; confira no programa oficial, no GCAP ou no Carnê-Leão Web.";
 
 function decimal(v: string, casas: number, campo: string): bigint {
   const m = /^(\d+)(?:[.,](\d+))?$/.exec(v.trim());
@@ -423,7 +423,8 @@ export const grupoCalculadoras: GrupoFerramentas = {
           original = BigInt(exigir(a.valor_original, "valor_original"));
           const f = decimal(exigir(a.fator, "fator"), 6, "fator");
           atualizado = (original * f) / 1_000_000n;
-          baseLegal = "Coeficiente informado pelo usuário; o AutoIR não tem tabela de índices.";
+          baseLegal =
+            "Coeficiente informado pelo usuário; o MCP Imposto de Renda não tem tabela de índices.";
           orientacao.push(
             "A legislação veda atualizar o custo de bens depois de 1995, salvo as opções legais (Lei 14.973/2024); confira a base do coeficiente.",
           );
@@ -643,7 +644,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
       {
         titulo: "Converter valor em moeda estrangeira",
         descricao:
-          "Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o AutoIR não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023).",
+          "Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o MCP Imposto de Renda não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023).",
         entrada: {
           valor: z.string().max(32).describe('Valor na moeda estrangeira ("1.234,56").'),
           cotacao: z.string().max(16).describe('Cotação em reais por unidade ("5,1234").'),

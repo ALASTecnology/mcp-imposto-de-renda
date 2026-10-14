@@ -15,7 +15,7 @@ import {
   registrosParaModelo,
   verificarControles,
   zDeclaracao,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { type Conexao, conectar, fixture, textoDe } from "./apoio.js";
 
@@ -25,7 +25,7 @@ let c: Conexao;
 const CPF = `123456789${calcularDvCpf("123456789")}`;
 
 beforeEach(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-ciclo-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-ciclo-")));
   pasta = join(base, "ir");
   mkdirSync(pasta);
   writeFileSync(join(pasta, "pj.DBK"), fixture("pj-simples-01.DBK"));
@@ -84,10 +84,20 @@ describe("ciclo de vida", () => {
     const reg = await ok("registrar_recibo", { arquivo: "trib.DEC", recibo: "1234.5678.90-12" });
     expect(reg).toMatchObject({ arquivoRecibo: "trib.recibo.json", recibo: "123456789012" });
     const salvo = JSON.parse(readFileSync(join(pasta, "trib.recibo.json"), "utf8"));
-    expect(salvo).toMatchObject({ tipo: "recibo-autoir", recibo: "123456789012" });
+    expect(salvo).toMatchObject({ tipo: "recibo-mcp-imposto-de-renda", recibo: "123456789012" });
     const s = await ok("criar_retificadora", { arquivo: "trib.DEC", arquivo_destino: "r.DBK" });
     expect(s).toMatchObject({ recibo: "123456789012", origemRecibo: "registrado" });
     expect(modelo("r.DBK").identificacao.tipoDeclaracao.reciboRetificada).toBe("123456789012");
+    // Recibo gravado com o tipo do nome antigo do projeto continua aceito.
+    writeFileSync(
+      join(pasta, "trib.recibo.json"),
+      JSON.stringify({ ...salvo, tipo: "recibo-autoir", recibo: "999999999999" }),
+    );
+    const antigo = await ok("criar_retificadora", {
+      arquivo: "trib.DEC",
+      arquivo_destino: "r2.DBK",
+    });
+    expect(antigo).toMatchObject({ recibo: "999999999999", origemRecibo: "registrado" });
     const semRecibo = await c.chamar("criar_retificadora", { arquivo: "pj.DBK" });
     expect(semRecibo.isError).toBe(true);
     expect(textoDe(semRecibo)).toMatch(/registrar_recibo/);

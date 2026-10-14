@@ -5,7 +5,7 @@
 
 ## Contexto
 
-O AutoIR lida com dados fiscais. Quem usa precisa poder auditar exatamente o que o código faz com
+O MCP Imposto de Renda lida com dados fiscais. Quem usa precisa poder auditar exatamente o que o código faz com
 esses dados, e versões modificadas devem continuar auditáveis, inclusive quando oferecidas a
 terceiros como serviço de rede.
 

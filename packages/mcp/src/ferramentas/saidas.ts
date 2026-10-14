@@ -12,7 +12,7 @@ import {
   formatCentavos,
   motor2026,
   PARAMETROS_2026,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import {
   AVISO_FERIADOS,
@@ -48,7 +48,7 @@ export const CODIGOS_DARF = {
 } as const;
 
 const INSTRUCOES_DARF = [
-  "O AutoIR não emite Darf: os dados abaixo servem para conferência.",
+  "O MCP Imposto de Renda não emite Darf: os dados abaixo servem para conferência.",
   "Para o Darf oficial com código de barras: no programa da declaração, menu Imprimir > Darf, depois de abrir ou restaurar o DBK; ou no Sicalc (Sicalc Web da Receita Federal), informando código de receita, período de apuração e valor.",
   "Pague até o vencimento de cada quota; a partir da 2ª quota incidem juros Selic acumulada a partir de junho de 2026 mais 1% no mês do pagamento.",
 ];
@@ -143,7 +143,7 @@ function relatorio(dec: Declaracao): string {
     `- Bens em 31/12/2025: ${brl(soma(dec.bens, "situacaoAtual"))}`,
     `- Dívidas em 31/12/2025: ${brl(soma(dec.dividas, "situacaoAtual"))}`,
     "",
-    "## Resultado (simulação do AutoIR)",
+    "## Resultado (simulação do MCP Imposto de Renda)",
     "",
     `- Imposto devido: ${brl(s.impostoDevido)}`,
     s.saldo > 0n
@@ -151,7 +151,7 @@ function relatorio(dec: Declaracao): string {
       : `- Imposto a restituir: ${brl(s.restituir)}`,
     `- Modelo mais vantajoso pelo cálculo: ${s.comparacao.modeloMaisVantajoso}`,
     "",
-    "Relatório informativo do AutoIR, não substitui a impressão da declaração no programa oficial.",
+    "Relatório informativo do MCP Imposto de Renda, não substitui a impressão da declaração no programa oficial.",
   );
   return linhas.join("\n");
 }
@@ -350,7 +350,7 @@ export const grupoSaidas: GrupoFerramentas = {
       {
         titulo: "Passo a passo para transmitir",
         descricao:
-          "Gera o passo a passo e o checklist para concluir no programa oficial da declaração 2026: restaurar o DBK gravado pelo AutoIR, verificar pendências, conferir o Resumo, transmitir com ou sem certificado digital, guardar o recibo e pagar o Darf. Com 'arquivo' ou 'declaracao', inclui as pendências do AutoIR e o saldo.",
+          "Gera o passo a passo e o checklist para concluir no programa oficial da declaração 2026: restaurar o DBK gravado pelo MCP Imposto de Renda, verificar pendências, conferir o Resumo, transmitir com ou sem certificado digital, guardar o recibo e pagar o Darf. Com 'arquivo' ou 'declaracao', inclui as pendências do MCP Imposto de Renda e o saldo.",
         entrada: {
           arquivo: zNomeArquivo("DBK/DEC da pasta (opcional).").optional(),
           declaracao: zDeclaracaoJson.optional(),
@@ -368,7 +368,7 @@ export const grupoSaidas: GrupoFerramentas = {
         const dec = await declaracaoOpcional(r, a);
         const p = dec ? pendenciasDe(dec) : undefined;
         const s = dec ? saldoDaDeclaracao(dec) : undefined;
-        const nome = a.arquivo ?? "o arquivo .DBK gravado pelo AutoIR";
+        const nome = a.arquivo ?? "o arquivo .DBK gravado pelo MCP Imposto de Renda";
         const passos = [
           "Instale ou atualize o programa oficial IRPF 2026 pelo site da Receita Federal (gov.br/receitafederal).",
           `Copie ${nome} para o computador em que o programa está instalado.`,
@@ -378,7 +378,7 @@ export const grupoSaidas: GrupoFerramentas = {
           "Clique em Entregar Declaração. Sem certificado digital, informe o número do recibo da declaração do ano anterior quando pedido; com certificado ou procuração, siga o assistente.",
           "Depois da transmissão, salve e imprima o recibo de entrega (menu Imprimir > Recibo) e guarde o arquivo .DEC gerado.",
           s && s.saldo > 0n
-            ? `Há saldo a pagar de ${brl(s.saldo)} pela simulação do AutoIR: emita o Darf no programa (menu Imprimir > Darf) ou opte pelo débito automático antes de transmitir.`
+            ? `Há saldo a pagar de ${brl(s.saldo)} pela simulação do MCP Imposto de Renda: emita o Darf no programa (menu Imprimir > Darf) ou opte pelo débito automático antes de transmitir.`
             : "Se houver imposto a pagar, emita o Darf no programa (menu Imprimir > Darf) ou no Sicalc.",
           `O prazo de entrega é ${dataBr(PARAMETROS_2026.prazoEntrega)}; a entrega depois do prazo gera multa por atraso (calcular_multa_atraso).`,
         ];
@@ -397,7 +397,7 @@ export const grupoSaidas: GrupoFerramentas = {
           ...checklist.map((x) => `- ${x}`),
           ...(p
             ? [
-                `Pendências do AutoIR: ${p.totalErros} erro(s) e ${p.totalAvisos} aviso(s); use validar_declaracao para ver cada uma.`,
+                `Pendências do MCP Imposto de Renda: ${p.totalErros} erro(s) e ${p.totalAvisos} aviso(s); use validar_declaracao para ver cada uma.`,
               ]
             : []),
         ].join("\n");

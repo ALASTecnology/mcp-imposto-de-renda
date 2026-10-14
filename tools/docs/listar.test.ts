@@ -6,7 +6,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createServer, GRUPOS } from "@autoir/mcp";
+import { createServer, GRUPOS } from "@mcp-imposto-de-renda/mcp";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { expect, it } from "vitest";
@@ -22,7 +22,7 @@ async function conectar(opcoes: Parameters<typeof createServer>[0]) {
 }
 
 it("lista as ferramentas por grupo", async () => {
-  const dir = mkdtempSync(join(tmpdir(), "autoir-catalogo-"));
+  const dir = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-catalogo-"));
   try {
     const grupos = [];
     let prompts: string[] = [];

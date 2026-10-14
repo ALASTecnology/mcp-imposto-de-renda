@@ -247,7 +247,7 @@ Fontes: Ajuda "Como fazer para..." e "Perguntas mais Frequentes" (págs. 366 a 4
 ## M-FERR-COPIA-GRAVAR Gravar Cópia de Segurança
 - Onde: Ferramentas > Cópia de segurança > Gravar; barra lateral Gravar Cópia; abas Em Preenchimento e Transmitidas; Ctrl+K; págs. 380 e 418; telas PainelGravarCopiaSeguranca, PainelGravarCopiaSegurancaPasso2, PainelGravarCopiaDeclaracaoTransmitida
 - Campos: tipo: "Cópia da declaração com os dados atuais" (estado atual, sem recibo, não serve para entrega); "Cópia da declaração para entrega à RFB" (arquivo transmissível depois pelo Receitanet); "Cópia da última declaração entregue e do recibo de entrega" (declaração transmitida e recibo; importável no IRPF2027; permite imprimir o recibo em outro computador); seleção de uma, algumas ou todas; unidade e pasta de destino
-- Exige do MCP: `gravar_copia_seguranca` (formato próprio do AutoIR e, quando possível, `gerar_dbk` para o formato de entrega)
+- Exige do MCP: `gravar_copia_seguranca` (formato próprio do MCP Imposto de Renda e, quando possível, `gerar_dbk` para o formato de entrega)
 
 ## M-FERR-COPIA-RESTAURAR Restaurar Cópia de Segurança
 - Onde: Ferramentas > Cópia de Segurança > Restaurar; barra lateral Restaurar; Ctrl+T; págs. 381 e 418
@@ -262,7 +262,7 @@ Fontes: Ajuda "Como fazer para..." e "Perguntas mais Frequentes" (págs. 366 a 4
 ## M-FERR-ATUALIZACOES Verificar Atualizações
 - Onde: Ferramentas > Verificar Atualizações; Alt, T, V; automática ao abrir; pág. 367; telas PainelVerificarAtualizacao, PainelAvisoVerificarAtualizacoes, PainelDownloadAtualizacoes; ação VerificarNovaVersaoAction
 - Regras: atualização opcional ou obrigatória (obrigatória impede a entrega); reinicia o programa; se falhar, download manual
-- Exige do MCP: `verificar_versao_tabelas` (versão das tabelas e parâmetros embarcados no AutoIR x versão do PGD conhecida); alerta de PGD desatualizado ao instruir a transmissão
+- Exige do MCP: `verificar_versao_tabelas` (versão das tabelas e parâmetros embarcados no MCP Imposto de Renda x versão do PGD conhecida); alerta de PGD desatualizado ao instruir a transmissão
 
 ## M-FERR-RECNOMES Recuperação de Nomes (Ativar/Desativar, Limpar)
 - Onde: Ferramentas > Recuperação de Nomes; Alt, T, R, T (ativar) e Alt, T, R, L (limpar); pág. 368; ações AtivarRecuperarNomesAction, LimparCacheNomesAction
@@ -483,7 +483,7 @@ Fontes: Ajuda "Como fazer para..." e "Perguntas mais Frequentes" (págs. 366 a 4
 
 ## S-ARQ-REG-GCAP Registros 60 a 78
 - Campos: 60 identificação do demonstrativo e transportes (94 campos); 62 bens móveis; 63 participações societárias; 64 operações em moeda estrangeira; 65 adquirentes; 66 e 67 reduções e parcelas; 68 a 72 apuração, cálculo e parcelas; 73 a 77 moeda estrangeira em espécie e consolidação; 78 transportes para a declaração (VR_BENSISENTO, VR_BENSIMPOSTO, VR_BENSEXCLUSIVO, VR_ESPIMPOSTO, VR_ESPEXCLUSIVO)
-- Exige do MCP: preservação integral dos registros importados do GCAP (o AutoIR não recalcula o demonstrativo importado)
+- Exige do MCP: preservação integral dos registros importados do GCAP (o MCP Imposto de Renda não recalcula o demonstrativo importado)
 
 ## S-ARQ-REG-RECIBO Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC
 - Campos: FR (nome da declaração, CPF, data e hora de entrega, meio, tipo, situação); HR/DR/R9 recibo (DR com dados do contribuinte; R9 com NR_HASH); HC/RC/TC complemento do recibo (data e hora de recepção, SIGNET); NC notificação de multa; VC dados do validador; MC mensagens

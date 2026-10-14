@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ArquivoGrandeDemaisError } from "@autoir/core";
+import { ArquivoGrandeDemaisError } from "@mcp-imposto-de-renda/core";
 import { describe, expect, it } from "vitest";
 import { mensagemDeErro } from "../src/erros.js";
 

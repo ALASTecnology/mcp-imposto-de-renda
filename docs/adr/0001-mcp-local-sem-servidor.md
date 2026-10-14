@@ -11,9 +11,9 @@ criar mais um lugar onde esses dados fiquem armazenados ou trafeguem.
 
 ## Decisão
 
-O AutoIR é um servidor MCP que roda exclusivamente na máquina do usuário, com transporte stdio.
+O MCP Imposto de Renda é um servidor MCP que roda exclusivamente na máquina do usuário, com transporte stdio.
 
-- Não existe backend, conta, telemetria nem chamada de rede feita pelo AutoIR.
+- Não existe backend, conta, telemetria nem chamada de rede feita pelo MCP Imposto de Renda.
 - O processo é iniciado pelo cliente MCP do usuário e termina junto com ele.
 - O acesso a disco fica restrito à pasta autorizada passada em `--dir`.
 - O transporte HTTP do MCP não será oferecido enquanto esta decisão valer.

@@ -33,7 +33,7 @@ function relogio(): Date {
 }
 
 beforeEach(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-arq-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-arq-")));
   raiz = join(base, "autorizada");
   fora = join(base, "fora");
   mkdirSync(raiz);
@@ -199,7 +199,7 @@ describe("escrita atômica e backup", () => {
       await pasta.escrever("decl.DBK", new TextEncoder().encode(`v${i}`), DBK);
     }
     const backups = readdirSync(join(raiz, PASTA_BACKUPS)).sort();
-    // A primeira cópia (o conteúdo de antes do AutoIR) nunca sai da rotação.
+    // A primeira cópia (o conteúdo de antes do MCP Imposto de Renda) nunca sai da rotação.
     expect(backups).toEqual([
       "decl.DBK.20261014T120100Z.bak",
       "decl.DBK.20261014T120400Z.bak",

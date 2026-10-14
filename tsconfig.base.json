@@ -18,7 +18,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "customConditions": ["@autoir/source"],
+    "customConditions": ["@mcp-imposto-de-renda/source"],
     "declaration": true,
     "sourceMap": true,
     "noEmit": true

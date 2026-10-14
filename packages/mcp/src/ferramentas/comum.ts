@@ -2,7 +2,7 @@
  * Apoio comum às ferramentas que lidam com a declaração: carregar de arquivo ou do JSON do
  * modelo, e as extensões aceitas em cada operação.
  */
-import { type Declaracao, lerArquivo, type Registro } from "@autoir/core";
+import { type Declaracao, lerArquivo, type Registro } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import type { PastaAutorizada } from "../arquivos/index.js";
 import { interpretarDeclaracao, registrosParaModelo } from "../conversao/dbk-modelo.js";
@@ -41,7 +41,7 @@ export const zNomeArquivo = (descricao: string) =>
 export const zDeclaracaoJson = z
   .record(z.string(), z.unknown())
   .describe(
-    "Declaração no modelo do AutoIR (mesma forma devolvida por converter_dbk_para_modelo): " +
+    "Declaração no modelo do MCP Imposto de Renda (mesma forma devolvida por converter_dbk_para_modelo): " +
       "valores monetários em centavos (número inteiro), datas AAAA-MM-DD, CPF/CNPJ só dígitos.",
   );
 

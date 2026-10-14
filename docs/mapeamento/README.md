@@ -1,6 +1,6 @@
 # Mapeamento do PGD IRPF 2026
 
-Esta pasta descreve o programa oficial da Declaração do Imposto sobre a Renda da Pessoa Física 2026 (exercício 2026, ano-calendário 2025, versão 1.5) do ponto de vista funcional, para orientar o que o AutoIR precisa oferecer como servidor MCP local.
+Esta pasta descreve o programa oficial da Declaração do Imposto sobre a Renda da Pessoa Física 2026 (exercício 2026, ano-calendário 2025, versão 1.5) do ponto de vista funcional, para orientar o que o MCP Imposto de Renda precisa oferecer como servidor MCP local.
 
 ## Documentos
 
@@ -25,5 +25,5 @@ Esta pasta descreve o programa oficial da Declaração do Imposto sobre a Renda 
 ## Limites e regras legais
 
 - Nenhum código da Receita Federal foi descompilado, copiado ou incluído no repositório. O pacote do programa oficial fica em `vendor/rfb/`, fora do controle de versão.
-- O que depende de serviços autenticados ou de componentes da Receita Federal (transmissão com Receitanet, certificado digital, login gov.br, pré-preenchida, Carnê-Leão Web, Darf oficial com código de barras, recibo) não é reproduzido: o AutoIR gera o arquivo da declaração e instrui o usuário a concluir no programa oficial. O quadro completo está na matriz de cobertura.
+- O que depende de serviços autenticados ou de componentes da Receita Federal (transmissão com Receitanet, certificado digital, login gov.br, pré-preenchida, Carnê-Leão Web, Darf oficial com código de barras, recibo) não é reproduzido: o MCP Imposto de Renda gera o arquivo da declaração e instrui o usuário a concluir no programa oficial. O quadro completo está na matriz de cobertura.
 - Valores e prazos são os do exercício 2026 e precisam ser revistos a cada nova versão do programa oficial.

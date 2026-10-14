@@ -1,5 +1,5 @@
 /**
- * Ponte entre as ferramentas MCP e a conversão do core (`@autoir/core`, `conversao/`).
+ * Ponte entre as ferramentas MCP e a conversão do core (`@mcp-imposto-de-renda/core`, `conversao/`).
  *
  * A conversão em si é pura e fica no core; aqui ficam só a validação com mensagem pensada para
  * o LLM (`interpretarDeclaracao`) e assinaturas compatíveis com as ferramentas existentes.
@@ -16,7 +16,7 @@ import {
   registrosParaModelo as registrosParaModeloCore,
   tiposMapeados,
   zDeclaracao,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { EntradaInvalidaError } from "../erros.js";
 
 /** Tipos de registro lidos e gravados a partir do modelo. */
@@ -51,7 +51,7 @@ export function interpretarDeclaracao(entrada: unknown): Declaracao {
     .map((i) => `- ${i.path.join(".") || "(raiz)"}: ${i.message}`);
   const extra = r.error.issues.length > 20 ? `\n(e mais ${r.error.issues.length - 20})` : "";
   throw new EntradaInvalidaError(
-    `A declaração não segue o modelo do AutoIR:\n${problemas.join("\n")}${extra}\n` +
+    `A declaração não segue o modelo do MCP Imposto de Renda:\n${problemas.join("\n")}${extra}\n` +
       "Valores monetários do modelo são inteiros em centavos (número); datas em AAAA-MM-DD; CPF/CNPJ só com dígitos.",
   );
 }

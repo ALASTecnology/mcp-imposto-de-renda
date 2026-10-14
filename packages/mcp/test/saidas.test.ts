@@ -8,7 +8,7 @@ let base: string;
 let c: Conexao;
 
 beforeAll(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-saidas-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-saidas-")));
   const pasta = join(base, "ir");
   mkdirSync(pasta);
   writeFileSync(join(pasta, "pj.DBK"), fixture("pj-simples-01.DBK"));

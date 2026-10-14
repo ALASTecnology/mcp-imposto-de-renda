@@ -10,7 +10,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { lerArquivo, verificarControles } from "@autoir/core";
+import { lerArquivo, verificarControles } from "@mcp-imposto-de-renda/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { PASTA_BACKUPS } from "../src/index.js";
 import { type Conexao, conectar, declaracaoSintetica, fixture, textoDe } from "./apoio.js";
@@ -20,7 +20,7 @@ let pasta: string;
 let c: Conexao;
 
 beforeEach(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-decl-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-decl-")));
   pasta = join(base, "ir");
   rmSync(pasta, { recursive: true, force: true });
   await import("node:fs/promises").then((f) => f.mkdir(pasta));

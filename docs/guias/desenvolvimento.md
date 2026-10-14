@@ -6,19 +6,19 @@ convenções do projeto. Para o processo de contribuição (issues, PRs, commits
 
 ## Arquitetura
 
-![Arquitetura do AutoIR](../assets/arquitetura.svg)
+![Arquitetura do MCP Imposto de Renda](../assets/arquitetura.svg)
 
 Monorepo pnpm com três pacotes. A dependência só vai de fora para dentro:
 
 ```text
-apps/cli (autoir-mcp)  ->  packages/mcp (@autoir/mcp)  ->  packages/core (@autoir/core)
+apps/cli (mcp-imposto-de-renda)  ->  packages/mcp (@mcp-imposto-de-renda/mcp)  ->  packages/core (@mcp-imposto-de-renda/core)
 ```
 
 | Pacote | Responsabilidade | Pode fazer I/O? |
 | --- | --- | --- |
 | `packages/core` | Modelo da declaração (`model`), codec do arquivo (`dbk`), conversão registros e modelo (`conversao`), motor de cálculo por exercício (`calc`), regras de validação (`validate`), tabelas de códigos (`tabelas`), tipo `Centavos`. | Não. Funções puras sobre bytes e objetos. |
 | `packages/mcp` | `createServer()`: grupos de ferramentas, prompts, recursos, esquemas de entrada com zod, mensagens de erro, e a `PastaAutorizada`, única porta para o disco. | Só disco, só pela `PastaAutorizada`. Nunca rede. |
-| `apps/cli` | Executável `autoir-mcp`: interpreta argumentos, liga o transporte stdio, logs em stderr. | Processo e stdio. |
+| `apps/cli` | Executável `mcp-imposto-de-renda`: interpreta argumentos, liga o transporte stdio, logs em stderr. | Processo e stdio. |
 
 Decisões que moldam o código:
 

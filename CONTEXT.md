@@ -1,6 +1,6 @@
 # Contexto de domínio
 
-Glossário da linguagem usada no código, nos testes e na documentação do AutoIR. Ao introduzir um
+Glossário da linguagem usada no código, nos testes e na documentação do MCP Imposto de Renda. Ao introduzir um
 termo novo no código, registre-o aqui primeiro. Nomes de tipos e funções seguem estes termos em
 português.
 
@@ -31,7 +31,7 @@ instrução, previdência, pensão alimentícia e outras). O motor de cálculo c
 
 **PGD**
 : Programa Gerador da Declaração, o aplicativo oficial de desktop usado para preencher, validar e
-gravar a DIRPF. O AutoIR não embute, não redistribui e não executa o PGD em produção (ver ADR 0002).
+gravar a DIRPF. O MCP Imposto de Renda não embute, não redistribui e não executa o PGD em produção (ver ADR 0002).
 
 **Ficha**
 : Seção temática da declaração no PGD, como Identificação do Contribuinte, Dependentes,
@@ -40,11 +40,11 @@ Dívidas e Ônus Reais. No modelo (`core/model`), cada ficha é um tipo.
 
 **DBK**
 : Arquivo de cópia de segurança da declaração gravado pelo PGD (extensão `.DBK`). É texto em
-registros de largura fixa e é a principal porta de entrada e saída do AutoIR (`core/dbk`).
+registros de largura fixa e é a principal porta de entrada e saída do MCP Imposto de Renda (`core/dbk`).
 
 **DEC**
 : Arquivo da declaração gravado pelo PGD para entrega (extensão `.DEC`), com estrutura de
-registros equivalente à do DBK. O AutoIR não transmite declarações.
+registros equivalente à do DBK. O MCP Imposto de Renda não transmite declarações.
 
 **Registro**
 : Uma linha do arquivo DBK ou DEC. Começa por um identificador de tipo e tem campos em posições
@@ -69,10 +69,10 @@ exterior. É apurado ao longo do ano-calendário e os dados são importados para
 : Apuração de Ganhos de Capital, usada na alienação de bens e direitos (imóveis, participações e
 outros). O resultado é apurado à parte e importado para a declaração.
 
-## Termos técnicos do AutoIR
+## Termos técnicos do MCP Imposto de Renda
 
 **Centavos**
-: Tipo monetário do AutoIR: inteiro (`bigint`) de centavos, nunca ponto flutuante. Textos no
+: Tipo monetário do MCP Imposto de Renda: inteiro (`bigint`) de centavos, nunca ponto flutuante. Textos no
 formato brasileiro ("1.234,56") são convertidos por `parseCentavos` e `formatCentavos`.
 
 **Dígito verificador (DV)**

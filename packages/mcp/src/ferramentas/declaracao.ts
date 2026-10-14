@@ -11,7 +11,7 @@ import {
   gravarArquivo,
   lerArquivo,
   verificarControles,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import {
   FICHAS_CONVERTIDAS,
@@ -36,7 +36,7 @@ const EXT_ENTREGA = [".DEC"] as const;
 
 /** Lembrete que acompanha todo arquivo de entrega gerado. */
 export const AVISO_TRANSMISSAO =
-  "O AutoIR não transmite a declaração. A transmissão continua sendo feita pelo programa oficial " +
+  "O MCP Imposto de Renda não transmite a declaração. A transmissão continua sendo feita pelo programa oficial " +
   "da Receita Federal: restaure o DBK no programa (Ferramentas > Cópia de Segurança > Restaurar), " +
   "confira cada ficha, rode Verificar Pendências e use Entregar Declaração por ele.";
 
@@ -169,7 +169,7 @@ export const grupoDeclaracao: GrupoFerramentas = {
       {
         titulo: "Converter DBK/DEC para o modelo",
         descricao:
-          "Converte um DBK/DEC da pasta autorizada no modelo JSON do AutoIR (identificação, " +
+          "Converte um DBK/DEC da pasta autorizada no modelo JSON do MCP Imposto de Renda (identificação, " +
           "dependentes, rendimentos de PJ, pagamentos, bens e dívidas). Valores em centavos " +
           "(número inteiro). O resultado pode ser editado e gravado com converter_modelo_para_dbk.",
         entrada: { arquivo: zNomeArquivo("Arquivo .DBK ou .DEC.") },
@@ -221,7 +221,7 @@ export const grupoDeclaracao: GrupoFerramentas = {
           "Grava a declaração (modelo JSON) em um arquivo .DBK da pasta autorizada. Com " +
           "'arquivo_base', parte do DBK/DEC existente e substitui só as fichas convertidas, " +
           "preservando as demais. Recalcula os controles (CRC, T9 e hash). Se o destino existir, " +
-          "uma cópia é guardada em .autoir-backups antes. Depois, abra no programa oficial para conferir.",
+          "uma cópia é guardada em .mcp-imposto-de-renda-backups antes. Depois, abra no programa oficial para conferir.",
         escreve: true,
         entrada: {
           declaracao: zDeclaracaoJson,
@@ -259,8 +259,8 @@ export const grupoDeclaracao: GrupoFerramentas = {
           "Gera o arquivo de entrega (.DEC) a partir de um .DBK da pasta autorizada, montando os " +
           "registros do recibo (HR, DR e R9) e recalculando os controles, como o programa oficial " +
           "grava. Valida a declaração antes: com erros, só gera com aceitar_pendencias: true. Não " +
-          "sobrescreve um .DEC existente sem sobrescrever: true (e guarda cópia em .autoir-backups). " +
-          "O AutoIR não transmite: a transmissão continua sendo feita pelo programa oficial.",
+          "sobrescreve um .DEC existente sem sobrescrever: true (e guarda cópia em .mcp-imposto-de-renda-backups). " +
+          "O MCP Imposto de Renda não transmite: a transmissão continua sendo feita pelo programa oficial.",
         escreve: true,
         entrada: {
           arquivo: zNomeArquivo("Arquivo .DBK (ou .DEC) de origem."),
@@ -310,7 +310,7 @@ export const grupoDeclaracao: GrupoFerramentas = {
           );
           if (existe) {
             throw new EntradaInvalidaError(
-              `Já existe "${destino}". Para substituí-lo (com cópia em .autoir-backups), informe sobrescrever: true.`,
+              `Já existe "${destino}". Para substituí-lo (com cópia em .mcp-imposto-de-renda-backups), informe sobrescrever: true.`,
             );
           }
         }

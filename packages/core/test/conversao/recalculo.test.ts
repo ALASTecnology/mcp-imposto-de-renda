@@ -1,7 +1,7 @@
 /**
  * Totais recalculados a partir do modelo, conferidos com os arquivos do programa oficial.
  *
- * Cada campo de total que o AutoIR recalcula é comparado com o valor gravado pelo programa em
+ * Cada campo de total que o MCP Imposto de Renda recalcula é comparado com o valor gravado pelo programa em
  * todos os casos de referência. Divergências conhecidas do motor de cálculo (em correção contra
  * os casos golden) ficam listadas em `DIVERGENCIAS_CONHECIDAS`, com o número de casos.
  */

@@ -6,7 +6,7 @@
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { lerArquivo, registrosParaModelo, zDeclaracao } from "@autoir/core";
+import { lerArquivo, registrosParaModelo, zDeclaracao } from "@mcp-imposto-de-renda/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { campoDoRotulo, interpretarInforme } from "../src/ferramentas/ciclo-informe.js";
 import { type Conexao, conectar, fixture, textoDe } from "./apoio.js";
@@ -16,7 +16,7 @@ let pasta: string;
 let c: Conexao;
 
 beforeEach(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-informe-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-informe-")));
   pasta = join(base, "ir");
   mkdirSync(pasta);
   writeFileSync(join(pasta, "pj.DBK"), fixture("pj-simples-01.DBK"));

@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-wordmark-dark.svg">
-    <img alt="AutoIR" src="docs/assets/logo-wordmark.svg" height="56">
+    <img alt="MCP Imposto de Renda" src="docs/assets/logo-wordmark.svg" height="56">
   </picture>
 </p>
 
@@ -17,10 +17,10 @@
 </p>
 
 <p align="center">
-  <img alt="Prévia do AutoIR" src="docs/assets/preview.png" width="760">
+  <img alt="Prévia do MCP Imposto de Renda" src="docs/assets/preview.png" width="760">
 </p>
 
-O AutoIR é um servidor [MCP](https://modelcontextprotocol.io) (Model Context Protocol) que roda
+O MCP Imposto de Renda é um servidor [MCP](https://modelcontextprotocol.io) (Model Context Protocol) que roda
 na sua máquina e conversa com o seu cliente MCP via stdio. Ele lê e grava o arquivo de cópia de
 segurança da declaração (`.DBK`) do programa oficial, calcula o imposto nos modelos completo e
 simplificado, explica cada conta, aponta pendências e consulta as tabelas de códigos do exercício.
@@ -29,11 +29,11 @@ No fim, você restaura o arquivo no programa oficial, confere e transmite por l�
 > [!WARNING]
 > **Leia antes de usar.**
 >
-> - O AutoIR **não é serviço oficial da Receita Federal** e não tem vínculo com ela nem com
+> - O MCP Imposto de Renda **não é serviço oficial da Receita Federal** e não tem vínculo com ela nem com
 >   qualquer órgão público.
-> - O AutoIR **não transmite** declarações e não acessa sistemas do governo. A entrega é sempre
+> - O MCP Imposto de Renda **não transmite** declarações e não acessa sistemas do governo. A entrega é sempre
 >   feita pelo programa oficial (PGD).
-> - O AutoIR não envia nada pela rede. Porém, tudo o que as ferramentas devolvem ao seu cliente MCP
+> - O MCP Imposto de Renda não envia nada pela rede. Porém, tudo o que as ferramentas devolvem ao seu cliente MCP
 >   (nomes, CPFs, rendimentos, bens) **chega ao provedor de LLM que você escolheu** nesse cliente.
 >   Leia a política de privacidade desse provedor e decida o que compartilhar.
 > - Não há garantia de exatidão. A responsabilidade pela declaração é sempre do contribuinte.
@@ -59,7 +59,7 @@ No fim, você restaura o arquivo no programa oficial, confere e transmite por l�
 
 ## O que é e o que não é
 
-| O AutoIR é | O AutoIR não é |
+| O MCP Imposto de Renda é | O MCP Imposto de Renda não é |
 | --- | --- |
 | Um servidor MCP local, iniciado pelo seu cliente MCP e encerrado junto com ele | Um serviço on-line, um aplicativo da Receita Federal ou um substituto do programa oficial |
 | Um leitor e gravador do `.DBK` com controles de integridade recalculados | Um transmissor: não envia a declaração, não usa certificado digital nem login gov.br |
@@ -67,11 +67,11 @@ No fim, você restaura o arquivo no programa oficial, confere e transmite por l�
 | Um conjunto de validações equivalentes às críticas do programa | Garantia de que a declaração está livre de malha fina |
 | Software livre sob AGPL-3.0-only | Um intermediário de dados: não há backend, conta nem telemetria |
 
-Os dados que você mostra ao assistente seguem o caminho abaixo. O AutoIR fica inteiramente do lado
+Os dados que você mostra ao assistente seguem o caminho abaixo. O MCP Imposto de Renda fica inteiramente do lado
 da sua máquina; o único dado que sai dela é o que o seu cliente MCP manda ao provedor de LLM.
 
 <p align="center">
-  <img alt="Fluxo da declaração: usuário, cliente MCP, AutoIR local, pasta autorizada e programa oficial" src="docs/assets/fluxo-declaracao.svg" width="860">
+  <img alt="Fluxo da declaração: usuário, cliente MCP, MCP Imposto de Renda local, pasta autorizada e programa oficial" src="docs/assets/fluxo-declaracao.svg" width="860">
 </p>
 
 ## Destaques
@@ -96,19 +96,19 @@ Requisitos: **Node.js 22 ou superior**. Para compilar a partir do código, tamb�
 ### Pelo npm
 
 ```sh
-npx autoir-mcp --dir ~/Documentos/IR-2026
+npx mcp-imposto-de-renda --dir ~/Documentos/IR-2026
 ```
 
 > [!NOTE]
 > A versão 0.1.0 ainda não foi publicada no npm. Até a publicação, use a instalação a partir do
 > código abaixo; a configuração dos clientes muda apenas no comando (`node` com o caminho do
-> `dist/index.js` no lugar de `npx autoir-mcp`).
+> `dist/index.js` no lugar de `npx mcp-imposto-de-renda`).
 
 ### A partir do código
 
 ```sh
-git clone <url-do-repositório> AutoIR
-cd AutoIR
+git clone https://github.com/ALASTecnology/mcp-imposto-de-renda.git
+cd mcp-imposto-de-renda
 corepack enable
 pnpm install
 pnpm build
@@ -139,9 +139,9 @@ código, estão em [docs/guias/clientes-mcp.md](docs/guias/clientes-mcp.md).
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -153,15 +153,15 @@ código, estão em [docs/guias/clientes-mcp.md](docs/guias/clientes-mcp.md).
 <summary><strong>Claude Code</strong> (linha de comando ou <code>.mcp.json</code>)</summary>
 
 ```sh
-claude mcp add autoir -- npx -y autoir-mcp --dir /Users/voce/Documentos/IR-2026
+claude mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026
 ```
 
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -175,9 +175,9 @@ claude mcp add autoir -- npx -y autoir-mcp --dir /Users/voce/Documentos/IR-2026
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -191,10 +191,10 @@ claude mcp add autoir -- npx -y autoir-mcp --dir /Users/voce/Documentos/IR-2026
 ```json
 {
   "servers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -208,9 +208,9 @@ claude mcp add autoir -- npx -y autoir-mcp --dir /Users/voce/Documentos/IR-2026
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -224,10 +224,10 @@ claude mcp add autoir -- npx -y autoir-mcp --dir /Users/voce/Documentos/IR-2026
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "node",
       "args": [
-        "/caminho/para/AutoIR/apps/cli/dist/index.js",
+        "/caminho/para/mcp-imposto-de-renda/apps/cli/dist/index.js",
         "--dir",
         "/Users/voce/Documentos/IR-2026"
       ]
@@ -269,7 +269,7 @@ O tutorial completo, com uma declaração fictícia do início ao fim, está em
    o modelo escolhido e `definir_informacoes_bancarias` a conta de restituição ou débito e as
    quotas.
 6. **Confira o `.DBK`.** As edições gravam no próprio arquivo (ou em `arquivo_destino`), guardando
-   o conteúdo anterior em `.autoir-backups` (`listar_copias_seguranca` e
+   o conteúdo anterior em `.mcp-imposto-de-renda-backups` (`listar_copias_seguranca` e
    `restaurar_copia_seguranca` desfazem uma gravação). `verificar_integridade_arquivo` confere os
    controles e `gerar_relatorio_declaracao` monta um relatório para conferência.
 7. **Restaure no programa oficial.** No PGD IRPF 2026, use **Ferramentas > Cópia de Segurança >
@@ -311,7 +311,7 @@ Abrir, converter e gravar o arquivo da declaração (DBK/DEC). Exige `--dir`.
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
 | `abrir_declaracao` | Lê um DBK ou DEC da pasta autorizada e devolve um resumo: contribuinte, tipo de declaração, quantidade de itens e totais por ficha, registros por tipo e integridade dos controles. | não |
-| `converter_dbk_para_modelo` | Converte um DBK/DEC da pasta autorizada no modelo JSON do AutoIR (identificação, dependentes, rendimentos de PJ, pagamentos, bens e dívidas). | não |
+| `converter_dbk_para_modelo` | Converte um DBK/DEC da pasta autorizada no modelo JSON do MCP Imposto de Renda (identificação, dependentes, rendimentos de PJ, pagamentos, bens e dívidas). | não |
 | `converter_modelo_para_dbk` | Grava a declaração (modelo JSON) em um arquivo .DBK da pasta autorizada. | **sim** |
 | `gerar_arquivo_entrega` | Gera o arquivo de entrega (.DEC) a partir de um .DBK da pasta autorizada, montando os registros do recibo (HR, DR e R9) e recalculando os controles, como o programa oficial grava. | **sim** |
 
@@ -385,10 +385,10 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | `criar_declaracao` | Cria um DBK novo na pasta autorizada a partir da identificação do contribuinte (formato do modelo) e da opção de tributação. | **sim** |
 | `criar_retificadora` | Marca a declaração como retificadora com o número do recibo (12 dígitos) da declaração a retificar e grava em um novo DBK (padrão: CPF-IRPF-A-2026-2025-RETIF.DBK), preservando o restante. | **sim** |
 | `registrar_recibo` | Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). | **sim** |
-| `excluir_declaracao` | Remove um DBK ou DEC da pasta autorizada, guardando antes uma cópia em .autoir-backups. | **sim** |
+| `excluir_declaracao` | Remove um DBK ou DEC da pasta autorizada, guardando antes uma cópia em .mcp-imposto-de-renda-backups. | **sim** |
 | `gravar_copia_seguranca` | Copia um DBK ou DEC da pasta para outro .DBK (um DEC vira DBK sem o recibo, com os controles refeitos). | **sim** |
-| `listar_copias_seguranca` | Lista as cópias automáticas guardadas em .autoir-backups (feitas antes de sobrescrever ou excluir), da mais recente para a mais antiga. | não |
-| `restaurar_copia_seguranca` | Restaura uma cópia de .autoir-backups (nome de listar_copias_seguranca) sobre um .DBK da pasta (padrão: o arquivo de origem; cópia de um .DEC exige arquivo_destino .DBK). | **sim** |
+| `listar_copias_seguranca` | Lista as cópias automáticas guardadas em .mcp-imposto-de-renda-backups (feitas antes de sobrescrever ou excluir), da mais recente para a mais antiga. | não |
+| `restaurar_copia_seguranca` | Restaura uma cópia de .mcp-imposto-de-renda-backups (nome de listar_copias_seguranca) sobre um .DBK da pasta (padrão: o arquivo de origem; cópia de um .DEC exige arquivo_destino .DBK). | **sim** |
 | `definir_opcao_tributacao` | Escolhe deduções legais (completa) ou desconto simplificado, preservando as deduções informadas, e devolve a comparação dos dois modelos com a recomendação. | **sim** |
 | `definir_informacoes_bancarias` | Grava a conta para restituição ou débito (banco, agência sem DV, conta, DV, tipo e operação da Caixa), Pix pela chave CPF, número de quotas (1 a 8) e débito automático, validando banco, agência, conta e DV pela regra de cada banco. | **sim** |
 | `definir_imposto_pago` | Grava as linhas digitadas da ficha Imposto Pago/Retido: imposto complementar (Darf 0246), imposto pago no exterior e imposto retido na fonte da Lei 11.033/2004. | **sim** |
@@ -432,7 +432,7 @@ Etapa final: dados do Darf e passo a passo para transmitir pelo programa oficial
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
 | `gerar_darf` | Calcula os dados do Darf (código de receita, período de apuração, vencimentos e valores de cada quota, juros Selic das quotas e, se informada a data de pagamento após o vencimento, multa de 0,33% ao dia até 20% e juros de mora). | não |
-| `instruir_transmissao` | Gera o passo a passo e o checklist para concluir no programa oficial da declaração 2026: restaurar o DBK gravado pelo AutoIR, verificar pendências, conferir o Resumo, transmitir com ou sem certificado digital, guardar o recibo e pagar o Darf. | não |
+| `instruir_transmissao` | Gera o passo a passo e o checklist para concluir no programa oficial da declaração 2026: restaurar o DBK gravado pelo MCP Imposto de Renda, verificar pendências, conferir o Resumo, transmitir com ou sem certificado digital, guardar o recibo e pagar o Darf. | não |
 | `gerar_relatorio_declaracao` | Monta um relatório em Markdown da declaração (identificação, fichas preenchidas, totais e resultado simulado) para conferência. | não |
 | `gerar_comunicacao_saida` | Gera o texto da comunicação de saída definitiva do país, uma por fonte pagadora de rendimentos de PJ, a partir da ficha Saída Definitiva. | não |
 
@@ -451,17 +451,17 @@ Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, R
 | `calcular_acrescimos_moratorios` | Calcula a multa de mora (0,33% por dia de atraso, limitada a 20%) e os juros (Selic acumulada informada mais 1% no mês do pagamento) de qualquer débito federal vencido. | não |
 | `calcular_condicao_residencia` | Determina a data em que a pessoa passa a residente ou não residente no Brasil (IN SRF 208/2002): saída definitiva (não residente na data da saída), ausência temporária (não residente no dia seguinte ao que completar 12 meses fora), retorno de brasileiro ou visto permanente (residente na chegada) e visto temporário (residente ao completar 184 dias no país em 12 meses). | não |
 | `verificar_obrigatoriedade` | Avalia os critérios de obrigatoriedade da declaração de 2026 (rendimentos tributáveis acima de R$ 35.584,00; isentos e exclusivos acima de R$ 200.000,00; ganho de capital; bolsa acima de R$ 40.000,00; atividade rural; bens acima de R$ 800.000,00; residência; reaplicação de imóvel; exterior e trust) a partir das respostas do usuário. | não |
-| `converter_moeda` | Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o AutoIR não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023). | não |
+| `converter_moeda` | Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o MCP Imposto de Renda não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023). | não |
 
 ### orientacao
 
-Orientação sobre serviços que só existem fora do AutoIR (sem acesso à rede).
+Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede).
 
 | Ferramenta | O que faz | Grava? |
 | --- | --- | --- |
-| `orientar_servico_externo` | Explica como usar um serviço que só existe fora do AutoIR (gov.br, pré-preenchida, Carnê-Leão Web, consulta de CPF, e-CAC, extrato e malha, débito automático, Darf e Sicalc, GCAP, Livro Caixa rural, restituição) e o que trazer de volta para a pasta autorizada. | não |
-| `obter_ajuda` | Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do AutoIR (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). | não |
-| `verificar_versao_tabelas` | Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no AutoIR e quantos registros cada uma tem. | não |
+| `orientar_servico_externo` | Explica como usar um serviço que só existe fora do MCP Imposto de Renda (gov.br, pré-preenchida, Carnê-Leão Web, consulta de CPF, e-CAC, extrato e malha, débito automático, Darf e Sicalc, GCAP, Livro Caixa rural, restituição) e o que trazer de volta para a pasta autorizada. | não |
+| `obter_ajuda` | Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do MCP Imposto de Renda (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). | não |
+| `verificar_versao_tabelas` | Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no MCP Imposto de Renda e quantos registros cada uma tem. | não |
 <!-- catalogo:fim -->
 
 **Valores monetários na entrada:** texto é sempre em **reais** no formato brasileiro (`"1.234,56"`);
@@ -474,7 +474,7 @@ valores são inteiros em centavos, as datas em `AAAA-MM-DD` e CPF/CNPJ só com d
 | --- | --- | --- |
 | Prompt | `preparar_declaracao` | Roteiro guiado de coleta dos informes e preenchimento das fichas, com simulação a cada etapa. Argumento opcional `arquivo` (um `.DBK` da pasta para partir dele). |
 | Prompt | `revisar_malha_fina` | Revisão em busca de pendências e inconsistências que costumam levar à malha fina. Argumento opcional `arquivo`. |
-| Recurso | `autoir://aviso-legal` | Limites do AutoIR: não é serviço oficial, dados vão ao provedor de LLM, revisar e transmitir pelo programa oficial. |
+| Recurso | `mcp-imposto-de-renda://aviso-legal` | Limites do MCP Imposto de Renda: não é serviço oficial, dados vão ao provedor de LLM, revisar e transmitir pelo programa oficial. |
 
 ## Segurança e privacidade
 
@@ -487,13 +487,13 @@ valores são inteiros em centavos, as datas em `AAAA-MM-DD` e CPF/CNPJ só com d
   oferecido ([ADR 0001](docs/adr/0001-mcp-local-sem-servidor.md)).
 - **Pasta autorizada.** Só nomes relativos dentro de `--dir`. Caminhos absolutos, `..`, `~`, links
   simbólicos, arquivos ocultos e nomes reservados do Windows são recusados antes de tocar no disco.
-- **Gravação segura.** Escrita atômica com `fsync`, backup automático em `.autoir-backups`
+- **Gravação segura.** Escrita atômica com `fsync`, backup automático em `.mcp-imposto-de-renda-backups`
   (10 por arquivo, permissão 0600) e `--somente-leitura` para consultar sem risco.
 - **Limites.** 20 MB por arquivo e 50.000 elementos por chamada.
 - **Logs sem dados pessoais.** Só eventos do processo, nome da ferramenta e classe do erro, em
   stderr.
 
-O que o AutoIR **não** consegue proteger: o provedor de LLM vê tudo o que as ferramentas devolvem.
+O que o MCP Imposto de Renda **não** consegue proteger: o provedor de LLM vê tudo o que as ferramentas devolvem.
 Modelo de ameaças completo em [docs/seguranca.md](docs/seguranca.md); para relatar uma
 vulnerabilidade, siga o [SECURITY.md](SECURITY.md) e nunca abra issue pública com o problema.
 
@@ -559,7 +559,7 @@ hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato
 - **Exercícios anteriores**, para retificadoras e declarações em atraso.
 - **Importação de PDF local** de informes de rendimentos, lida na máquina, sem serviço externo.
 - Calculadoras auxiliares offline (renda variável, preço médio, carnê-leão, RRA, ganho de capital
-  e acréscimos) e orientação sobre serviços que só existem fora do AutoIR: os grupos `calculadoras`
+  e acréscimos) e orientação sobre serviços que só existem fora do MCP Imposto de Renda: os grupos `calculadoras`
   e `orientacao` já estão declarados no servidor.
 - As funções do programa oficial ainda pendentes na
   [matriz de cobertura](docs/mapeamento/matriz-cobertura.md), como a importação do arquivo do
@@ -573,17 +573,17 @@ hash e controle do header), está descrito em [docs/formato-dbk.md](docs/formato
 </p>
 
 ```
-apps/cli            autoir-mcp     executável stdio (argumentos, logs em stderr)
-packages/mcp        @autoir/mcp    createServer(): ferramentas, prompts, recursos, pasta autorizada
-packages/core       @autoir/core   modelo, codec DBK, conversão, cálculo, validação e tabelas (sem I/O)
+apps/cli            mcp-imposto-de-renda     executável stdio (argumentos, logs em stderr)
+packages/mcp        @mcp-imposto-de-renda/mcp    createServer(): ferramentas, prompts, recursos, pasta autorizada
+packages/core       @mcp-imposto-de-renda/core   modelo, codec DBK, conversão, cálculo, validação e tabelas (sem I/O)
 tools/leiaute                      gerador do leiaute a partir dos XML de dados do programa
 tools/referencia                   harness local que gera golden e fixtures com o programa oficial
 tools/mapeamento                   inventário das funções do programa
 docs/                              ADRs, formato DBK, regras por exercício, mapeamento, guias
 ```
 
-A dependência só vai de fora para dentro: `apps/cli` depende de `@autoir/mcp`, que depende de
-`@autoir/core`. O core não faz I/O. Vocabulário do domínio em [CONTEXT.md](CONTEXT.md).
+A dependência só vai de fora para dentro: `apps/cli` depende de `@mcp-imposto-de-renda/mcp`, que depende de
+`@mcp-imposto-de-renda/core`. O core não faz I/O. Vocabulário do domínio em [CONTEXT.md](CONTEXT.md).
 
 ## Desenvolvimento
 
@@ -617,7 +617,7 @@ precisam disponibilizar o código-fonte sob a mesma licença.
 
 ## Aviso legal
 
-O AutoIR é software livre fornecido "no estado em que se encontra", sem garantia de qualquer tipo,
+O MCP Imposto de Renda é software livre fornecido "no estado em que se encontra", sem garantia de qualquer tipo,
 nos termos da AGPL-3.0. Não é serviço oficial da Receita Federal do Brasil, não tem vínculo com ela
 nem com qualquer órgão público e não usa marca, brasão ou identidade visual do governo. Cálculos,
 conversões e validações podem divergir do programa oficial. Abra o arquivo no programa da Receita

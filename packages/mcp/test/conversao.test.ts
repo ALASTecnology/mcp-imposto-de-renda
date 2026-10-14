@@ -1,4 +1,9 @@
-import { gravarArquivo, lerArquivo, verificarControles, zDeclaracao } from "@autoir/core";
+import {
+  gravarArquivo,
+  lerArquivo,
+  verificarControles,
+  zDeclaracao,
+} from "@mcp-imposto-de-renda/core";
 import { describe, expect, it } from "vitest";
 import {
   interpretarDeclaracao,

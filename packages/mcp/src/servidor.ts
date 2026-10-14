@@ -1,5 +1,5 @@
 /**
- * Montagem do servidor MCP do AutoIR: ferramentas por grupo, prompts e recursos.
+ * Montagem do servidor do MCP Imposto de Renda: ferramentas por grupo, prompts e recursos.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
@@ -15,7 +15,7 @@ import type { ContextoFerramentas, GrupoFerramentas } from "./ferramentas/tipos.
 import { registrarPrompts } from "./prompts.js";
 import { registrarRecursos } from "./recursos.js";
 
-export const NOME_SERVIDOR = "autoir";
+export const NOME_SERVIDOR = "mcp-imposto-de-renda";
 export const VERSAO_SERVIDOR = "0.1.0";
 
 /** Maior quantidade de elementos (itens de lista e campos) aceita em `tools/call`. */
@@ -65,14 +65,14 @@ function pastaSobDemanda(diretorio: string, opcoes: OpcoesPasta): PastaAutorizad
 }
 
 const INSTRUCOES =
-  "AutoIR roda localmente e apoia o preenchimento da declaração do IRPF (exercício 2026). " +
+  "O MCP Imposto de Renda roda localmente e apoia o preenchimento da declaração do IRPF (exercício 2026). " +
   "Não é serviço oficial da Receita Federal: confira tudo e transmita pelo programa oficial. " +
   "Arquivos só podem ser lidos e gravados dentro da pasta autorizada, por nome relativo. " +
   'Valores monetários de entrada: texto em reais ("1.234,56") ou número inteiro em centavos. ' +
-  "Leia o recurso autoir://aviso-legal antes de começar.";
+  "Leia o recurso mcp-imposto-de-renda://aviso-legal antes de começar.";
 
 /**
- * Cria o servidor MCP do AutoIR com ferramentas, prompts e recursos registrados.
+ * Cria o servidor do MCP Imposto de Renda com ferramentas, prompts e recursos registrados.
  * Não abre transporte: quem chama decide (stdio no CLI, memória nos testes).
  */
 export function createServer(opcoes: OpcoesServidor = {}): McpServer {

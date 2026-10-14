@@ -1,7 +1,7 @@
 /**
  * Grupo "arquivos": listagem da pasta autorizada e conferência dos controles do DBK/DEC.
  */
-import { verificarControles } from "@autoir/core";
+import { verificarControles } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { EXT_LISTAGEM, exigirPasta, lerDeclaracaoArquivo, zNomeArquivo } from "./comum.js";
 import type { GrupoFerramentas } from "./tipos.js";

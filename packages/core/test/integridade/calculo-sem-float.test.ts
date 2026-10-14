@@ -1,7 +1,7 @@
 /**
  * Varredura estática: nenhum valor monetário do cálculo passa por ponto flutuante.
  *
- * O dinheiro do AutoIR é `bigint` de centavos (`Centavos`). Este teste lê o código de
+ * O dinheiro do MCP Imposto de Renda é `bigint` de centavos (`Centavos`). Este teste lê o código de
  * `src/calc/**` e `src/centavos.ts`, remove comentários e o texto fixo das strings (as
  * expressões dentro de `${...}` continuam sendo examinadas) e procura construções que
  * levam a float: `parseFloat`, `toFixed`, `Math.round`, literais decimais e afins.

@@ -15,7 +15,7 @@ import {
   registrosParaModelo,
   verificarControles,
   zDeclaracao,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { PASTA_BACKUPS } from "../src/index.js";
 import { type Conexao, conectar, fixture, textoDe } from "./apoio.js";
@@ -26,7 +26,7 @@ const DEP = `987654321${calcularDvCpf("987654321")}`;
 const OUTRO = `135792468${calcularDvCpf("135792468")}`;
 
 beforeEach(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-edicao-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-edicao-")));
   mkdirSync(join(base, "ir"));
   writeFileSync(join(base, "ir", "pj.DBK"), fixture("pj-simples-01.DBK"));
   c = await conectar({ diretorioAutorizado: join(base, "ir") });

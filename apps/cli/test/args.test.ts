@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { AJUDA, interpretarArgs } from "../src/args.js";
 
-const pasta = mkdtempSync(join(tmpdir(), "autoir-cli-"));
+const pasta = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-cli-"));
 const arquivo = join(pasta, "arquivo.txt");
 writeFileSync(arquivo, "x");
 const somenteLeitura = join(pasta, "ro");

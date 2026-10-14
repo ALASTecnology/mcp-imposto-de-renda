@@ -1,16 +1,25 @@
 {
-  "name": "@autoir/mcp",
+  "name": "@mcp-imposto-de-renda/mcp",
   "version": "0.0.0",
   "private": true,
-  "description": "Servidor MCP do AutoIR: expõe as funções do núcleo como tools.",
+  "description": "Servidor do MCP Imposto de Renda: expõe as funções do núcleo como tools.",
   "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/ALASTecnology/mcp-imposto-de-renda#readme",
+  "bugs": {
+    "url": "https://github.com/ALASTecnology/mcp-imposto-de-renda/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALASTecnology/mcp-imposto-de-renda.git",
+    "directory": "packages/mcp"
+  },
   "type": "module",
   "engines": {
     "node": ">=22"
   },
   "exports": {
     ".": {
-      "@autoir/source": "./src/index.ts",
+      "@mcp-imposto-de-renda/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
@@ -23,7 +32,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@autoir/core": "workspace:*",
+    "@mcp-imposto-de-renda/core": "workspace:*",
     "@modelcontextprotocol/sdk": "1.32.1",
     "zod": "4.6.7"
   }

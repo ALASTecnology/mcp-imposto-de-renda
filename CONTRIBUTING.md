@@ -1,6 +1,6 @@
-# Como contribuir com o AutoIR
+# Como contribuir com o MCP Imposto de Renda
 
-Obrigado pelo interesse. O AutoIR lida com dados fiscais e pretende reproduzir ao centavo o
+Obrigado pelo interesse. O MCP Imposto de Renda lida com dados fiscais e pretende reproduzir ao centavo o
 programa oficial da declaração, por isso o processo tem algumas regras firmes. Leia este guia
 inteiro antes de abrir um PR.
 

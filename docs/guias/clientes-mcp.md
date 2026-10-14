@@ -1,6 +1,6 @@
 # Configuração nos clientes MCP
 
-Todo cliente MCP inicia o AutoIR da mesma forma: um comando, uma lista de argumentos e, no
+Todo cliente MCP inicia o MCP Imposto de Renda da mesma forma: um comando, uma lista de argumentos e, no
 argumento `--dir`, a pasta da declaração. Só muda o arquivo de configuração e o nome da chave.
 
 Nos exemplos abaixo, troque `/Users/voce/Documentos/IR-2026` pela sua pasta. No Windows, use
@@ -11,13 +11,13 @@ barras duplas no JSON (`"C:\\Users\\voce\\Documentos\\IR-2026"`) ou barras norma
 
 | Instalação | `command` | `args` |
 | --- | --- | --- |
-| npm (depois da publicação) | `npx` | `["-y", "autoir-mcp", "--dir", "<pasta>"]` |
-| código-fonte | `node` | `["/caminho/para/AutoIR/apps/cli/dist/index.js", "--dir", "<pasta>"]` |
+| npm (depois da publicação) | `npx` | `["-y", "mcp-imposto-de-renda", "--dir", "<pasta>"]` |
+| código-fonte | `node` | `["/caminho/para/mcp-imposto-de-renda/apps/cli/dist/index.js", "--dir", "<pasta>"]` |
 
 Para usar só consulta e simulação, acrescente `"--somente-leitura"` ao fim de `args`.
 
 Depois de editar a configuração, reinicie o cliente (ou recarregue os servidores MCP) e confira se
-as ferramentas do AutoIR aparecem na lista.
+as ferramentas do MCP Imposto de Renda aparecem na lista.
 
 ## Claude Desktop
 
@@ -29,9 +29,9 @@ Arquivo `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -42,10 +42,10 @@ A partir do código:
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "node",
       "args": [
-        "/Users/voce/src/AutoIR/apps/cli/dist/index.js",
+        "/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js",
         "--dir",
         "/Users/voce/Documentos/IR-2026"
       ]
@@ -59,9 +59,9 @@ A partir do código:
 Pela linha de comando (escopo do usuário ou do projeto):
 
 ```sh
-claude mcp add autoir -- npx -y autoir-mcp --dir /Users/voce/Documentos/IR-2026
+claude mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026
 # ou, a partir do código
-claude mcp add autoir -- node /Users/voce/src/AutoIR/apps/cli/dist/index.js --dir /Users/voce/Documentos/IR-2026
+claude mcp add mcp-imposto-de-renda -- node /Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js --dir /Users/voce/Documentos/IR-2026
 ```
 
 Ou num arquivo `.mcp.json` na raiz do projeto:
@@ -69,9 +69,9 @@ Ou num arquivo `.mcp.json` na raiz do projeto:
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -86,9 +86,9 @@ Arquivo `~/.cursor/mcp.json` (global) ou `.cursor/mcp.json` (por projeto):
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -102,10 +102,10 @@ Arquivo `.vscode/mcp.json` no espaço de trabalho (ou o comando **MCP: Add Serve
 ```json
 {
   "servers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -118,9 +118,9 @@ Arquivo `~/.codeium/windsurf/mcp_config.json`:
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "autoir-mcp", "--dir", "/Users/voce/Documentos/IR-2026"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -132,8 +132,8 @@ Qualquer cliente compatível com MCP via stdio funciona. Procure na documentaç�
 servidores locais e preencha:
 
 - comando: `npx` (ou `node`);
-- argumentos: `-y autoir-mcp --dir <pasta>` (ou o caminho do `dist/index.js` e `--dir <pasta>`);
-- transporte: stdio. O AutoIR não oferece HTTP
+- argumentos: `-y mcp-imposto-de-renda --dir <pasta>` (ou o caminho do `dist/index.js` e `--dir <pasta>`);
+- transporte: stdio. O MCP Imposto de Renda não oferece HTTP
   ([ADR 0001](../adr/0001-mcp-local-sem-servidor.md)).
 
 ## Boas práticas
@@ -142,7 +142,7 @@ servidores locais e preencha:
   `destructiveHint: true` (as de inclusão, alteração, remoção e gravação do `.DBK`). Não aprove
   gravações em lote sem ler.
 - **Um servidor por pasta.** Para separar declarações de pessoas diferentes, configure dois
-  servidores com nomes distintos (`autoir-ana`, `autoir-bruno`), cada um com a sua pasta.
+  servidores com nomes distintos (`mcp-imposto-de-renda-ana`, `mcp-imposto-de-renda-bruno`), cada um com a sua pasta.
 - **Privacidade.** O provedor de LLM configurado no cliente recebe tudo o que as ferramentas
   devolvem. Escolha o provedor e o plano conforme a política de dados que você aceita.
 

@@ -161,8 +161,8 @@ ferr("abrir_declaracao", "Carrega uma declaração e devolve visão geral: tipo,
 ferr("excluir_declaracao", "Exclui uma ou mais declarações locais após confirmação explícita.", "ids, confirmar", "sim", "model")
 ferr("criar_retificadora", "Cria a retificadora a partir de uma declaração do exercício, exigindo o número do recibo da anterior e aplicando as travas de prazo (troca de regime, bens de espólio, débito automático).", "id_origem, numero_recibo", "sim", "model")
 ferr("registrar_recibo", "Registra o recibo de entrega informado pelo usuário (número de 12 dígitos ou arquivo do recibo gerado pelo PGD) e marca a declaração como transmitida.", "id_declaracao, numero_recibo? | arquivo_recibo?", "sim", "importacao")
-ferr("gravar_copia_seguranca", "Grava cópia de segurança (dados atuais, cópia para entrega ou transmitida com recibo) no formato do AutoIR.", "ids, tipo (dados_atuais|entrega|transmitida_com_recibo), destino", "sim", "model")
-ferr("restaurar_copia_seguranca", "Restaura cópia de segurança do AutoIR, avisando se substitui declaração existente do mesmo CPF.", "arquivo, sobrescrever?", "sim", "model")
+ferr("gravar_copia_seguranca", "Grava cópia de segurança (dados atuais, cópia para entrega ou transmitida com recibo) no formato do MCP Imposto de Renda.", "ids, tipo (dados_atuais|entrega|transmitida_com_recibo), destino", "sim", "model")
+ferr("restaurar_copia_seguranca", "Restaura cópia de segurança do MCP Imposto de Renda, avisando se substitui declaração existente do mesmo CPF.", "arquivo, sobrescrever?", "sim", "model")
 ferr("listar_fichas", "Lista as fichas e demonstrativos aplicáveis ao tipo da declaração, com estado de preenchimento e sugestões (equivale à aba Início e ao menu Fichas).", "id_declaracao", "não", "model")
 ferr("listar_lancamentos", "Lista os lançamentos de uma ficha ou demonstrativo, com chave de cada item.", "id_declaracao, ficha, filtro?", "não", "model")
 ferr("editar_lancamento", "Altera campos de um lançamento existente em qualquer ficha, revalidando o item.", "id_declaracao, ficha, id_lancamento, campos", "sim", "model")
@@ -204,7 +204,7 @@ ferr("definir_fii_fiagro", "Grava o mês do demonstrativo de operações em FII 
 ferr("listar_ganhos_capital", "Lista os demonstrativos de ganhos de capital importados por tipo (imóveis, móveis, participações, moeda em espécie) e os valores transportados.", "id_declaracao, tipo?", "não", "model")
 # importações
 ferr("importar_declaracao_anterior", "Importa dados da declaração de 2025 a partir do arquivo .DEC gravado ou transmitido, sem apagar silenciosamente o que já foi digitado.", "arquivo, cpfs?, id_destino?, mesclar?", "sim", "importacao")
-ferr("importar_pre_preenchida", "Importa o arquivo da declaração pré-preenchida obtido pelo usuário fora do AutoIR.", "arquivo, id_destino?", "sim", "importacao")
+ferr("importar_pre_preenchida", "Importa o arquivo da declaração pré-preenchida obtido pelo usuário fora do MCP Imposto de Renda.", "arquivo, id_destino?", "sim", "importacao")
 ferr("importar_informe_rendimentos", "Importa informe de rendimentos em XML (layout público da RFB) para as fichas correspondentes, com detecção de duplicidade.", "id_declaracao, arquivo, beneficiario?", "sim", "importacao")
 ferr("importar_informe_plano_saude", "Importa informe de plano de saúde em XML para Pagamentos Efetuados (código 26 e reembolsos), com detecção de duplicidade.", "id_declaracao, arquivo", "sim", "importacao")
 ferr("importar_carne_leao", "Importa o demonstrativo do Carnê-Leão 2025 obtido pelo usuário para a ficha PF/Exterior do titular ou dependente, respeitando as regras de não sobrescrita.", "id_declaracao, arquivo, cpf_beneficiario?", "sim", "importacao")
@@ -237,7 +237,7 @@ ferr("gerar_dbk", "Gera o arquivo da declaração no layout oficial de 2026 (reg
 ferr("gerar_relatorio_declaracao", "Gera relatório da declaração (toda ou partes, inclusive rendimentos de PF e demonstrativos) em PDF ou HTML com layout próprio.", "id_declaracao, partes?, formato (pdf|html), destino", "sim", "model")
 ferr("gerar_comunicacao_saida", "Gera a comunicação à fonte pagadora de saída definitiva do país, uma por fonte.", "id_declaracao, fontes?, destino", "sim", "model")
 ferr("instruir_transmissao", "Gera o passo a passo e o checklist para concluir no PGD oficial: abrir ou restaurar a declaração, verificar pendências, entregar com ou sem certificado, guardar o recibo e pagar o Darf.", "id_declaracao", "não", "dbk")
-ferr("orientar_servico_externo", "Explica como usar um serviço que só existe fora do AutoIR (gov.br, pré-preenchida, Carnê-Leão Web, e-CAC, débito automático, extrato, Darf oficial, GCAP, LCAR, Sicalc, Correios) e o que trazer de volta.", "servico, contexto?", "não", "tabelas")
+ferr("orientar_servico_externo", "Explica como usar um serviço que só existe fora do MCP Imposto de Renda (gov.br, pré-preenchida, Carnê-Leão Web, e-CAC, débito automático, extrato, Darf oficial, GCAP, LCAR, Sicalc, Correios) e o que trazer de volta.", "servico, contexto?", "não", "tabelas")
 
 # ---------------------------------------------------------------- estado atual do servidor (packages/mcp/src/ferramentas)
 EXISTENTES = [
@@ -276,7 +276,7 @@ EXISTENTES = [
     "orientar_servico_externo", "verificar_versao_tabelas",
 ]
 EDICAO = "edição pelo fluxo abrir, alterar o modelo, validar e gravar o DBK com cópia de segurança"
-ONLINE = "serviço online: só orientação com `orientar_servico_externo`; o AutoIR não acessa a rede"
+ONLINE = "serviço online: só orientação com `orientar_servico_externo`; o MCP Imposto de Renda não acessa a rede"
 _IMPL = {n: ([n], EDICAO) for n in [
     "definir_identificacao", "adicionar_dependente", "adicionar_alimentando", "adicionar_rendimento_pj",
     "definir_rendimentos_pf_exterior", "adicionar_rendimento_isento", "adicionar_rendimento_exclusivo",
@@ -370,7 +370,7 @@ def imp(motivo, alternativa):
     return f"IMPOSSÍVEL fora do PGD: {motivo}. Alternativa: {alternativa}."
 
 IMP_TRANSMISSAO = imp("a transmissão usa o Receitanet incorporado, com protocolo, hash, envelope e certificado da RFB, que não podem ser reimplementados nem copiados", "`gerar_dbk` grava o arquivo e `instruir_transmissao` orienta abrir no PGD 2026, verificar pendências e entregar; depois `registrar_recibo`")
-IMP_GOVBR = imp("exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho", "`orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário")
+IMP_GOVBR = imp("exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho", "`orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário")
 IMP_DARF = imp("o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc", "`gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial")
 IMP_RECIBO = imp("o recibo é produzido pela RFB na recepção", "imprimir no PGD e informar o número com `registrar_recibo`")
 
@@ -419,14 +419,14 @@ regra(r"M-IMP-ANO-ANTERIOR", T("importar_declaracao_anterior"), "importacao", "P
 regra(r"M-IMP-PREPREENCHIDA", T("importar_pre_preenchida", "orientar_servico_externo"), "importacao", "P1", IMP_GOVBR)
 regra(r"M-IMP-INFORME-REND", T("importar_informe_rendimentos"), "importacao", "P1", "Detectar duplicidade (o PGD duplica).")
 regra(r"M-IMP-INFORME-PS", T("importar_informe_plano_saude"), "importacao", "P1", "Detectar duplicidade.")
-regra(r"M-IMP-CARNE-LEAO", T("importar_carne_leao", "orientar_servico_externo"), "importacao", "P1", imp("o PGD baixa o Carnê-Leão Web com gov.br ou código de acesso", "o usuário obtém o demonstrativo no e-CAC e o AutoIR importa o arquivo; formato a mapear"))
+regra(r"M-IMP-CARNE-LEAO", T("importar_carne_leao", "orientar_servico_externo"), "importacao", "P1", imp("o PGD baixa o Carnê-Leão Web com gov.br ou código de acesso", "o usuário obtém o demonstrativo no e-CAC e o MCP Imposto de Renda importa o arquivo; formato a mapear"))
 regra(r"M-IMP-AR", T("importar_livro_caixa_rural"), "importacao", "P1")
 regra(r"M-IMP-GCAP", T("importar_gcap"), "importacao", "P1", "Substituição por CPF, como no PGD.")
 regra(r"M-IMP-SUGESTAO", T("listar_declaracoes", "importar_declaracao_anterior"), "importacao", "P2", "Função inferida.")
 regra(r"M-FERR-COPIA-GRAVAR", T("gravar_copia_seguranca", "gerar_dbk"), "model", "P1", "Formato de cópia do PGD não é reproduzido; a cópia para entrega equivale a `gerar_dbk`.")
 regra(r"M-FERR-COPIA-RESTAURAR", T("restaurar_copia_seguranca", "importar_declaracao_anterior"), "model", "P1", "Restaurar cópia do PGD 2026 depende de mapear o formato (lacuna).")
 regra(r"M-FERR-CALCULADORA", NA, "nenhum", "P2", "O assistente faz os cálculos.")
-regra(r"M-FERR-ATUALIZACOES", T("verificar_versao_tabelas"), "tabelas", "P2", "Atualização do PGD é do programa oficial; o AutoIR só versiona as próprias tabelas.")
+regra(r"M-FERR-ATUALIZACOES", T("verificar_versao_tabelas"), "tabelas", "P2", "Atualização do PGD é do programa oficial; o MCP Imposto de Renda só versiona as próprias tabelas.")
 regra(r"M-FERR-RECNOMES", T("buscar_nome_por_documento"), "model", "P2")
 regra(r"M-FERR-LOGIN-GOVBR", T("orientar_servico_externo"), "nenhum", "P2", IMP_GOVBR)
 regra(r"M-FERR-PAGINAS", T("obter_ajuda"), "tabelas", "P2", "Links públicos.")
@@ -440,7 +440,7 @@ regra(r"M-DEMO-ACOES", T("calcular_ganho_capital", "orientar_servico_externo"), 
 regra(r"S-TIPO-AJUSTE", T("criar_declaracao"), "model", "P0")
 regra(r"S-TIPO-DFE", T("criar_declaracao", "definir_espolio"), "model", "P1")
 regra(r"S-TIPO-DSDP", T("criar_declaracao", "definir_saida_definitiva"), "model", "P1")
-regra(r"S-PROGRAMAS-RFB", T("orientar_servico_externo"), "nenhum", "P2", "GCAP, LCAR e Carnê-Leão são programas da RFB; o AutoIR importa as exportações.")
+regra(r"S-PROGRAMAS-RFB", T("orientar_servico_externo"), "nenhum", "P2", "GCAP, LCAR e Carnê-Leão são programas da RFB; o MCP Imposto de Renda importa as exportações.")
 regra(r"S-REGRA-(CASADO|COMPANHEIRO|SEPARADO-FATO|DIVORCIADO|VIUVO|MENOR|EMANCIPADO|INCAPAZ)", T("obter_ajuda", "adicionar_dependente", "listar_pendencias"), "validate", "P1", "Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns).")
 regra(r"S-REGRA-ESPOLIO", T("definir_identificacao", "definir_espolio"), "model", "P1", "Natureza 81 habilita a ficha Espólio.")
 regra(r"S-REGRA-ESPOLIO-FINAL", T("definir_espolio", "definir_partilha_bem"), "model", "P1")
@@ -591,7 +591,7 @@ regra(r"S-VALIDADOR", NA, "nenhum", "P2", "Produzido pela RFB na recepção.")
 regra(r"S-CALAMIDADE", T("listar_pendencias", "consultar_tabela"), "validate", "P2", "Regra inferida; confirmar.")
 regra(r"S-ERROS-FREQ", T("listar_pendencias", "validar_documento"), "validate", "P0", "Também normalização de valores monetários na entrada.")
 regra(r"S-REQUISITOS", T("instruir_transmissao"), "nenhum", "P2")
-regra(r"S-PROBLEMAS-IMPRESSAO", NA, "nenhum", "P2", "O AutoIR gera PDF/HTML.")
+regra(r"S-PROBLEMAS-IMPRESSAO", NA, "nenhum", "P2", "O MCP Imposto de Renda gera PDF/HTML.")
 # 7 nuvem
 regra(r"S-NUVEM-(PREPREENCHIDA|CARNELEAO|DECONLINE)", T("orientar_servico_externo"), "nenhum", "P2", IMP_GOVBR)
 regra(r"S-NUVEM-DARF", T("gerar_darf", "orientar_servico_externo"), "calc", "P2", IMP_DARF)
@@ -603,7 +603,7 @@ regra(r"S-ARQ-GERAL", T("gerar_dbk", "importar_declaracao_anterior"), "dbk", "P0
 regra(r"S-ARQ-REG-(IDENT|TOTAIS|RENDIMENTOS|ISENTOS-EXCL|PESSOAS|PAGAMENTOS-DOACOES|BENS-DIVIDAS)", T("gerar_dbk"), "dbk", "P0")
 regra(r"S-ARQ-REG-(ESPOLIO-SAIDA|RRA|RV|AR)", T("gerar_dbk"), "dbk", "P1")
 regra(r"S-ARQ-REG-GCAP", T("importar_gcap", "gerar_dbk"), "dbk", "P1", "Registros importados preservados sem recálculo.")
-regra(r"S-ARQ-REG-RECIBO", T("registrar_recibo"), "importacao", "P2", "Somente leitura; nunca gerado pelo AutoIR.")
+regra(r"S-ARQ-REG-RECIBO", T("registrar_recibo"), "importacao", "P2", "Somente leitura; nunca gerado pelo MCP Imposto de Renda.")
 regra(r"S-ARQ-INFORMES", T("importar_informe_rendimentos", "importar_informe_plano_saude", "importar_gcap"), "importacao", "P1")
 # 9 tabelas
 regra(r"S-TAB-(PROGRESSIVA|DEPENDENCIA|BENS|PAGAMENTOS)", T("consultar_tabela"), "tabelas", "P0")
@@ -629,7 +629,7 @@ cont_cat = Counter(rid.split("-")[0] for rid in registros)
 out = []
 out.append("# Inventário de funções do PGD IRPF 2026")
 out.append("")
-out.append("Inventário exaustivo das funções do programa oficial da Declaração de Ajuste Anual do IRPF 2026 (exercício 2026, ano-calendário 2025, versão 1.5): menus, telas, fichas, abas, quadros, botões, demonstrativos, importações, impressões, pagamento, transmissão, serviços em nuvem, arquivo da declaração e tabelas. Cada item tem um ID estável, usado pela [matriz de cobertura](matriz-cobertura.md) e pelo código do AutoIR.")
+out.append("Inventário exaustivo das funções do programa oficial da Declaração de Ajuste Anual do IRPF 2026 (exercício 2026, ano-calendário 2025, versão 1.5): menus, telas, fichas, abas, quadros, botões, demonstrativos, importações, impressões, pagamento, transmissão, serviços em nuvem, arquivo da declaração e tabelas. Cada item tem um ID estável, usado pela [matriz de cobertura](matriz-cobertura.md) e pelo código do MCP Imposto de Renda.")
 out.append("")
 out.append("Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (AtalhosIRPF.pdf), recursos de dados que acompanham o programa (tabelas XML, `LayoutDadosDIRPF2026.xml`, `Mensagens.properties`, esquemas XSD dos informes) e nomes de classes, telas e relatórios listados em [estrutura-pacotes.md](estrutura-pacotes.md). Nenhum código foi descompilado ou copiado. Ver [README](README.md).")
 out.append("")
@@ -683,7 +683,7 @@ for num, titulo, subs in SECOES:
             out.append(f"- Origem: {orig}")
             out.extend(reg["corpo"])
             fs, mod, pr, ob = cobertura(rid)
-            out.append(f"- Cobertura no AutoIR: {fs}; módulo {mod}; prioridade {pr}; status {status_linha(fs)[0]} (ver matriz)")
+            out.append(f"- Cobertura no MCP Imposto de Renda: {fs}; módulo {mod}; prioridade {pr}; status {status_linha(fs)[0]} (ver matriz)")
             out.append("")
 
 (SAIDA / "funcoes-pgd-2026.md").write_text("\n".join(out) + "\n", encoding="utf-8")
@@ -693,7 +693,7 @@ def esc(s):
     return s.replace("|", "\\|")
 
 m = []
-m.append("# Matriz de cobertura: PGD IRPF 2026 x AutoIR")
+m.append("# Matriz de cobertura: PGD IRPF 2026 x MCP Imposto de Renda")
 m.append("")
 m.append("Uma linha por item do [inventário de funções](funcoes-pgd-2026.md). Colunas: ID estável, função do PGD, ferramentas MCP propostas (nomes em snake_case, pt-BR), módulo do core (`dbk`, `model`, `calc`, `validate`, `tabelas`, `importacao`; \"nenhum\" quando só a camada MCP responde), prioridade e observação.")
 m.append("")
@@ -701,11 +701,11 @@ m.append("Prioridades: **P0** essencial para entregar uma declaração de ajuste
 m.append("")
 m.append("## O que é impossível fora do programa oficial")
 m.append("")
-m.append("| Função | Por que é impossível | Alternativa no AutoIR |")
+m.append("| Função | Por que é impossível | Alternativa no MCP Imposto de Renda |")
 m.append("|---|---|---|")
 m.append("| Transmissão (com ou sem certificado digital) | O Receitanet incorporado ao PGD usa protocolo, envelope, hash e assinatura próprios da RFB; reimplementar exigiria engenharia reversa do programa, vedada pelas regras do projeto, e a RFB só aceita a entrega pelo PGD ou pelo Meu Imposto de Renda. | `gerar_dbk` grava o arquivo no layout 2026; `instruir_transmissao` dá o passo a passo: instalar ou atualizar o PGD 2026, abrir ou restaurar a declaração, rodar Verificar Pendências (F5), Entregar Declaração, guardar e imprimir o recibo; depois `registrar_recibo`. |")
 m.append("| Assinatura e certificado digital | Credenciais pessoais do contribuinte, usadas só pelo PGD ou e-CAC. | Orientar o uso do certificado no próprio PGD. |")
-m.append("| Login gov.br, pré-preenchida, Carnê-Leão Web, salvar e recuperar on-line | Serviços autenticados (Ouro ou Prata) da RFB; o AutoIR é um servidor 100% local e não guarda credenciais. | `orientar_servico_externo` explica como baixar ou exportar o arquivo; `importar_pre_preenchida` e `importar_carne_leao` leem o arquivo trazido pelo usuário. |")
+m.append("| Login gov.br, pré-preenchida, Carnê-Leão Web, salvar e recuperar on-line | Serviços autenticados (Ouro ou Prata) da RFB; o MCP Imposto de Renda é um servidor 100% local e não guarda credenciais. | `orientar_servico_externo` explica como baixar ou exportar o arquivo; `importar_pre_preenchida` e `importar_carne_leao` leem o arquivo trazido pelo usuário. |")
 m.append("| Darf oficial (número do documento e código de barras), Darf da notificação de multa | Emitidos pelo PGD, pelo serviço da RFB ou pelo Sicalc a partir de dados oficiais. | `gerar_darf` calcula código, período, vencimento, principal, multa e juros e instrui a emissão no PGD, e-CAC ou Sicalc. |")
 m.append("| Recibo de entrega, notificação de lançamento da multa, dados do validador | Gerados pela RFB na recepção. | `registrar_recibo` guarda o número informado pelo usuário para retificação e para o ano seguinte. |")
 m.append("| Inclusão ou alteração de débito automático após a entrega, extrato, consulta de débitos | Serviços do e-CAC (Meu Imposto de Renda). | `orientar_servico_externo` com o caminho no e-CAC e prazos (dia 14 de cada mês). |")

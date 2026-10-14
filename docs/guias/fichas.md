@@ -1,13 +1,13 @@
-# Fichas: do programa oficial ao AutoIR
+# Fichas: do programa oficial ao MCP Imposto de Renda
 
-Este guia liga cada ficha do programa IRPF 2026 ao que o AutoIR oferece: a chave no modelo JSON,
+Este guia liga cada ficha do programa IRPF 2026 ao que o MCP Imposto de Renda oferece: a chave no modelo JSON,
 os registros do `.DBK` que a representam, as ferramentas que a preenchem, as regras de validação e
 os IDs da [matriz de cobertura](../mapeamento/matriz-cobertura.md), onde está o detalhe função por
 função (o que já existe, o que é parcial e o que falta).
 
 ## Como as fichas são tratadas
 
-O AutoIR trabalha com um **modelo JSON tipado** da declaração (`packages/core/src/model`). Toda
+O MCP Imposto de Renda trabalha com um **modelo JSON tipado** da declaração (`packages/core/src/model`). Toda
 edição segue o mesmo fluxo:
 
 ```text
@@ -17,7 +17,7 @@ edição segue o mesmo fluxo:
 
 - As ferramentas `adicionar_*`, `editar_*`, `remover_*` e `definir_*` recebem `arquivo` (o `.DBK`
   ou `.DEC` a alterar) e, opcionalmente, `arquivo_destino`. Sem destino, gravam no próprio arquivo
-  e guardam o conteúdo anterior em `.autoir-backups`. Partindo de um `.DEC`, informe um destino
+  e guardam o conteúdo anterior em `.mcp-imposto-de-renda-backups`. Partindo de um `.DEC`, informe um destino
   `.DBK`.
 - Cada gravação devolve as pendências da declaração e se ela pode ser entregue (sem `erro`).
 - `editar_*` mescla os campos informados (`null` remove um campo) e localiza o item pela posição

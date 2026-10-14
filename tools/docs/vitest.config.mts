@@ -18,8 +18,8 @@ const sdk = dirname(
 export default defineConfig({
   resolve: {
     alias: [
-      { find: "@autoir/core", replacement: raiz("packages/core/src/index.ts") },
-      { find: "@autoir/mcp", replacement: raiz("packages/mcp/src/index.ts") },
+      { find: "@mcp-imposto-de-renda/core", replacement: raiz("packages/core/src/index.ts") },
+      { find: "@mcp-imposto-de-renda/mcp", replacement: raiz("packages/mcp/src/index.ts") },
       { find: /^@modelcontextprotocol\/sdk\/(.*)$/, replacement: `${dirname(sdk)}/$1` },
     ],
   },

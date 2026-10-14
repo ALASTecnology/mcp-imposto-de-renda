@@ -7,7 +7,7 @@ import {
   separarPendencias,
   validarDeclaracao,
   validarDocumento,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { carregarDeclaracao, zDeclaracaoJson, zNomeArquivo } from "./comum.js";
 import type { GrupoFerramentas } from "./tipos.js";

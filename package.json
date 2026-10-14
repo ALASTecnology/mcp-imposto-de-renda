@@ -1,9 +1,17 @@
 {
-  "name": "autoir-monorepo",
+  "name": "mcp-imposto-de-renda-monorepo",
   "version": "0.0.0",
   "private": true,
-  "description": "AutoIR: servidor MCP local (stdio) para apoiar a declaração do IRPF.",
+  "description": "MCP Imposto de Renda: servidor MCP local (stdio) para apoiar a declaração do IRPF.",
   "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/ALASTecnology/mcp-imposto-de-renda#readme",
+  "bugs": {
+    "url": "https://github.com/ALASTecnology/mcp-imposto-de-renda/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALASTecnology/mcp-imposto-de-renda.git"
+  },
   "type": "module",
   "packageManager": "pnpm@12.11.2",
   "engines": {

@@ -136,7 +136,7 @@ Fonte: AjudaIRPF.pdf do IRPF 2026 versão 1.5 (texto em ajuda.txt, linhas 14482 
 ## S-REQUISITOS Requisitos e instalação do programa oficial
 - Onde: Ajuda págs. 394 e 395
 - Regras: roda em Linux, Windows (10 ou superior recomendado) e Mac; Java embutido; Receitanet incorporado (não precisa instalar à parte); navegador necessário; impressora recomendada para o recibo; resolução 1280x768 ou maior; instalado em "Arquivos de Programas RFB" no Windows; não roda em rede (sem controle de concorrência)
-- Exige do MCP: orientação ao usuário para a etapa final no PGD (o AutoIR não substitui a instalação do PGD para transmitir)
+- Exige do MCP: orientação ao usuário para a etapa final no PGD (o MCP Imposto de Renda não substitui a instalação do PGD para transmitir)
 
 ## S-PROBLEMAS-IMPRESSAO Problemas na Impressão (orientação)
 - Onde: Ajuda pág. 425

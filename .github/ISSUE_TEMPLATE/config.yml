@@ -5,4 +5,4 @@ contact_links:
     about: Não abra issue pública. Use a aba Security do repositório, opção "Report a vulnerability", e siga o SECURITY.md.
   - name: Dúvidas sobre a declaração (Receita Federal)
     url: https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda
-    about: O AutoIR não é serviço oficial. Dúvidas sobre obrigações e regras do IRPF vão aos canais oficiais da Receita Federal.
+    about: O MCP Imposto de Renda não é serviço oficial. Dúvidas sobre obrigações e regras do IRPF vão aos canais oficiais da Receita Federal.

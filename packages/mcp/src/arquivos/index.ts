@@ -11,7 +11,7 @@
  *   intermediárias que levem para fora (conferido com `realpath`);
  * - leitura e escrita têm limite de tamanho;
  * - a escrita é atômica (temporário na mesma pasta, `fsync`, `rename`) e, antes de sobrescrever,
- *   guarda uma cópia com carimbo de data em `.autoir-backups`, com rotação.
+ *   guarda uma cópia com carimbo de data em `.mcp-imposto-de-renda-backups`, com rotação.
  *
  * Mensagens de erro citam só o nome relativo informado, nunca o caminho absoluto da máquina.
  */
@@ -31,7 +31,15 @@ import { basename, dirname, extname, isAbsolute, join, sep } from "node:path";
 import { ErroFerramenta } from "../erros.js";
 
 /** Pasta, dentro da pasta autorizada, onde ficam as cópias de segurança automáticas. */
-export const PASTA_BACKUPS = ".autoir-backups";
+export const PASTA_BACKUPS = ".mcp-imposto-de-renda-backups";
+/**
+ * Pasta de cópias das versões publicadas com o nome antigo do projeto. É só lida, por
+ * `listarCopias` e `restaurarCopia`, para que as cópias antigas continuem acessíveis; nada novo
+ * é gravado nela.
+ */
+export const PASTA_BACKUPS_ANTIGA = ".autoir-backups";
+/** Pastas consultadas ao listar e restaurar cópias, da atual para a antiga. */
+const PASTAS_BACKUPS_LEITURA = [PASTA_BACKUPS, PASTA_BACKUPS_ANTIGA] as const;
 /** Tamanho máximo padrão de um arquivo lido ou gravado: 20 MB. */
 export const LIMITE_PADRAO_BYTES = 20 * 1024 * 1024;
 /** Quantas cópias de segurança manter por arquivo. */
@@ -102,11 +110,11 @@ export interface PastaAutorizada {
   ): Promise<ResultadoEscrita>;
   listar(extensoes: readonly string[]): Promise<ItemArquivo[]>;
   /**
-   * Remove um arquivo da pasta autorizada, guardando antes uma cópia em `.autoir-backups`.
+   * Remove um arquivo da pasta autorizada, guardando antes uma cópia em `.mcp-imposto-de-renda-backups`.
    * Recusa links simbólicos e o que não for arquivo comum.
    */
   remover(nome: string, extensoes: readonly string[]): Promise<ResultadoRemocao>;
-  /** Cópias de segurança em `.autoir-backups`, da mais recente para a mais antiga. */
+  /** Cópias de segurança em `.mcp-imposto-de-renda-backups`, da mais recente para a mais antiga. */
   listarCopias(): Promise<CopiaSeguranca[]>;
   /**
    * Restaura uma cópia (pelo nome devolvido em `listarCopias`) sobre `destino`, que também
@@ -120,7 +128,7 @@ export interface PastaAutorizada {
 }
 
 export interface CopiaSeguranca {
-  /** Nome da cópia dentro de `.autoir-backups`. */
+  /** Nome da cópia dentro de `.mcp-imposto-de-renda-backups`. */
   readonly copia: string;
   /** Nome relativo do arquivo de origem. */
   readonly arquivo: string;
@@ -207,7 +215,7 @@ function muitoGrande(limite: number): ErroArquivo {
 function link(nome: string): ErroArquivo {
   return new ErroArquivo(
     "LINK_SIMBOLICO",
-    `"${nome}" é um link simbólico. Por segurança o AutoIR não segue links; use o arquivo real.`,
+    `"${nome}" é um link simbólico. Por segurança o MCP Imposto de Renda não segue links; use o arquivo real.`,
   );
 }
 
@@ -248,8 +256,9 @@ export function nomeDoPrefixo(prefixo: string): string {
 const TAMANHO_SUFIXO_BACKUP = 25;
 
 /** Temporário da escrita atômica: nome curto e reconhecível, limpo na abertura da pasta. */
-const PREFIXO_TEMPORARIO = ".autoir-";
-const PADRAO_TEMPORARIO = /^\.autoir-[0-9a-f-]{36}\.tmp$/;
+const PREFIXO_TEMPORARIO = ".mcp-imposto-de-renda-";
+// Também reconhece os temporários deixados pelas versões com o nome antigo do projeto.
+const PADRAO_TEMPORARIO = /^\.(?:mcp-imposto-de-renda|autoir)-[0-9a-f-]{36}\.tmp$/;
 
 async function lerHandle(h: FileHandle, nome: string, limite: number): Promise<Uint8Array> {
   const st = await h.stat();
@@ -396,23 +405,31 @@ class PastaAutorizadaImpl implements PastaAutorizada {
   }
 
   async listarCopias(): Promise<CopiaSeguranca[]> {
-    const pasta = join(this.raiz, PASTA_BACKUPS);
-    const st = await lstatOuNada(pasta);
-    if (!st) return [];
-    if (st.isSymbolicLink() || !st.isDirectory()) throw link(PASTA_BACKUPS);
     const copias: CopiaSeguranca[] = [];
-    for (const nome of await readdir(pasta)) {
-      const m = PADRAO_BACKUP.exec(nome);
-      if (!m || CONTROLE.test(nome)) continue;
-      const info = await lstatOuNada(join(pasta, nome));
-      if (!info?.isFile()) continue;
-      const c = m[2] ?? "";
-      copias.push({
-        copia: nome,
-        arquivo: nomeDoPrefixo(m[1] ?? ""),
-        criadaEm: `${c.slice(0, 4)}-${c.slice(4, 6)}-${c.slice(6, 8)}T${c.slice(9, 11)}:${c.slice(11, 13)}:${c.slice(13, 15)}Z`,
-        tamanho: info.size,
-      });
+    const vistas = new Set<string>();
+    for (const nomePasta of PASTAS_BACKUPS_LEITURA) {
+      const pasta = join(this.raiz, nomePasta);
+      const st = await lstatOuNada(pasta);
+      if (!st) continue;
+      if (st.isSymbolicLink() || !st.isDirectory()) {
+        // A pasta antiga só é lida por compatibilidade: se não for uma pasta comum, é ignorada.
+        if (nomePasta === PASTA_BACKUPS_ANTIGA) continue;
+        throw link(nomePasta);
+      }
+      for (const nome of await readdir(pasta)) {
+        const m = PADRAO_BACKUP.exec(nome);
+        if (!m || CONTROLE.test(nome) || vistas.has(nome)) continue;
+        const info = await lstatOuNada(join(pasta, nome));
+        if (!info?.isFile()) continue;
+        vistas.add(nome);
+        const c = m[2] ?? "";
+        copias.push({
+          copia: nome,
+          arquivo: nomeDoPrefixo(m[1] ?? ""),
+          criadaEm: `${c.slice(0, 4)}-${c.slice(4, 6)}-${c.slice(6, 8)}T${c.slice(9, 11)}:${c.slice(11, 13)}:${c.slice(13, 15)}Z`,
+          tamanho: info.size,
+        });
+      }
     }
     copias.sort((a, b) => (a.copia < b.copia ? 1 : a.copia > b.copia ? -1 : 0));
     return copias.slice(0, MAX_ITENS_LISTAGEM);
@@ -432,8 +449,17 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     ) {
       throw invalido("Nome de cópia de segurança inválido; use listar_copias_seguranca.");
     }
-    const caminho = join(this.raiz, PASTA_BACKUPS, copia);
-    const st = await lstatOuNada(caminho);
+    // Procura primeiro na pasta atual e, se não achar, na pasta do nome antigo do projeto.
+    let caminho = "";
+    let st: Stats | undefined;
+    for (const nomePasta of PASTAS_BACKUPS_LEITURA) {
+      const pasta = join(this.raiz, nomePasta);
+      const stPasta = await lstatOuNada(pasta);
+      if (!stPasta || stPasta.isSymbolicLink() || !stPasta.isDirectory()) continue;
+      caminho = join(pasta, copia);
+      st = await lstatOuNada(caminho);
+      if (st) break;
+    }
     if (!st) throw naoEncontrado(copia);
     if (st.isSymbolicLink()) throw link(copia);
     if (!st.isFile()) throw new ErroArquivo("NAO_E_ARQUIVO", `"${copia}" não é um arquivo comum.`);
@@ -517,7 +543,7 @@ class PastaAutorizadaImpl implements PastaAutorizada {
       .filter((x) => x.m?.[1] === prefixo)
       .map((x) => ({ n: x.n, marca: x.m?.[2] ?? "", seq: Number(x.m?.[3] ?? 0) }))
       .sort((a, b) => (a.marca === b.marca ? a.seq - b.seq : a.marca < b.marca ? -1 : 1));
-    // A primeira cópia de cada arquivo (o conteúdo original, de antes do AutoIR) nunca sai da
+    // A primeira cópia de cada arquivo (o conteúdo original, de antes do MCP Imposto de Renda) nunca sai da
     // rotação: a quantidade só gira entre as demais (revisão M2).
     const [, ...giram] = meus;
     const excesso = meus.length - Math.max(2, this.maxBackups);
@@ -562,7 +588,7 @@ export async function abrirPastaAutorizada(
 
 /**
  * Apaga temporários de escrita deixados por um encerramento no meio de uma gravação (podem ter
- * dados pessoais). Só os que seguem o padrão do AutoIR, na raiz da pasta autorizada.
+ * dados pessoais). Só os que seguem o padrão do MCP Imposto de Renda, na raiz da pasta autorizada.
  */
 async function limparTemporarios(raiz: string): Promise<void> {
   let nomes: string[];

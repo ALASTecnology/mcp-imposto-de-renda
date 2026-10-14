@@ -1,4 +1,4 @@
-# Testes do AutoIR
+# Testes do MCP Imposto de Renda
 
 Como o projeto é testado, como rodar cada suíte e o que cada uma garante. Todos os dados de
 teste são sintéticos: nenhum CPF, nome ou valor pertence a uma pessoa real.
@@ -155,7 +155,7 @@ quando a cobertura subir; não os baixe para fazer um PR passar.
 - CodeQL (`security-extended`) roda no CI a cada push, PR e toda segunda-feira.
 - `pnpm audit --prod`: nenhuma vulnerabilidade. `pnpm audit` completo: uma de severidade baixa
   em `esbuild` 0.27.7 (GHSA-g7r4-m6w7-qqqr, leitura de arquivo pelo servidor de desenvolvimento no
-  Windows), dependência de desenvolvimento via `vitest`/`vite` e `tsup`; o AutoIR não usa o
+  Windows), dependência de desenvolvimento via `vitest`/`vite` e `tsup`; o MCP Imposto de Renda não usa o
   servidor de desenvolvimento do esbuild. O CI falha a partir de severidade moderada.
 
 ### Dependências diretas
@@ -176,9 +176,9 @@ instalado e com `pnpm licenses list`.
 
 Dependências transitivas de execução (`pnpm licenses list --prod`): MIT, ISC, BSD-2-Clause e
 BSD-3-Clause, todas compatíveis. O SDK do MCP traz `express`, `hono` e `cors` como dependências
-mesmo quando só o transporte stdio é usado; o AutoIR não importa os transportes HTTP (conferido
+mesmo quando só o transporte stdio é usado; o MCP Imposto de Renda não importa os transportes HTTP (conferido
 por `packages/mcp/test/seguranca.test.ts`). Nas de desenvolvimento aparecem também Apache-2.0 e
-MPL-2.0 (`lightningcss`, via `vite`), que não são distribuídas com o AutoIR.
+MPL-2.0 (`lightningcss`, via `vite`), que não são distribuídas com o MCP Imposto de Renda.
 
 `@vitest/coverage-v8` foi a única dependência acrescentada pela suíte de integridade, porque a
 cobertura não pode ser medida sem um provedor. Mesma versão e mesmos mantenedores do `vitest`

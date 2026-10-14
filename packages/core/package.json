@@ -1,16 +1,25 @@
 {
-  "name": "@autoir/core",
+  "name": "@mcp-imposto-de-renda/core",
   "version": "0.0.0",
   "private": true,
-  "description": "Núcleo do AutoIR: modelo da declaração, codec DBK, cálculo e validação.",
+  "description": "Núcleo do MCP Imposto de Renda: modelo da declaração, codec DBK, cálculo e validação.",
   "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/ALASTecnology/mcp-imposto-de-renda#readme",
+  "bugs": {
+    "url": "https://github.com/ALASTecnology/mcp-imposto-de-renda/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALASTecnology/mcp-imposto-de-renda.git",
+    "directory": "packages/core"
+  },
   "type": "module",
   "engines": {
     "node": ">=22"
   },
   "exports": {
     ".": {
-      "@autoir/source": "./src/index.ts",
+      "@mcp-imposto-de-renda/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }

@@ -1,6 +1,6 @@
 # Changelog
 
-Todas as mudanças relevantes do AutoIR são registradas aqui.
+Todas as mudanças relevantes do MCP Imposto de Renda são registradas aqui.
 
 O formato segue o [Keep a Changelog 1.1.0](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto
 adota o [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/). Enquanto a versão for
@@ -8,13 +8,33 @@ adota o [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/). Enquan
 
 ## [Não publicado]
 
+### Alterado
+
+- **Novo nome do projeto: MCP Imposto de Renda** (antes AutoIR), com repositório em
+  <https://github.com/ALASTecnology/mcp-imposto-de-renda>. O que muda para quem já usava:
+  - pacote npm e executável: `mcp-imposto-de-renda` (antes `autoir-mcp`); a configuração dos
+    clientes passa a usar `npx -y mcp-imposto-de-renda --dir <pasta>`;
+  - nome do servidor no `initialize`: `mcp-imposto-de-renda` (antes `autoir`);
+  - recurso do aviso legal: `mcp-imposto-de-renda://aviso-legal` (antes `autoir://aviso-legal`);
+  - pacotes internos do workspace: `@mcp-imposto-de-renda/core` e `@mcp-imposto-de-renda/mcp`
+    (antes `@autoir/core` e `@autoir/mcp`), com a condição de exportação
+    `@mcp-imposto-de-renda/source` (antes `@autoir/source`);
+  - variável do harness de referência: `MCP_IMPOSTO_DE_RENDA_REFERENCIA_CACHE` (antes
+    `AUTOIR_REFERENCIA_CACHE`);
+  - pasta de cópias de segurança: `.mcp-imposto-de-renda-backups` (antes `.autoir-backups`).
+- **Compatibilidade com a pasta antiga.** `listar_copias_seguranca` e `restaurar_copia_seguranca`
+  também leem `.autoir-backups`, se existir, para que as cópias feitas antes da mudança continuem
+  acessíveis; nada novo é gravado nela. Recibos registrados com o tipo antigo (`recibo-autoir`)
+  continuam aceitos por `criar_retificadora`, e temporários de escrita no padrão antigo
+  (`.autoir-<uuid>.tmp`) também são limpos ao abrir a pasta.
+
 ## [0.1.0] - ainda não publicada
 
 Primeira versão. Cobre o exercício 2026 (ano-calendário 2025).
 
 ### Adicionado
 
-- **Servidor MCP local** via stdio (`autoir-mcp`), sem nenhuma chamada de rede, com pasta autorizada
+- **Servidor MCP local** via stdio (`mcp-imposto-de-renda`), sem nenhuma chamada de rede, com pasta autorizada
   obrigatória (`--dir`) e modo `--somente-leitura`.
 - **Codec do arquivo da declaração** (`.DBK` e `.DEC`) com leiaute do exercício 2026 gerado a partir
   dos XML de dados do programa oficial (`tools/leiaute`), e recálculo dos quatro controles de
@@ -35,9 +55,9 @@ Primeira versão. Cobre o exercício 2026 (ano-calendário 2025).
   objeto único; importar informes de rendimentos e de plano de saúde colados em texto; simular e
   explicar o cálculo; validar; consultar tabelas; conferir a integridade do arquivo; gerar dados do
   Darf, relatório de conferência e roteiro de transmissão. Lista completa no README.
-- **Prompts** `preparar_declaracao` e `revisar_malha_fina` e o recurso `autoir://aviso-legal`.
+- **Prompts** `preparar_declaracao` e `revisar_malha_fina` e o recurso `mcp-imposto-de-renda://aviso-legal`.
 - **Camada de arquivos segura**: só nomes relativos, recusa de links simbólicos, nomes reservados e
-  arquivos ocultos, escrita atômica com `fsync`, backup automático com rotação em `.autoir-backups`,
+  arquivos ocultos, escrita atômica com `fsync`, backup automático com rotação em `.mcp-imposto-de-renda-backups`,
   limites de tamanho e de elementos por chamada.
 - **Harness de referência** (`tools/referencia`) que usa, só na máquina do desenvolvedor, o
   programa oficial como biblioteca para gerar casos golden e fixtures a partir de dados sintéticos.
@@ -54,7 +74,7 @@ Primeira versão. Cobre o exercício 2026 (ano-calendário 2025).
   (tipo 4) e operação da Caixa antes do número da conta; indicador `IN_IMPOSTO_PAGO` do header;
   resultado da atividade rural no Brasil no cálculo do ajuste.
 - `pnpm docs:catalogo` regenera o catálogo de ferramentas do README a partir do `tools/list`.
-- **Inventário das 416 funções** do programa oficial com a matriz de cobertura do AutoIR.
+- **Inventário das 416 funções** do programa oficial com a matriz de cobertura do MCP Imposto de Renda.
 - Documentação: guias de instalação, clientes MCP, primeira declaração, fichas, perguntas
   frequentes, solução de problemas e desenvolvimento; formato do arquivo; regras do IRPF 2026 e
   notas do IRPF 2027; modelo de ameaças; política de segurança; ADRs; guia de contribuição e código

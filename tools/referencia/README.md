@@ -7,7 +7,7 @@ pelo próprio desenvolvedor, como **biblioteca** para:
   e gravar o resultado esperado em `packages/core/test/golden/2026/<id>.json`;
 - gravar a cópia de segurança (`.DBK`) e o arquivo de entrega (`.DEC`) de cada caso pelo próprio
   mecanismo de persistência do programa, em `packages/core/test/fixtures/dbk/2026/<id>.DBK|.DEC`;
-- restaurar um `.DBK`/`.DEC` produzido por terceiros (por exemplo, pelo codec do AutoIR) e listar
+- restaurar um `.DBK`/`.DEC` produzido por terceiros (por exemplo, pelo codec do MCP Imposto de Renda) e listar
   integridade, resultado do cálculo e pendências apontadas pelo programa.
 
 ## Regras (ADR 0002)
@@ -45,7 +45,7 @@ Variáveis de ambiente:
 |---|---|---|
 | `IRPF_DIR` | (vazio) | pasta já extraída do programa; se vazia, o zip é extraído no cache |
 | `IRPF_ZIP` | `vendor/rfb/irpf/IRPF2026-1.5.zip` | zip do programa oficial |
-| `AUTOIR_REFERENCIA_CACHE` | `$TMPDIR/autoir-referencia` | programa extraído, classes compiladas e execuções temporárias |
+| `MCP_IMPOSTO_DE_RENDA_REFERENCIA_CACHE` | `$TMPDIR/mcp-imposto-de-renda-referencia` | programa extraído, classes compiladas e execuções temporárias |
 | `GOLDEN_DIR` | `packages/core/test/golden/2026` | destino dos casos com `esperado` |
 | `FIXTURES_DIR` | `packages/core/test/fixtures/dbk/2026` | destino dos `.DBK`/`.DEC` |
 | `JAVA`, `JAVAC` | `java`, `javac` | binários do JDK |
@@ -163,7 +163,7 @@ O `.DBK`/`.DEC` é gravado com o modelo mais vantajoso selecionado, como faria o
 ## Casos gerados
 
 48 casos em `casos/`, todos com golden e fixtures (48 `.DBK` e 48 `.DEC`, 96 arquivos). O motor
-do AutoIR reproduz os 48 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
+do MCP Imposto de Renda reproduz os 48 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
 cada DBK em DEC reproduz a DEC do programa byte a byte.
 
 Os 31 casos iniciais cobrem: isento, cada faixa da tabela anual (isenção, 7,5%, 15%, 22,5%,
@@ -252,7 +252,7 @@ pendência (o usuário confirma de novo no PGD). É o caso de `pensao-alimentici
   NR_CONTROLE do header nem o CRC por linha nem os hashes: um `.DBK` com controle `0000000001` ou com
   o CRC de um registro zerado é restaurado normalmente, e `crcPrograma` continua `ok`. Só
   `hashPrograma` (validação dos registros de hash do `.DEC`) detecta conteúdo alterado. O codec do
-  AutoIR deve, mesmo assim, gravar os valores corretos.
+  MCP Imposto de Renda deve, mesmo assim, gravar os valores corretos.
 - O header contém o nome e a versão do sistema operacional e da JVM em que o arquivo foi gerado
   (por exemplo `MAC OS X 27.0 27`), lidos das propriedades do sistema.
 

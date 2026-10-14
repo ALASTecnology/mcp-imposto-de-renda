@@ -46,7 +46,7 @@ Passos:
 4. Use comparar_modelos para confirmar o modelo de tributação mais vantajoso.
 5. Liste as correções sugeridas em ordem de risco, citando a ficha e o documento que comprova cada valor.
 
-Lembre que o AutoIR não é serviço oficial: a conferência final e a transmissão são feitas no programa da Receita Federal.`;
+Lembre que o MCP Imposto de Renda não é serviço oficial: a conferência final e a transmissão são feitas no programa da Receita Federal.`;
 }
 
 export function registrarPrompts(server: McpServer): void {

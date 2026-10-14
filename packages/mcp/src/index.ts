@@ -1,5 +1,5 @@
 /**
- * @autoir/mcp: servidor MCP do AutoIR.
+ * @mcp-imposto-de-renda/mcp: servidor do MCP Imposto de Renda.
  *
  * Pontos de extensão:
  * - `GrupoFerramentas` e `RegistroFerramentas` (`ferramentas/tipos.ts`): contrato de um grupo;

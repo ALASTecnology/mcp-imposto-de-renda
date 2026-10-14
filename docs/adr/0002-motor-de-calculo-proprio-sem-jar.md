@@ -6,13 +6,13 @@
 ## Contexto
 
 O programa oficial da declaração (PGD) é um aplicativo Java distribuído pela Receita Federal.
-Executá-lo a partir do AutoIR daria cálculo idêntico ao oficial, mas exigiria Java instalado,
+Executá-lo a partir do MCP Imposto de Renda daria cálculo idêntico ao oficial, mas exigiria Java instalado,
 amarraria o projeto aos termos de uso e à distribuição de software de terceiros, tornaria a
 execução lenta e opaca e impediria explicar ao usuário de onde vem cada valor.
 
 ## Decisão
 
-O AutoIR implementa o próprio codec do arquivo DBK e o próprio motor de cálculo em TypeScript.
+O MCP Imposto de Renda implementa o próprio codec do arquivo DBK e o próprio motor de cálculo em TypeScript.
 
 - Nenhum código, binário ou JAR do programa oficial entra no repositório. A pasta `vendor/rfb/`
   é ignorada pelo git, e nenhum bytecode é descompilado.

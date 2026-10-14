@@ -38,13 +38,13 @@ body:
     id: mensagem
     attributes:
       label: Mensagem de erro
-      description: Texto devolvido pela ferramenta ou linhas `autoir-mcp:` do log do cliente. Remova caminhos pessoais.
+      description: Texto devolvido pela ferramenta ou linhas `mcp-imposto-de-renda:` do log do cliente. Remova caminhos pessoais.
       render: text
   - type: input
     id: versao
     attributes:
-      label: Versão do AutoIR
-      description: Saída de `autoir-mcp --versao` (ou commit, se instalado a partir do código).
+      label: Versão do MCP Imposto de Renda
+      description: Saída de `mcp-imposto-de-renda --versao` (ou commit, se instalado a partir do código).
     validations:
       required: true
   - type: input

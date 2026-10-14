@@ -18,7 +18,7 @@ import {
   separarPendencias,
   validarDeclaracao,
   verificarControles,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { interpretarDeclaracao } from "../conversao/dbk-modelo.js";
 import { EntradaInvalidaError } from "../erros.js";
@@ -46,7 +46,10 @@ export const zPendenciaSaida = z.object({
 export const SAIDA_GRAVACAO = {
   arquivo: z.string().describe("DBK gravado (nome relativo à pasta autorizada)."),
   bytes: z.number(),
-  backup: z.string().nullable().describe("Cópia do conteúdo anterior em .autoir-backups."),
+  backup: z
+    .string()
+    .nullable()
+    .describe("Cópia do conteúdo anterior em .mcp-imposto-de-renda-backups."),
   registros: z.number(),
   controlesValidos: z.boolean(),
   podeEntregar: z.boolean().describe("Falso se houver pendência do tipo erro."),

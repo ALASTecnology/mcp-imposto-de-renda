@@ -3,12 +3,12 @@
 Antes de tudo, rode o servidor direto no terminal. Se ele não sobe ali, não vai subir no cliente:
 
 ```sh
-node /caminho/para/AutoIR/apps/cli/dist/index.js --dir /caminho/da/pasta
+node /caminho/para/mcp-imposto-de-renda/apps/cli/dist/index.js --dir /caminho/da/pasta
 # ou, depois da publicação no npm
-npx -y autoir-mcp --dir /caminho/da/pasta
+npx -y mcp-imposto-de-renda --dir /caminho/da/pasta
 ```
 
-Esperado em stderr: `autoir-mcp: pronto (versão 0.1.0)`. Encerre com Ctrl+C.
+Esperado em stderr: `mcp-imposto-de-renda: pronto (versão 0.1.0)`. Encerre com Ctrl+C.
 
 ## O servidor não sobe
 
@@ -26,7 +26,7 @@ Esperado em stderr: `autoir-mcp: pronto (versão 0.1.0)`. Encerre com Ctrl+C.
 
 1. Confira se o JSON da configuração é válido (vírgulas, aspas, barras invertidas no Windows).
 2. Reinicie o cliente por completo; alguns só leem a configuração na abertura.
-3. Abra o log de servidores MCP do cliente. As mensagens do AutoIR começam com `autoir-mcp:`.
+3. Abra o log de servidores MCP do cliente. As mensagens do MCP Imposto de Renda começam com `mcp-imposto-de-renda:`.
 4. Teste o mesmo comando no terminal, como no início desta página.
 5. Clientes de interface gráfica não herdam o `PATH` do seu terminal. Se `npx` ou `node` não forem
    encontrados, use o caminho absoluto (`which node` no macOS e Linux, `where node` no Windows).
@@ -38,9 +38,9 @@ Alguns clientes no Windows não executam `npx` diretamente. Use o interpretador 
 ```json
 {
   "mcpServers": {
-    "autoir": {
+    "mcp-imposto-de-renda": {
       "command": "cmd",
-      "args": ["/c", "npx", "-y", "autoir-mcp", "--dir", "C:/Users/voce/Documentos/IR-2026"]
+      "args": ["/c", "npx", "-y", "mcp-imposto-de-renda", "--dir", "C:/Users/voce/Documentos/IR-2026"]
     }
   }
 }
@@ -60,10 +60,10 @@ No JSON, cada argumento é um item da lista, então espaços não precisam de as
 | Ferramentas `adicionar_*`, `editar_*`, `definir_*` ou `converter_modelo_para_dbk` não aparecem | O servidor foi iniciado com `--somente-leitura`. | Remova a opção da configuração. |
 | `remover_dependente` recusa a remoção | O dependente tem rendimentos ou pagamentos vinculados. | Informe `cascata: true` para remover também os itens vinculados, como no programa. |
 | `editar_*` diz que o item não existe | A posição começa em 1 e muda depois de remoções. | Rode `listar_*` de novo e use o `indice` mostrado. |
-| "A declaração não segue o modelo do AutoIR" | O JSON enviado tem campo errado. A mensagem lista o caminho de cada problema. | No modelo, valores são inteiros em centavos, datas `AAAA-MM-DD`, CPF/CNPJ só dígitos. |
+| "A declaração não segue o modelo do MCP Imposto de Renda" | O JSON enviado tem campo errado. A mensagem lista o caminho de cada problema. | No modelo, valores são inteiros em centavos, datas `AAAA-MM-DD`, CPF/CNPJ só dígitos. |
 | "Valor monetário inválido" | Valor com ponto decimal (`"1234.56"`) ou número com casas decimais. | Use `"1.234,56"` (reais) ou `123456` (centavos). |
 | Arquivo maior que o limite | O limite é 20 MB por arquivo. | Um `.DBK` real tem poucos KB; confira se o arquivo é mesmo uma declaração. |
-| "divergência(s) nos controles" ao abrir | O arquivo foi editado fora do programa ou está corrompido. | Rode `verificar_integridade_arquivo`. Gravar de novo pelo AutoIR recalcula os controles. |
+| "divergência(s) nos controles" ao abrir | O arquivo foi editado fora do programa ou está corrompido. | Rode `verificar_integridade_arquivo`. Gravar de novo pelo MCP Imposto de Renda recalcula os controles. |
 | Exercício desconhecido | O arquivo é de outro exercício. | Só o exercício 2026 é suportado por enquanto. |
 
 ## O programa oficial não restaura o arquivo
@@ -79,7 +79,7 @@ No JSON, cada argumento é um item da lista, então espaços não precisam de as
 
 ## Restaurou, mas o programa aponta pendências
 
-O AutoIR não cobre todas as críticas do programa. Resolva as pendências no próprio programa
+O MCP Imposto de Renda não cobre todas as críticas do programa. Resolva as pendências no próprio programa
 (**Verificar Pendências**, F5). Uma pendência conhecida: alimentandos sempre voltam pedindo a
 confirmação de que atendem aos requisitos, porque essa confirmação não faz parte do arquivo.
 
@@ -94,6 +94,6 @@ confirmação de que atendem aos requisitos, porque essa confirmação não faz 
 
 ## Ainda com problema?
 
-Abra uma issue com o modelo **Bug** e inclua: versão do AutoIR (`--versao`), versão do Node.js,
+Abra uma issue com o modelo **Bug** e inclua: versão do MCP Imposto de Renda (`--versao`), versão do Node.js,
 sistema operacional, cliente MCP e a mensagem de erro. Nunca inclua CPFs, nomes, valores ou
 arquivos de declarações reais. Falhas de segurança seguem o [SECURITY.md](../../SECURITY.md).

@@ -1,7 +1,7 @@
 # Formato do arquivo da declaração (DEC e DBK)
 
 Este documento descreve o arquivo gravado pelo programa da declaração do IRPF (PGD) e como o
-codec do AutoIR (`packages/core/src/dbk`) o lê e grava. Vale para o exercício 2026; os demais
+codec do MCP Imposto de Renda (`packages/core/src/dbk`) o lê e grava. Vale para o exercício 2026; os demais
 exercícios seguem a mesma estrutura com leiautes próprios.
 
 - **DEC**: arquivo da declaração gravado para entrega. O programa já o grava com os registros
@@ -265,7 +265,7 @@ import {
   verificarControles,
   centavosDoCampo,
   LEIAUTE_2026,
-} from "@autoir/core/dbk"; // hoje: packages/core/src/dbk/index.ts
+} from "@mcp-imposto-de-renda/core/dbk"; // hoje: packages/core/src/dbk/index.ts
 
 const arquivo = lerArquivo(bytes); // { exercicio, registros, terminadorFinal }
 const novos = recalcularControles(arquivo.registros);

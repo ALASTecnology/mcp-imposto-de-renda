@@ -1,6 +1,6 @@
 /**
  * Demonstrativo de Ganhos de Capital (GCAP) importado para a declaração
- * (registros 60 a 78; nota 06 D-GCAP-*). O AutoIR guarda os dados que o
+ * (registros 60 a 78; nota 06 D-GCAP-*). O MCP Imposto de Renda guarda os dados que o
  * demonstrativo transporta para a declaração e a identificação de cada
  * alienação; o detalhamento interno do cálculo (faixas, parcelas, reduções)
  * fica em `apuracao`, como valores já apurados.

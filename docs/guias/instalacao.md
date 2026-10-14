@@ -1,6 +1,6 @@
 # Instalação
 
-O AutoIR é um executável de linha de comando (`autoir-mcp`) que o seu cliente MCP inicia e encerra.
+O MCP Imposto de Renda é um executável de linha de comando (`mcp-imposto-de-renda`) que o seu cliente MCP inicia e encerra.
 Você não precisa deixá-lo rodando: basta instalar, apontar a pasta da declaração e configurar o
 cliente ([clientes-mcp.md](clientes-mcp.md)).
 
@@ -10,9 +10,9 @@ cliente ([clientes-mcp.md](clientes-mcp.md)).
 | --- | --- | --- |
 | Node.js | 22 ou superior | `node --version` precisa mostrar `v22` ou mais. |
 | pnpm | o fixado em `package.json` (`packageManager`) | Só para compilar a partir do código. `corepack enable` instala a versão certa. |
-| Programa oficial IRPF 2026 | o da Receita Federal | Para restaurar o `.DBK`, conferir e transmitir. O AutoIR não o instala nem o executa. |
+| Programa oficial IRPF 2026 | o da Receita Federal | Para restaurar o `.DBK`, conferir e transmitir. O MCP Imposto de Renda não o instala nem o executa. |
 
-Sistemas: macOS, Linux e Windows. O AutoIR não depende de Java; quem precisa de Java é o programa
+Sistemas: macOS, Linux e Windows. O MCP Imposto de Renda não depende de Java; quem precisa de Java é o programa
 oficial, instalado à parte.
 
 ## 1. Prepare a pasta autorizada
@@ -37,17 +37,17 @@ dela. Detalhes em [../seguranca.md](../seguranca.md).
 ### Opção A: pelo npm
 
 ```sh
-npx autoir-mcp --versao
+npx mcp-imposto-de-renda --versao
 ```
 
 > A versão 0.1.0 ainda não foi publicada no npm. Até lá, use a opção B. Depois da publicação, a
-> configuração dos clientes usa `npx -y autoir-mcp` como comando.
+> configuração dos clientes usa `npx -y mcp-imposto-de-renda` como comando.
 
 ### Opção B: a partir do código
 
 ```sh
-git clone <url-do-repositório> AutoIR
-cd AutoIR
+git clone https://github.com/ALASTecnology/mcp-imposto-de-renda.git
+cd mcp-imposto-de-renda
 corepack enable
 pnpm install
 pnpm build
@@ -71,7 +71,7 @@ node apps/cli/dist/index.js --dir ~/Documentos/IR-2026
 ```
 
 O segundo comando fica aguardando mensagens do protocolo em stdin e escreve
-`autoir-mcp: pronto (versão 0.1.0)` em stderr. Encerre com Ctrl+C. Isso confirma que o Node.js, o
+`mcp-imposto-de-renda: pronto (versão 0.1.0)` em stderr. Encerre com Ctrl+C. Isso confirma que o Node.js, o
 build e a pasta estão certos.
 
 ## Opções

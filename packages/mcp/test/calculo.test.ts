@@ -1,4 +1,4 @@
-import { calcular2026 } from "@autoir/core";
+import { calcular2026 } from "@mcp-imposto-de-renda/core";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { normalizarValor } from "../src/index.js";
 import { type Conexao, conectar, textoDe } from "./apoio.js";

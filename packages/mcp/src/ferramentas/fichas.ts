@@ -2,7 +2,7 @@
  * Grupo "fichas": leitura de uma ficha específica da declaração, para o LLM trabalhar com
  * pouco contexto em vez do modelo inteiro.
  */
-import { FICHAS } from "@autoir/core";
+import { FICHAS } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { FICHAS_CONVERTIDAS } from "../conversao/dbk-modelo.js";
 import { objetoJson } from "../serializacao.js";

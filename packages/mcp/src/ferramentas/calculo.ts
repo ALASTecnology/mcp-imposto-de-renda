@@ -15,7 +15,7 @@ import {
   type LinhaMemoria,
   obterMotor,
   TABELA_ANUAL_2026,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { DESCRICAO_VALOR, paraEntradaCore, zEntradaCalculo, zValorMonetario } from "../esquemas.js";
 import { objetoJson } from "../serializacao.js";
@@ -81,7 +81,7 @@ const zResumoModelo = z.object({
 });
 
 const AVISO_SIMULACAO =
-  "Simulação do AutoIR; confira no programa oficial da Receita Federal antes de transmitir.";
+  "Simulação do MCP Imposto de Renda; confira no programa oficial da Receita Federal antes de transmitir.";
 
 export const grupoCalculo: GrupoFerramentas = {
   nome: "calculo",

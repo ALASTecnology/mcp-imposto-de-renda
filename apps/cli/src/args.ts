@@ -2,9 +2,9 @@ import { accessSync, constants, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
 
-export const AJUDA = `Uso: autoir-mcp --dir <pasta> [--somente-leitura]
+export const AJUDA = `Uso: mcp-imposto-de-renda --dir <pasta> [--somente-leitura]
 
-Sobe o servidor MCP AutoIR via stdio (JSON-RPC em stdin/stdout). Roda só na sua
+Sobe o servidor MCP Imposto de Renda via stdio (JSON-RPC em stdin/stdout). Roda só na sua
 máquina e não faz chamadas de rede. Não é serviço oficial da Receita Federal.
 
 Opções:

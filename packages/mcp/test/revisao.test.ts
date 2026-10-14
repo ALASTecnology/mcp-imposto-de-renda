@@ -15,7 +15,12 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { lerArquivo, registrosParaModelo, verificarControles, zDeclaracao } from "@autoir/core";
+import {
+  lerArquivo,
+  registrosParaModelo,
+  verificarControles,
+  zDeclaracao,
+} from "@mcp-imposto-de-renda/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { type Conexao, conectar, fixture, textoDe } from "./apoio.js";
 
@@ -24,7 +29,7 @@ let pasta: string;
 let c: Conexao;
 
 beforeEach(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-revisao-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-revisao-")));
   pasta = join(base, "ir");
   mkdirSync(pasta);
   writeFileSync(join(pasta, "pj.DBK"), fixture("pj-simples-01.DBK"));
@@ -88,7 +93,7 @@ describe("cópias de segurança", () => {
         sobrescrever: true,
       });
     }
-    const pastaB = join(pasta, ".autoir-backups");
+    const pastaB = join(pasta, ".mcp-imposto-de-renda-backups");
     const nomes = readdirSync(pastaB);
     expect(nomes.length).toBeLessThanOrEqual(2);
     expect(nomes.some((n) => readFileSync(join(pastaB, n)).equals(original))).toBe(true);
@@ -110,17 +115,37 @@ describe("cópias de segurança", () => {
     });
     expect(r.isError).toBe(true);
     expect(textoDe(r)).toMatch(/Nome longo/);
-    expect(existsSync(join(pasta, ".autoir-backups"))).toBe(false);
+    expect(existsSync(join(pasta, ".mcp-imposto-de-renda-backups"))).toBe(false);
+  });
+
+  it("lista e restaura cópias da pasta do nome antigo do projeto, sem gravar nela", async () => {
+    const antiga = join(pasta, ".autoir-backups");
+    mkdirSync(antiga);
+    const copia = "pj.DBK.20250101T000000Z.bak";
+    writeFileSync(join(antiga, copia), fixture("pj-simples-01.DBK"));
+    await ok("gravar_copia_seguranca", {
+      arquivo: "trib.DEC",
+      arquivo_destino: "pj.DBK",
+      sobrescrever: true,
+    });
+    const copias = (await ok("listar_copias_seguranca", {})).copias as { copia: string }[];
+    expect(copias.map((x) => x.copia)).toContain(copia);
+    await ok("restaurar_copia_seguranca", { copia, arquivo_destino: "pj.DBK" });
+    expect(readFileSync(join(pasta, "pj.DBK"))).toEqual(Buffer.from(fixture("pj-simples-01.DBK")));
+    expect(readdirSync(antiga)).toEqual([copia]);
   });
 
   it("M4: temporários de escrita interrompida são apagados ao abrir a pasta", async () => {
-    const temporario = ".autoir-0f0e0d0c-0b0a-4908-8706-050403020100.tmp";
+    const temporario = ".mcp-imposto-de-renda-0f0e0d0c-0b0a-4908-8706-050403020100.tmp";
+    const antigo = ".autoir-0f0e0d0c-0b0a-4908-8706-050403020101.tmp";
     writeFileSync(join(pasta, temporario), "dados pessoais");
-    writeFileSync(join(pasta, ".outro.tmp"), "não é do AutoIR");
+    writeFileSync(join(pasta, antigo), "dados pessoais");
+    writeFileSync(join(pasta, ".outro.tmp"), "não é do MCP Imposto de Renda");
     const outra = await conectar({ diretorioAutorizado: pasta });
     try {
       await outra.chamar("listar_arquivos");
       expect(existsSync(join(pasta, temporario))).toBe(false);
+      expect(existsSync(join(pasta, antigo))).toBe(false);
       expect(existsSync(join(pasta, ".outro.tmp"))).toBe(true);
     } finally {
       await outra.fechar();

@@ -6,7 +6,7 @@
  *
  * Toda escrita valida a declaração com o core antes de gravar e devolve as pendências; nada é
  * gravado fora da pasta autorizada e todo arquivo sobrescrito ou removido ganha cópia em
- * `.autoir-backups`.
+ * `.mcp-imposto-de-renda-backups`.
  */
 import {
   converterTipoArquivo,
@@ -20,7 +20,7 @@ import {
   validarContaBancaria,
   zIdentificacao,
   zRendimentoPJ,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { interpretarDeclaracao } from "../conversao/dbk-modelo.js";
 import { EntradaInvalidaError } from "../erros.js";
@@ -348,7 +348,7 @@ export const grupoCiclo: GrupoFerramentas = {
       {
         titulo: "Registrar o recibo da declaração transmitida",
         descricao:
-          "Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). O AutoIR não transmite nem consulta a Receita Federal: o número vem do usuário.",
+          "Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). O MCP Imposto de Renda não transmite nem consulta a Receita Federal: o número vem do usuário.",
         escreve: true,
         entrada: {
           arquivo: zNomeArquivo("DBK ou DEC da declaração transmitida."),
@@ -395,7 +395,7 @@ export const grupoCiclo: GrupoFerramentas = {
       {
         titulo: "Excluir uma declaração da pasta",
         descricao:
-          "Remove um DBK ou DEC da pasta autorizada, guardando antes uma cópia em .autoir-backups. Exige 'confirmar' igual ao nome do arquivo; para DEC (arquivo de entrega, que pode ter recibo) exige também confirmar_dec: true.",
+          "Remove um DBK ou DEC da pasta autorizada, guardando antes uma cópia em .mcp-imposto-de-renda-backups. Exige 'confirmar' igual ao nome do arquivo; para DEC (arquivo de entrega, que pode ter recibo) exige também confirmar_dec: true.",
         escreve: true,
         entrada: {
           arquivo: zNomeArquivo("Arquivo .DBK ou .DEC a excluir."),
@@ -461,7 +461,7 @@ export const grupoCiclo: GrupoFerramentas = {
       {
         titulo: "Listar cópias de segurança",
         descricao:
-          "Lista as cópias automáticas guardadas em .autoir-backups (feitas antes de sobrescrever ou excluir), da mais recente para a mais antiga.",
+          "Lista as cópias automáticas guardadas em .mcp-imposto-de-renda-backups (feitas antes de sobrescrever ou excluir), da mais recente para a mais antiga.",
         entrada: {
           arquivo: z.string().max(255).optional().describe("Filtra pelo arquivo de origem."),
         },
@@ -494,7 +494,7 @@ export const grupoCiclo: GrupoFerramentas = {
       {
         titulo: "Restaurar cópia de segurança",
         descricao:
-          "Restaura uma cópia de .autoir-backups (nome de listar_copias_seguranca) sobre um .DBK da pasta (padrão: o arquivo de origem; cópia de um .DEC exige arquivo_destino .DBK). O conteúdo atual também ganha cópia antes de ser sobrescrito.",
+          "Restaura uma cópia de .mcp-imposto-de-renda-backups (nome de listar_copias_seguranca) sobre um .DBK da pasta (padrão: o arquivo de origem; cópia de um .DEC exige arquivo_destino .DBK). O conteúdo atual também ganha cópia antes de ser sobrescrito.",
         escreve: true,
         entrada: {
           copia: z.string().min(1).max(300),
@@ -568,7 +568,7 @@ export const grupoCiclo: GrupoFerramentas = {
             a.opcao === "completa" ||
             (a.opcao === "mais_vantajosa" && c.modeloMaisVantajoso === "completo");
           dec.resumo.opcaoTributacao = completa ? "deducoesLegais" : "descontoSimplificado";
-          resumo = `Opção: ${completa ? "deduções legais (completa)" : "desconto simplificado"}; mais vantajoso pelo cálculo do AutoIR: ${c.modeloMaisVantajoso}.`;
+          resumo = `Opção: ${completa ? "deduções legais (completa)" : "desconto simplificado"}; mais vantajoso pelo cálculo do MCP Imposto de Renda: ${c.modeloMaisVantajoso}.`;
           return dec;
         });
         return {

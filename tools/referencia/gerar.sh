@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Harness de referência do AutoIR: usa o programa oficial IRPF 2026 (baixado pelo
+# Harness de referência do MCP Imposto de Renda: usa o programa oficial IRPF 2026 (baixado pelo
 # desenvolvedor, nunca versionado) para gerar casos golden e fixtures DBK/DEC sintéticos.
 # Uso local, apenas em desenvolvimento. Ver tools/referencia/README.md e docs/adr/0002.
 #
@@ -13,7 +13,7 @@ set -euo pipefail
 AQUI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RAIZ="$(cd "$AQUI/../.." && pwd)"
 ZIP="${IRPF_ZIP:-$RAIZ/vendor/rfb/irpf/IRPF2026-1.5.zip}"
-CACHE="${AUTOIR_REFERENCIA_CACHE:-${TMPDIR:-/tmp}/autoir-referencia}"
+CACHE="${MCP_IMPOSTO_DE_RENDA_REFERENCIA_CACHE:-${TMPDIR:-/tmp}/mcp-imposto-de-renda-referencia}"
 CACHE="${CACHE%/}"
 JAVA="${JAVA:-java}"
 JAVAC="${JAVAC:-javac}"

@@ -2,7 +2,7 @@
  * Grupo "tabelas": consulta às tabelas de códigos do exercício (dependentes, pagamentos, bens,
  * municípios, países, ocupações e outras).
  */
-import { buscarCodigo, listar, NOMES_TABELAS, type NomeTabela } from "@autoir/core";
+import { buscarCodigo, listar, NOMES_TABELAS, type NomeTabela } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { paraJson } from "../serializacao.js";
 import type { GrupoFerramentas } from "./tipos.js";

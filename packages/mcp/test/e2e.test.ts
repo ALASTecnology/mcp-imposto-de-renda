@@ -15,7 +15,7 @@ import {
   registrosParaModelo,
   verificarControles,
   zDeclaracao,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Conexao, conectar, textoDe } from "./apoio.js";
 
@@ -30,7 +30,7 @@ let pasta: string;
 let c: Conexao;
 
 beforeAll(async () => {
-  base = realpathSync(mkdtempSync(join(tmpdir(), "autoir-e2e-")));
+  base = realpathSync(mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-e2e-")));
   pasta = join(base, "ir");
   mkdirSync(pasta);
   c = await conectar({ diretorioAutorizado: pasta });

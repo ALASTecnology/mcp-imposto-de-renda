@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { calcularDvCpf, type DeclaracaoEntrada } from "@autoir/core";
+import { calcularDvCpf, type DeclaracaoEntrada } from "@mcp-imposto-de-renda/core";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";

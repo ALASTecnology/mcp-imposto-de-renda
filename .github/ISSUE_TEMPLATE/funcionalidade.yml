@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Antes de abrir, confira a matriz de cobertura em `docs/mapeamento/matriz-cobertura.md`: ela lista cada função do programa oficial e o que o AutoIR já cobre ou planeja.
+        Antes de abrir, confira a matriz de cobertura em `docs/mapeamento/matriz-cobertura.md`: ela lista cada função do programa oficial e o que o MCP Imposto de Renda já cobre ou planeja.
 
         Fora de escopo por desenho: transmissão, certificado digital, login gov.br, declaração pré-preenchida on-line, Carnê-Leão Web, Darf com código de barras e qualquer chamada de rede.
   - type: textarea

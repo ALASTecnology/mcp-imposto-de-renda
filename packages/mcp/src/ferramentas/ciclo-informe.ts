@@ -9,7 +9,7 @@
  * CNPJ do texto é o da fonte; o nome vem da linha com "Nome empresarial" ou "Razão social".
  * Mensagens de erro citam o campo, nunca o conteúdo colado.
  */
-import { calcularDvCnpj, parseCentavos } from "@autoir/core";
+import { calcularDvCnpj, parseCentavos } from "@mcp-imposto-de-renda/core";
 import { EntradaInvalidaError } from "../erros.js";
 import { normalizarValor } from "../esquemas.js";
 

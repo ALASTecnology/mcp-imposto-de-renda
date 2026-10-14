@@ -1,5 +1,5 @@
 name: Divergência de cálculo
-description: O AutoIR e o programa oficial dão resultados diferentes para os mesmos dados.
+description: O MCP Imposto de Renda e o programa oficial dão resultados diferentes para os mesmos dados.
 title: "calc: "
 labels: ["bug", "calculo"]
 body:
@@ -26,10 +26,10 @@ body:
     validations:
       required: true
   - type: input
-    id: versao-autoir
+    id: versao-mcp-imposto-de-renda
     attributes:
-      label: Versão do AutoIR
-      description: Saída de `autoir-mcp --versao` ou commit.
+      label: Versão do MCP Imposto de Renda
+      description: Saída de `mcp-imposto-de-renda --versao` ou commit.
     validations:
       required: true
   - type: textarea
@@ -64,9 +64,9 @@ body:
     id: valores
     attributes:
       label: Valores
-      description: Para cada campo divergente, o valor do AutoIR e o do programa oficial.
+      description: Para cada campo divergente, o valor do MCP Imposto de Renda e o do programa oficial.
       placeholder: |
-        Imposto devido (completo): AutoIR R$ 1.234,57; programa R$ 1.234,56
+        Imposto devido (completo): MCP Imposto de Renda R$ 1.234,57; programa R$ 1.234,56
     validations:
       required: true
   - type: textarea

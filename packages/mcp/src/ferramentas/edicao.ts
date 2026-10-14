@@ -25,7 +25,7 @@ import {
   zRendaVariavel,
   zRendimentosPFExterior,
   zSaidaDefinitiva,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { EntradaInvalidaError } from "../erros.js";
 import { objetoJson, type paraJson } from "../serializacao.js";

@@ -34,7 +34,7 @@ import {
   zRendimentoPJ,
   zRendimentoRRA,
   zRendimentosPFExterior,
-} from "@autoir/core";
+} from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 
 type Item = Record<string, unknown>;

@@ -6,7 +6,7 @@
  * que o modelo descreve vêm do modelo; os demais (fillers, campos calculados e informações que o
  * modelo não guarda) vêm do par. Sem par, ficam com o padrão do leiaute. Assim abrir e regravar
  * um arquivo sem alterações devolve os mesmos bytes, e editar uma ficha não apaga o que o
- * AutoIR não conhece.
+ * MCP Imposto de Renda não conhece.
  */
 import type { Registro, ValorCampo } from "../dbk/codec.js";
 import { criarRegistro } from "../dbk/codec.js";

@@ -1,4 +1,4 @@
-# Primeira declaração com o AutoIR
+# Primeira declaração com o MCP Imposto de Renda
 
 Tutorial completo, do zero até a transmissão, com uma contribuinte fictícia. Todos os nomes, CPFs,
 CNPJs e valores abaixo são inventados; os CPFs e CNPJs só têm dígitos verificadores válidos. As
@@ -6,7 +6,7 @@ respostas das ferramentas foram obtidas rodando o servidor com estes dados (data
 backups variam).
 
 > Lembrete: tudo o que as ferramentas devolvem chega ao provedor de LLM do seu cliente MCP. O
-> AutoIR não é serviço oficial; a conferência e a transmissão são feitas no programa da Receita
+> MCP Imposto de Renda não é serviço oficial; a conferência e a transmissão são feitas no programa da Receita
 > Federal.
 
 ## O caso
@@ -28,12 +28,12 @@ mkdir -p ~/Documentos/IR-2026
 ```
 
 Configure o cliente MCP com `--dir` apontando para essa pasta (caminho absoluto), conforme
-[clientes-mcp.md](clientes-mcp.md). Reinicie o cliente e confira se as ferramentas do AutoIR
+[clientes-mcp.md](clientes-mcp.md). Reinicie o cliente e confira se as ferramentas do MCP Imposto de Renda
 aparecem.
 
 ## 2. Crie a declaração no programa oficial e grave a cópia
 
-O jeito mais seguro de começar é deixar o programa oficial criar o arquivo e usar o AutoIR para
+O jeito mais seguro de começar é deixar o programa oficial criar o arquivo e usar o MCP Imposto de Renda para
 preenchê-lo:
 
 1. No programa IRPF 2026, crie a declaração (**Declaração > Nova**) com CPF, nome e identificação
@@ -43,7 +43,7 @@ preenchê-lo:
    `12345678909-IRPF-A-2026-2025-ORIGI.DBK`.
 
 Se você já tem uma declaração em andamento, ou a do ano passado gravada pelo programa, use esse
-arquivo no lugar. Também é possível criar o arquivo pelo AutoIR com `criar_declaracao`, que recebe
+arquivo no lugar. Também é possível criar o arquivo pelo MCP Imposto de Renda com `criar_declaracao`, que recebe
 a identificação no formato do modelo e grava o `.DBK` com o mesmo nome padrão; partir do programa
 oficial continua sendo o caminho mais conservador.
 
@@ -52,7 +52,7 @@ oficial continua sendo o caminho mais conservador.
 No cliente, acione o prompt **`preparar_declaracao`** (com o argumento `arquivo` igual ao nome do
 `.DBK`) ou escreva:
 
-> Use o AutoIR. Liste os arquivos da pasta, abra o DBK da Maria e me mostre um resumo.
+> Use o MCP Imposto de Renda. Liste os arquivos da pasta, abra o DBK da Maria e me mostre um resumo.
 
 O assistente chama `listar_arquivos` e `abrir_declaracao`:
 
@@ -161,7 +161,7 @@ confirmação a cada gravação.
 
 ```text
 Dependentes: item 1 incluído. Gravado 12345678909-IRPF-A-2026-2025-ORIGI.DBK (6 registros).
-Cópia do conteúdo anterior: .autoir-backups/12345678909-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak.
+Cópia do conteúdo anterior: .mcp-imposto-de-renda-backups/12345678909-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak.
 Controles: conferem.
 Sem erros impeditivos; 0 aviso(s).
 ```
@@ -210,7 +210,7 @@ verificar_integridade_arquivo -> controles conferem (10 registros, CRC de cada l
 `erro` impede a entrega e precisa ser corrigido; `aviso` indica risco ou informação que convém
 completar. Para uma revisão focada em malha fina, use o prompt `revisar_malha_fina`.
 
-Todas as versões anteriores do arquivo ficaram em `.autoir-backups` (as 10 mais recentes). Para
+Todas as versões anteriores do arquivo ficaram em `.mcp-imposto-de-renda-backups` (as 10 mais recentes). Para
 voltar atrás, copie o backup desejado de volta para a pasta com o nome original.
 
 ## 8. Saldo a pagar e quotas
@@ -228,7 +228,7 @@ Quota 3: vence 2026-07-31, principal R$ 333,33, juros a calcular (Selic não inf
 valor de cada quota e, se o pagamento for depois do vencimento, multa e juros de mora). O Darf
 oficial, com código de barras, é emitido pelo programa oficial.
 
-Antes de sair do AutoIR, grave a conta para restituição ou débito e o número de quotas com
+Antes de sair do MCP Imposto de Renda, grave a conta para restituição ou débito e o número de quotas com
 `definir_informacoes_bancarias` e, se quiser, gere um relatório de conferência com
 `gerar_relatorio_declaracao` e o roteiro final com `instruir_transmissao`.
 

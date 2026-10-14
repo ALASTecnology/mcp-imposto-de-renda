@@ -12,7 +12,7 @@ import { afterAll, afterEach, describe, expect, it } from "vitest";
 const RAIZ = fileURLToPath(new URL("../../../", import.meta.url));
 const CARREGADOR = fileURLToPath(new URL("./carregador.mjs", import.meta.url));
 const ENTRADA = fileURLToPath(new URL("../src/index.ts", import.meta.url));
-const pasta = mkdtempSync(join(tmpdir(), "autoir-stdio-"));
+const pasta = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-stdio-"));
 
 const vivos = new Set<ChildProcessWithoutNullStreams>();
 
@@ -41,7 +41,7 @@ interface Processo {
 function iniciar(args: string[]): Processo {
   const filho = spawn(
     process.execPath,
-    ["--conditions=@autoir/source", "--import", CARREGADOR, ENTRADA, ...args],
+    ["--conditions=@mcp-imposto-de-renda/source", "--import", CARREGADOR, ENTRADA, ...args],
     { cwd: RAIZ, stdio: ["pipe", "pipe", "pipe"] },
   );
   vivos.add(filho);
@@ -119,11 +119,11 @@ async function inicializar(p: Processo): Promise<Record<string, unknown>> {
   return r;
 }
 
-describe("autoir-mcp via stdio", () => {
+describe("mcp-imposto-de-renda via stdio", () => {
   it("responde initialize, tools/list e tools/call e sai ao fechar o stdin", async () => {
     const p = iniciar(["--dir", pasta]);
     const init = await inicializar(p);
-    expect(init.result).toMatchObject({ serverInfo: { name: "autoir" } });
+    expect(init.result).toMatchObject({ serverInfo: { name: "mcp-imposto-de-renda" } });
 
     p.enviar({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} });
     const lista = (await p.resposta(2)).result as { tools: { name: string }[] };

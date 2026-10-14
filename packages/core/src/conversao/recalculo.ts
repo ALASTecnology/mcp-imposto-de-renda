@@ -3,7 +3,7 @@
  *
  * `entradaCalculoDoModelo` traduz a declaração para a entrada do motor (formato dos casos de
  * referência). `calcularTotais` devolve os campos dos registros 17 a 20 e do header que o
- * AutoIR sabe refazer; os demais ficam como no arquivo base (ver `CAMPOS_NAO_RECALCULADOS`).
+ * MCP Imposto de Renda sabe refazer; os demais ficam como no arquivo base (ver `CAMPOS_NAO_RECALCULADOS`).
  */
 import { motor2026, PARAMETROS_2026 } from "../calc/2026/index.js";
 import type {
@@ -127,7 +127,7 @@ export interface TotaisCalculados {
   readonly r20: Valores;
   readonly header: Valores;
   /**
-   * Indicadores do header que o programa calcula por critérios que o AutoIR conhece só em
+   * Indicadores do header que o programa calcula por critérios que o MCP Imposto de Renda conhece só em
    * parte (obrigatoriedade pelo critério de rendimentos tributáveis, imposto antecipado): usados
    * apenas em arquivo novo, sem base.
    */
@@ -231,7 +231,7 @@ function ddmmaaaaOuVazio(iso: string | undefined): string {
 }
 
 /**
- * Campos que o AutoIR não sabe refazer e que ficam como no arquivo base (ou zerados em
+ * Campos que o MCP Imposto de Renda não sabe refazer e que ficam como no arquivo base (ou zerados em
  * arquivo novo): imposto e totais de RRA, ganhos de capital, renda variável, moeda
  * estrangeira, Lei 14.754, atividade rural no Resumo e indicadores internos do programa.
  */

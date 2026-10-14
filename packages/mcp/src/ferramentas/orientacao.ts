@@ -1,10 +1,10 @@
 /**
  * Grupo "orientacao": ajuda por ficha (das notas de mapeamento) e orientação sobre serviços que
- * só existem fora do AutoIR. O servidor não
+ * só existem fora do MCP Imposto de Renda. O servidor não
  * acessa a rede: as ferramentas só explicam o caminho e o que trazer de volta para a pasta
  * autorizada.
  */
-import { listar, NOMES_TABELAS } from "@autoir/core";
+import { listar, NOMES_TABELAS } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import { buscarAjuda, TOPICOS_AJUDA } from "../ajuda/index.js";
 import type { GrupoFerramentas } from "./tipos.js";
@@ -31,7 +31,7 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
       "Crie ou eleve a conta gov.br para o nível prata ou ouro (validação facial ou banco credenciado).",
       "Use a conta para entrar no e-CAC, na declaração pré-preenchida e no Carnê-Leão Web.",
     ],
-    trazer: "Nada: o AutoIR não usa nem guarda credenciais.",
+    trazer: "Nada: o MCP Imposto de Renda não usa nem guarda credenciais.",
   },
   pre_preenchida: {
     titulo: "Declaração pré-preenchida",
@@ -103,7 +103,7 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
       "No programa da declaração, use Importações > Ganhos de Capital; grave a cópia de segurança.",
     ],
     trazer:
-      "O .DBK com o demonstrativo importado (a conversão do AutoIR preserva o detalhe do GCAP).",
+      "O .DBK com o demonstrativo importado (a conversão do MCP Imposto de Renda preserva o detalhe do GCAP).",
   },
   livro_caixa_rural: {
     titulo: "Livro Caixa da Atividade Rural (LCDPR e programa LCAR)",
@@ -126,14 +126,15 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
 
 export const grupoOrientacao: GrupoFerramentas = {
   nome: "orientacao",
-  descricao: "Orientação sobre serviços que só existem fora do AutoIR (sem acesso à rede).",
+  descricao:
+    "Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede).",
   registrar(r) {
     r.ferramenta(
       "orientar_servico_externo",
       {
         titulo: "Orientar sobre serviço externo",
         descricao:
-          "Explica como usar um serviço que só existe fora do AutoIR (gov.br, pré-preenchida, Carnê-Leão Web, consulta de CPF, e-CAC, extrato e malha, débito automático, Darf e Sicalc, GCAP, Livro Caixa rural, restituição) e o que trazer de volta para a pasta autorizada. O AutoIR não acessa a rede.",
+          "Explica como usar um serviço que só existe fora do MCP Imposto de Renda (gov.br, pré-preenchida, Carnê-Leão Web, consulta de CPF, e-CAC, extrato e malha, débito automático, Darf e Sicalc, GCAP, Livro Caixa rural, restituição) e o que trazer de volta para a pasta autorizada. O MCP Imposto de Renda não acessa a rede.",
         entrada: {
           servico: z.enum(Object.keys(SERVICOS) as [string, ...string[]]),
         },
@@ -162,7 +163,7 @@ export const grupoOrientacao: GrupoFerramentas = {
       {
         titulo: "Ajuda por ficha",
         descricao:
-          "Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do AutoIR (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). Busca por identificador (ex.: F-IDENT, F-DEP) ou por palavras (ex.: \"despesas médicas\"); sem 'consulta', lista os identificadores, com filtro opcional por prefixo.",
+          "Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do MCP Imposto de Renda (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). Busca por identificador (ex.: F-IDENT, F-DEP) ou por palavras (ex.: \"despesas médicas\"); sem 'consulta', lista os identificadores, com filtro opcional por prefixo.",
         entrada: {
           consulta: z.string().max(200).optional(),
           prefixo: z
@@ -224,7 +225,7 @@ export const grupoOrientacao: GrupoFerramentas = {
       {
         titulo: "Versão das tabelas embarcadas",
         descricao:
-          "Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no AutoIR e quantos registros cada uma tem. Se houver versão mais nova do programa, confira as tabelas nele.",
+          "Informa de qual versão do programa oficial vieram as tabelas de códigos e parâmetros embarcadas no MCP Imposto de Renda e quantos registros cada uma tem. Se houver versão mais nova do programa, confira as tabelas nele.",
         entrada: {},
         saida: {
           programa: z.string(),

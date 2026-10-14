@@ -7,8 +7,8 @@ export default defineConfig({
   resolve: {
     // Testes usam o código-fonte dos pacotes do workspace, sem exigir build prévio.
     alias: {
-      "@autoir/core": src("./packages/core/src/index.ts"),
-      "@autoir/mcp": src("./packages/mcp/src/index.ts"),
+      "@mcp-imposto-de-renda/core": src("./packages/core/src/index.ts"),
+      "@mcp-imposto-de-renda/mcp": src("./packages/mcp/src/index.ts"),
     },
   },
   test: {

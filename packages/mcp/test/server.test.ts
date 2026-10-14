@@ -1,13 +1,13 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { calcularDvCnpj, calcularDvCpf } from "@autoir/core";
+import { calcularDvCnpj, calcularDvCpf } from "@mcp-imposto-de-renda/core";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 import { AVISO_LEGAL, type GrupoFerramentas, URI_AVISO_LEGAL } from "../src/index.js";
 import { type Conexao, conectar, textoDe } from "./apoio.js";
 
-const pasta = mkdtempSync(join(tmpdir(), "autoir-srv-"));
+const pasta = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-srv-"));
 afterAll(() => rmSync(pasta, { recursive: true, force: true }));
 
 let conexao: Conexao | undefined;

@@ -69,5 +69,5 @@ export {
   type TipoRegistroLeiaute,
   tipoDoLeiaute,
 } from "./leiaute.js";
-export { LEIAUTE_2026, LEIAUTES, obterLeiaute } from "./leiautes/index.js";
+export { LEIAUTE_2025, LEIAUTE_2026, LEIAUTES, obterLeiaute } from "./leiautes/index.js";
 export { ajustarParaEntrega, montarRecibo } from "./recibo.js";

@@ -1,11 +1,15 @@
 import { ExercicioNaoSuportadoError } from "../erros.js";
 import type { Leiaute } from "../leiaute.js";
+import { LEIAUTE_2025 } from "./2025.js";
 import { LEIAUTE_2026 } from "./2026.js";
 
-export { LEIAUTE_2026 };
+export { LEIAUTE_2025, LEIAUTE_2026 };
 
 /** Leiautes disponíveis, por exercício. */
-export const LEIAUTES: Readonly<Record<number, Leiaute>> = { 2026: LEIAUTE_2026 };
+export const LEIAUTES: Readonly<Record<number, Leiaute>> = {
+  2025: LEIAUTE_2025,
+  2026: LEIAUTE_2026,
+};
 
 /** Leiaute do exercício; lança `ExercicioNaoSuportadoError` se não houver. */
 export function obterLeiaute(exercicio: number): Leiaute {

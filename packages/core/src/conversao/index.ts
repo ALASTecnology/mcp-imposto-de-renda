@@ -43,6 +43,12 @@ import {
   TIPOS_TOTAIS,
 } from "./totais.js";
 
+export {
+  DeclaracaoAnteriorInvalidaError,
+  migrarDeclaracaoAnterior,
+  type OpcoesMigracao,
+  type ResultadoMigracao,
+} from "./ano-anterior.js";
 export type { ContextoGravacao, ContextoLeitura, Mapeador } from "./contexto.js";
 export { calcularTotais, entradaCalculoDoModelo, type TotaisCalculados } from "./recalculo.js";
 export { type ModoTotais, TIPOS_TOTAIS } from "./totais.js";

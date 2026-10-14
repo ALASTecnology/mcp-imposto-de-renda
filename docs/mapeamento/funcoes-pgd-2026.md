@@ -117,7 +117,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: barra de menu (Alt+J); pág. 367
 - Itens: Conteúdo (Alt+Shift+C); Instruções de Preenchimento (Alt+Shift+I); Como Fazer para... (Alt+Shift+F); Perguntas e Respostas (Alt+Shift+G); Perguntas mais Frequentes (Alt+Shift+R); Sobre o IRPF 2026 (Alt+Shift+S); Ajuda de Acessibilidade (F11); fechar Ajuda (Alt+F4)
 - Exige do MCP: `obter_ajuda` com conteúdo de regras por ficha e campo
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 #### M-TOOLBAR Barra de ferramentas
 
@@ -133,7 +133,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: parte inferior da tela abaixo da barra lateral (FAQ pág. 419); telas PainelImpostoPagar, PainelComparativo; classe ComparativoAction
 - Campos: imposto a pagar ou a restituir nas duas formas (deduções legais e desconto simplificado) atualizado durante o preenchimento
 - Exige do MCP: `calcular_imposto` com modelo "ambos" e recomendação
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 ### 1.2 Tela inicial
 
@@ -171,7 +171,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: tela de entrada; telas PainelDeclaracoesTransmitidas, SubpainelDeclaracoesTransmitidas
 - Campos: pesquisa por nome; ícones Abrir, Retificar, Imprimir (Declaração, Recibo, Darf do IRPF), Gravar Cópia de Segurança e Recibo; símbolo de transmitida
 - Exige do MCP: estado "transmitida" registrado a partir do recibo informado pelo usuário (`registrar_recibo`)
-- Cobertura no AutoIR: `listar_declaracoes`, `registrar_recibo`, `criar_retificadora`; módulo model; prioridade P1; status parcial (`criar_retificadora`, `listar_arquivos`) (ver matriz)
+- Cobertura no AutoIR: `listar_declaracoes`, `registrar_recibo`, `criar_retificadora`; módulo model; prioridade P1; status parcial (`criar_retificadora`, `listar_arquivos`, `registrar_recibo`) (ver matriz)
 
 #### M-INICIAL-BOASVINDAS Aba "Boas-vindas", links úteis e "Entrar com gov.br"
 
@@ -179,7 +179,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: tela de entrada; telas PainelAbaBemVindos, PainelIRPFBemVindos, PainelBemVindoToolTip
 - Campos: mensagens, dicas, novidades; links úteis; botão Entrar com gov.br
 - Exige do MCP: sem equivalente; orientação textual
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 ### 1.3 Menu Declaração
 
@@ -236,7 +236,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: menu, barra lateral (também no rodapé do menu lateral com declaração aberta), ícone, aba Em Preenchimento, Ctrl+I; com certificação digital Ctrl+Shift+B; sem certificação digital Ctrl+Shift+E; págs. 382 e 420; telas PainelGravarEntrega, PainelGravarTransmitir, PainelGravarTransmitirPendenciasNaoImpeditivas, PainelGravacaoEntregaPendenciasNaoImpeditivas, PainelGravacaoEntregaModeloMelhor, PainelInformaRegimeTributacao, PainelDadosRestituicao, PainelDadosDebitoAutomatico; ações GravarEntregaAction e TransmitirDeclaracaoAction
 - Validações conhecidas: verifica pendências antes; erros bloqueiam; avisos permitem; aviso de modelo de tributação mais vantajoso (inferido pelo nome PainelGravacaoEntregaModeloMelhor); confirma regime, dados de restituição e débito automático (inferido pelos nomes de tela); recibo gravado automaticamente e disponível na aba Transmitidas; única forma de apresentação é a Internet, sem programa adicional (Receitanet incorporado)
 - Exige do MCP: impossível transmitir fora do PGD; alternativa: `gerar_dbk` + `instruir_transmissao`
-- Cobertura no AutoIR: `gerar_dbk`, `listar_pendencias`, `instruir_transmissao`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `instruir_transmissao`, `validar_declaracao`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`, `listar_pendencias`, `instruir_transmissao`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `instruir_transmissao`, `validar_declaracao`, `verificar_integridade_arquivo`) (ver matriz)
 
 #### M-DECL-SALVAR-ONLINE Declaração > Salvar On-line (F6)
 
@@ -293,7 +293,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ctrl+R; págs. 383 e 421; tela PainelImprimirRecibo; relatório relRecibo; ação SalvarImagemReciboAction
 - Validações conhecidas: só após a apresentação; recibo de uma via com duas páginas; nº do recibo de 12 dígitos na folha 2; impressão em outro computador via cópia "última declaração entregue e recibo"
 - Exige do MCP: impossível gerar recibo oficial; alternativa: orientar a impressão no PGD e `registrar_recibo` para guardar o número
-- Cobertura no AutoIR: `registrar_recibo`, `instruir_transmissao`; módulo importacao; prioridade P1; status parcial (`instruir_transmissao`) (ver matriz)
+- Cobertura no AutoIR: `registrar_recibo`, `instruir_transmissao`; módulo importacao; prioridade P1; status implementada (`criar_retificadora`, `instruir_transmissao`, `registrar_recibo`) (ver matriz)
 
 #### M-IMPR-DARF Imprimir Darf do IRPF
 
@@ -348,14 +348,14 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ctrl+Alt+R; págs. 391 e 402; relatórios relInformeRendimentosPJ*
 - Campos: seleção do XML; Visualizar ou Imprimir
 - Exige do MCP: `ler_informe` (visualização legível do XML)
-- Cobertura no AutoIR: `ler_informe`; módulo importacao; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `ler_informe`; módulo importacao; prioridade P2; status implementada (`ler_informe`) (ver matriz)
 
 #### M-IMPR-INFORME-PS Imprimir Informe de Plano de Saúde
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: Ctrl+Alt+I; págs. 392 e 402; relatórios relInformePlanoSaude*
 - Exige do MCP: `ler_informe`
-- Cobertura no AutoIR: `ler_informe`; módulo importacao; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `ler_informe`; módulo importacao; prioridade P2; status implementada (`ler_informe`) (ver matriz)
 
 #### M-IMPR-DARF-AUXILIO Darf de devolução do Auxílio Emergencial (inferido)
 
@@ -455,7 +455,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ferramentas > Cópia de segurança > Gravar; barra lateral Gravar Cópia; abas Em Preenchimento e Transmitidas; Ctrl+K; págs. 380 e 418; telas PainelGravarCopiaSeguranca, PainelGravarCopiaSegurancaPasso2, PainelGravarCopiaDeclaracaoTransmitida
 - Campos: tipo: "Cópia da declaração com os dados atuais" (estado atual, sem recibo, não serve para entrega); "Cópia da declaração para entrega à RFB" (arquivo transmissível depois pelo Receitanet); "Cópia da última declaração entregue e do recibo de entrega" (declaração transmitida e recibo; importável no IRPF2027; permite imprimir o recibo em outro computador); seleção de uma, algumas ou todas; unidade e pasta de destino
 - Exige do MCP: `gravar_copia_seguranca` (formato próprio do AutoIR e, quando possível, `gerar_dbk` para o formato de entrega)
-- Cobertura no AutoIR: `gravar_copia_seguranca`, `gerar_dbk`; módulo model; prioridade P1; status implementada (`converter_modelo_para_dbk`, `gravar_copia_seguranca`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gravar_copia_seguranca`, `gerar_dbk`; módulo model; prioridade P1; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `gravar_copia_seguranca`, `verificar_integridade_arquivo`) (ver matriz)
 
 #### M-FERR-COPIA-RESTAURAR Restaurar Cópia de Segurança
 
@@ -501,7 +501,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ações PaginaIRPFAction, PaginaDTEAction, AbrirNavegadorAction (inferido: abrem páginas do IRPF e do Domicílio Tributário Eletrônico)
 - Exige do MCP: orientação com links públicos
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 #### M-FERR-MEMORIA Memória do IRPF (inferido)
 
@@ -538,14 +538,14 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: F1 em qualquer campo; links internos; págs. 366 e 417; na ficha Resumo, F1 indica a procedência dos valores (pág. 413)
 - Exige do MCP: `obter_ajuda` por ficha e campo, inclusive rastreabilidade do Resumo (`explicar_calculo`)
-- Cobertura no AutoIR: `obter_ajuda`, `calcular_imposto`; módulo tabelas; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `calcular_imposto`; módulo tabelas; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `obter_ajuda`, `simular_imposto`) (ver matriz)
 
 #### M-AJUDA-DOCUMENTOS Conteúdo, Instruções, Como Fazer, Perguntas e Respostas, FAQ
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: menu Ajuda; botões da janela de ajuda (Guardar como, Imprimir, Procurar, painel de utilitários, navegação de páginas, zoom)
 - Exige do MCP: `obter_ajuda` com busca textual
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 #### M-AJUDA-ATALHOS Exibir atalhos
 
@@ -567,7 +567,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ações SobreAction, NovidadesAction, TutorialAction; telas PainelSobre, PainelCreditos, PainelNovidades, PainelSplash
 - Exige do MCP: `obter_ajuda` tópico "novidades 2026"
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 ### 1.8 Ações de demonstrativo
 
@@ -654,7 +654,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: nenhuma
 - Exige do MCP: suportar rateio 50% ou 100% de rendimentos de bens comuns; suportar declaração em conjunto (cônjuge como dependente); orientar a escolha
 - Observações: separado de fato segue as regras do casado (pág. 10)
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-COMPANHEIRO Contribuinte que tenha companheiro
 
@@ -668,7 +668,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: nenhuma
 - Exige do MCP: permitir percentual contratual diferente de 50% para condomínio
 - Observações: nenhuma
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-SEPARADO-FATO Contribuinte separado de fato
 
@@ -677,7 +677,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Aplica-se a: Ajuste Anual
 - Regras: segue as instruções do contribuinte casado
 - Exige do MCP: mesma lógica de S-REGRA-CASADO
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-DIVORCIADO Contribuinte separado judicialmente, divorciado, que dissolveu união estável ou separado/divorciado por escritura pública
 
@@ -688,7 +688,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: rendimentos de dependentes vão nas abas Dependentes das fichas Rendimentos Tributáveis de PJ, de PF/Exterior e Imposto Pago/Retido; bens e dívidas dos dependentes em Bens e Direitos e Dívidas e Ônus Reais
 - Exige do MCP: validar que o mesmo filho não seja dependente e alimentando ao mesmo tempo (inferido); orientar escolha
 - Observações: nenhuma
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-VIUVO Contribuinte viúvo
 
@@ -697,7 +697,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Aplica-se a: Ajuste Anual
 - Regras de cálculo afetadas: declara com o próprio CPF os rendimentos próprios; no curso do inventário pode optar por tributar 50% dos rendimentos de bens comuns na própria declaração ou integralmente na declaração do espólio
 - Exige do MCP: opção de rateio dos bens comuns com o espólio
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-MENOR Contribuinte menor
 
@@ -707,7 +707,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: declaração em nome do menor, com o CPF dele. Opcionalmente dependente de um dos pais ou de quem o crie, eduque e detenha a guarda judicial. Menor sob guarda por sentença ou acordo homologado: tributação em conjunto só com quem detém a guarda judicial.
 - Regras de cálculo afetadas: rendimentos do menor nas abas Dependentes das fichas de rendimentos e Imposto Pago/Retido
 - Exige do MCP: alerta de guarda judicial ao incluir menor como dependente
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-EMANCIPADO Contribuinte menor emancipado
 
@@ -715,7 +715,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 12
 - Regras: declaração própria; opcionalmente dependente de um dos pais se preencher os requisitos
 - Exige do MCP: mesma lógica de dependente
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-INCAPAZ Contribuinte incapaz
 
@@ -723,7 +723,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 12
 - Regras: declaração em nome do incapaz, feita por tutor, curador ou responsável pela guarda judicial; opcionalmente dependente desses, incluindo rendimentos, bens e direitos do incapaz
 - Exige do MCP: mesma lógica de dependente
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status parcial (`adicionar_dependente`, `validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_dependente`, `listar_pendencias`; módulo validate; prioridade P1; status implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### S-REGRA-ESPOLIO Declaração do espólio (inicial e intermediárias)
 
@@ -797,7 +797,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: isentos os rendimentos do trabalho assalariado de servidor diplomático estrangeiro, servidor estrangeiro de organismo internacional com isenção por tratado, servidor não brasileiro de embaixada/consulado com reciprocidade; demais rendimentos no Brasil exclusivos na fonte ou definitivos (ganho de capital e renda variável)
 - Validações conhecidas: isenção não alcança servidor brasileiro com residência permanente no Brasil ou estrangeiro que virou residente; esses recolhem carnê-leão e declaram
 - Exige do MCP: orientar classificação como isento ou carnê-leão
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 #### S-REGRA-CONVERSAO Conversão em reais de rendimentos ou pagamentos em moeda estrangeira
 
@@ -836,7 +836,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 25
 - Regras: resultado positivo do Demonstrativo da Atividade Rural é rendimento tributável na declaração
 - Exige do MCP: transferir resultado do demonstrativo para o resumo
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### S-REGRA-RRA Rendimentos recebidos acumuladamente (regra geral)
 
@@ -888,7 +888,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: deduções legais: todas as deduções comprovadas; desconto simplificado: 20% dos rendimentos tributáveis, limitado a R$ 16.754,34, substituindo todas as deduções, sem comprovação
 - Exige do MCP: calcular as duas opções e indicar a mais vantajosa; permitir escolha
 - Observações: troca de opção na retificadora só até 29/05/2026 (S-REGRA-RETIF)
-- Cobertura no AutoIR: `calcular_imposto`, `definir_opcao_tributacao`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`, `definir_opcao_tributacao`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### S-REGRA-PREENCHIMENTO Forma de preenchimento e pré-preenchida
 
@@ -945,7 +945,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 33
 - Regras: usar o programa do exercício correspondente (ex.: IRPF 2025 para ano-calendário 2024); entrega pela Internet ou mídia removível nas unidades da RFB
 - Exige do MCP: fora do escopo do PGD 2026; orientar (o MCP pode suportar outros exercícios no futuro, inferido)
-- Cobertura no AutoIR: `obter_ajuda`; módulo nenhum; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo nenhum; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 ## 3 Fichas da declaração
 
@@ -1474,7 +1474,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: nenhum editável (valor transportado)
 - Importações: resultado não tributável da Atividade Rural Brasil e Exterior apurado no Demonstrativo da Atividade Rural
 - Exige do MCP: cálculo no módulo de Atividade Rural e transporte automático
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-ISENTO-16 Imposto de anos-calendário anteriores compensado judicialmente neste ano-calendário
 
@@ -1537,7 +1537,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: prejuízo acumulado de anos anteriores usado para reduzir ganho neste ano
 - Importações: Demonstrativo de Renda Variável (prejuízo compensado)
 - Exige do MCP: cálculo no módulo Renda Variável e transporte
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-ISENTO-23 Rendimento bruto, até 90%, de transporte de carga e serviços com trator, máquina de terraplenagem, colheitadeira e assemelhados
 
@@ -1573,7 +1573,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: nenhum editável (transportado)
 - Importações: campo "Valor recebido referente a juros" da ficha RRA (titular e dependentes)
 - Exige do MCP: transporte automático a partir de F-RRA
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-ISENTO-28 Pensão Alimentícia
 
@@ -1615,7 +1615,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: nenhum editável (transportado)
 - Importações: campo 13º salário da ficha Rendimentos Tributáveis Recebidos de PJ pelo Titular
 - Exige do MCP: transporte automático
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-EXCL-02 Ganhos de capital na alienação de bens e/ou direitos
 
@@ -1648,7 +1648,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: ganhos líquidos menos o imposto pago
 - Importações: Demonstrativo de Renda Variável (comuns e day trade) e Operações em FII ou Fiagro
 - Exige do MCP: cálculo mensal RV/FII e transporte
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-EXCL-06 Rendimentos de aplicações financeiras
 
@@ -1665,7 +1665,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Regras de cálculo afetadas: total de rendimentos recebidos menos contribuição previdenciária oficial, pensão alimentícia e IRRF, da ficha RRA do titular com opção "Exclusiva na Fonte"
 - Exige do MCP: transporte a partir de F-RRA-TIT
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-EXCL-08 13º salário recebido pelos dependentes
 
@@ -1673,7 +1673,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Importações: campo 13º salário da ficha Rendimentos Tributáveis Recebidos de PJ pelos Dependentes
 - Exige do MCP: transporte
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-EXCL-09 Rendimentos recebidos acumuladamente pelos dependentes
 
@@ -1681,7 +1681,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Regras de cálculo afetadas: idem F-EXCL-07, da ficha RRA dos dependentes com opção exclusiva
 - Exige do MCP: transporte a partir de F-RRA-DEP
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-EXCL-10 Juros sobre capital próprio
 
@@ -1704,7 +1704,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Regras de cálculo afetadas: rendimentos líquidos informados nos campos específicos da ficha Bens e Direitos (aplicações financeiras e lucros/dividendos de entidades no exterior). A apuração anual do imposto de 15% ocorre no Resumo (inferido, conferir com F-BENS-ESP)
 - Exige do MCP: transporte a partir de Bens e Direitos exterior
-- Cobertura no AutoIR: `calcular_imposto`, `adicionar_bem`; módulo calc; prioridade P1; status parcial (`adicionar_bem`, `comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`, `adicionar_bem`; módulo calc; prioridade P1; status implementada (`adicionar_bem`, `comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-EXCL-13 Prêmios líquidos obtidos em loterias de apostas de quota fixa (Lei 14.790/2023)
 
@@ -1801,7 +1801,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Fichas da Declaração > Imposto Pago/Retido; págs. 135 e 136
 - Aplica-se a: todos (inferido)
 - Exige do MCP: edição das linhas 01, 02, 03; cálculo automático das linhas 04 a 07; limite de compensação do imposto do exterior no Resumo
-- Cobertura no AutoIR: `definir_imposto_pago`, `calcular_imposto`; módulo model; prioridade P0; status parcial (`comparar_modelos`, `definir_imposto_pago`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_imposto_pago`, `calcular_imposto`; módulo model; prioridade P0; status implementada (`comparar_modelos`, `definir_imposto_pago`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-IMPPAGO-01 Linha 01: Imposto Complementar
 
@@ -1836,7 +1836,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: calculado
 - Regras de cálculo afetadas: soma do IRRF do titular na ficha Rendimentos Tributáveis PJ Titular mais "IRRF" e "IRRF sobre 13º" do código 11 de Isentos (titular)
 - Exige do MCP: cálculo automático
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-IMPPAGO-05 Linha 05: Imposto retido na fonte dos dependentes
 
@@ -1844,7 +1844,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: calculado
 - Regras de cálculo afetadas: soma do IRRF da ficha Rendimentos Tributáveis PJ Dependentes mais IRRF e IRRF 13º do código 11 de Isentos (dependentes)
 - Exige do MCP: cálculo automático
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-IMPPAGO-06 Linha 06: Carnê-Leão do titular
 
@@ -1852,7 +1852,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: calculado
 - Importações: total do imposto pago de Carnê-Leão do titular na ficha Rendimentos Tributáveis de PF e do Exterior pelo Titular (Darf 0190, inclusive importação do Carnê-Leão Web)
 - Exige do MCP: cálculo automático
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-IMPPAGO-07 Linha 07: Carnê-Leão dos dependentes
 
@@ -1861,7 +1861,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações: total do imposto pago de Carnê-Leão dos dependentes na ficha PF/Exterior pelos Dependentes
 - Exige do MCP: cálculo automático
 - Observações: a Ajuda não cita aqui o IRRF de RRA com opção pelo ajuste nem o imposto pago de GCAP/RV, que não entram nesta ficha (inferido: IRRF de RRA no ajuste compõe imposto retido no Resumo; conferir no bloco F-RESUMO)
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 ### 3.10 Pagamentos Efetuados
 
@@ -2229,7 +2229,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Pronas/PCD (45) e Pronon (46): cada um limitado a 1% do imposto devido, fora dos limites globais.
   - Dedução só na opção pelas deduções legais; o programa calcula os limites.
 - Exige do MCP: motor de limites encadeados sobre o imposto devido; explicação da glosa por limite
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-DOA-40 Código 40, Doações ao Estatuto da Criança e do Adolescente
 
@@ -2525,7 +2525,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Espólio inicial e intermediárias: todos os bens do inventário; comuns pelo espólio se obrigado; se desobrigado, pelo cônjuge sobrevivente; bens dos dependentes também.
   - Excluir dependente exige excluir os bens dele (não é automático).
 - Exige do MCP: validação de bens de dependente excluído (órfãos); lembrete do item 99/99 em declaração separada
-- Cobertura no AutoIR: `listar_pendencias`, `obter_ajuda`; módulo validate; prioridade P1; status parcial (`validar_declaracao`) (ver matriz)
+- Cobertura no AutoIR: `listar_pendencias`, `obter_ajuda`; módulo validate; prioridade P1; status implementada (`obter_ajuda`, `validar_declaracao`) (ver matriz)
 
 #### F-BENS-DATAAQ Informações dos bens conforme a data de aquisição
 
@@ -2537,7 +2537,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Em 2025: à vista, 2024 vazio e 2025 = custo; a prazo, 2024 vazio e 2025 = parcelas pagas em 2025.
   - Guardar documentação de benfeitorias.
 - Exige do MCP: assistente de valor por data e forma de aquisição; tabela de atualização (S-TAB-ATUALIZACAO)
-- Cobertura no AutoIR: `aplicar_caso_especial_bem`, `atualizar_custo_bem`; módulo calc; prioridade P1; status parcial (`aplicar_caso_especial_bem`) (ver matriz)
+- Cobertura no AutoIR: `aplicar_caso_especial_bem`, `atualizar_custo_bem`; módulo calc; prioridade P1; status implementada (`aplicar_caso_especial_bem`, `atualizar_custo_bem`) (ver matriz)
 
 #### F-BENS-DFE Bens e Direitos na Declaração Final de Espólio
 
@@ -2995,7 +2995,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 346
 - Regras de cálculo afetadas: permitidas todas as deduções legais; limites anuais de dependentes e instrução podem ser usados integralmente se preenchidos os requisitos; deduções do período de residência (1º/01 ou data da residência até a véspera da saída permanente, ou até completar 12 meses de ausência)
 - Exige do MCP: não proporcionalizar limites anuais de dependentes e instrução
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-SAIDA-DIVIDAS Dívidas e Ônus Reais na Saída Definitiva
 
@@ -3011,7 +3011,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda págs. 348 e 349
 - Regras de cálculo afetadas: soma das tabelas progressivas mensais dos meses do período, ainda que os rendimentos sejam de um ou alguns meses. Exemplo: residente em 01/01/2025 e não residente em 16/06/2025 usa a soma das tabelas de janeiro a junho. Se adquiriu residência no mesmo ano, soma dos meses da data da residência até o retorno à não residência. Tabela mensal de janeiro a abril difere da de maio a dezembro (S-TAB-PROGRESSIVA).
 - Exige do MCP: motor de cálculo com tabela proporcional por meses e por faixa mensal vigente em cada mês
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-SAIDA-IMPEXT Compensação do imposto pago no exterior na Saída Definitiva
 
@@ -3019,7 +3019,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 349
 - Regras de cálculo afetadas: mesma lista de países com acordo (África do Sul a Venezuela) e reciprocidade sem prova (Alemanha, Estados Unidos, Reino Unido); prova de reciprocidade por lei traduzida e autenticada ou declaração da representação diplomática; tributos estaduais e municipais excluídos; limite = imposto com rendimentos do exterior menos imposto sem eles; conversão pela cotação de compra do Bacen do último dia útil da 1ª quinzena do mês anterior ao recebimento
 - Exige do MCP: mesmo cálculo de F-IMPPAGO-02 aplicado à tabela proporcional
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-SAIDA-PAGTO Pagamento, restituição e disposições finais da Saída Definitiva
 
@@ -3188,7 +3188,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: pág. 336
 - Regras de cálculo: tabela progressiva mensal do ano-calendário multiplicada pelo número de meses de janeiro até o mês da decisão judicial/lavratura, ainda que os rendimentos sejam de apenas alguns meses.
 - Exige do MCP: motor de cálculo com tabela proporcional ao número de meses (parâmetro mês da decisão).
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-DFE-PRAZO Observações finais: prazo, multa, pagamento, restituição
 
@@ -3241,7 +3241,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: base de cálculo
 - Exige do MCP: função de cálculo do resumo; rastreabilidade linha a linha da origem
 - Observações: nenhuma
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-RESUMO-DED Resumo, Deduções (modelo completo)
 
@@ -3264,7 +3264,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: base de cálculo = total tributável - total de deduções
 - Exige do MCP: motor de deduções com limites parametrizados por exercício; explicação de cada limite aplicado
 - Observações: nenhuma
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-RESUMO-CALC Resumo, Cálculo do Imposto (deduções legais)
 
@@ -3295,7 +3295,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: ver F-RESUMO-QUOTAS e F-RESUMO-BANCO
 - Exige do MCP: calculadora completa e determinística; tabela progressiva anual e mensal parametrizada; cálculo RRA art. 12-A; limites de incentivo
 - Observações: nenhuma
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-RESUMO-QUOTAS Resumo, Imposto a pagar: formas de pagamento, quotas e débito automático
 
@@ -3347,7 +3347,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: desconto substitui todas as deduções legais; dedução de incentivo não existe no simplificado (inferido pela ausência da linha)
 - Exige do MCP: cálculo paralelo dos dois modelos
 - Observações: diferença na composição do IRRF do titular entre os dois modelos é do texto (conferir)
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-RESUMO-EVOL Resumo, Outras Informações: Evolução patrimonial
 
@@ -3358,7 +3358,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: somatórios das fichas Bens e Dívidas
 - Exige do MCP: totais por tipo de declaração; consistência de evolução patrimonial (variação patrimonial x rendimentos declarados, inferido)
 - Observações: nenhuma
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-RESUMO-OUTRAS Resumo, Outras Informações: demais linhas
 
@@ -3383,7 +3383,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: importação do GCAP 2025 alimenta estas linhas
 - Exige do MCP: agregação a partir dos demonstrativos; importação GCAP
 - Observações: nenhuma
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### F-RESUMO-OPCAO Opção pela Tributação (Ajuste Anual)
 
@@ -3395,7 +3395,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: escolhe o modelo do cálculo final
 - Exige do MCP: ferramenta de comparação e recomendação do modelo mais vantajoso; ferramenta de troca de opção; exclusão em cascata de dependente com aviso das fichas que exigem ação manual
 - Observações: nenhuma
-- Cobertura no AutoIR: `definir_opcao_tributacao`, `calcular_imposto`; módulo calc; prioridade P0; status parcial (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_opcao_tributacao`, `calcular_imposto`; módulo calc; prioridade P0; status implementada (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 ## 4 Demonstrativos
 
@@ -3415,7 +3415,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: IRPF2025 (declaração anterior) e Livro Caixa da Atividade Rural 2025 (ver D-AR-IMPORT); todos os itens importados são alteráveis.
 - Exige do MCP: módulo completo de atividade rural (CRUD das fichas, cálculo do resultado, importação), controle de período conforme tipo de declaração.
 - Observações: documentos guardados até a prescrição dos créditos tributários.
-- Cobertura no AutoIR: `listar_fichas`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `listar_fichas`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `listar_fichas`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `listar_fichas`, `simular_imposto`) (ver matriz)
 
 #### D-AR-OBRIG Obrigatoriedade de Preenchimento do Demonstrativo
 
@@ -3439,7 +3439,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Não é receita rural: aluguel ou arrendamento de imóvel rural, pastos, máquinas; prestação de serviços de preparo da terra e transporte de produtos de terceiros (vão para rendimentos tributáveis comuns). Transformação fora das condições: ganho de capital (sem habitualidade) ou equiparação a PJ (com habitualidade).
 - Não é atividade rural: compra e venda de rebanho bovino com permanência inferior a 52 dias (confinamento) ou 138 dias (demais casos).
 - Exige do MCP: orientação/classificação de receita (rural x outra) em ferramenta de ajuda; alerta quando usuário classificar aluguel de pasto como receita rural (inferido).
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P2; status implementada (`obter_ajuda`) (ver matriz)
 
 #### D-AR-IMOVEL Dados do Imóvel Explorado (abas Brasil e Exterior)
 
@@ -3521,7 +3521,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Imóvel comum ao casal: cada cônjuge apura e tributa sua parte; opcionalmente o total na declaração de um dos cônjuges junto com os demais rendimentos comuns.
   - Cônjuge arrendatário/condômino/parceiro em unidade que não pertence ao casal: tributa integralmente o titular da atividade, salvo declaração em conjunto.
 - Exige do MCP: motor de apuração com colunas Brasil e Exterior; parâmetros do exercício (5,5018; 56.000,00; 20%).
-- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L01 Saldo de prejuízo(s) a compensar de exercício(s) anterior(es)
 
@@ -3536,7 +3536,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Encerramento de espólio: saldo não deduzido pelo de cujus (sem opção posterior pelos 20%) pode ser usado pelo meeiro e sucessores, proporcionalmente à parcela da unidade rural.
 - Importações: NÃO é importado do IRPF2025; deve ser preenchido no IRPF2026.
 - Exige do MCP: campo manual com validação de limite; alerta se houve opção por 20% em 2024 (depende de dado anterior, inferido).
-- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L02 Receita bruta total
 
@@ -3544,7 +3544,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Apuração do Resultado; pág. 280
 - Regras de cálculo: transportado pelo programa: soma da receita bruta mensal (Brasil) e das receitas do exterior.
 - Exige do MCP: cálculo automático.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L03 Despesa de custeio e investimento total
 
@@ -3552,7 +3552,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Apuração do Resultado; pág. 281
 - Regras de cálculo: transportado: soma das despesas mensais (Brasil) e do exterior.
 - Exige do MCP: cálculo automático.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L04 Resultado (Brasil) / Resultado total US$ e Resultado total R$ (Exterior)
 
@@ -3564,7 +3564,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Final de Espólio: Resultado total R$ informado pelo usuário, com dólar de compra BCB da data da decisão judicial/lavratura.
   - Saída Definitiva: Resultado total R$ informado, com dólar de compra BCB do dia anterior à condição de não residente.
 - Exige do MCP: cálculo; para Espólio final e Saída, campo de cotação informada.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L05 Limite de 20% sobre a receita bruta total
 
@@ -3573,7 +3573,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo: Brasil: 20% da Receita bruta total (calculado). Exterior: 20% da receita bruta em moeda original por país, convertido para US$ (cotação do último dia do ano pela autoridade monetária do país), somado entre países, multiplicado por 5,5018.
 - Validações: no exterior, quando importado do IRPF2025/LCAR, o limite de 20% em R$ deve ser preenchido manualmente (pág. 296).
 - Exige do MCP: cálculo Brasil; campo informado ou cálculo auxiliado no exterior.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L06 Opção pela forma de apuração do resultado tributável
 
@@ -3582,7 +3582,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: seleção entre "Limite de 20% sobre a receita bruta" e "Resultado"
 - Regras de cálculo: define o Resultado tributável. Opção por 20% impede compensação de prejuízo e o aproveitamento futuro do saldo (ver L01).
 - Exige do MCP: ferramenta de simulação comparando as duas opções e recomendando (inferido).
-- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L07 Compensação de prejuízo(s) de exercício(s) anterior(es)
 
@@ -3591,7 +3591,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: valor que pretende compensar
 - Validações: só se resultado tributável positivo e opção pelo Resultado; limitado ao saldo e ao resultado.
 - Exige do MCP: validação de limite.
-- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L08 Resultado tributável
 
@@ -3599,7 +3599,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Apuração do Resultado; pág. 286
 - Regras de cálculo: preenchido conforme opção. Se positivo, transportado para "Resultado tributável da Atividade Rural" da ficha Rendimentos Tributáveis e Deduções do Resumo. Brasil e exterior não se compensam.
 - Exige do MCP: transporte automático ao Resumo.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L09 Saldo de prejuízo(s) a compensar
 
@@ -3607,7 +3607,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Apuração do Resultado; pág. 287
 - Regras de cálculo: Resultado positivo e opção pelo resultado: saldo anterior menos compensação. Resultado negativo: soma do negativo ao saldo anterior. Valor vai para "Informação para o exercício seguinte".
 - Exige do MCP: cálculo; exportar saldo para o próximo exercício.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L10 Apuração do resultado não tributável
 
@@ -3618,7 +3618,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Exterior: Resultado total R$ + adiantamentos 2025 - receitas de produtos entregues em 2025 referentes a adiantamentos até 2024 - resultado tributável (negativo = zero).
   - Se positivo, vai para a linha Resultado não tributável e é transportado para Isentos código 15 (Parcela não tributável correspondente à atividade rural).
 - Exige do MCP: cálculo e transporte automático para ficha de isentos.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L11 Adiantamento(s) recebido(s) em 2025 por conta de venda para entrega futura
 
@@ -3628,7 +3628,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações: só adiantamentos de contratos cujos produtos não foram entregues até 31/12/2025; se entregue em 2025, vira receita do mês da entrega. Exterior: converter moeda local para US$ (último dia do ano, autoridade do país) e para R$ (dólar de compra BCB do último dia de 2025). Devolução antes da entrega reduz o adiantamento.
 - Importações: importado do LCAR 2025.
 - Exige do MCP: campo e orientação de conversão.
-- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-APUR-L12 Adiantamento(s) recebido(s) até 2024 a ser(em) informado(s) como receita(s) de produto(s) entregue(s) em 2025
 
@@ -3638,7 +3638,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações: valores declarados como adiantamento nos exercícios anteriores e entregues em 2025; também devem constar como receita no mês da entrega. Exterior: mesma conversão.
 - Importações: importado do LCAR 2025.
 - Exige do MCP: campo; validação cruzada com receita mensal (inferido).
-- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `definir_apuracao_rural`, `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-AR-REBANHO Movimentação do Rebanho (abas Brasil e Exterior)
 
@@ -3788,7 +3788,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: pág. 306
 - Regras de cálculo: soma algébrica das linhas do mês, por coluna (comuns e day-trade); negativo com sinal.
 - Exige do MCP: cálculo.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L02 Resultado negativo até o mês anterior
 
@@ -3802,25 +3802,25 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: Resultado líquido do mês menos Resultado negativo até o mês anterior, se positivo.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L04 Prejuízo a compensar
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: se negativo anterior maior que o resultado do mês ou resultado do mês negativo, soma algébrica; compensável nos meses seguintes.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L05 Alíquota do imposto / IMPOSTO DEVIDO
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: base x 15% (operações comuns) ou 20% (day-trade).
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L06 Total do imposto devido
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: soma do imposto devido das colunas comuns e day-trade.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L07 IR fonte de Day-Trade no mês
 
@@ -3832,13 +3832,13 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: transportado do "IR fonte de Day-Trade a compensar" do mês anterior.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L09 IR fonte de Day-Trade a compensar
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: Total do imposto devido menos IR fonte DT do mês e de meses anteriores; se negativo, indica o saldo. Compensável até dezembro; saldo final pode ser pedido em restituição (IN RFB 1.300/2012).
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L10 IR fonte (Lei nº 11.033/2004) no mês / nos meses anteriores / a compensar
 
@@ -3854,7 +3854,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Regras: Total do imposto devido menos (IR fonte DT do mês + meses anteriores + a compensar + IR fonte Lei 11.033), se positivo. Pagamento até o último dia útil do mês seguinte; Darf código 6015.
 - Exige do MCP: cálculo e geração de orientação de Darf 6015 com multa e juros.
-- Cobertura no AutoIR: `calcular_imposto`, `gerar_darf`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `gerar_darf`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`, `gerar_darf`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `gerar_darf`, `simular_imposto`) (ver matriz)
 
 #### D-RV-L12 Imposto Pago
 
@@ -3884,14 +3884,14 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: pág. 314 e 315
 - Regras: fundos distribuem no mínimo 95% dos lucros (regime de caixa, balanço semestral 30/06 e 31/12). Rendimentos e ganhos do fundo seguem regras de aplicações de PJ; distribuição sujeita a IRRF de 20%.
 - Exige do MCP: orientação; rendimentos distribuídos tributados vão para Exclusivos (inferido).
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo`; módulo tabelas; prioridade P2; status parcial (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo`; módulo tabelas; prioridade P2; status implementada (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`, `obter_ajuda`) (ver matriz)
 
 #### D-FII-ALIEN Alienação ou Resgate de Quotas
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: pág. 316
 - Regras: alíquota 20%: na fonte no resgate (só no término do prazo ou liquidação; rendimento = resgate menos custo); demais casos pelas normas de renda variável/ganho de capital.
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo`; módulo tabelas; prioridade P2; status parcial (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo`; módulo tabelas; prioridade P2; status implementada (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`, `obter_ajuda`) (ver matriz)
 
 #### D-FII-ISENCAO Isenção dos rendimentos distribuídos
 
@@ -3899,7 +3899,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: pág. 317
 - Regras: rendimentos distribuídos isentos na fonte e na DAA se quotas negociadas exclusivamente em bolsa ou balcão organizado, fundo com no mínimo 50 cotistas, e o cotista PF não detenha 10% ou mais das quotas nem direito a mais de 10% dos rendimentos. Fundo que aplica em empreendimento com incorporador, construtor ou sócio cotista com mais de 25% (isolado ou com pessoa ligada: parentes até 2º grau, empresa sob seu controle ou de parentes) tributa como PJ.
 - Exige do MCP: orientação/validação para classificar rendimentos de FII como isentos (código de isentos de FII, inferido código 26 ou 99 conforme tabela) ou exclusivos.
-- Cobertura no AutoIR: `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo`; módulo tabelas; prioridade P2; status parcial (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`) (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo`; módulo tabelas; prioridade P2; status implementada (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`, `obter_ajuda`) (ver matriz)
 
 #### D-FII-PROC Procedimentos para Apuração (FII/Fiagro)
 
@@ -3928,21 +3928,21 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: pág. 322
 - Regras: Resultado líquido do mês menos Resultado negativo anterior, se positivo.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-FII-L04 Prejuízo a compensar
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: pág. 323
 - Regras: idem renda variável; compensável nos meses seguintes (só com FII/Fiagro, inferido pela ficha separada).
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-FII-L05 Alíquota do imposto / Imposto devido
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: pág. 324
 - Regras: base x 20%.
-- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no AutoIR: `calcular_imposto`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) (ver matriz)
 
 #### D-FII-L06 Imposto pago
 
@@ -3994,7 +3994,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 18, 19, 33, 37
 - Regras: transferência eletrônica em instituições autorizadas; Darf em agência da rede arrecadadora ou caixa eletrônico; débito automático (S-PAG-DEBITO); remessa de ordem de pagamento pelo Banco do Brasil Gecex Brasília-DF prefixo 1608-X (ausente no exterior a serviço do Brasil)
 - Exige do MCP: orientação ao usuário
-- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P1; status pendente (ver matriz)
+- Cobertura no AutoIR: `obter_ajuda`; módulo tabelas; prioridade P1; status implementada (`obter_ajuda`) (ver matriz)
 
 ### S-PAG-DEBITO Débito automático das quotas
 
@@ -4098,7 +4098,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: págs. 382 e 419; ação GravarEntregaAction; classe GravadorTXT (gravarDeclaracao, montaNomeArquivoTXT)
 - Regras: só sem erros impeditivos; nome do arquivo `CPF-IRPF-<A|E|S>-2026-2025-<ORIGI|RETIF>.DEC` (padrão do FAQ para 2025, inferido para 2026); pode ir para mídia removível via cópia "para entrega"
 - Exige do MCP: `gerar_dbk` com o layout `LayoutDadosDIRPF2026.xml` e o nome padrão
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-TRANSMISSAO Transmissão (Receitanet incorporado)
 
@@ -4114,7 +4114,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: págs. 383, 403, 405; layout registros HR, DR, R9, HC, RC, NC, VC, MC, TC; relatório relRecibo
 - Regras: recibo de 12 dígitos usado para retificar e como segurança na declaração seguinte; ausência do recibo de 2025 não impede a entrega
 - Exige do MCP: `registrar_recibo` (o usuário informa o número ou aponta o arquivo .REC para leitura); validação do formato
-- Cobertura no AutoIR: `registrar_recibo`, `validar_documento`; módulo importacao; prioridade P1; status parcial (`validar_documento`) (ver matriz)
+- Cobertura no AutoIR: `registrar_recibo`, `validar_documento`; módulo importacao; prioridade P1; status parcial (`criar_retificadora`, `registrar_recibo`, `validar_documento`) (ver matriz)
 
 ### S-NOTIFICACAO-MAED Notificação de lançamento da multa por atraso emitida pelo PGD
 
@@ -4198,98 +4198,98 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: `LayoutDadosDIRPF2026.xml`; registros IR (header, 160 campos: sistema, exercício, ano-base, código Receitanet, indicador de retificadora, CPF, tipo de NI, versão etc.) e T9 (trailer com quantidades por tipo de registro, QT_R16 em diante); campos com nome, observação, formato (C, N etc.) e tamanho
 - Exige do MCP: `gerar_dbk` e leitor do mesmo layout (`importar_declaracao_anterior` usa o layout de 2025)
-- Cobertura no AutoIR: `gerar_dbk`, `importar_declaracao_anterior`; módulo dbk; prioridade P0; status parcial (`converter_dbk_para_modelo`, `converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`, `importar_declaracao_anterior`; módulo dbk; prioridade P0; status parcial (`converter_dbk_para_modelo`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-IDENT Registro 16 (identificação do contribuinte)
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos (início): NR_REG, NR_CPF, NM_NOME, TIP_LOGRA, NM_LOGRA, NR_NUMERO, NM_COMPLEM, NM_BAIRRO, NR_CEP (65 campos)
 - Exige do MCP: mapeamento a partir de F-IDENT
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-TOTAIS Registros 17, 18, 19 e 20 (totais, modelo, imposto pago e resumo)
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos (início): 17 impostos e totais (VR_IMPCOMP, VR_ISENTOS, VR_EXCLUSIVOS, VR_TOTAL13, VR_IRFONTELEI11033); 18 cálculo do simplificado (VR_RENDTRIB, VR_DESCSIMP, VR_BASECALC, VR_IMPDEVIDO); 19 imposto pago e livro caixa (VR_IMPEXT, VR_CARNELEAO_TIT, VR_LIVCAIX_TIT); 20 resumo completo (VR_RENDJUR, VR_RENDPFEXT, VR_RESAR, VR_TOTTRIB, limites Funpresp) (inferido pelos nomes)
 - Exige do MCP: preenchidos pelo motor de cálculo
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-RENDIMENTOS Registros 21, 32, 22, 49, 80, 81 (rendimentos PJ, PF/Exterior e exigibilidade suspensa)
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos (início): 21 PJ titular (NR_PAGADOR, NM_PAGADOR, VR_RENDTO, VR_CONTRIB, VR_DECTERC, VR_IMPOSTO, DT_COMUNICACAO_SAIDA); 32 PJ dependentes (CPF_BENEF); 22 PF/Exterior mensal (E_DEPENDENTE, NR_CPF_DEPEN, NR_MES, VR_RENDTO, VR_ALUGUEIS, VR_OUTROS, VR_EXTER); 49 pagadores PF por mês (CPF titular do pagamento e beneficiário); 80 e 81 exigibilidade suspensa titular e dependentes (VR_DEP_JUDICIAL)
 - Exige do MCP: mapeamento das fichas F-RTPJ, F-RTPF, F-SUSP
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-ISENTOS-EXCL Registros 23, 24, 31, 33, 82 e 83 a 99 (isentos, exclusivos e detalhes)
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 23 isentos por código (NR_COD_ISENTO, VR_VALOR); 24 exclusivos por código; 31, 33, 82, 93 a 99 detalhes com pagadora e beneficiário (lucros, indenizações, IRRF anos anteriores, JCP, PLR, outros, poupança, aplicações); 83 médicos residentes; 84 Voluntários da Copa; 85 meação e dissolução; 86 ganho com ações; 87 ganho com ouro; 88 parcela isenta de aposentadoria (com NR_CHAVE_BEM); 89 sócio de microempresa
 - Exige do MCP: um registro de detalhe por lançamento; registro 23/24 de totais por código
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-PESSOAS Registros 25, 35, 29 (dependentes, alimentandos, cônjuge)
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos (início): 25 dependentes (NR_CHAVE, CD_DEPEND, NM_DEPEND, DT_NASCIM, NI_DEPEND, IN_SAIDA, NR_NITPISPASEP); 35 alimentandos (INDICADOR_RESIDENCIA, NM_NOME, DT_NASCIM, NI_ALIMENTANDO, NR_CPF_VINCULADO, IN_TIPO_PROCESSO); 29 informações do cônjuge (NR_CONJ, VR_BASE, VR_IMPOSTO, VR_ISENTO, VR_EXCLUSIVO, VR_RENDPJ_EXIB_SUSP, VR_TOTALCONJ)
 - Exige do MCP: mapeamento; o registro 29 indica um quadro "Informações do Cônjuge" com totais do cônjuge (base, imposto, isentos, exclusivos, exigibilidade suspensa) que a Ajuda 2026 não descreve (lacuna, inferido)
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-PAGAMENTOS-DOACOES Registros 26, 34, 46, 48, 90, 91, 92
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 26 pagamentos (CD_PAGTO, NR_CHAVE_DEPEND, NR_BENEF, NM_BENEF, NR_NIT_EMP_DOM, VR_PAGTO, VR_REDUC); 34 doações a partidos (NR_PARTIDO, NM_PARTIDO, VR_DOACAO); 46 e 48 pensão alimentícia do RRA por alimentando (titular e dependentes); 90 doações efetuadas (CD_DOACAO, VR_PARC_NAO_DEDUT, IN_TIPO_CPF_CNPJ); 91 e 92 doações diretamente na declaração ECA e Idoso (IN_TIPO_FUNDO, SG_UF, NOME_MUNICIPIO, VR_DOACAO, NR_CNPJ_FUNDO)
 - Exige do MCP: mapeamento das fichas F-PAG, F-PARTIDOS, F-DOA, F-DDD, F-RRA
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-BENS-DIVIDAS Registros 27, 36, 37, 28
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 27 bens (CD_BEM, IN_EXTERIOR, CD_PAIS, TX_BEM, VR_ANTER, VR_ATUAL e mais 52 campos condicionais); 36 vínculo bem x CPF/CNPJ (NR_CHAVE_BEM, CD_GRUPO_BEM, CD_BEM); 37 aplicações e lucros no exterior por bem (VR_GANHO_PREJUIZO, VR_IMPOSTO_DEVIDO, VR_IMPOSTO_PAGO_EXTERIOR_BRASIL, VR_BASE_CALCULO); 28 dívidas (CD_DIV, TX_DIV, VR_ANTER, VR_ATUAL, VR_PAGAMENTOANUAL)
 - Exige do MCP: mapeamento de F-BENS, F-BENS-ESP, F-DIV; cálculo da Lei 14.754 por bem
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-ESPOLIO-SAIDA Registros 30, 38, 58, 59, 39
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 30 espólio em ajuste (NR_INVENT, NM_INVENT, IN_SOBREPARTILHA); 38 final de espólio (NR_ANOOBITO, inventariante, sobrepartilha e status); 58 herdeiros (NR_CHAVE_HERDEIRO, NM_NOME, NR_CPF_CNPJ); 59 percentual por bem e herdeiro (NR_CHAVE_BEM, NR_CHAVE_HERDEIRO, VR_PERCENTUAL); 39 saída (procurador, DT_NAORESIDENTE, DT_RESIDENTE, CD_NOVO_PAIS_RESIDENCIA)
 - Exige do MCP: mapeamento de F-ESPOLIO, F-DFE-*, F-SAIDA
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-RRA Registros 45 e 47
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 45 RRA titular (NR_PAGADOR, NM_PAGADOR, VR_RENDTO, VR_CONTRIB, VR_PENSAO, VR_IMPOSTO e 13 campos mais); 47 RRA dependentes (CPF_BENEF)
 - Exige do MCP: mapeamento de F-RRA
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-RV Registros 40, 41, 42, 43
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 40 renda variável mensal por mercado (GC_COMUM_MVISTA_ACOES, GC_COMUM_MVISTA_OURO, GC_COMUM_MOPC_* e day-trade, 54 campos); 41 totais anuais comuns/day-trade; 42 consolidação mensal; 43 totais anuais FII/Fiagro
 - Exige do MCP: lista exata de linhas de mercado da grade de Renda Variável (D-RV-TIPOS) a extrair destes nomes de campo
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-AR Registros 50 a 57
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 50 imóvel explorado (NM_IMOVEL, NM_LOCAL, QT_AREA, PC_PARTIC, CD_EXPLOR); 51 receitas e despesas mensais; 52 apuração (VR_RECTOTAL, VR_DESPTOTAL, VR_PREJEXERCANT, VR_OPCAO); 53 rebanho (CD_ESPEC, QT_INIC, QT_COMPRA, QT_NASCIM, QT_PERDA, QT_VENDA); 54 bens da AR; 55 dívidas da AR; 56 exterior por país (RECBRUTA, DESPCUSTEIO, RESORIGINAL, RESDOLAR); 57 participantes do imóvel
 - Exige do MCP: mapeamento de D-AR-*
-- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `gerar_dbk`; módulo dbk; prioridade P1; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-GCAP Registros 60 a 78
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 60 identificação do demonstrativo e transportes (94 campos); 62 bens móveis; 63 participações societárias; 64 operações em moeda estrangeira; 65 adquirentes; 66 e 67 reduções e parcelas; 68 a 72 apuração, cálculo e parcelas; 73 a 77 moeda estrangeira em espécie e consolidação; 78 transportes para a declaração (VR_BENSISENTO, VR_BENSIMPOSTO, VR_BENSEXCLUSIVO, VR_ESPIMPOSTO, VR_ESPEXCLUSIVO)
 - Exige do MCP: preservação integral dos registros importados do GCAP (o AutoIR não recalcula o demonstrativo importado)
-- Cobertura no AutoIR: `importar_gcap`, `gerar_dbk`; módulo dbk; prioridade P1; status parcial (`abrir_declaracao`, `converter_modelo_para_dbk`, `orientar_servico_externo`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no AutoIR: `importar_gcap`, `gerar_dbk`; módulo dbk; prioridade P1; status parcial (`abrir_declaracao`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `orientar_servico_externo`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-RECIBO Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC
 
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: FR (nome da declaração, CPF, data e hora de entrega, meio, tipo, situação); HR/DR/R9 recibo (DR com dados do contribuinte; R9 com NR_HASH); HC/RC/TC complemento do recibo (data e hora de recepção, SIGNET); NC notificação de multa; VC dados do validador; MC mensagens
 - Exige do MCP: só leitura (registrar_recibo); nunca gerar (produzidos pela RFB)
-- Cobertura no AutoIR: `registrar_recibo`; módulo importacao; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `registrar_recibo`; módulo importacao; prioridade P2; status implementada (`criar_retificadora`, `registrar_recibo`) (ver matriz)
 
 ### S-ARQ-INFORMES Arquivos de informe (XML) e mapeamentos de importação
 
@@ -4327,7 +4327,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda págs. 357 e 358
 - Regras: dividir o valor original, na moeda da época, pelo índice do mês/ano da aquisição ou pagamento para obter o valor em reais até 31/12/1995; índices de 1938 a 1995 por moeda (Real 1994-1995; Cruzeiro Real 1993-1994; Cruzeiro 1990-1993 e 1967-1986; Cruzado Novo 1989-1990; Cruzado 1986-1989; Cruzeiro Novo 1967-1970; Mil-Réis 1938-1942); exemplo de índice: jan/1992 720,4779; dez/1995 0,9596
 - Exige do MCP: tabela digitalizada e calculadora `atualizar_custo_bem` (lacuna: não está entre os JSON existentes)
-- Cobertura no AutoIR: `atualizar_custo_bem`; módulo tabelas; prioridade P2; status pendente (ver matriz)
+- Cobertura no AutoIR: `atualizar_custo_bem`; módulo tabelas; prioridade P2; status implementada (`atualizar_custo_bem`) (ver matriz)
 
 ### S-TAB-DEPENDENCIA Tabela de Relação de Dependência
 

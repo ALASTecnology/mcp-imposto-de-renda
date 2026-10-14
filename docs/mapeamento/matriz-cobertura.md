@@ -24,36 +24,36 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | M-MENU-IMPORTACOES | Menu Importações | `importar_carne_leao`, `importar_livro_caixa_rural`, `importar_gcap`, `importar_informe_rendimentos`, `importar_informe_plano_saude` | importacao | P1 | parcial (`abrir_declaracao`, `definir_receitas_despesas_rurais`, `definir_rendimentos_pf_exterior`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `orientar_servico_externo`) |  |
 | M-MENU-FICHAS | Menu Fichas e navegação | `listar_fichas` | model | P1 | implementada (`listar_fichas`) | Navegação substituída por consulta de fichas aplicáveis. |
 | M-MENU-FERRAMENTAS | Menu Ferramentas | `gravar_copia_seguranca`, `restaurar_copia_seguranca` | model | P1 | implementada (`gravar_copia_seguranca`, `listar_copias_seguranca`, `restaurar_copia_seguranca`) | Calculadora e preferências de UI não têm equivalente. |
-| M-MENU-AJUDA | Menu Ajuda | `obter_ajuda` | tabelas | P2 | pendente | Conteúdo de ajuda como dados versionados. |
+| M-MENU-AJUDA | Menu Ajuda | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) | Conteúdo de ajuda como dados versionados. |
 | M-TOOLBAR | Barra de ferramentas | não se aplica | nenhum | P2 | não se aplica | Atalhos visuais; as ações estão cobertas pelas ferramentas de ciclo de vida. |
-| M-RODAPE-COMPARATIVO | Painel de imposto e comparativo no rodapé | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Modelo `ambos` devolve os dois saldos e a recomendação. |
+| M-RODAPE-COMPARATIVO | Painel de imposto e comparativo no rodapé | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Modelo `ambos` devolve os dois saldos e a recomendação. |
 | M-INICIAL | Tela "O que você deseja fazer?" | `criar_declaracao`, `listar_declaracoes` | model | P0 | parcial (`criar_declaracao`, `listar_arquivos`) |  |
 | M-INICIAL-NOVA | Aba "Nova" (tela "O que você deseja fazer?") | `criar_declaracao`, `importar_declaracao_anterior`, `importar_pre_preenchida` | model | P0 | parcial (`abrir_declaracao`, `converter_dbk_para_modelo`, `criar_declaracao`, `orientar_servico_externo`) | Modo pré-preenchida depende de arquivo obtido pelo usuário (ver M-IMP-PREPREENCHIDA). |
 | M-INICIAL-EMPREENCH | Aba "Em Preenchimento" | `listar_declaracoes`, `abrir_declaracao` | model | P1 | parcial (`abrir_declaracao`, `listar_arquivos`) |  |
-| M-INICIAL-TRANSMITIDAS | Aba "Transmitidas" | `listar_declaracoes`, `registrar_recibo`, `criar_retificadora` | model | P1 | parcial (`criar_retificadora`, `listar_arquivos`) | Estado de transmitida vem do recibo informado. |
-| M-INICIAL-BOASVINDAS | Aba "Boas-vindas", links úteis e "Entrar com gov.br" | `obter_ajuda` | tabelas | P2 | pendente | Botão gov.br: IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
+| M-INICIAL-TRANSMITIDAS | Aba "Transmitidas" | `listar_declaracoes`, `registrar_recibo`, `criar_retificadora` | model | P1 | parcial (`criar_retificadora`, `listar_arquivos`, `registrar_recibo`) | Estado de transmitida vem do recibo informado. |
+| M-INICIAL-BOASVINDAS | Aba "Boas-vindas", links úteis e "Entrar com gov.br" | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) | Botão gov.br: IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
 | M-DECL-NOVA | Declaração > Nova | `criar_declaracao` | model | P0 | implementada (`criar_declaracao`) |  |
 | M-DECL-ABRIR | Declaração > Abrir | `abrir_declaracao` | model | P0 | implementada (`abrir_declaracao`) | Sem a restrição de uma declaração aberta por vez. |
 | M-DECL-FECHAR | Declaração > Fechar | não se aplica | model | P2 | não se aplica | Persistência imediata dispensa fechar. |
 | M-DECL-EXCLUIR | Declaração > Excluir | `excluir_declaracao` | model | P1 | implementada (`excluir_declaracao`) | Exige confirmação explícita. |
 | M-DECL-RETIFICAR | Declaração > Retificar | `criar_retificadora` | model | P1 | implementada (`criar_retificadora`) |  |
 | M-DECL-PENDENCIAS | Declaração > Verificar Pendências | `listar_pendencias` | validate | P0 | implementada (`validar_declaracao`) | Catálogo de mensagens próprio, com severidade erro ou aviso. |
-| M-DECL-ENTREGAR | Declaração > Entregar Declaração | `gerar_dbk`, `listar_pendencias`, `instruir_transmissao` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `instruir_transmissao`, `validar_declaracao`, `verificar_integridade_arquivo`) | IMPOSSÍVEL fora do PGD: a transmissão usa o Receitanet incorporado, com protocolo, hash, envelope e certificado da RFB, que não podem ser reimplementados nem copiados. Alternativa: `gerar_dbk` grava o arquivo e `instruir_transmissao` orienta abrir no PGD 2026, verificar pendências e entregar; depois `registrar_recibo`. |
+| M-DECL-ENTREGAR | Declaração > Entregar Declaração | `gerar_dbk`, `listar_pendencias`, `instruir_transmissao` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `instruir_transmissao`, `validar_declaracao`, `verificar_integridade_arquivo`) | IMPOSSÍVEL fora do PGD: a transmissão usa o Receitanet incorporado, com protocolo, hash, envelope e certificado da RFB, que não podem ser reimplementados nem copiados. Alternativa: `gerar_dbk` grava o arquivo e `instruir_transmissao` orienta abrir no PGD 2026, verificar pendências e entregar; depois `registrar_recibo`. |
 | M-DECL-SALVAR-ONLINE | Declaração > Salvar On-line (F6) | `gravar_copia_seguranca`, `orientar_servico_externo` | model | P2 | implementada (`gravar_copia_seguranca`, `orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
 | M-DECL-RECUPERAR-ONLINE | Declaração > Recuperar On-line (F7) | `restaurar_copia_seguranca`, `orientar_servico_externo` | model | P2 | implementada (`listar_copias_seguranca`, `orientar_servico_externo`, `restaurar_copia_seguranca`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
 | M-DECL-SAIR | Declaração > Sair do Programa | não se aplica | nenhum | P2 | não se aplica | Encerramento de UI. |
 | M-DECL-CONVERTER | Converter declaração (inferido) | `definir_identificacao` | model | P2 | implementada (`definir_identificacao`) | Função inferida; confirmar no programa. |
 | M-IMPR-DECLARACAO | Imprimir Declaração | `gerar_relatorio_declaracao` | model | P1 | parcial (`gerar_relatorio_declaracao`) | Layout próprio; renderização em PDF fica na camada MCP ou em módulo de relatórios a criar. |
 | M-IMPR-REND-PF | Imprimir Rendimentos Recebidos de PF | `gerar_relatorio_declaracao` | model | P2 | parcial (`gerar_relatorio_declaracao`) | Parte `rendimentos_pf`. |
-| M-IMPR-RECIBO | Imprimir Recibo de Entrega | `registrar_recibo`, `instruir_transmissao` | importacao | P1 | parcial (`instruir_transmissao`) | IMPOSSÍVEL fora do PGD: o recibo é produzido pela RFB na recepção. Alternativa: imprimir no PGD e informar o número com `registrar_recibo`. |
+| M-IMPR-RECIBO | Imprimir Recibo de Entrega | `registrar_recibo`, `instruir_transmissao` | importacao | P1 | implementada (`criar_retificadora`, `instruir_transmissao`, `registrar_recibo`) | IMPOSSÍVEL fora do PGD: o recibo é produzido pela RFB na recepção. Alternativa: imprimir no PGD e informar o número com `registrar_recibo`. |
 | M-IMPR-DARF | Imprimir Darf do IRPF | `gerar_darf`, `simular_quotas` | calc | P0 | implementada (`calcular_quotas`, `gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc. Alternativa: `gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial. |
 | M-IMPR-DARF-MAED | Imprimir Darf de Multa por Atraso na Entrega | `calcular_multa_atraso`, `gerar_darf` | calc | P1 | implementada (`calcular_multa_atraso`, `gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf da multa decorre da notificação de lançamento emitida pelo PGD na entrega. Alternativa: calcular o valor e orientar a emissão pelo PGD ou e-CAC. |
 | M-IMPR-DARF-ECA | Imprimir Darf, Doações Diretamente na Declaração, ECA | `gerar_darf` | calc | P1 | implementada (`gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc. Alternativa: `gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial. |
 | M-IMPR-DARF-IDOSO | Imprimir Darf, Doações Diretamente na Declaração, Pessoa Idosa | `gerar_darf` | calc | P1 | implementada (`gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc. Alternativa: `gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial. |
 | M-IMPR-RELACAO | Imprimir Relação de Declarações | `listar_declaracoes` | model | P2 | parcial (`listar_arquivos`) |  |
 | M-IMPR-COMUNICACAO-SAIDA | Imprimir Comunicação à Fonte Pagadora de Saída do País | `gerar_comunicacao_saida` | model | P1 | implementada (`gerar_comunicacao_saida`) |  |
-| M-IMPR-INFORME-REND | Imprimir Informe de Rendimentos (arquivo XML da fonte) | `ler_informe` | importacao | P2 | pendente |  |
-| M-IMPR-INFORME-PS | Imprimir Informe de Plano de Saúde | `ler_informe` | importacao | P2 | pendente |  |
+| M-IMPR-INFORME-REND | Imprimir Informe de Rendimentos (arquivo XML da fonte) | `ler_informe` | importacao | P2 | implementada (`ler_informe`) |  |
+| M-IMPR-INFORME-PS | Imprimir Informe de Plano de Saúde | `ler_informe` | importacao | P2 | implementada (`ler_informe`) |  |
 | M-IMPR-DARF-AUXILIO | Darf de devolução do Auxílio Emergencial (inferido) | `orientar_servico_externo` | nenhum | P2 | implementada (`orientar_servico_externo`) | Fora do escopo do exercício 2026 (função herdada, inferida). |
 | M-IMPR-CRITERIOS-OBRIG | Impressão de critérios de obrigatoriedade (inferido) | `verificar_obrigatoriedade` | validate | P2 | implementada (`verificar_obrigatoriedade`) | Função inferida. |
 | M-IMPR-SALVAR-PDF | Visualizar e salvar em PDF | `gerar_relatorio_declaracao`, `gerar_darf` | model | P2 | parcial (`gerar_darf`, `gerar_relatorio_declaracao`) |  |
@@ -65,56 +65,56 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | M-IMP-AR | Importar Atividade Rural 2025 | `importar_livro_caixa_rural` | importacao | P1 | parcial (`definir_receitas_despesas_rurais`, `orientar_servico_externo`) |  |
 | M-IMP-GCAP | Importar Ganhos de Capital 2025 | `importar_gcap` | importacao | P1 | parcial (`abrir_declaracao`, `orientar_servico_externo`) | Substituição por CPF, como no PGD. |
 | M-IMP-SUGESTAO | Sugestão de importação (inferido) | `listar_declaracoes`, `importar_declaracao_anterior` | importacao | P2 | parcial (`converter_dbk_para_modelo`, `listar_arquivos`) | Função inferida. |
-| M-FERR-COPIA-GRAVAR | Gravar Cópia de Segurança | `gravar_copia_seguranca`, `gerar_dbk` | model | P1 | implementada (`converter_modelo_para_dbk`, `gravar_copia_seguranca`, `verificar_integridade_arquivo`) | Formato de cópia do PGD não é reproduzido; a cópia para entrega equivale a `gerar_dbk`. |
+| M-FERR-COPIA-GRAVAR | Gravar Cópia de Segurança | `gravar_copia_seguranca`, `gerar_dbk` | model | P1 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `gravar_copia_seguranca`, `verificar_integridade_arquivo`) | Formato de cópia do PGD não é reproduzido; a cópia para entrega equivale a `gerar_dbk`. |
 | M-FERR-COPIA-RESTAURAR | Restaurar Cópia de Segurança | `restaurar_copia_seguranca`, `importar_declaracao_anterior` | model | P1 | parcial (`converter_dbk_para_modelo`, `listar_copias_seguranca`, `restaurar_copia_seguranca`) | Restaurar cópia do PGD 2026 depende de mapear o formato (lacuna). |
 | M-FERR-CALCULADORA | Calculadora | não se aplica | nenhum | P2 | não se aplica | O assistente faz os cálculos. |
 | M-FERR-ATUALIZACOES | Verificar Atualizações | `verificar_versao_tabelas` | tabelas | P2 | implementada (`verificar_versao_tabelas`) | Atualização do PGD é do programa oficial; o AutoIR só versiona as próprias tabelas. |
 | M-FERR-RECNOMES | Recuperação de Nomes (Ativar/Desativar, Limpar) | `buscar_nome_por_documento` | model | P2 | parcial (`buscar_nome_por_documento`) |  |
 | M-FERR-LOGIN-GOVBR | Entrar e sair com gov.br | `orientar_servico_externo` | nenhum | P2 | implementada (`orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
-| M-FERR-PAGINAS | Links para páginas da RFB (IRPF, DTE) e navegador | `obter_ajuda` | tabelas | P2 | pendente | Links públicos. |
+| M-FERR-PAGINAS | Links para páginas da RFB (IRPF, DTE) e navegador | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) | Links públicos. |
 | M-FERR-MEMORIA | Memória do IRPF (inferido) | não se aplica | nenhum | P2 | não se aplica | Função inferida do nome da ação; sem efeito na declaração. |
 | M-FERR-LEAOZINHO | Assistente "Leãozinho" (inferido) | não se aplica | nenhum | P2 | não se aplica | Função inferida do nome da ação; sem efeito na declaração. |
 | M-FERR-AVALIACAO | Avaliação do programa (inferido) | não se aplica | nenhum | P2 | não se aplica | Função inferida do nome da ação; sem efeito na declaração. |
 | M-FERR-INFO-CALCULO | Constantes de cálculo (inferido, tela de testes) | `consultar_tabela` | tabelas | P2 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
-| M-AJUDA-CONTEXTUAL | Ajuda de campo (F1) e textos em azul | `obter_ajuda`, `calcular_imposto` | tabelas | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | `calcular_imposto` com `detalhar` cumpre o F1 do Resumo (procedência dos valores). |
-| M-AJUDA-DOCUMENTOS | Conteúdo, Instruções, Como Fazer, Perguntas e Respostas, FAQ | `obter_ajuda` | tabelas | P2 | pendente |  |
+| M-AJUDA-CONTEXTUAL | Ajuda de campo (F1) e textos em azul | `obter_ajuda`, `calcular_imposto` | tabelas | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `obter_ajuda`, `simular_imposto`) | `calcular_imposto` com `detalhar` cumpre o F1 do Resumo (procedência dos valores). |
+| M-AJUDA-DOCUMENTOS | Conteúdo, Instruções, Como Fazer, Perguntas e Respostas, FAQ | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) |  |
 | M-AJUDA-ATALHOS | Exibir atalhos | não se aplica | nenhum | P2 | não se aplica | Respostas textuais do MCP já são acessíveis. |
 | M-AJUDA-ACESSIBILIDADE | Acessibilidade (F11) e leitura de tela | não se aplica | nenhum | P2 | não se aplica | Respostas textuais do MCP já são acessíveis. |
-| M-AJUDA-SOBRE | Sobre, Novidades, Tutorial | `obter_ajuda` | tabelas | P2 | pendente |  |
+| M-AJUDA-SOBRE | Sobre, Novidades, Tutorial | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) |  |
 | M-DEMO-ACOES | Novo, Abrir, Fechar, Excluir e Retificar Demonstrativo (inferido) | `calcular_ganho_capital`, `orientar_servico_externo` | calc | P2 | parcial (`calcular_ganho_capital`, `orientar_servico_externo`) | Função inferida; demonstrativo oficial do GCAP continua no PGD. |
 | S-TIPO-AJUSTE | Declaração de Ajuste Anual | `criar_declaracao` | model | P0 | implementada (`criar_declaracao`) |  |
 | S-TIPO-DFE | Declaração Final de Espólio | `criar_declaracao`, `definir_espolio` | model | P1 | implementada (`criar_declaracao`, `definir_espolio`) |  |
 | S-TIPO-DSDP | Declaração de Saída Definitiva do País | `criar_declaracao`, `definir_saida_definitiva` | model | P1 | implementada (`criar_declaracao`, `definir_saida_definitiva`) |  |
 | S-PROGRAMAS-RFB | Programas relacionados disponibilizados pela RFB | `orientar_servico_externo` | nenhum | P2 | implementada (`orientar_servico_externo`) | GCAP, LCAR e Carnê-Leão são programas da RFB; o AutoIR importa as exportações. |
-| S-REGRA-CASADO | Contribuinte casado | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-COMPANHEIRO | Contribuinte que tenha companheiro | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-SEPARADO-FATO | Contribuinte separado de fato | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-DIVORCIADO | Contribuinte separado judicialmente, divorciado, que dissolveu união estável ou separado/divorciado por escritura pública | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-VIUVO | Contribuinte viúvo | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-MENOR | Contribuinte menor | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-EMANCIPADO | Contribuinte menor emancipado | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
-| S-REGRA-INCAPAZ | Contribuinte incapaz | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | parcial (`adicionar_dependente`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-CASADO | Contribuinte casado | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-COMPANHEIRO | Contribuinte que tenha companheiro | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-SEPARADO-FATO | Contribuinte separado de fato | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-DIVORCIADO | Contribuinte separado judicialmente, divorciado, que dissolveu união estável ou separado/divorciado por escritura pública | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-VIUVO | Contribuinte viúvo | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-MENOR | Contribuinte menor | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-EMANCIPADO | Contribuinte menor emancipado | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
+| S-REGRA-INCAPAZ | Contribuinte incapaz | `obter_ajuda`, `adicionar_dependente`, `listar_pendencias` | validate | P1 | implementada (`adicionar_dependente`, `obter_ajuda`, `validar_declaracao`) | Regras viram avisos (dependente comum, guarda judicial, rateio de bens comuns). |
 | S-REGRA-ESPOLIO | Declaração do espólio (inicial e intermediárias) | `definir_identificacao`, `definir_espolio` | model | P1 | implementada (`definir_espolio`, `definir_identificacao`) | Natureza 81 habilita a ficha Espólio. |
 | S-REGRA-ESPOLIO-FINAL | Regras da Declaração Final de Espólio e sobrepartilha | `definir_espolio`, `definir_partilha_bem` | model | P1 | implementada (`definir_espolio`, `definir_partilha_bem`) |  |
 | S-REGRA-AUSENTE-SERVICO | Contribuinte ausente no exterior a serviço do Brasil | `definir_rendimentos_pf_exterior`, `adicionar_rendimento_isento`, `converter_moeda` | calc | P2 | parcial (`adicionar_rendimento_isento`, `converter_moeda`, `definir_rendimentos_pf_exterior`) | Divisão 25% tributável e 75% isento (código 17). |
 | S-REGRA-AUSENTE-OUTROS | Contribuinte ausente no exterior exceto a serviço do Brasil | `calcular_condicao_residencia` | calc | P1 | implementada (`calcular_condicao_residencia`) |  |
 | S-REGRA-RESIDENTE | Contribuinte que adquiriu ou readquiriu a condição de residente | `calcular_condicao_residencia` | calc | P1 | implementada (`calcular_condicao_residencia`) |  |
-| S-REGRA-DIPLOMATICO | Rendimentos de representações diplomáticas e organismos internacionais no Brasil | `obter_ajuda` | tabelas | P2 | pendente |  |
+| S-REGRA-DIPLOMATICO | Rendimentos de representações diplomáticas e organismos internacionais no Brasil | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) |  |
 | S-REGRA-CONVERSAO | Conversão em reais de rendimentos ou pagamentos em moeda estrangeira | `converter_moeda` | tabelas | P1 | parcial (`converter_moeda`) |  |
 | S-REGRA-REND-TRAB | Rendimentos do trabalho (tributáveis) | `adicionar_rendimento_pj`, `definir_rendimentos_pf_exterior`, `transferir_excedente_isencao_65` | calc | P0 | implementada (`adicionar_rendimento_pj`, `definir_rendimentos_pf_exterior`, `transferir_excedente_isencao_65`) |  |
 | S-REGRA-ALUGUEIS | Rendimentos de aluguéis | `definir_rendimentos_pf_exterior`, `adicionar_rendimento_pj` | calc | P1 | implementada (`adicionar_rendimento_pj`, `definir_rendimentos_pf_exterior`) | Aluguel líquido e aluguel presumido de cessão gratuita. |
-| S-REGRA-AR-RESULTADO | Resultado tributável da atividade rural | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| S-REGRA-AR-RESULTADO | Resultado tributável da atividade rural | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
 | S-REGRA-RRA | Rendimentos recebidos acumuladamente (regra geral) | `adicionar_rra`, `adicionar_pagamento`, `calcular_rra` | calc | P1 | parcial (`adicionar_pagamento`, `adicionar_rra`, `calcular_rra`) |  |
 | S-REGRA-OUTROS-REND | Outros rendimentos tributáveis | `definir_rendimentos_pf_exterior` | model | P2 | implementada (`definir_rendimentos_pf_exterior`) |  |
 | S-REGRA-NAO-RESIDENTE | Caracterização da condição de residente e de não residente | `calcular_condicao_residencia` | calc | P1 | implementada (`calcular_condicao_residencia`) |  |
 | S-REGRA-OBRIG | Obrigatoriedade de apresentação da Declaração de Ajuste Anual 2026 | `verificar_obrigatoriedade` | validate | P1 | implementada (`verificar_obrigatoriedade`) |  |
-| S-REGRA-REGIME | Regime de tributação (deduções legais ou desconto simplificado) | `calcular_imposto`, `definir_opcao_tributacao` | calc | P0 | parcial (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) |  |
+| S-REGRA-REGIME | Regime de tributação (deduções legais ou desconto simplificado) | `calcular_imposto`, `definir_opcao_tributacao` | calc | P0 | implementada (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) |  |
 | S-REGRA-PREENCHIMENTO | Forma de preenchimento e pré-preenchida | `importar_pre_preenchida`, `importar_informe_rendimentos`, `importar_informe_plano_saude`, `orientar_servico_externo` | importacao | P1 | parcial (`abrir_declaracao`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
 | S-REGRA-PRAZO | Prazo e local de apresentação | `listar_pendencias`, `instruir_transmissao` | validate | P0 | implementada (`instruir_transmissao`, `validar_declaracao`) | Alerta de prazo de 29/05/2026. |
 | S-REGRA-MULTA-ATRASO | Multa por atraso na entrega (MAED) | `calcular_multa_atraso` | calc | P1 | implementada (`calcular_multa_atraso`) |  |
 | S-REGRA-RETIF | Retificação da declaração | `criar_retificadora`, `listar_pendencias` | validate | P1 | implementada (`criar_retificadora`, `validar_declaracao`) | Trava de troca de regime após o prazo. |
 | S-REGRA-APOS-PRAZO | Locais de apresentação após o prazo | `instruir_transmissao` | nenhum | P2 | implementada (`instruir_transmissao`) |  |
-| S-REGRA-EXERC-ANT | Declaração de exercícios anteriores | `obter_ajuda` | nenhum | P2 | pendente | Fora do escopo (outros exercícios usam o PGD do ano). |
+| S-REGRA-EXERC-ANT | Declaração de exercícios anteriores | `obter_ajuda` | nenhum | P2 | implementada (`obter_ajuda`) | Fora do escopo (outros exercícios usam o PGD do ano). |
 | F-INICIO | Aba Início | `listar_fichas` | model | P2 | implementada (`listar_fichas`) |  |
 | F-IDENT | Identificação do Contribuinte (visão geral) | `definir_identificacao`, `validar_documento` | model | P0 | parcial (`definir_identificacao`, `validar_documento`) |  |
 | F-IDENT-TIPO | Que Tipo de Declaração Você Deseja Fazer? | `definir_identificacao`, `validar_documento` | model | P0 | parcial (`definir_identificacao`, `validar_documento`) |  |
@@ -160,33 +160,33 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | F-ISENTO-12 | Rendimentos de caderneta de poupança, letras hipotecárias, LCA, LCI, CRA e CRI | `adicionar_rendimento_isento` | model | P0 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-13 | Rendimento de sócio ou titular de ME/EPP optante pelo Simples Nacional, exceto pró-labore, aluguéis e serviços prestados | `adicionar_rendimento_isento` | model | P1 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-14 | Transferências patrimoniais: doações e heranças | `adicionar_rendimento_isento` | model | P0 | implementada (`adicionar_rendimento_isento`) |  |
-| F-ISENTO-15 | Parcela não tributável correspondente à atividade rural | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado do Demonstrativo da Atividade Rural. |
+| F-ISENTO-15 | Parcela não tributável correspondente à atividade rural | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado do Demonstrativo da Atividade Rural. |
 | F-ISENTO-16 | Imposto de anos-calendário anteriores compensado judicialmente neste ano-calendário | `adicionar_rendimento_isento` | model | P2 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-17 | 75% dos rendimentos do trabalho assalariado recebidos em moeda estrangeira por servidores de autarquias ou repartições do Governo Brasileiro no exterior | `adicionar_rendimento_isento` | model | P2 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-18 | Incorporação de reservas ao capital / Bonificações em ações | `adicionar_rendimento_isento` | model | P2 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-19 | Transferências patrimoniais: meação e dissolução da sociedade conjugal e da unidade familiar | `adicionar_rendimento_isento` | model | P1 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-20 | Ganhos líquidos em ações no mercado à vista em bolsa, alienações até R$ 20.000,00 por mês para o conjunto de ações | `adicionar_rendimento_isento` | model | P1 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-21 | Ganhos líquidos em operações com ouro ativo financeiro, alienações até R$ 20.000,00 por mês | `adicionar_rendimento_isento` | model | P1 | implementada (`adicionar_rendimento_isento`) |  |
-| F-ISENTO-22 | Recuperação de prejuízos em renda variável (bolsa, mercadorias, futuros, FII e Fiagro) | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da Renda Variável. |
+| F-ISENTO-22 | Recuperação de prejuízos em renda variável (bolsa, mercadorias, futuros, FII e Fiagro) | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da Renda Variável. |
 | F-ISENTO-23 | Rendimento bruto, até 90%, de transporte de carga e serviços com trator, máquina de terraplenagem, colheitadeira e assemelhados | `adicionar_rendimento_isento` | model | P2 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-24 | Rendimento bruto, até 40%, de transporte de passageiros | `adicionar_rendimento_isento` | model | P2 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-25 | Restituição do imposto sobre a renda de anos-calendário anteriores | `adicionar_rendimento_isento` | model | P1 | implementada (`adicionar_rendimento_isento`) |  |
-| F-ISENTO-27 | Juros referentes aos Rendimentos Recebidos Acumuladamente | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da ficha RRA. |
+| F-ISENTO-27 | Juros referentes aos Rendimentos Recebidos Acumuladamente | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da ficha RRA. |
 | F-ISENTO-28 | Pensão Alimentícia | `adicionar_rendimento_isento` | model | P1 | implementada (`adicionar_rendimento_isento`) |  |
 | F-ISENTO-99 | Outros | `adicionar_rendimento_isento` | model | P0 | implementada (`adicionar_rendimento_isento`) |  |
 | F-EXCL | Rendimentos Sujeitos à Tributação Exclusiva/Definitiva (ficha) | `adicionar_rendimento_exclusivo`, `listar_lancamentos` | model | P0 | implementada (`adicionar_rendimento_exclusivo`, `ler_ficha`, `listar_lancamentos`) |  |
-| F-EXCL-01 | 13º salário | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado do campo 13º da ficha Rendimentos PJ. |
+| F-EXCL-01 | 13º salário | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado do campo 13º da ficha Rendimentos PJ. |
 | F-EXCL-02 | Ganhos de capital na alienação de bens e/ou direitos | `importar_gcap` | importacao | P1 | parcial (`abrir_declaracao`, `orientar_servico_externo`) | Transportado do GCAP. |
 | F-EXCL-03 | Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira | `importar_gcap` | importacao | P1 | parcial (`abrir_declaracao`, `orientar_servico_externo`) | Transportado do GCAP. |
 | F-EXCL-04 | Ganhos de capital na alienação de moeda estrangeira em espécie | `importar_gcap` | importacao | P1 | parcial (`abrir_declaracao`, `orientar_servico_externo`) | Transportado do GCAP. |
-| F-EXCL-05 | Ganhos líquidos em renda variável (bolsa, mercadorias, futuros, FII e Fiagro) | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da Renda Variável e FII/Fiagro. |
+| F-EXCL-05 | Ganhos líquidos em renda variável (bolsa, mercadorias, futuros, FII e Fiagro) | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da Renda Variável e FII/Fiagro. |
 | F-EXCL-06 | Rendimentos de aplicações financeiras | `adicionar_rendimento_exclusivo` | model | P0 | implementada (`adicionar_rendimento_exclusivo`) |  |
-| F-EXCL-07 | Rendimentos recebidos acumuladamente (titular) | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da ficha RRA (opção exclusiva). |
-| F-EXCL-08 | 13º salário recebido pelos dependentes | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado do campo 13º da ficha Rendimentos PJ. |
-| F-EXCL-09 | Rendimentos recebidos acumuladamente pelos dependentes | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da ficha RRA (opção exclusiva). |
+| F-EXCL-07 | Rendimentos recebidos acumuladamente (titular) | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da ficha RRA (opção exclusiva). |
+| F-EXCL-08 | 13º salário recebido pelos dependentes | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado do campo 13º da ficha Rendimentos PJ. |
+| F-EXCL-09 | Rendimentos recebidos acumuladamente pelos dependentes | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado da ficha RRA (opção exclusiva). |
 | F-EXCL-10 | Juros sobre capital próprio | `adicionar_rendimento_exclusivo` | model | P0 | implementada (`adicionar_rendimento_exclusivo`) |  |
 | F-EXCL-11 | Participação nos lucros ou resultados da empresa (PLR) | `adicionar_rendimento_exclusivo` | model | P0 | implementada (`adicionar_rendimento_exclusivo`) |  |
-| F-EXCL-12 | Aplicações Financeiras e Lucros e Dividendos no Exterior (Lei 14.754/2023) | `calcular_imposto`, `adicionar_bem` | calc | P1 | parcial (`adicionar_bem`, `comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado de Bens e Direitos (Lei 14.754/2023). |
+| F-EXCL-12 | Aplicações Financeiras e Lucros e Dividendos no Exterior (Lei 14.754/2023) | `calcular_imposto`, `adicionar_bem` | calc | P1 | implementada (`adicionar_bem`, `comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Transportado de Bens e Direitos (Lei 14.754/2023). |
 | F-EXCL-13 | Prêmios líquidos obtidos em loterias de apostas de quota fixa (Lei 14.790/2023) | `adicionar_rendimento_exclusivo` | model | P1 | implementada (`adicionar_rendimento_exclusivo`) |  |
 | F-EXCL-99 | Outros | `adicionar_rendimento_exclusivo` | model | P1 | implementada (`adicionar_rendimento_exclusivo`) |  |
 | F-SUSP | Rendimentos Tributáveis de PJ (Imposto com Exigibilidade Suspensa) | `adicionar_rendimento_exigibilidade_suspensa` | model | P2 | implementada (`adicionar_rendimento_exigibilidade_suspensa`) | Informativo, fora do cálculo. |
@@ -195,14 +195,14 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | F-RRA | Rendimentos Recebidos Acumuladamente (ficha) | `adicionar_rra`, `calcular_rra` | calc | P1 | parcial (`adicionar_rra`, `calcular_rra`) |  |
 | F-RRA-TIT | Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelo Titular | `adicionar_rra`, `calcular_rra` | calc | P1 | parcial (`adicionar_rra`, `calcular_rra`) |  |
 | F-RRA-DEP | Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelos Dependentes | `adicionar_rra`, `calcular_rra` | calc | P1 | parcial (`adicionar_rra`, `calcular_rra`) |  |
-| F-IMPPAGO | Imposto Pago/Retido (ficha) | `definir_imposto_pago`, `calcular_imposto` | model | P0 | parcial (`comparar_modelos`, `definir_imposto_pago`, `explicar_calculo`, `simular_imposto`) |  |
+| F-IMPPAGO | Imposto Pago/Retido (ficha) | `definir_imposto_pago`, `calcular_imposto` | model | P0 | implementada (`comparar_modelos`, `definir_imposto_pago`, `explicar_calculo`, `simular_imposto`) |  |
 | F-IMPPAGO-01 | Linha 01: Imposto Complementar | `definir_imposto_pago` | model | P1 | implementada (`definir_imposto_pago`) | Só Darf 0246. |
 | F-IMPPAGO-02 | Linha 02: Imposto pago no exterior pelo titular e pelos dependentes | `definir_imposto_pago`, `calcular_imposto`, `converter_moeda` | calc | P1 | parcial (`comparar_modelos`, `converter_moeda`, `definir_imposto_pago`, `explicar_calculo`, `simular_imposto`) | Limite de compensação exige dois cálculos. |
 | F-IMPPAGO-03 | Linha 03: Imposto sobre a renda na fonte (Lei nº 11.033/2004) | `definir_imposto_pago` | model | P2 | implementada (`definir_imposto_pago`) |  |
-| F-IMPPAGO-04 | Linha 04: Imposto retido na fonte do titular | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| F-IMPPAGO-05 | Linha 05: Imposto retido na fonte dos dependentes | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| F-IMPPAGO-06 | Linha 06: Carnê-Leão do titular | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| F-IMPPAGO-07 | Linha 07: Carnê-Leão dos dependentes | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| F-IMPPAGO-04 | Linha 04: Imposto retido na fonte do titular | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| F-IMPPAGO-05 | Linha 05: Imposto retido na fonte dos dependentes | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| F-IMPPAGO-06 | Linha 06: Carnê-Leão do titular | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| F-IMPPAGO-07 | Linha 07: Carnê-Leão dos dependentes | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
 | F-PAG | Pagamentos Efetuados (ficha) | `adicionar_pagamento`, `editar_lancamento`, `remover_lancamento` | model | P0 | implementada (`adicionar_pagamento`, `editar_lancamento`, `remover_lancamento`) |  |
 | F-PAG-INSTR | Despesas com Instrução (regras comuns aos códigos 01 e 02) | `adicionar_pagamento` | model | P0 | implementada (`adicionar_pagamento`) |  |
 | F-PAG-01 | Código 01, Despesas com instrução no Brasil | `adicionar_pagamento` | model | P0 | implementada (`adicionar_pagamento`) |  |
@@ -243,7 +243,7 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | F-PAG-99 | Código 99, Outros | `adicionar_pagamento` | model | P1 | implementada (`adicionar_pagamento`) |  |
 | F-PAG-IMPPS | Botão "Importar arquivo do plano de saúde" | `importar_informe_plano_saude` | importacao | P1 | implementada (`importar_informe_plano_saude`) |  |
 | F-DOA | Doações Efetuadas (ficha) | `adicionar_doacao` | model | P1 | implementada (`adicionar_doacao`) |  |
-| F-DOA-LIMITES | Limites das deduções de incentivo | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Limites encadeados de 6%, 7% e 1%. |
+| F-DOA-LIMITES | Limites das deduções de incentivo | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Limites encadeados de 6%, 7% e 1%. |
 | F-DOA-40 | Código 40, Doações ao Estatuto da Criança e do Adolescente | `adicionar_doacao` | model | P1 | implementada (`adicionar_doacao`) |  |
 | F-DOA-41 | Código 41, Incentivo à cultura | `adicionar_doacao` | model | P1 | implementada (`adicionar_doacao`) |  |
 | F-DOA-42 | Código 42, Incentivo à atividade audiovisual | `adicionar_doacao` | model | P1 | implementada (`adicionar_doacao`) |  |
@@ -271,8 +271,8 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | F-BENS-G07 | Grupo 07, Fundos | `adicionar_bem`, `consultar_tabela` | model | P0 | implementada (`adicionar_bem`, `buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
 | F-BENS-G08 | Grupo 08, Criptoativos | `adicionar_bem`, `consultar_tabela` | model | P0 | implementada (`adicionar_bem`, `buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
 | F-BENS-G99 | Grupo 99, Outros bens e direitos | `adicionar_bem`, `consultar_tabela` | model | P0 | implementada (`adicionar_bem`, `buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
-| F-BENS-COMUNS | Situações individuais: bens comuns, condomínio e tipos de declaração | `listar_pendencias`, `obter_ajuda` | validate | P1 | parcial (`validar_declaracao`) |  |
-| F-BENS-DATAAQ | Informações dos bens conforme a data de aquisição | `aplicar_caso_especial_bem`, `atualizar_custo_bem` | calc | P1 | parcial (`aplicar_caso_especial_bem`) |  |
+| F-BENS-COMUNS | Situações individuais: bens comuns, condomínio e tipos de declaração | `listar_pendencias`, `obter_ajuda` | validate | P1 | implementada (`obter_ajuda`, `validar_declaracao`) |  |
+| F-BENS-DATAAQ | Informações dos bens conforme a data de aquisição | `aplicar_caso_especial_bem`, `atualizar_custo_bem` | calc | P1 | implementada (`aplicar_caso_especial_bem`, `atualizar_custo_bem`) |  |
 | F-BENS-DFE | Bens e Direitos na Declaração Final de Espólio | `adicionar_bem`, `definir_partilha_bem` | model | P1 | implementada (`adicionar_bem`, `definir_partilha_bem`) |  |
 | F-BENS-DSDP | Bens e Direitos na Declaração de Saída Definitiva | `adicionar_bem`, `repetir_valores_bens`, `converter_moeda` | model | P1 | parcial (`adicionar_bem`, `converter_moeda`, `repetir_valores_bens`) |  |
 | F-BENS-ALIEN-DFE | Bens e direitos alienados no ano (Final de Espólio) | `adicionar_bem` | model | P2 | implementada (`adicionar_bem`) | Divergência do texto da Ajuda registrada. |
@@ -302,10 +302,10 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | F-SAIDA-GERAL | Declaração de Saída Definitiva do País: obrigações | `criar_declaracao`, `definir_saida_definitiva` | model | P1 | implementada (`criar_declaracao`, `definir_saida_definitiva`) |  |
 | F-SAIDA-IDENT | Ficha Identificação do Contribuinte na Saída Definitiva | `definir_identificacao` | model | P1 | implementada (`definir_identificacao`) |  |
 | F-SAIDA | Ficha Saída | `definir_saida_definitiva` | model | P1 | implementada (`definir_saida_definitiva`) |  |
-| F-SAIDA-DEDUCOES | Deduções na Saída Definitiva | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Soma das tabelas mensais do período. |
+| F-SAIDA-DEDUCOES | Deduções na Saída Definitiva | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Soma das tabelas mensais do período. |
 | F-SAIDA-DIVIDAS | Dívidas e Ônus Reais na Saída Definitiva | `adicionar_divida` | model | P1 | implementada (`adicionar_divida`) |  |
-| F-SAIDA-CALC | Cálculo do imposto na Saída Definitiva | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Soma das tabelas mensais do período. |
-| F-SAIDA-IMPEXT | Compensação do imposto pago no exterior na Saída Definitiva | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Soma das tabelas mensais do período. |
+| F-SAIDA-CALC | Cálculo do imposto na Saída Definitiva | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Soma das tabelas mensais do período. |
+| F-SAIDA-IMPEXT | Compensação do imposto pago no exterior na Saída Definitiva | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Soma das tabelas mensais do período. |
 | F-SAIDA-PAGTO | Pagamento, restituição e disposições finais da Saída Definitiva | `simular_quotas`, `calcular_acrescimos_moratorios` | calc | P1 | implementada (`calcular_acrescimos_moratorios`, `calcular_quotas`) | Quota única. |
 | F-SAIDA-DARF | Darf da Saída Definitiva | `gerar_darf` | calc | P1 | implementada (`gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc. Alternativa: `gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial. |
 | F-SAIDA-MULTA | Multa por atraso na entrega da Saída Definitiva | `calcular_multa_atraso` | calc | P1 | implementada (`calcular_multa_atraso`) |  |
@@ -320,38 +320,38 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | F-DFE-FICHA | Ficha Espólio | `definir_espolio` | model | P1 | implementada (`definir_espolio`) |  |
 | F-DFE-HERDEIROS | Ficha Herdeiros/Meeiro | `adicionar_herdeiro` | model | P1 | implementada (`adicionar_herdeiro`) |  |
 | F-DFE-DIVIDAS | Ficha Dívidas e Ônus Reais (Final de Espólio) | `adicionar_divida` | model | P1 | implementada (`adicionar_divida`) |  |
-| F-DFE-CALCULO | Resumo da Declaração - Cálculo do imposto devido (Final de Espólio) | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Tabela mensal x meses até a decisão. |
+| F-DFE-CALCULO | Resumo da Declaração - Cálculo do imposto devido (Final de Espólio) | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Tabela mensal x meses até a decisão. |
 | F-DFE-PRAZO | Observações finais: prazo, multa, pagamento, restituição | `listar_pendencias`, `calcular_multa_atraso` | validate | P1 | implementada (`calcular_multa_atraso`, `validar_declaracao`) | Prazo calculado localmente (o PGD consulta serviço). |
 | F-DFE-DARF | Preenchimento do Darf (Final de Espólio) | `gerar_darf` | calc | P1 | implementada (`gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc. Alternativa: `gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial. |
 | F-DFE-PAGTO | Pagamento do Imposto (Final de Espólio) | `simular_quotas` | calc | P1 | implementada (`calcular_quotas`) | Quota única. |
-| F-RESUMO-TRIB | Resumo, Rendimentos Tributáveis (modelo completo) | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
-| F-RESUMO-DED | Resumo, Deduções (modelo completo) | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
-| F-RESUMO-CALC | Resumo, Cálculo do Imposto (deduções legais) | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| F-RESUMO-TRIB | Resumo, Rendimentos Tributáveis (modelo completo) | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| F-RESUMO-DED | Resumo, Deduções (modelo completo) | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| F-RESUMO-CALC | Resumo, Cálculo do Imposto (deduções legais) | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
 | F-RESUMO-QUOTAS | Resumo, Imposto a pagar: formas de pagamento, quotas e débito automático | `definir_informacoes_bancarias`, `simular_quotas` | calc | P0 | implementada (`calcular_quotas`, `definir_informacoes_bancarias`) |  |
 | F-RESUMO-BANCO | Resumo, Informações Bancárias (restituição e débito) | `definir_informacoes_bancarias`, `validar_documento` | validate | P0 | parcial (`definir_informacoes_bancarias`, `validar_documento`) | DV por banco (bancos_calculo_dv) e Pix pela chave CPF. |
-| F-RESUMO-SIMPL | Resumo, Cálculo do Imposto (Desconto Simplificado) | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
-| F-RESUMO-EVOL | Resumo, Outras Informações: Evolução patrimonial | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
-| F-RESUMO-OUTRAS | Resumo, Outras Informações: demais linhas | `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
-| F-RESUMO-OPCAO | Opção pela Tributação (Ajuste Anual) | `definir_opcao_tributacao`, `calcular_imposto` | calc | P0 | parcial (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) |  |
-| D-AR-GERAL | Demonstrativo da Atividade Rural (visão geral e regras de período) | `listar_fichas`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `listar_fichas`, `simular_imposto`) |  |
+| F-RESUMO-SIMPL | Resumo, Cálculo do Imposto (Desconto Simplificado) | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| F-RESUMO-EVOL | Resumo, Outras Informações: Evolução patrimonial | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| F-RESUMO-OUTRAS | Resumo, Outras Informações: demais linhas | `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) |  |
+| F-RESUMO-OPCAO | Opção pela Tributação (Ajuste Anual) | `definir_opcao_tributacao`, `calcular_imposto` | calc | P0 | implementada (`comparar_modelos`, `definir_opcao_tributacao`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-GERAL | Demonstrativo da Atividade Rural (visão geral e regras de período) | `listar_fichas`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `listar_fichas`, `simular_imposto`) |  |
 | D-AR-OBRIG | Obrigatoriedade de Preenchimento do Demonstrativo | `verificar_obrigatoriedade` | validate | P1 | implementada (`verificar_obrigatoriedade`) |  |
-| D-AR-OQUE | O Que deve ser Declarado (atividade rural) | `obter_ajuda` | tabelas | P2 | pendente |  |
+| D-AR-OQUE | O Que deve ser Declarado (atividade rural) | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) |  |
 | D-AR-IMOVEL | Dados do Imóvel Explorado (abas Brasil e Exterior) | `adicionar_imovel_rural` | model | P1 | implementada (`adicionar_imovel_rural`) |  |
 | D-AR-RD-BRASIL | Receitas e Despesas - Brasil | `definir_receitas_despesas_rurais` | model | P1 | implementada (`definir_receitas_despesas_rurais`) |  |
 | D-AR-RD-EXTERIOR | Receitas e Despesas - Exterior | `definir_receitas_despesas_rurais` | model | P1 | implementada (`definir_receitas_despesas_rurais`) |  |
-| D-AR-APUR | Apuração do Resultado (considerações gerais) | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
-| D-AR-APUR-L01 | Saldo de prejuízo(s) a compensar de exercício(s) anterior(es) | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
-| D-AR-APUR-L02 | Receita bruta total | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L03 | Despesa de custeio e investimento total | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L04 | Resultado (Brasil) / Resultado total US$ e Resultado total R$ (Exterior) | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L05 | Limite de 20% sobre a receita bruta total | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L06 | Opção pela forma de apuração do resultado tributável | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
-| D-AR-APUR-L07 | Compensação de prejuízo(s) de exercício(s) anterior(es) | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
-| D-AR-APUR-L08 | Resultado tributável | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L09 | Saldo de prejuízo(s) a compensar | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L10 | Apuração do resultado não tributável | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-AR-APUR-L11 | Adiantamento(s) recebido(s) em 2025 por conta de venda para entrega futura | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
-| D-AR-APUR-L12 | Adiantamento(s) recebido(s) até 2024 a ser(em) informado(s) como receita(s) de produto(s) entregue(s) em 2025 | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-APUR | Apuração do Resultado (considerações gerais) | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-APUR-L01 | Saldo de prejuízo(s) a compensar de exercício(s) anterior(es) | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-APUR-L02 | Receita bruta total | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L03 | Despesa de custeio e investimento total | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L04 | Resultado (Brasil) / Resultado total US$ e Resultado total R$ (Exterior) | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L05 | Limite de 20% sobre a receita bruta total | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L06 | Opção pela forma de apuração do resultado tributável | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-APUR-L07 | Compensação de prejuízo(s) de exercício(s) anterior(es) | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-APUR-L08 | Resultado tributável | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L09 | Saldo de prejuízo(s) a compensar | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L10 | Apuração do resultado não tributável | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-AR-APUR-L11 | Adiantamento(s) recebido(s) em 2025 por conta de venda para entrega futura | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
+| D-AR-APUR-L12 | Adiantamento(s) recebido(s) até 2024 a ser(em) informado(s) como receita(s) de produto(s) entregue(s) em 2025 | `definir_apuracao_rural`, `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `definir_apuracao_rural`, `explicar_calculo`, `simular_imposto`) |  |
 | D-AR-REBANHO | Movimentação do Rebanho (abas Brasil e Exterior) | `definir_rebanho` | model | P1 | implementada (`definir_rebanho`) |  |
 | D-AR-BENS | Bens da Atividade Rural | `adicionar_bem_rural`, `repetir_valores_bens` | model | P1 | implementada (`adicionar_bem_rural`, `repetir_valores_bens`) |  |
 | D-AR-DIVIDAS | Dívidas Vinculadas à Atividade Rural (abas Brasil e Exterior) | `adicionar_divida_rural` | model | P1 | implementada (`adicionar_divida_rural`) |  |
@@ -364,33 +364,33 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | D-RV-GERAL | Renda Variável - Operações Comuns e Day-Trade (considerações gerais) | `definir_renda_variavel` | model | P1 | implementada (`definir_renda_variavel`) |  |
 | D-RV-PROC | Procedimentos para Apuração dos Ganhos Líquidos ou Perdas | `calcular_preco_medio` | calc | P2 | implementada (`apurar_renda_variavel`, `calcular_preco_medio`) |  |
 | D-RV-TIPOS | Tipos de Mercado ou Ativo / Ganhos Líquidos ou Perdas (linhas de entrada) | `definir_renda_variavel` | model | P1 | implementada (`definir_renda_variavel`) |  |
-| D-RV-L01 | RESULTADO LÍQUIDO DO MÊS | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L01 | RESULTADO LÍQUIDO DO MÊS | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
 | D-RV-L02 | Resultado negativo até o mês anterior | `definir_renda_variavel` | model | P1 | implementada (`definir_renda_variavel`) |  |
-| D-RV-L03 | BASE DE CÁLCULO DO IMPOSTO | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-RV-L04 | Prejuízo a compensar | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-RV-L05 | Alíquota do imposto / IMPOSTO DEVIDO | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-RV-L06 | Total do imposto devido | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L03 | BASE DE CÁLCULO DO IMPOSTO | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L04 | Prejuízo a compensar | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L05 | Alíquota do imposto / IMPOSTO DEVIDO | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L06 | Total do imposto devido | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
 | D-RV-L07 | IR fonte de Day-Trade no mês | `definir_renda_variavel` | model | P1 | implementada (`definir_renda_variavel`) |  |
-| D-RV-L08 | IR fonte de Day-Trade nos meses anteriores | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-RV-L09 | IR fonte de Day-Trade a compensar | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L08 | IR fonte de Day-Trade nos meses anteriores | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-RV-L09 | IR fonte de Day-Trade a compensar | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
 | D-RV-L10 | IR fonte (Lei nº 11.033/2004) no mês / nos meses anteriores / a compensar | `definir_renda_variavel` | model | P1 | implementada (`definir_renda_variavel`) |  |
-| D-RV-L11 | Imposto a pagar | `calcular_imposto`, `gerar_darf` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `gerar_darf`, `simular_imposto`) | Darf 6015 com acréscimos. |
+| D-RV-L11 | Imposto a pagar | `calcular_imposto`, `gerar_darf` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `gerar_darf`, `simular_imposto`) | Darf 6015 com acréscimos. |
 | D-RV-L12 | Imposto Pago | `definir_renda_variavel` | model | P1 | implementada (`definir_renda_variavel`) |  |
 | D-FII-GERAL | Operações em FII ou Fiagro (conceito e considerações gerais) | `definir_fii_fiagro` | model | P1 | implementada (`definir_fii_fiagro`) |  |
-| D-FII-DISTRIB | Distribuição dos Lucros / Rendimentos e Ganhos Auferidos e Distribuídos | `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo` | tabelas | P2 | parcial (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`) |  |
-| D-FII-ALIEN | Alienação ou Resgate de Quotas | `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo` | tabelas | P2 | parcial (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`) |  |
-| D-FII-ISENCAO | Isenção dos rendimentos distribuídos | `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo` | tabelas | P2 | parcial (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`) |  |
+| D-FII-DISTRIB | Distribuição dos Lucros / Rendimentos e Ganhos Auferidos e Distribuídos | `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo` | tabelas | P2 | implementada (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`, `obter_ajuda`) |  |
+| D-FII-ALIEN | Alienação ou Resgate de Quotas | `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo` | tabelas | P2 | implementada (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`, `obter_ajuda`) |  |
+| D-FII-ISENCAO | Isenção dos rendimentos distribuídos | `obter_ajuda`, `adicionar_rendimento_isento`, `adicionar_rendimento_exclusivo` | tabelas | P2 | implementada (`adicionar_rendimento_exclusivo`, `adicionar_rendimento_isento`, `obter_ajuda`) |  |
 | D-FII-PROC | Procedimentos para Apuração (FII/Fiagro) | `calcular_preco_medio` | calc | P2 | implementada (`apurar_renda_variavel`, `calcular_preco_medio`) |  |
 | D-FII-L01 | Ganhos Líquidos ou Perdas / Resultado líquido do mês | `definir_fii_fiagro` | model | P1 | implementada (`definir_fii_fiagro`) |  |
 | D-FII-L02 | Resultado negativo até o mês anterior | `definir_fii_fiagro` | model | P1 | implementada (`definir_fii_fiagro`) |  |
-| D-FII-L03 | Base de cálculo do imposto | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-FII-L04 | Prejuízo a compensar | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
-| D-FII-L05 | Alíquota do imposto / Imposto devido | `calcular_imposto` | calc | P1 | parcial (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-FII-L03 | Base de cálculo do imposto | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-FII-L04 | Prejuízo a compensar | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
+| D-FII-L05 | Alíquota do imposto / Imposto devido | `calcular_imposto` | calc | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `simular_imposto`) | Linha calculada. |
 | D-FII-L06 | Imposto pago | `definir_fii_fiagro` | model | P1 | implementada (`definir_fii_fiagro`) |  |
 | D-CL-GERAL | Escrituração do Carnê-Leão importada (titular e dependentes) | `importar_carne_leao`, `definir_rendimentos_pf_exterior` | importacao | P1 | parcial (`definir_rendimentos_pf_exterior`, `orientar_servico_externo`) |  |
 | D-CL-PROGRAMA | Programa Carnê-Leão (e-CAC) | `orientar_servico_externo`, `calcular_carne_leao` | calc | P2 | implementada (`calcular_carne_leao`, `orientar_servico_externo`) | O Carnê-Leão é serviço do e-CAC. |
 | S-PAG-DARF | Preenchimento do Darf do IRPF | `gerar_darf` | calc | P0 | implementada (`gerar_darf`) | IMPOSSÍVEL fora do PGD: o Darf oficial (número do documento e código de barras) é emitido pelo PGD, pelo serviço da RFB ou pelo Sicalc. Alternativa: `gerar_darf` calcula principal, multa, juros, código e vencimento e instrui a emissão oficial. |
-| S-PAG-FORMAS | Formas de pagamento do imposto | `obter_ajuda` | tabelas | P1 | pendente |  |
+| S-PAG-FORMAS | Formas de pagamento do imposto | `obter_ajuda` | tabelas | P1 | implementada (`obter_ajuda`) |  |
 | S-PAG-DEBITO | Débito automático das quotas | `definir_informacoes_bancarias`, `simular_quotas` | validate | P0 | implementada (`calcular_quotas`, `definir_informacoes_bancarias`) | Alteração posterior do débito automático só no e-CAC (`orientar_servico_externo`). |
 | S-PAG-PARCEL | Parcelamento do imposto | `simular_quotas` | calc | P0 | implementada (`calcular_quotas`) | Selic futura informada pelo usuário ou consultada. |
 | S-PAG-QUOTAS-PRAZO | Valor das quotas pagas dentro do prazo | `simular_quotas` | calc | P0 | implementada (`calcular_quotas`) | Selic futura informada pelo usuário ou consultada. |
@@ -401,9 +401,9 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | S-PROBLEMAS-IMPRESSAO | Problemas na Impressão (orientação) | não se aplica | nenhum | P2 | não se aplica | O AutoIR gera PDF/HTML. |
 | S-SALVAMENTO | Salvamento automático | todas as ferramentas que escrevem em disco | model | P0 | implementada (gravação atômica com cópia de segurança em toda ferramenta de escrita) | Gravação atômica a cada chamada. |
 | S-UMA-ABERTA | Uma declaração aberta por vez e base local | `listar_declaracoes` | model | P2 | parcial (`listar_arquivos`) | Restrição não replicada. |
-| S-GRAVAR-ENTREGA | Gravação da declaração para entrega (arquivo .DEC) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) | Nome padrão CPF-IRPF-A-2026-2025-ORIGI.DEC (a confirmar). |
+| S-GRAVAR-ENTREGA | Gravação da declaração para entrega (arquivo .DEC) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) | Nome padrão CPF-IRPF-A-2026-2025-ORIGI.DEC (a confirmar). |
 | S-TRANSMISSAO | Transmissão (Receitanet incorporado) | `instruir_transmissao` | dbk | P0 | implementada (`instruir_transmissao`) | IMPOSSÍVEL fora do PGD: a transmissão usa o Receitanet incorporado, com protocolo, hash, envelope e certificado da RFB, que não podem ser reimplementados nem copiados. Alternativa: `gerar_dbk` grava o arquivo e `instruir_transmissao` orienta abrir no PGD 2026, verificar pendências e entregar; depois `registrar_recibo`. |
-| S-RECIBO | Recibo de entrega e número do recibo | `registrar_recibo`, `validar_documento` | importacao | P1 | parcial (`validar_documento`) | IMPOSSÍVEL fora do PGD: o recibo é produzido pela RFB na recepção. Alternativa: imprimir no PGD e informar o número com `registrar_recibo`. |
+| S-RECIBO | Recibo de entrega e número do recibo | `registrar_recibo`, `validar_documento` | importacao | P1 | parcial (`criar_retificadora`, `registrar_recibo`, `validar_documento`) | IMPOSSÍVEL fora do PGD: o recibo é produzido pela RFB na recepção. Alternativa: imprimir no PGD e informar o número com `registrar_recibo`. |
 | S-NOTIFICACAO-MAED | Notificação de lançamento da multa por atraso emitida pelo PGD | `calcular_multa_atraso` | calc | P2 | implementada (`calcular_multa_atraso`) | Notificação oficial só existe após a entrega. |
 | S-VALIDADOR | Dados do validador e mensagens pós-recepção | não se aplica | nenhum | P2 | não se aplica | Produzido pela RFB na recepção. |
 | S-CALAMIDADE | Contribuintes de municípios em calamidade (RS 2024) | `listar_pendencias`, `consultar_tabela` | validate | P2 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`, `validar_declaracao`) | Regra inferida; confirmar. |
@@ -414,24 +414,24 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | S-NUVEM-MUNICIPIOS | Atualização da tabela de municípios | `consultar_tabela`, `verificar_versao_tabelas` | tabelas | P2 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`, `verificar_versao_tabelas`) | Tabela local versionada. |
 | S-NUVEM-VENC-DFE | Data de vencimento da Declaração Final de Espólio | `listar_pendencias` | validate | P1 | implementada (`validar_declaracao`) | Cálculo local pelas regras de prazo da DFE. |
 | S-NUVEM-CAPTCHA-TOKEN | Captcha, token de acesso e certificado digital | não se aplica | nenhum | P2 | não se aplica | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o AutoIR é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o AutoIR importa o arquivo trazido pelo usuário. |
-| S-ARQ-GERAL | Estrutura do arquivo de declaração | `gerar_dbk`, `importar_declaracao_anterior` | dbk | P0 | parcial (`converter_dbk_para_modelo`, `converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-IDENT | Registro 16 (identificação do contribuinte) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-TOTAIS | Registros 17, 18, 19 e 20 (totais, modelo, imposto pago e resumo) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-RENDIMENTOS | Registros 21, 32, 22, 49, 80, 81 (rendimentos PJ, PF/Exterior e exigibilidade suspensa) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-ISENTOS-EXCL | Registros 23, 24, 31, 33, 82 e 83 a 99 (isentos, exclusivos e detalhes) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-PESSOAS | Registros 25, 35, 29 (dependentes, alimentandos, cônjuge) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-PAGAMENTOS-DOACOES | Registros 26, 34, 46, 48, 90, 91, 92 | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-BENS-DIVIDAS | Registros 27, 36, 37, 28 | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-ESPOLIO-SAIDA | Registros 30, 38, 58, 59, 39 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-RRA | Registros 45 e 47 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-RV | Registros 40, 41, 42, 43 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-AR | Registros 50 a 57 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`) |  |
-| S-ARQ-REG-GCAP | Registros 60 a 78 | `importar_gcap`, `gerar_dbk` | dbk | P1 | parcial (`abrir_declaracao`, `converter_modelo_para_dbk`, `orientar_servico_externo`, `verificar_integridade_arquivo`) | Registros importados preservados sem recálculo. |
-| S-ARQ-REG-RECIBO | Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC | `registrar_recibo` | importacao | P2 | pendente | Somente leitura; nunca gerado pelo AutoIR. |
+| S-ARQ-GERAL | Estrutura do arquivo de declaração | `gerar_dbk`, `importar_declaracao_anterior` | dbk | P0 | parcial (`converter_dbk_para_modelo`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-IDENT | Registro 16 (identificação do contribuinte) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-TOTAIS | Registros 17, 18, 19 e 20 (totais, modelo, imposto pago e resumo) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-RENDIMENTOS | Registros 21, 32, 22, 49, 80, 81 (rendimentos PJ, PF/Exterior e exigibilidade suspensa) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-ISENTOS-EXCL | Registros 23, 24, 31, 33, 82 e 83 a 99 (isentos, exclusivos e detalhes) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-PESSOAS | Registros 25, 35, 29 (dependentes, alimentandos, cônjuge) | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-PAGAMENTOS-DOACOES | Registros 26, 34, 46, 48, 90, 91, 92 | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-BENS-DIVIDAS | Registros 27, 36, 37, 28 | `gerar_dbk` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-ESPOLIO-SAIDA | Registros 30, 38, 58, 59, 39 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-RRA | Registros 45 e 47 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-RV | Registros 40, 41, 42, 43 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-AR | Registros 50 a 57 | `gerar_dbk` | dbk | P1 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) |  |
+| S-ARQ-REG-GCAP | Registros 60 a 78 | `importar_gcap`, `gerar_dbk` | dbk | P1 | parcial (`abrir_declaracao`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `orientar_servico_externo`, `verificar_integridade_arquivo`) | Registros importados preservados sem recálculo. |
+| S-ARQ-REG-RECIBO | Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC | `registrar_recibo` | importacao | P2 | implementada (`criar_retificadora`, `registrar_recibo`) | Somente leitura; nunca gerado pelo AutoIR. |
 | S-ARQ-INFORMES | Arquivos de informe (XML) e mapeamentos de importação | `importar_informe_rendimentos`, `importar_informe_plano_saude`, `importar_gcap` | importacao | P1 | parcial (`abrir_declaracao`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `orientar_servico_externo`) |  |
 | S-TAB-PROGRESSIVA | Tabela Progressiva Anual e Mensal (ano-calendário 2025) | `consultar_tabela` | tabelas | P0 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
 | S-TAB-DOLAR | Tabela de Conversão para Reais do Dólar dos EUA em 2025 | `converter_moeda`, `consultar_tabela` | tabelas | P1 | parcial (`buscar_codigo`, `consultar_parametros`, `converter_moeda`, `listar_tabela`) | Tabela ainda não exportada em JSON (lacuna). |
-| S-TAB-ATUALIZACAO | Tabela de Atualização do Custo de Bens e Direitos | `atualizar_custo_bem` | tabelas | P2 | pendente | Tabela ainda não exportada em JSON (lacuna). |
+| S-TAB-ATUALIZACAO | Tabela de Atualização do Custo de Bens e Direitos | `atualizar_custo_bem` | tabelas | P2 | implementada (`atualizar_custo_bem`) | Tabela ainda não exportada em JSON (lacuna). |
 | S-TAB-DEPENDENCIA | Tabela de Relação de Dependência | `consultar_tabela` | tabelas | P0 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
 | S-TAB-BENS | Tabela de Códigos de Bens e Direitos | `consultar_tabela` | tabelas | P0 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
 | S-TAB-PAGAMENTOS | Tabela de Códigos de Pagamentos | `consultar_tabela` | tabelas | P0 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
@@ -443,9 +443,9 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 
 | Status | P0 | P1 | P2 | Total |
 |---|---:|---:|---:|---:|
-| implementada | 80 | 128 | 38 | 246 |
-| parcial | 35 | 97 | 13 | 145 |
-| pendente | 0 | 1 | 12 | 13 |
+| implementada | 96 | 179 | 53 | 328 |
+| parcial | 19 | 47 | 10 | 76 |
+| pendente | 0 | 0 | 0 | 0 |
 | não se aplica | 0 | 0 | 12 | 12 |
 
 ## Ferramentas MCP propostas (lista consolidada e deduplicada)
@@ -461,7 +461,7 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 | `abrir_declaracao` | Carrega uma declaração e devolve visão geral: tipo, fichas preenchidas, totais e pendências resumidas. | id_declaracao \| cpf + exercicio | não | model | 3 | implementada (`abrir_declaracao`): lê DBK/DEC da pasta autorizada e resume |
 | `excluir_declaracao` | Exclui uma ou mais declarações locais após confirmação explícita. | ids, confirmar | sim | model | 2 | implementada (`excluir_declaracao`): exige confirmação com o nome do arquivo e guarda cópia de segurança |
 | `criar_retificadora` | Cria a retificadora a partir de uma declaração do exercício, exigindo o número do recibo da anterior e aplicando as travas de prazo (troca de regime, bens de espólio, débito automático). | id_origem, numero_recibo | sim | model | 4 | implementada (`criar_retificadora`): a partir de DBK ou DEC, com o número do recibo |
-| `registrar_recibo` | Registra o recibo de entrega informado pelo usuário (número de 12 dígitos ou arquivo do recibo gerado pelo PGD) e marca a declaração como transmitida. | id_declaracao, numero_recibo? \| arquivo_recibo? | sim | importacao | 4 | pendente |
+| `registrar_recibo` | Registra o recibo de entrega informado pelo usuário (número de 12 dígitos ou arquivo do recibo gerado pelo PGD) e marca a declaração como transmitida. | id_declaracao, numero_recibo? \| arquivo_recibo? | sim | importacao | 4 | implementada (`registrar_recibo`, `criar_retificadora`): guarda o número informado pelo usuário em <declaração>.recibo.json; a retificadora o reaproveita |
 | `gravar_copia_seguranca` | Grava cópia de segurança (dados atuais, cópia para entrega ou transmitida com recibo) no formato do AutoIR. | ids, tipo (dados_atuais\|entrega\|transmitida_com_recibo), destino | sim | model | 3 | implementada (`gravar_copia_seguranca`) |
 | `restaurar_copia_seguranca` | Restaura cópia de segurança do AutoIR, avisando se substitui declaração existente do mesmo CPF. | arquivo, sobrescrever? | sim | model | 3 | implementada (`restaurar_copia_seguranca`, `listar_copias_seguranca`) |
 | `listar_fichas` | Lista as fichas e demonstrativos aplicáveis ao tipo da declaração, com estado de preenchimento e sugestões (equivale à aba Início e ao menu Fichas). | id_declaracao | não | model | 3 | implementada (`listar_fichas`) |
@@ -523,13 +523,13 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 | `importar_carne_leao` | Importa o demonstrativo do Carnê-Leão 2025 obtido pelo usuário para a ficha PF/Exterior do titular ou dependente, respeitando as regras de não sobrescrita. | id_declaracao, arquivo, cpf_beneficiario? | sim | importacao | 4 | parcial (`definir_rendimentos_pf_exterior`, `orientar_servico_externo`): serviço online: só orientação com `orientar_servico_externo`; o AutoIR não acessa a rede; os totais mensais são informados na ficha |
 | `importar_gcap` | Importa o arquivo exportado pelo GCAP 2025, substituindo os dados do mesmo CPF e transportando valores para Isentos, Exclusivos e Resumo. | id_declaracao, arquivo | sim | importacao | 15 | parcial (`abrir_declaracao`, `orientar_servico_externo`): o DBK com o GCAP importado no programa é preservado; sem leitura do arquivo do GCAP |
 | `importar_livro_caixa_rural` | Importa o arquivo exportado pelo Livro Caixa da Atividade Rural 2025 para Receitas e Despesas e Apuração. | id_declaracao, arquivo | sim | importacao | 3 | parcial (`definir_receitas_despesas_rurais`, `orientar_servico_externo`): totais mensais informados na ficha; sem leitura do arquivo do LCAR |
-| `ler_informe` | Apresenta de forma legível um informe XML (rendimentos ou plano de saúde) sem importá-lo. | arquivo | não | importacao | 2 | pendente |
+| `ler_informe` | Apresenta de forma legível um informe XML (rendimentos ou plano de saúde) sem importá-lo. | arquivo | não | importacao | 2 | implementada (`ler_informe`): texto colado ou .txt da pasta, regras fixas por rótulo; sem XML, PDF ou OCR |
 
 ### Cálculo, validação e tabelas
 
 | Ferramenta | Descrição | Parâmetros principais | Escreve em disco | Módulo | Itens | Status |
 |---|---|---|---|---|---:|---|
-| `calcular_imposto` | Calcula o Resumo (rendimentos, deduções, base, imposto devido, incentivos, RRA, Lei 14.754, imposto pago, saldo) nos dois modelos, recomenda o melhor e explica a procedência de cada linha. | id_declaracao, modelo (completo\|simplificado\|ambos), detalhar? | não | calc | 59 | parcial (`simular_imposto`, `comparar_modelos`, `explicar_calculo`): cálculo dos dois modelos e memória; RRA, atividade rural, Lei 14.754 e incentivos a conferir contra o golden |
+| `calcular_imposto` | Calcula o Resumo (rendimentos, deduções, base, imposto devido, incentivos, RRA, Lei 14.754, imposto pago, saldo) nos dois modelos, recomenda o melhor e explica a procedência de cada linha. | id_declaracao, modelo (completo\|simplificado\|ambos), detalhar? | não | calc | 59 | implementada (`simular_imposto`, `comparar_modelos`, `explicar_calculo`): dois modelos e memória de cálculo; 48 de 48 casos golden ao centavo, inclusive atividade rural no Brasil; RRA pela opção do ajuste e Lei 14.754 ficam com os valores do arquivo |
 | `listar_pendencias` | Executa as validações e devolve erros (impedem a entrega) e avisos, com ficha, campo, item e mensagem. | id_declaracao, severidade? | não | validate | 20 | implementada (`validar_declaracao`): catálogo de regras a ampliar para todas as fichas |
 | `verificar_obrigatoriedade` | Avalia os 12 critérios de obrigatoriedade e as dispensas a partir da declaração ou de respostas do usuário. | id_declaracao? \| respostas? | não | validate | 3 | implementada (`verificar_obrigatoriedade`): critérios de 2026 a partir das respostas do usuário |
 | `simular_quotas` | Calcula número máximo de quotas, valor de cada quota, vencimentos e elegibilidade ao débito automático pela data prevista de entrega. | saldo_a_pagar, numero_quotas?, data_entrega?, tipo_declaracao? | não | calc | 8 | implementada (`calcular_quotas`): falta elegibilidade do débito automático pela data de entrega |
@@ -539,14 +539,14 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 | `calcular_rra` | Simula o imposto de RRA pela tabela acumulada (exclusiva) e compara com a opção pelo ajuste. | rendimentos, numero_meses, mes_recebimento, previdencia, pensao, irrf, parcelas? | não | calc | 4 | parcial (`calcular_rra`): simulador; a ficha RRA é preenchida com `adicionar_rra` |
 | `transferir_excedente_isencao_65` | Aplica o limite da parcela isenta de 65 anos (R$ 1.903,98 por mês) somando as fontes e transfere o excedente para Rendimentos PJ, como a pergunta do PGD. | id_declaracao, beneficiario? | sim | calc | 2 | implementada (`transferir_excedente_isencao_65`) |
 | `converter_moeda` | Converte valores pela tabela oficial do dólar de 2025 (compra para rendimentos e imposto, venda para deduções) ou por cotação informada para outras regras. | valor, moeda, data_ou_mes, finalidade (rendimento\|deducao\|bem\|aplicacao), cotacao? | não | tabelas | 19 | parcial (`converter_moeda`): só com cotação informada pelo usuário (sem download de cotações) |
-| `atualizar_custo_bem` | Atualiza custo de bem adquirido até 1995 pela Tabela de Atualização do Custo de Bens e Direitos. | valor_original, moeda_epoca, mes, ano | não | tabelas | 2 | pendente |
+| `atualizar_custo_bem` | Atualiza custo de bem adquirido até 1995 pela Tabela de Atualização do Custo de Bens e Direitos. | valor_original, moeda_epoca, mes, ano | não | tabelas | 2 | implementada (`atualizar_custo_bem`): UFIR de 1º/1/1996, coeficiente informado e Lei 14.973/2024, com os valores do usuário |
 | `calcular_condicao_residencia` | Determina datas de aquisição de residência ou de não residência a partir de entradas, saídas, vistos e vínculos. | eventos[], visto?, vinculo_empregaticio? | não | calc | 3 | implementada (`calcular_condicao_residencia`) |
 | `calcular_ganho_capital` | Simulador próprio de ganho de capital (imóvel, móvel, participação, moeda em espécie) com isenções e reduções, apenas para orientação; não substitui o GCAP oficial. | tipo, dados_alienacao, dados_aquisicao, perguntas_isencao | não | calc | 5 | parcial (`calcular_ganho_capital`): simulador de orientação; o demonstrativo oficial é o GCAP |
 | `calcular_preco_medio` | Calcula custo médio ponderado e ganho por operação a partir de notas de corretagem (ações, ouro, opções, termo, futuro, FII) para preencher a Renda Variável. | operacoes[] | não | calc | 2 | implementada (`calcular_preco_medio`, `apurar_renda_variavel`) |
 | `calcular_carne_leao` | Simula o Carnê-Leão mensal pela tabela mensal vigente no mês. | mes, rendimentos, deducoes | não | calc | 1 | implementada (`calcular_carne_leao`): tabelas mensais de 2025 |
 | `validar_documento` | Valida CPF, CNPJ, NIT/PIS, número de recibo, CEP, nome, data e conta bancária com DV por banco. | tipo, valor, banco? | não | validate | 16 | parcial (`validar_documento`): só CPF e CNPJ; a conta bancária é validada em `definir_informacoes_bancarias` |
 | `consultar_tabela` | Consulta as tabelas de códigos e parâmetros do exercício (bens, rendimentos, pagamentos, doações, dependência, países, municípios, bancos, fundos, alíquotas, prazos). | tabela, filtro? | não | tabelas | 22 | implementada (`listar_tabela`, `buscar_codigo`, `consultar_parametros`) |
-| `obter_ajuda` | Responde com as regras oficiais de uma ficha, campo ou tópico (orientação equivalente à Ajuda do PGD), citando a página da Ajuda. | topico \| ficha + campo, busca? | não | tabelas | 22 | pendente |
+| `obter_ajuda` | Responde com as regras oficiais de uma ficha, campo ou tópico (orientação equivalente à Ajuda do PGD), citando a página da Ajuda. | topico \| ficha + campo, busca? | não | tabelas | 22 | implementada (`obter_ajuda`): tópicos gerados das notas de mapeamento (tools/mapeamento/gera_ajuda.mjs) |
 | `buscar_nome_por_documento` | Sugere o nome já informado para um CPF ou CNPJ nas declarações locais (equivalente à Recuperação de Nomes). | cpf_cnpj | não | model | 1 | parcial (`buscar_nome_por_documento`): busca só nas declarações da pasta; a consulta à Receita é serviço online: só orientação com `orientar_servico_externo`; o AutoIR não acessa a rede |
 | `verificar_versao_tabelas` | Informa a versão das tabelas e parâmetros embarcados e alerta se o PGD conhecido for mais novo. | nenhum | não | tabelas | 2 | implementada (`verificar_versao_tabelas`): versão embarcada, sem consulta online |
 
@@ -554,7 +554,7 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 
 | Ferramenta | Descrição | Parâmetros principais | Escreve em disco | Módulo | Itens | Status |
 |---|---|---|---|---|---:|---|
-| `gerar_dbk` | Gera o arquivo da declaração no layout oficial de 2026 (registros IR, 16 a 99 e T9) com o nome padrão, bloqueando se houver erros impeditivos. | id_declaracao, destino | sim | dbk | 16 | implementada (`converter_modelo_para_dbk`, `verificar_integridade_arquivo`): conversão de todas as fichas; registros sem campo no modelo são preservados do arquivo base; totais recalculados com o motor |
+| `gerar_dbk` | Gera o arquivo da declaração no layout oficial de 2026 (registros IR, 16 a 99 e T9) com o nome padrão, bloqueando se houver erros impeditivos. | id_declaracao, destino | sim | dbk | 16 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`): conversão de todas as fichas; registros sem campo no modelo são preservados do arquivo base; totais recalculados com o motor; o .DEC de entrega sai de gerar_arquivo_entrega, igual ao do programa nos 48 casos |
 | `gerar_relatorio_declaracao` | Gera relatório da declaração (toda ou partes, inclusive rendimentos de PF e demonstrativos) em PDF ou HTML com layout próprio. | id_declaracao, partes?, formato (pdf\|html), destino | sim | model | 3 | parcial (`gerar_relatorio_declaracao`): relatório em texto; sem PDF ou HTML |
 | `gerar_comunicacao_saida` | Gera a comunicação à fonte pagadora de saída definitiva do país, uma por fonte. | id_declaracao, fontes?, destino | sim | model | 1 | implementada (`gerar_comunicacao_saida`): só o texto |
 | `instruir_transmissao` | Gera o passo a passo e o checklist para concluir no PGD oficial: abrir ou restaurar a declaração, verificar pendências, entregar com ou sem certificado, guardar o recibo e pagar o Darf. | id_declaracao | não | dbk | 6 | implementada (`instruir_transmissao`) |
@@ -617,7 +617,7 @@ Ferramentas registradas hoje em `packages/mcp/src/ferramentas/*.ts` e a ferramen
 | `aplicar_caso_especial_bem` | `aplicar_caso_especial_bem` |
 | `buscar_nome_por_documento` | `buscar_nome_por_documento` |
 | `criar_declaracao` | `criar_declaracao` |
-| `criar_retificadora` | `criar_retificadora` |
+| `criar_retificadora` | `criar_retificadora`, `registrar_recibo` |
 | `excluir_declaracao` | `excluir_declaracao` |
 | `gravar_copia_seguranca` | `gravar_copia_seguranca` |
 | `listar_copias_seguranca` | `restaurar_copia_seguranca` |
@@ -658,15 +658,15 @@ A prioridade de uma ferramenta é a mais alta entre os itens da matriz que a cit
 ### P0
 
 - Pendentes (0): nenhuma
-- Parciais (5): `listar_declaracoes`, `importar_declaracao_anterior`, `importar_pre_preenchida`, `calcular_imposto`, `validar_documento`
+- Parciais (4): `listar_declaracoes`, `importar_declaracao_anterior`, `importar_pre_preenchida`, `validar_documento`
 
 ### P1
 
-- Pendentes (3): `registrar_recibo`, `atualizar_custo_bem`, `obter_ajuda`
+- Pendentes (0): nenhuma
 - Parciais (8): `listar_ganhos_capital`, `importar_carne_leao`, `importar_gcap`, `importar_livro_caixa_rural`, `calcular_rra`, `converter_moeda`, `calcular_ganho_capital`, `gerar_relatorio_declaracao`
 
 ### P2
 
-- Pendentes (1): `ler_informe`
+- Pendentes (0): nenhuma
 - Parciais (1): `buscar_nome_por_documento`
 

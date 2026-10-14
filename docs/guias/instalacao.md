@@ -1,0 +1,93 @@
+# Instalação
+
+O AutoIR é um executável de linha de comando (`autoir-mcp`) que o seu cliente MCP inicia e encerra.
+Você não precisa deixá-lo rodando: basta instalar, apontar a pasta da declaração e configurar o
+cliente ([clientes-mcp.md](clientes-mcp.md)).
+
+## Requisitos
+
+| Item | Versão | Observação |
+| --- | --- | --- |
+| Node.js | 22 ou superior | `node --version` precisa mostrar `v22` ou mais. |
+| pnpm | o fixado em `package.json` (`packageManager`) | Só para compilar a partir do código. `corepack enable` instala a versão certa. |
+| Programa oficial IRPF 2026 | o da Receita Federal | Para restaurar o `.DBK`, conferir e transmitir. O AutoIR não o instala nem o executa. |
+
+Sistemas: macOS, Linux e Windows. O AutoIR não depende de Java; quem precisa de Java é o programa
+oficial, instalado à parte.
+
+## 1. Prepare a pasta autorizada
+
+Crie uma pasta só para a declaração. É o único lugar que o servidor poderá ler e gravar.
+
+```sh
+mkdir -p ~/Documentos/IR-2026
+```
+
+No Windows (PowerShell):
+
+```powershell
+New-Item -ItemType Directory -Force "$env:USERPROFILE\Documentos\IR-2026"
+```
+
+Não aponte `--dir` para a pasta pessoal inteira: o assistente poderia ler qualquer `.json` ou `.txt`
+dela. Detalhes em [../seguranca.md](../seguranca.md).
+
+## 2. Instale
+
+### Opção A: pelo npm
+
+```sh
+npx autoir-mcp --versao
+```
+
+> A versão 0.1.0 ainda não foi publicada no npm. Até lá, use a opção B. Depois da publicação, a
+> configuração dos clientes usa `npx -y autoir-mcp` como comando.
+
+### Opção B: a partir do código
+
+```sh
+git clone <url-do-repositório> AutoIR
+cd AutoIR
+corepack enable
+pnpm install
+pnpm build
+```
+
+O executável fica em `apps/cli/dist/index.js`. Guarde o caminho absoluto dele para a configuração
+do cliente:
+
+```sh
+node "$(pwd)/apps/cli/dist/index.js" --versao
+# 0.1.0
+```
+
+Para atualizar depois: `git pull`, `pnpm install` e `pnpm build`. Reinicie o cliente MCP.
+
+## 3. Teste a linha de comando
+
+```sh
+node apps/cli/dist/index.js --ajuda
+node apps/cli/dist/index.js --dir ~/Documentos/IR-2026
+```
+
+O segundo comando fica aguardando mensagens do protocolo em stdin e escreve
+`autoir-mcp: pronto (versão 0.1.0)` em stderr. Encerre com Ctrl+C. Isso confirma que o Node.js, o
+build e a pasta estão certos.
+
+## Opções
+
+| Opção | Efeito |
+| --- | --- |
+| `--dir <pasta>` | Obrigatória. A pasta precisa existir e, fora do modo somente leitura, permitir gravação. Caminho relativo é resolvido a partir da pasta em que o cliente inicia o processo; prefira caminho absoluto. |
+| `--somente-leitura` | Remove as ferramentas que gravam arquivos. Útil para consultar, simular e validar sem risco. |
+| `--versao` | Mostra a versão e sai. |
+| `--ajuda` | Mostra a ajuda e sai. |
+
+Saída com código 2 indica argumento inválido; a mensagem em stderr diz qual (por exemplo
+`--dir é obrigatório` ou `--dir: sem permissão de gravação`).
+
+## Próximos passos
+
+- Configurar o cliente: [clientes-mcp.md](clientes-mcp.md)
+- Fazer a primeira declaração: [primeira-declaracao.md](primeira-declaracao.md)
+- Se algo falhar: [solucao-de-problemas.md](solucao-de-problemas.md)

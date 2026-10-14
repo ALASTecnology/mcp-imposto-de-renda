@@ -1,0 +1,42 @@
+name: Funcionalidade
+description: Sugira uma ferramenta, ficha, demonstrativo ou melhoria.
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de abrir, confira a matriz de cobertura em `docs/mapeamento/matriz-cobertura.md`: ela lista cada função do programa oficial e o que o AutoIR já cobre ou planeja.
+
+        Fora de escopo por desenho: transmissão, certificado digital, login gov.br, declaração pré-preenchida on-line, Carnê-Leão Web, Darf com código de barras e qualquer chamada de rede.
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isto resolve
+      description: Em que etapa da declaração você esbarra? O que precisa fazer hoje no programa oficial?
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Ferramenta, parâmetros e resposta esperados. Use exemplos com dados fictícios.
+    validations:
+      required: true
+  - type: input
+    id: matriz
+    attributes:
+      label: ID na matriz de cobertura
+      description: Por exemplo F-RTPF ou D-GCAP-IMOVEIS, se houver.
+  - type: textarea
+    id: fontes
+    attributes:
+      label: Fontes
+      description: Legislação, Perguntas e Respostas da Receita Federal ou página da Ajuda do programa que descrevem a regra.
+  - type: checkboxes
+    id: regras
+    attributes:
+      label: Regras do projeto
+      options:
+        - label: A proposta não exige rede, código da Receita Federal nem dados reais.
+          required: true

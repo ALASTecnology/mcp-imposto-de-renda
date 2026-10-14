@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Vulnerabilidade de segurança
+    url: https://docs.github.com/pt/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability
+    about: Não abra issue pública. Use a aba Security do repositório, opção "Report a vulnerability", e siga o SECURITY.md.
+  - name: Dúvidas sobre a declaração (Receita Federal)
+    url: https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda
+    about: O AutoIR não é serviço oficial. Dúvidas sobre obrigações e regras do IRPF vão aos canais oficiais da Receita Federal.

@@ -1,0 +1,85 @@
+name: Bug
+description: Algo não funciona como documentado (servidor, ferramenta, gravação ou leitura do arquivo).
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar. **Nunca inclua dados reais**: nada de CPF, CNPJ de pessoa real, nomes, endereços, valores da sua declaração ou arquivos `.DBK`/`.DEC` reais. Reproduza com dados fictícios.
+
+        Diferença no valor do imposto? Use o modelo **Divergência de cálculo**. Falha de segurança? Não abra issue: siga o `SECURITY.md`.
+  - type: checkboxes
+    id: dados
+    attributes:
+      label: Dados pessoais
+      options:
+        - label: Confirmo que esta issue não contém dados reais de nenhuma pessoa.
+          required: true
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu
+      description: Descreva o problema e o que você esperava que acontecesse.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      description: Passos, ferramenta chamada e argumentos (com dados fictícios). Se precisar de um arquivo, descreva como gerá-lo com o modelo sintético.
+      placeholder: |
+        1. Configurei o servidor com --dir ...
+        2. Chamei adicionar_dependente com {...}
+        3. Recebi ...
+    validations:
+      required: true
+  - type: textarea
+    id: mensagem
+    attributes:
+      label: Mensagem de erro
+      description: Texto devolvido pela ferramenta ou linhas `autoir-mcp:` do log do cliente. Remova caminhos pessoais.
+      render: text
+  - type: input
+    id: versao
+    attributes:
+      label: Versão do AutoIR
+      description: Saída de `autoir-mcp --versao` (ou commit, se instalado a partir do código).
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Versão do Node.js
+      placeholder: v22.x
+    validations:
+      required: true
+  - type: dropdown
+    id: so
+    attributes:
+      label: Sistema operacional
+      options:
+        - macOS
+        - Linux
+        - Windows
+        - Outro
+    validations:
+      required: true
+  - type: input
+    id: cliente
+    attributes:
+      label: Cliente MCP
+      description: Nome e versão do cliente MCP usado.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Instalação ou inicialização
+        - Leitura de DBK/DEC
+        - Gravação de DBK
+        - Edição de fichas
+        - Validação
+        - Tabelas de códigos
+        - Restauração no programa oficial
+        - Outra

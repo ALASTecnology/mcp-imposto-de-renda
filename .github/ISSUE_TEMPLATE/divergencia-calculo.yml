@@ -1,0 +1,76 @@
+name: Divergência de cálculo
+description: O AutoIR e o programa oficial dão resultados diferentes para os mesmos dados.
+title: "calc: "
+labels: ["bug", "calculo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Divergências viram casos de referência (golden) gerados com o programa oficial. Para isso precisamos de um **caso sintético**: uma declaração fictícia, com o mínimo de dados, que reproduza a diferença.
+
+        **Nunca envie a sua declaração real, nem trechos dela, nem o seu `.DBK`/`.DEC`.** Troque nomes e documentos por fictícios e reduza os valores ao necessário para a diferença aparecer. CPFs fictícios com dígito válido: `123.456.789-09`, `987.654.321-00`; ou gere com `tools/referencia/gerar.sh cpf <número>`.
+  - type: checkboxes
+    id: dados
+    attributes:
+      label: Dados sintéticos
+      options:
+        - label: Confirmo que o caso abaixo é fictício e não contém dados reais de nenhuma pessoa.
+          required: true
+        - label: Reproduzi a diferença no programa oficial IRPF 2026 com estes mesmos dados fictícios.
+          required: true
+  - type: input
+    id: versao-programa
+    attributes:
+      label: Versão do programa oficial
+      placeholder: IRPF 2026 versão 1.5
+    validations:
+      required: true
+  - type: input
+    id: versao-autoir
+    attributes:
+      label: Versão do AutoIR
+      description: Saída de `autoir-mcp --versao` ou commit.
+    validations:
+      required: true
+  - type: textarea
+    id: caso
+    attributes:
+      label: Caso sintético
+      description: |
+        Entrada de `simular_imposto` (ou no formato de `tools/referencia/casos/*.json`) com os dados fictícios. Valores em texto são reais ("1.234,56"); números inteiros são centavos.
+      render: json
+    validations:
+      required: true
+  - type: dropdown
+    id: campo
+    attributes:
+      label: Campo divergente
+      multiple: true
+      options:
+        - Rendimentos tributáveis
+        - Deduções do completo
+        - Base de cálculo
+        - Imposto devido
+        - Desconto simplificado
+        - Imposto pago ou retido
+        - Saldo a pagar ou a restituir
+        - Modelo mais vantajoso
+        - Alíquota efetiva
+        - Quotas ou multa
+        - Outro
+    validations:
+      required: true
+  - type: textarea
+    id: valores
+    attributes:
+      label: Valores
+      description: Para cada campo divergente, o valor do AutoIR e o do programa oficial.
+      placeholder: |
+        Imposto devido (completo): AutoIR R$ 1.234,57; programa R$ 1.234,56
+    validations:
+      required: true
+  - type: textarea
+    id: hipotese
+    attributes:
+      label: Hipótese (opcional)
+      description: Regra que você acredita estar envolvida e a fonte (legislação, Perguntas e Respostas, Ajuda do programa).

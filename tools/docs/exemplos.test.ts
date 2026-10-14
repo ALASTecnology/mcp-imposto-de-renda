@@ -37,12 +37,12 @@ it("executa um exemplo de cada ferramenta", async () => {
   const registros: Record<string, Registro> = {};
   for (const cenario of CENARIOS) {
     const dir = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-ref-"));
+    const s = createServer({ diretorioAutorizado: dir, relogio: () => RELOGIO });
+    const c = new Client({ name: "referencia", version: "1" });
     try {
       for (const [nome, origem] of Object.entries(BASE))
         copyFileSync(join(EXEMPLOS, origem), join(dir, nome));
-      const s = createServer({ diretorioAutorizado: dir, relogio: () => RELOGIO });
       const [a, b] = InMemoryTransport.createLinkedPair();
-      const c = new Client({ name: "referencia", version: "1" });
       await Promise.all([s.connect(a), c.connect(b)]);
       for (const nome of readdirSync(dir)) utimesSync(join(dir, nome), RELOGIO, RELOGIO);
       for (const chamada of cenario) {
@@ -74,8 +74,9 @@ it("executa um exemplo de cada ferramenta", async () => {
           erro: r.isError === true,
         };
       }
-      await c.close();
     } finally {
+      await c.close();
+      await s.close();
       rmSync(dir, { recursive: true, force: true });
     }
   }

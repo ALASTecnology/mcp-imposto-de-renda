@@ -128,6 +128,7 @@ export async function executarRoteiro(roteiro: Roteiro): Promise<Map<string, Buf
     return arquivos;
   } finally {
     await cliente.close();
+    await servidor.close();
     rmSync(dir, { recursive: true, force: true });
   }
 }

@@ -1,6 +1,6 @@
 /**
  * Validação de campos isolados que o programa oficial confere na digitação: CPF, CNPJ,
- * número do recibo, CEP, telefone, e-mail, nome, data, Renavam e conta bancária.
+ * número do recibo, CEP, telefone, e-mail, nome, data, Renavam, NIT/PIS e conta bancária.
  *
  * Fontes: Ajuda do PGD IRPF 2026, págs. 42 a 45 (Identificação), 181 a 184 (Bens e
  * Direitos), 252 (Informações Bancárias) e 383 (recibo); nota de mapeamento 02
@@ -22,6 +22,7 @@ export const TIPOS_CAMPO = [
   "nome",
   "data",
   "renavam",
+  "nit",
   "conta_bancaria",
 ] as const;
 export type TipoCampo = (typeof TIPOS_CAMPO)[number];
@@ -148,6 +149,17 @@ export function validarCampo(
         ok,
         r,
         ok ? "Renavam válido." : "Renavam inválido: confira os dígitos e o DV.",
+      );
+    }
+    case "nit": {
+      // NIT, PIS, Pasep e NIS: 11 dígitos, DV módulo 11 com os pesos 3298765432 (resto < 2 vira 0).
+      const ok =
+        /^\d{11}$/.test(dig) && !/^(\d)\1+$/.test(dig) && dvRenavam(dig.slice(0, 10)) === dig[10];
+      return res(
+        tipo,
+        ok,
+        dig,
+        ok ? "NIT/PIS válido." : "NIT/PIS inválido: confira os 11 dígitos e o DV.",
       );
     }
     case "conta_bancaria": {

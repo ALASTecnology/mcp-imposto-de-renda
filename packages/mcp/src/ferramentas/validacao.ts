@@ -28,7 +28,7 @@ export const grupoValidacao: GrupoFerramentas = {
           "digitação. Sem `tipo`, detecta CPF (11 dígitos) ou CNPJ (14 dígitos) pelo tamanho. " +
           "Com `tipo`: 'recibo' (12 dígitos), 'cep' (8 dígitos), 'telefone' (DDD e número), " +
           "'email', 'nome' (regras da ficha Identificação), 'data' (dd/mm/aaaa), 'renavam' " +
-          "(DV módulo 11) e 'conta_bancaria' (banco da rede autorizada, tamanhos e DV público " +
+          "(DV módulo 11), 'nit' (NIT, PIS, Pasep) e 'conta_bancaria' (banco da rede autorizada, tamanhos e DV público " +
           "do banco; informe `banco` e `agencia`). Aceita pontuação. Não consulta a situação " +
           "cadastral nem base externa.",
         entrada: {

@@ -82,6 +82,15 @@ describe("validarCampo", () => {
     });
   });
 
+  it("NIT/PIS com DV módulo 11", () => {
+    // 1201234567 + DV: 1*3+2*2+0*9+1*8+2*7+3*6+4*5+5*4+6*3+7*2 = 119; 119 mod 11 = 9; 11 - 9 = 2.
+    expect(validarCampo("nit", "120.12345.67-2")).toMatchObject({
+      valido: true,
+      normalizado: "12012345672",
+    });
+    expect(validarCampo("nit", "12012345673").valido).toBe(false);
+  });
+
   it("conta bancária usa a rede autorizada e o DV público do banco", () => {
     const ok = validarCampo("conta_bancaria", "210169-6", { banco: "001", agencia: "1234" });
     expect(ok).toMatchObject({ valido: true, normalizado: "001/1234/210169-6" });

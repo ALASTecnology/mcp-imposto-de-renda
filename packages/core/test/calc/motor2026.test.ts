@@ -435,3 +435,37 @@ describe("regras confirmadas em casos de referência do programa oficial", () =>
     expect(r.saldoPagarSimplificado).toBe("274503");
   });
 });
+
+describe("atividade rural no Brasil", () => {
+  const rural = (opcao?: "resultado" | "limite20") =>
+    entradaPJ("6000000", {
+      atividadeRural: {
+        ...(opcao ? { opcao } : {}),
+        meses: [
+          { mes: 3, receita: "5000000", despesa: "2000000" },
+          { mes: 8, receita: "3000000", despesa: "1000000" },
+        ],
+      },
+    });
+
+  it("pelo resultado, soma receita menos despesa aos rendimentos tributáveis", () => {
+    // 80.000,00 - 30.000,00 = 50.000,00 de resultado; 60.000,00 + 50.000,00 = 110.000,00.
+    expect(calcularCompleto(rural("resultado")).rendimentosTributaveis).toBe(11000000n);
+  });
+
+  it("pelo limite de 20%, soma 20% da receita bruta", () => {
+    // 20% de 80.000,00 = 16.000,00; 60.000,00 + 16.000,00 = 76.000,00.
+    expect(calcularCompleto(rural("limite20")).rendimentosTributaveis).toBe(7600000n);
+  });
+
+  it("sem a opção, o resultado não é tributado (como no programa)", () => {
+    expect(calcularCompleto(rural()).rendimentosTributaveis).toBe(6000000n);
+  });
+
+  it("resultado negativo não reduz os demais rendimentos", () => {
+    const e = entradaPJ("6000000", {
+      atividadeRural: { opcao: "resultado", meses: [{ mes: 1, receita: "100", despesa: "500" }] },
+    });
+    expect(calcularCompleto(e).rendimentosTributaveis).toBe(6000000n);
+  });
+});

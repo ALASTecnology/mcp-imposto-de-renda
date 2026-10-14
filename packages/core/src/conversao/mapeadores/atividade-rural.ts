@@ -30,6 +30,13 @@ import type { ContextoGravacao, ContextoLeitura, Mapeador } from "../contexto.js
 /** Cotação do dólar para o resultado do exterior (31/12/2025, notas D-AR-APUR-L05). */
 export const COTACAO_DOLAR_RURAL_10000 = 55018n;
 
+/** Forma de apuração no arquivo (observada no harness): 1 = limite de 20%, 2 = resultado. */
+const OPCAO_NO_ARQUIVO = { limite20: 1n, resultado: 2n, naoInformada: 0n } as const;
+const OPCAO_DO_ARQUIVO: Record<string, "limite20" | "resultado"> = {
+  "1": "limite20",
+  "2": "resultado",
+};
+
 const pos = (v: bigint) => (v > 0n ? v : 0n);
 type Aba = NonNullable<Declaracao["atividadeRural"]>["brasil" | "exterior"];
 
@@ -59,7 +66,7 @@ function lerAba(ctx: ContextoLeitura, exterior: boolean): Objeto {
   const limite = numero(ap, "VR_OPCAO");
   const apuracao = {
     prejuizoAnterior: numero(ap, "VR_PREJEXERCANT"),
-    opcao: texto(ap, "IN_OPC_APURRESTRIB") === "1" ? "limite20" : "resultado",
+    opcao: OPCAO_DO_ARQUIVO[texto(ap, "IN_OPC_APURRESTRIB")] ?? "naoInformada",
     compensacaoPrejuizo: numero(ap, "VR_COMP_PREJ_EXERC_ANT"),
     adiantamentosRecebidos: numero(ap, "VR_RECVENDAFUTURA"),
     adiantamentosAnterioresEntregues: numero(ap, "VR_ADIANT"),
@@ -208,6 +215,9 @@ function gravarAba(ctx: ContextoGravacao, aba: Aba, exterior: boolean, chave: { 
   if (ap.opcao === "limite20") {
     tributavel = limite;
     saldo = 0n;
+  } else if (ap.opcao === "naoInformada") {
+    tributavel = 0n;
+    saldo = resultado >= 0n ? ap.prejuizoAnterior : ap.prejuizoAnterior - resultado;
   } else {
     compensado =
       resultado > 0n
@@ -235,7 +245,7 @@ function gravarAba(ctx: ContextoGravacao, aba: Aba, exterior: boolean, chave: { 
       VR_ADIANT: ap.adiantamentosAnterioresEntregues,
       VR_RESNAOTRIBAR: pos(resultado - tributavel - compensado),
       VR_RES1DOLAR: exterior ? resultadoDolar : 0n,
-      IN_OPC_APURRESTRIB: ap.opcao === "limite20" ? 1n : 0n,
+      IN_OPC_APURRESTRIB: OPCAO_NO_ARQUIVO[ap.opcao],
     },
     ["IN_EXTERIOR"],
   );

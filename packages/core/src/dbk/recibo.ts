@@ -6,13 +6,14 @@
  * com dados sintéticos (`packages/core/test/fixtures/dbk/2026`) e conferida byte a byte:
  *
  * - `NR_CPF` e `IN_COMPLETA`: header `IR`;
- * - nome, endereço (`TIP_LOGRA` a `SG_UF`), e-mail, telefone, `IN_RETIFICADORA`, `NR_QUOTAS`,
+ * - nome, endereço (`TIP_LOGRA` a `SG_UF`), telefone, `IN_RETIFICADORA`, `NR_QUOTAS`,
  *   banco, agência, conta, DV da conta e `IN_DEBITO_PRIMEIRA_QUOTA`: ficha 16, campo de mesmo nome;
  * - `VR_TOTTRIB`: `VR_TOTAL_RENDTRIB_PFPJ_TITDEP` do header;
  * - `VR_IMPDEV`: `VR_IMPDEVIDO` do header;
  * - `VR_IMPPAGAR`: `VR_SOMA_IMPOSTO_PAGAR` do header;
  * - `VR_IMPREST` e `VR_QUOTA`: Resumo do modelo gravado (`VR_IMPREST`/`VR_QUOTA` do registro 20
  *   na completa, `VR_IMPRESTIT`/`VR_QUOTA` do registro 18 na simplificada);
+ * - `NM_EMAIL` fica em branco: o programa não copia o e-mail da ficha 16 para o recibo;
  * - `VR_GCIMPOSTOPAGO` e `VR_VCMOEDAEST`: imposto pago de ganhos de capital e de moeda
  *   estrangeira em espécie, que nenhum par dos fixtures preenche (ver docs/formato-dbk.md);
  * - `HR` e `R9`: CPF do header; os controles (`NR_CONTROLE`, `NR_HASH` do `R9`) saem de
@@ -35,7 +36,6 @@ const CAMPOS_DA_FICHA_16 = [
   "CD_MUNICIP",
   "NM_MUNICIP",
   "SG_UF",
-  "NM_EMAIL",
   "NR_DDD_TELEFONE",
   "NR_TELEFONE",
   "IN_RETIFICADORA",

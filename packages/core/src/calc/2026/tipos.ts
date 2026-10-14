@@ -74,6 +74,22 @@ export interface DoacaoEfetuadaEntrada {
   parcelaNaoDedutivel?: string;
 }
 
+/** Mês da atividade rural no Brasil: receita bruta e despesas de custeio e investimento. */
+export interface MesAtividadeRuralEntrada {
+  mes: number;
+  receita?: string;
+  despesa?: string;
+}
+
+/**
+ * Atividade rural no Brasil. `opcao`: forma de apuração do resultado tributável (resultado da
+ * atividade ou 20% da receita bruta); sem ela, o programa não tributa o resultado.
+ */
+export interface AtividadeRuralEntrada {
+  opcao?: "resultado" | "limite20";
+  meses?: MesAtividadeRuralEntrada[];
+}
+
 export interface EntradaCalculo2026 {
   titular: PessoaEntrada;
   dependentes?: DependenteEntrada[];
@@ -85,6 +101,7 @@ export interface EntradaCalculo2026 {
   impostoPago?: { complementar?: string; exterior?: string; irrfLei11033?: string };
   doacoesDiretas?: { eca?: string; idoso?: string };
   doacoesEfetuadas?: DoacaoEfetuadaEntrada[];
+  atividadeRural?: AtividadeRuralEntrada;
 }
 
 export type Modelo = "completo" | "simplificado";

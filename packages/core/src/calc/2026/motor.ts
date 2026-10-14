@@ -80,6 +80,8 @@ interface Totais {
   complementar: Centavos;
   exteriorPago: Centavos;
   irrfLei11033: Centavos;
+  /** Resultado tributável da atividade rural no Brasil. */
+  atividadeRural: Centavos;
   quantidadeDependentes: number;
 }
 
@@ -96,6 +98,7 @@ function lerTotais(e: EntradaCalculo2026): Totais {
     complementar: lerCentavos(e.impostoPago?.complementar, "impostoPago.complementar"),
     exteriorPago: lerCentavos(e.impostoPago?.exterior, "impostoPago.exterior"),
     irrfLei11033: lerCentavos(e.impostoPago?.irrfLei11033, "impostoPago.irrfLei11033"),
+    atividadeRural: ZERO,
     quantidadeDependentes: e.dependentes?.length ?? 0,
   };
   (e.rendimentosPJ ?? []).forEach((r, i) => {
@@ -124,11 +127,35 @@ function lerTotais(e: EntradaCalculo2026): Totais {
     t.livroCaixa = somaCentavos(t.livroCaixa, lerCentavos(m.livroCaixa, `${p}.livroCaixa`));
     t.carneLeao = somaCentavos(t.carneLeao, lerCentavos(m.carneLeao, `${p}.carneLeao`));
   });
+  t.atividadeRural = resultadoRural(e);
   return t;
 }
 
+/**
+ * Resultado tributável da atividade rural no Brasil: receita bruta menos despesas (só o
+ * positivo) ou, por opção, 20% da receita bruta, com a fração de centavo truncada. Sem opção
+ * informada, o programa não tributa o resultado (vai inteiro para os isentos).
+ */
+function resultadoRural(e: EntradaCalculo2026): Centavos {
+  const ar = e.atividadeRural;
+  if (!ar?.opcao) return ZERO;
+  let receita = ZERO;
+  let despesa = ZERO;
+  (ar.meses ?? []).forEach((m, i) => {
+    receita = somaCentavos(receita, lerCentavos(m.receita, `atividadeRural.meses[${i}].receita`));
+    despesa = somaCentavos(despesa, lerCentavos(m.despesa, `atividadeRural.meses[${i}].despesa`));
+  });
+  if (ar.opcao === "limite20") return centavos((receita * 20n) / 100n);
+  return naoNegativo(centavos(receita - despesa));
+}
+
 function rendimentosTributaveis(t: Totais, comExterior: boolean): Centavos {
-  return somaCentavos(t.rendimentosPJ, t.rendimentosPF, comExterior ? t.exterior : ZERO);
+  return somaCentavos(
+    t.rendimentosPJ,
+    t.rendimentosPF,
+    comExterior ? t.exterior : ZERO,
+    t.atividadeRural,
+  );
 }
 
 function valorDedutivel(p: PagamentoEntrada, i: number): Centavos {
@@ -158,7 +185,7 @@ function apurarCompleto(e: EntradaCalculo2026, t: Totais, comExterior: boolean):
   mem.push(
     linha(
       "rendimentos.tributaveis",
-      `Rendimentos tributáveis: PJ ${brl(t.rendimentosPJ)} + PF ${brl(t.rendimentosPF)} + exterior ${brl(comExterior ? t.exterior : ZERO)} = ${brl(rendimentos)}`,
+      `Rendimentos tributáveis: PJ ${brl(t.rendimentosPJ)} + PF ${brl(t.rendimentosPF)} + exterior ${brl(comExterior ? t.exterior : ZERO)}${t.atividadeRural > 0n ? ` + atividade rural ${brl(t.atividadeRural)}` : ""} = ${brl(rendimentos)}`,
       rendimentos,
       "Resumo, Rendimentos Tributáveis: soma das fichas de PJ (titular e dependentes) e de PF/Exterior. O 13º salário fica fora (tributação exclusiva).",
     ),

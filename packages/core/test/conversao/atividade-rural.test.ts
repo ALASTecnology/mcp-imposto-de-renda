@@ -175,6 +175,25 @@ describe("Atividade Rural: registros 50 a 57", () => {
     expect(ap?.IN_OPC_APURRESTRIB).toBe(1n);
   });
 
+  it("grava a opção com os códigos do programa: 2 resultado, 1 limite, 0 não informada", () => {
+    const opcoes = ["resultado", "limite20", "naoInformada"] as const;
+    const codigos = opcoes.map((opcao) => {
+      const e = entrada();
+      const ar = e.atividadeRural;
+      if (ar?.brasil?.apuracao) ar.brasil.apuracao = { prejuizoAnterior: 0, opcao };
+      const r = modeloParaRegistros(zDeclaracao.parse(e)).registros;
+      const ap = doTipo(r, "52").find((x) => x.campos.IN_EXTERIOR === 0n)?.campos;
+      const relida = zDeclaracao.parse(registrosParaModelo(r).declaracao);
+      expect(relida.atividadeRural?.brasil.apuracao.opcao).toBe(opcao);
+      return [ap?.IN_OPC_APURRESTRIB, opcao === "naoInformada" ? ap?.VR_RESTRIB : undefined];
+    });
+    expect(codigos).toEqual([
+      [2n, undefined],
+      [1n, undefined],
+      [0n, 0n],
+    ]);
+  });
+
   it("sem demonstrativo não grava registros e a leitura deixa a ficha ausente", () => {
     const d = zDeclaracao.parse({ ...entrada(), atividadeRural: undefined, bens: [] });
     const r = modeloParaRegistros(d).registros;

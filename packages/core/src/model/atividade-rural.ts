@@ -56,8 +56,11 @@ export const zReceitasDespesasExterior = z.object({
 export const zApuracaoAtividadeRural = z.object({
   /** Saldo de prejuízo(s) a compensar de exercício(s) anterior(es). */
   prejuizoAnterior: zValor,
-  /** Forma de apuração do resultado tributável. */
-  opcao: z.enum(["resultado", "limite20"]).default("resultado"),
+  /**
+   * Forma de apuração do resultado tributável: pelo resultado (código 2 no arquivo), pelo limite
+   * de 20% da receita bruta (código 1) ou não informada (0, e o programa não tributa o resultado).
+   */
+  opcao: z.enum(["resultado", "limite20", "naoInformada"]).default("resultado"),
   /** Compensação de prejuízo(s) de exercício(s) anterior(es). */
   compensacaoPrejuizo: zValor,
   /** Adiantamento(s) recebido(s) no ano por conta de venda para entrega futura. */

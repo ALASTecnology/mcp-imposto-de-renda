@@ -54,7 +54,21 @@ export function entradaCalculoDoModelo(dec: Declaracao): EntradaCalculo2026 {
     exclusivos.set(e.codigo, (exclusivos.get(e.codigo) ?? 0n) + e.valor);
   }
   const soma = (l: readonly { valor: bigint }[]) => l.reduce((s, x) => s + x.valor, 0n);
+  const rural = dec.atividadeRural?.brasil;
+  const opcaoRural = rural?.apuracao.opcao;
   return {
+    ...(rural && opcaoRural && opcaoRural !== "naoInformada"
+      ? {
+          atividadeRural: {
+            opcao: opcaoRural,
+            meses: rural.receitasDespesas.map((m) => ({
+              mes: m.mes,
+              receita: txt(m.receitaBruta),
+              despesa: txt(m.despesa),
+            })),
+          },
+        }
+      : {}),
     titular: { cpf: id.cpf, nome: id.nome, ...(nascimento ? { nascimento } : {}) },
     dependentes: dec.dependentes.map((d) => ({
       cpf: d.cpf,

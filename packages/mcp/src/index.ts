@@ -9,6 +9,7 @@
 export {
   abrirPastaAutorizada,
   type CodigoErroArquivo,
+  type CopiaSeguranca,
   ErroArquivo,
   type GanchosEscrita,
   type ItemArquivo,

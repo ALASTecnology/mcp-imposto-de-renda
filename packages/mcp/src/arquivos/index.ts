@@ -106,6 +106,27 @@ export interface PastaAutorizada {
    * Recusa links simbólicos e o que não for arquivo comum.
    */
   remover(nome: string, extensoes: readonly string[]): Promise<ResultadoRemocao>;
+  /** Cópias de segurança em `.autoir-backups`, da mais recente para a mais antiga. */
+  listarCopias(): Promise<CopiaSeguranca[]>;
+  /**
+   * Restaura uma cópia (pelo nome devolvido em `listarCopias`) sobre `destino`, que também
+   * ganha backup antes de ser sobrescrito. O nome da cópia é conferido contra o padrão.
+   */
+  restaurarCopia(
+    copia: string,
+    destino: string,
+    extensoes: readonly string[],
+  ): Promise<ResultadoEscrita>;
+}
+
+export interface CopiaSeguranca {
+  /** Nome da cópia dentro de `.autoir-backups`. */
+  readonly copia: string;
+  /** Nome relativo do arquivo de origem. */
+  readonly arquivo: string;
+  /** Carimbo da cópia, ISO 8601 em UTC. */
+  readonly criadaEm: string;
+  readonly tamanho: number;
 }
 
 export interface ResultadoRemocao {
@@ -346,6 +367,59 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     }
     await this.sincronizarPasta(dirname(caminho));
     return { arquivo: nome, backup };
+  }
+
+  async listarCopias(): Promise<CopiaSeguranca[]> {
+    const pasta = join(this.raiz, PASTA_BACKUPS);
+    const st = await lstatOuNada(pasta);
+    if (!st) return [];
+    if (st.isSymbolicLink() || !st.isDirectory()) throw link(PASTA_BACKUPS);
+    const copias: CopiaSeguranca[] = [];
+    for (const nome of await readdir(pasta)) {
+      const m = PADRAO_BACKUP.exec(nome);
+      if (!m || CONTROLE.test(nome)) continue;
+      const info = await lstatOuNada(join(pasta, nome));
+      if (!info?.isFile()) continue;
+      const c = m[2] ?? "";
+      copias.push({
+        copia: nome,
+        arquivo: (m[1] ?? "").replaceAll("__", "/"),
+        criadaEm: `${c.slice(0, 4)}-${c.slice(4, 6)}-${c.slice(6, 8)}T${c.slice(9, 11)}:${c.slice(11, 13)}:${c.slice(13, 15)}Z`,
+        tamanho: info.size,
+      });
+    }
+    copias.sort((a, b) => (a.copia < b.copia ? 1 : a.copia > b.copia ? -1 : 0));
+    return copias.slice(0, MAX_ITENS_LISTAGEM);
+  }
+
+  async restaurarCopia(
+    copia: string,
+    destino: string,
+    extensoes: readonly string[],
+  ): Promise<ResultadoEscrita> {
+    if (
+      typeof copia !== "string" ||
+      !PADRAO_BACKUP.test(copia) ||
+      /[/\\]/.test(copia) ||
+      copia.startsWith(".") ||
+      CONTROLE.test(copia)
+    ) {
+      throw invalido("Nome de cópia de segurança inválido; use listar_copias_seguranca.");
+    }
+    const caminho = join(this.raiz, PASTA_BACKUPS, copia);
+    const st = await lstatOuNada(caminho);
+    if (!st) throw naoEncontrado(copia);
+    if (st.isSymbolicLink()) throw link(copia);
+    if (!st.isFile()) throw new ErroArquivo("NAO_E_ARQUIVO", `"${copia}" não é um arquivo comum.`);
+    if (st.size > this.limiteBytes) throw muitoGrande(this.limiteBytes);
+    const h = await open(caminho, constants.O_RDONLY | O_NOFOLLOW);
+    let dados: Uint8Array;
+    try {
+      dados = await lerHandle(h, copia, this.limiteBytes);
+    } finally {
+      await h.close();
+    }
+    return this.escrever(destino, dados, extensoes);
   }
 
   async listar(extensoes: readonly string[]): Promise<ItemArquivo[]> {

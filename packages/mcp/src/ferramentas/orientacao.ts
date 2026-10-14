@@ -1,10 +1,12 @@
 /**
- * Grupo "orientacao": orientação sobre serviços que só existem fora do AutoIR. O servidor não
+ * Grupo "orientacao": ajuda por ficha (das notas de mapeamento) e orientação sobre serviços que
+ * só existem fora do AutoIR. O servidor não
  * acessa a rede: as ferramentas só explicam o caminho e o que trazer de volta para a pasta
  * autorizada.
  */
 import { listar, NOMES_TABELAS } from "@autoir/core";
 import { z } from "zod";
+import { buscarAjuda, TOPICOS_AJUDA } from "../ajuda/index.js";
 import type { GrupoFerramentas } from "./tipos.js";
 
 /** Versão do programa oficial de que as tabelas embarcadas foram extraídas. */
@@ -151,6 +153,68 @@ export const grupoOrientacao: GrupoFerramentas = {
             `Trazer: ${o.trazer}`,
           ].join("\n"),
           dados: { titulo: o.titulo, onde: o.onde, passos: [...o.passos], trazer: o.trazer },
+        };
+      },
+    );
+
+    r.ferramenta(
+      "obter_ajuda",
+      {
+        titulo: "Ajuda por ficha",
+        descricao:
+          "Devolve a ajuda de uma ficha, demonstrativo, menu ou regra do programa oficial, tirada das notas de mapeamento do AutoIR (onde fica, a quem se aplica, campos, validações, códigos e regras de cálculo, com a página da Ajuda do programa). Busca por identificador (ex.: F-IDENT, F-DEP) ou por palavras (ex.: \"despesas médicas\"); sem 'consulta', lista os identificadores, com filtro opcional por prefixo.",
+        entrada: {
+          consulta: z.string().max(200).optional(),
+          prefixo: z
+            .string()
+            .max(20)
+            .optional()
+            .describe('Na listagem, só os tópicos cujo identificador começa assim (ex.: "F-").'),
+          limite: z.number().int().min(1).max(10).optional(),
+        },
+        saida: {
+          topicos: z.array(
+            z.object({
+              id: z.string(),
+              nome: z.string(),
+              fonte: z.string(),
+              itens: z.array(z.object({ campo: z.string(), texto: z.string() })),
+            }),
+          ),
+          lista: z.array(z.object({ id: z.string(), nome: z.string() })),
+        },
+      },
+      ({ consulta, prefixo, limite }) => {
+        if (consulta === undefined) {
+          const lista = TOPICOS_AJUDA.filter(
+            (t) => !prefixo || t.id.toUpperCase().startsWith(prefixo.toUpperCase()),
+          ).map((t) => ({ id: t.id, nome: t.nome }));
+          return {
+            texto: `${lista.length} tópico(s):\n${lista.map((t) => `- ${t.id}: ${t.nome}`).join("\n")}`,
+            dados: { topicos: [], lista },
+          };
+        }
+        const topicos = buscarAjuda(consulta, limite ?? 3);
+        const texto = topicos.length
+          ? topicos
+              .map((t) =>
+                [`## ${t.id} ${t.nome}`, ...t.itens.map((i) => `- ${i.campo}: ${i.texto}`)].join(
+                  "\n",
+                ),
+              )
+              .join("\n\n")
+          : "Nenhum tópico encontrado. Liste os identificadores sem 'consulta' ou use outras palavras.";
+        return {
+          texto,
+          dados: {
+            topicos: topicos.map((t) => ({
+              id: t.id,
+              nome: t.nome,
+              fonte: t.fonte,
+              itens: t.itens.map((i) => ({ campo: i.campo, texto: i.texto })),
+            })),
+            lista: [],
+          },
         };
       },
     );

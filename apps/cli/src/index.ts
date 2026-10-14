@@ -83,9 +83,8 @@ async function main(): Promise<void> {
   const enviar = transport.send.bind(transport);
   transport.send = async (msg: JSONRPCMessage) => {
     await enviar(msg);
-    if (!("method" in msg) && "id" in msg && pendentes.delete(msg.id) && pendentes.size === 0) {
-      aoEsvaziar?.();
-    }
+    const id = !("method" in msg) && "id" in msg ? msg.id : undefined;
+    if (id !== undefined && pendentes.delete(id) && pendentes.size === 0) aoEsvaziar?.();
   };
   transport.onclose = () => void encerrar("transporte fechado");
   log(`pronto (versão ${VERSAO_SERVIDOR}${args.somenteLeitura ? ", somente leitura" : ""})`);

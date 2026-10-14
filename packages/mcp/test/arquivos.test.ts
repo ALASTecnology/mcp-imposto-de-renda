@@ -207,7 +207,9 @@ describe("escrita atômica e backup", () => {
     ]);
     // Cada backup guarda o conteúdo anterior à escrita daquele instante.
     expect(readFileSync(join(raiz, PASTA_BACKUPS, backups[2] ?? ""), "utf8")).toBe("v4");
-    expect(readFileSync(join(raiz, PASTA_BACKUPS, backups[0] ?? ""), "utf8")).toBe("conteudo original");
+    expect(readFileSync(join(raiz, PASTA_BACKUPS, backups[0] ?? ""), "utf8")).toBe(
+      "conteudo original",
+    );
   });
 
   it("não perde backup quando dois são feitos no mesmo segundo", async () => {

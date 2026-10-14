@@ -23,9 +23,9 @@ suportado** (o cliente roda na nuvem e exigiria expor a pasta na internet).
 | Antigravity CLI, app e IDE | stdio, HTTP, SSE | Completo | Conta Antigravity | [gemini-cli.md](clientes/gemini-cli.md#antigravity-cli) |
 | App Gemini e Google AI Studio | sem servidor local | Não suportado | Qualquer | [gemini-app-e-ai-studio.md](clientes/gemini-app-e-ai-studio.md) |
 | Gemini Enterprise | Streamable HTTP com TLS público | Não suportado | Edições pagas | [gemini-app-e-ai-studio.md](clientes/gemini-app-e-ai-studio.md) |
-| GitHub Copilot no VS Code | stdio, HTTP | Completo (limite de 128 ferramentas) | Qualquer plano do Copilot | [vscode-copilot.md](clientes/vscode-copilot.md) |
+| GitHub Copilot no VS Code | stdio, HTTP | Completo com `--perfil essencial` (limite de 128 ferramentas) | Qualquer plano do Copilot | [vscode-copilot.md](clientes/vscode-copilot.md) |
 | Cursor | stdio, SSE, HTTP | Completo | Qualquer plano | [cursor.md](clientes/cursor.md) |
-| Windsurf (Devin Desktop) | stdio, HTTP, SSE | Completo (limite de 100 ferramentas no Cascade) | Qualquer plano | [windsurf.md](clientes/windsurf.md) |
+| Windsurf (Devin Desktop) | stdio, HTTP, SSE | Completo com `--perfil essencial` (limite de 100 ferramentas no Cascade) | Qualquer plano | [windsurf.md](clientes/windsurf.md) |
 | Zed | stdio, HTTP | Completo (sem recursos MCP) | Gratuito ou plano do Zed | [zed.md](clientes/zed.md) |
 | JetBrains AI Assistant e Junie | stdio, HTTP, SSE | Completo | Acesso ao JetBrains AI | [jetbrains.md](clientes/jetbrains.md) |
 | Cline | stdio, HTTP, SSE | Completo | Gratuito (paga o modelo) | [cline.md](clientes/cline.md) |
@@ -50,8 +50,9 @@ vale a documentação do fornecedor.
 | código-fonte (hoje) | `node` | `["/caminho/para/mcp-imposto-de-renda/apps/cli/dist/index.js", "--dir", "<pasta>"]` |
 
 O pacote ainda não está publicado no npm. Até lá, compile a partir do código
-([instalação](instalacao.md)) e use a segunda linha. Para só consultar e simular, acrescente
-`"--somente-leitura"` ao fim de `args`.
+([instalação](instalacao.md)) e use a segunda linha. Para escolher quais ferramentas o cliente vê,
+acrescente `"--perfil", "<nome>"` ao fim de `args` (veja abaixo). Para só consultar e simular,
+`"--perfil", "consulta"` ou `"--somente-leitura"`.
 
 Nos exemplos dos guias, troque `/Users/voce/Documentos/IR-2026` pela sua pasta. No Windows, use barras
 normais (`"C:/Users/voce/Documentos/IR-2026"`) ou duplas (`"C:\\Users\\voce\\Documentos\\IR-2026"`) no
@@ -59,10 +60,23 @@ JSON.
 
 ## Quantidade de ferramentas
 
-O servidor completo registra **154 ferramentas** (95 gravam). Com `--somente-leitura`, ficam **59**.
-Alguns clientes limitam a lista: o VS Code aceita até 128 ferramentas por pedido e o Cascade do
-Windsurf, 100. Modelos locais também sofrem com listas longas. Os guias desses clientes explicam como
-contornar.
+O servidor completo registra **154 ferramentas** (95 gravam). Alguns clientes limitam a lista: o VS
+Code aceita até 128 ferramentas por pedido e o Cascade do Windsurf, 100. Modelos locais também sofrem
+com listas longas. Para isso existem os perfis, escolhidos com `--perfil <nome>` ou com a variável de
+ambiente `MCP_IMPOSTO_DE_RENDA_PERFIL` (a opção na linha de comando vale mais):
+
+| Perfil | Ferramentas | O que expõe | Quando usar |
+| --- | --- | --- | --- |
+| `completo` (padrão) | 154 | Tudo. | Clientes sem limite (Claude Code, Claude Desktop, Cursor, Codex e outros). |
+| `essencial` | 78 | O ciclo inteiro: criar, preencher qualquer ficha, validar, calcular e gravar. Ficam de fora os atalhos repetidos por ficha (`editar_*`, `remover_*` e `listar_*` de cada ficha, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as 10 calculadoras avulsas. | VS Code (128), Windsurf (100) e modelos locais que vão gravar. |
+| `consulta` | 37 | Só leitura e cálculo; nenhuma ferramenta grava. Dispensa pasta com permissão de gravação. | Simular, validar e revisar sem risco. |
+
+Para ajuste fino, `--grupos calculo,validacao` expõe só os grupos citados e `--sem-grupos
+calculadoras,orientacao` tira grupos; as duas opções combinam com `--perfil` e com
+`--somente-leitura`. `mcp-imposto-de-renda --ajuda` mostra a contagem de cada perfil e de cada grupo,
+e o log de início diz quantas ferramentas ficaram (`pronto (versão 0.1.0, perfil essencial, 78
+ferramentas)`). Nome de perfil ou de grupo inválido encerra com código 2 e uma mensagem que lista os
+nomes válidos.
 
 ## Boas práticas
 

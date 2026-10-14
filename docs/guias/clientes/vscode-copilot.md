@@ -2,7 +2,7 @@
 
 | Transporte | Suporte | Plano |
 | --- | --- | --- |
-| stdio local | Completo, com atenção ao limite de 128 ferramentas | Qualquer plano do GitHub Copilot. Em Copilot Business e Enterprise, a organização controla o acesso a servidores MCP pelas políticas do Copilot. |
+| stdio local | Completo, com o perfil `essencial` por causa do limite de 128 ferramentas | Qualquer plano do GitHub Copilot. Em Copilot Business e Enterprise, a organização controla o acesso a servidores MCP pelas políticas do Copilot. |
 
 O VS Code inicia servidores MCP locais e entrega as ferramentas ao chat do Copilot no modo agente.
 
@@ -34,7 +34,7 @@ Pacote publicado no npm:
     "mcp-imposto-de-renda": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--somente-leitura"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--perfil", "essencial"]
     }
   }
 }
@@ -52,19 +52,21 @@ A partir do código:
         "/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js",
         "--dir",
         "/Users/voce/Documentos/IR-2026",
-        "--somente-leitura"
+        "--perfil",
+        "essencial"
       ]
     }
   }
 }
 ```
 
-Os exemplos já trazem `--somente-leitura` por causa do limite de ferramentas explicado abaixo.
+Os exemplos já trazem `--perfil essencial` por causa do limite de ferramentas explicado abaixo. Esse
+perfil preenche e grava a declaração inteira com 78 ferramentas.
 
 Pela linha de comando, o mesmo servidor entra no perfil com:
 
 ```sh
-code --add-mcp '{"name":"mcp-imposto-de-renda","command":"npx","args":["-y","mcp-imposto-de-renda","--dir","/Users/voce/Documentos/IR-2026","--somente-leitura"]}'
+code --add-mcp '{"name":"mcp-imposto-de-renda","command":"npx","args":["-y","mcp-imposto-de-renda","--dir","/Users/voce/Documentos/IR-2026","--perfil","essencial"]}'
 ```
 
 ## Passo a passo pela interface
@@ -87,14 +89,25 @@ code --add-mcp '{"name":"mcp-imposto-de-renda","command":"npx","args":["-y","mcp
 
 O chat do VS Code aceita no máximo **128 ferramentas ativas por pedido** e devolve o erro
 "Cannot have more than 128 tools per request" acima disso. O MCP Imposto de Renda completo registra
-154 ferramentas; com `--somente-leitura`, 59. Para gravar a declaração:
+154 ferramentas. Por isso os exemplos usam `--perfil essencial`:
 
-1. Configure um segundo servidor sem `--somente-leitura` (por exemplo `mcp-imposto-de-renda-gravacao`),
-   deixe-o parado e inicie só quando for preencher;
-2. em **Configure Tools**, desmarque grupos de ferramentas que não vai usar até ficar abaixo de 128
-   (somando as ferramentas embutidas e as de outros servidores); ou
+| Perfil | Ferramentas | Para quê |
+| --- | --- | --- |
+| `completo` (padrão) | 154 | Tudo. Passa do limite do VS Code. |
+| `essencial` | 78 | Cria, preenche qualquer ficha, valida, calcula e grava. Tira só os atalhos repetidos por ficha (`editar_bem`, `listar_dependentes` e afins, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as calculadoras avulsas. |
+| `consulta` | 37 | Só leitura e cálculo, nada grava. |
+
+O limite vale para a soma de todas as ferramentas ativas no pedido, incluindo as embutidas do
+Copilot e as de outros servidores. Se ainda passar de 128:
+
+1. em **Configure Tools**, desmarque as ferramentas que não vai usar;
+2. tire grupos inteiros com `--sem-grupos`, por exemplo `"--sem-grupos", "orientacao,arquivos"`
+   (a lista de grupos aparece em `mcp-imposto-de-renda --ajuda`); ou
 3. ative a configuração `github.copilot.chat.virtualTools.threshold`, que agrupa ferramentas
    automaticamente quando a lista é grande.
+
+Precisa de uma calculadora avulsa (carnê-leão, ganho de capital, preço médio)? Use `--perfil
+completo` em outro servidor, deixe-o parado e inicie só quando for usar.
 
 ## Modo somente leitura e sandbox
 
@@ -107,7 +120,7 @@ escrita só na pasta da declaração:
     "mcp-imposto-de-renda": {
       "type": "stdio",
       "command": "node",
-      "args": ["/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js", "--dir", "/Users/voce/Documentos/IR-2026", "--somente-leitura"],
+      "args": ["/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js", "--dir", "/Users/voce/Documentos/IR-2026", "--perfil", "consulta"],
       "sandboxEnabled": true,
       "sandbox": {
         "filesystem": { "allowWrite": ["/Users/voce/Documentos/IR-2026"] }
@@ -118,8 +131,8 @@ escrita só na pasta da declaração:
 ```
 
 Atenção: com sandbox ativo, o VS Code **aprova automaticamente** as chamadas desse servidor. Use
-sandbox só junto com `--somente-leitura`; para gravar, deixe o servidor fora da sandbox e confirme
-cada chamada. A sandbox não existe no Windows.
+sandbox só com `--perfil consulta` (ou `--somente-leitura`), que não grava nada; para gravar, deixe o
+servidor fora da sandbox e confirme cada chamada. A sandbox não existe no Windows.
 
 ## Limitações
 
@@ -131,9 +144,9 @@ cada chamada. A sandbox não existe no Windows.
 
 | Sintoma | Solução |
 | --- | --- |
-| "Cannot have more than 128 tools per request" | Veja a seção sobre o limite de 128 ferramentas. |
+| "Cannot have more than 128 tools per request" | Use `--perfil essencial` e veja a seção sobre o limite de 128 ferramentas. |
 | Servidor em erro | **MCP: List Servers > Show Output** e rode o mesmo comando no terminal. |
-| Windows: `npx` não inicia | `"command": "cmd"` e `"args": ["/c", "npx", "-y", "mcp-imposto-de-renda", "--dir", "C:/Users/voce/Documentos/IR-2026"]`. |
+| Windows: `npx` não inicia | `"command": "cmd"` e `"args": ["/c", "npx", "-y", "mcp-imposto-de-renda", "--dir", "C:/Users/voce/Documentos/IR-2026", "--perfil", "essencial"]`. |
 | Ferramentas não aparecem no chat | Confira se o chat está no modo **Agent**; os modos Ask e Edit não chamam ferramentas MCP. |
 
 ## Prompts para começar

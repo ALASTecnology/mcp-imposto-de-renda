@@ -17,9 +17,9 @@ terminal feito para o Ollama, com aprovação de cada chamada de ferramenta (*Hu
 uv tool install --upgrade ollmcp   # ou: pip install --upgrade ollmcp
 
 # pacote publicado no npm
-ollmcp mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026 --somente-leitura
+ollmcp mcp add mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026 --perfil consulta
 # a partir do código
-ollmcp mcp add mcp-imposto-de-renda -- node /Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js --dir /Users/voce/Documentos/IR-2026 --somente-leitura
+ollmcp mcp add mcp-imposto-de-renda -- node /Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js --dir /Users/voce/Documentos/IR-2026 --perfil consulta
 
 ollmcp   # inicia o cliente; /help mostra os comandos
 ```
@@ -49,8 +49,10 @@ Os logs de cada servidor ficam em `~/.config/ollmcp/logs/`.
 
 ## Modo somente leitura
 
-Os exemplos já usam `--somente-leitura`, que reduz a lista de 154 para 59 ferramentas e cabe melhor
-no contexto de modelos locais. Para gravar, retire a opção e aprove cada chamada.
+Os exemplos já usam `--perfil consulta`, que só lê e calcula e reduz a lista de 154 para 37
+ferramentas, o que cabe melhor no contexto de modelos locais. Para gravar, troque por `--perfil
+essencial` (78 ferramentas, preenche e grava a declaração inteira) e aprove cada chamada. Os perfis
+estão em [clientes-mcp.md](../clientes-mcp.md#quantidade-de-ferramentas).
 
 ## Limitações
 
@@ -63,7 +65,7 @@ no contexto de modelos locais. Para gravar, retire a opção e aprove cada chama
 | Sintoma | Solução |
 | --- | --- |
 | O modelo responde sem chamar ferramentas | Escolha um modelo com suporte a ferramentas. |
-| Respostas cortadas ou confusas | Aumente o contexto do modelo e use `--somente-leitura`. |
+| Respostas cortadas ou confusas | Aumente o contexto do modelo e use `--perfil consulta` (ou `--perfil essencial` para gravar). |
 | Servidor não inicia | Veja `~/.config/ollmcp/logs/` e rode o comando no terminal. |
 
 ## Prompts para começar

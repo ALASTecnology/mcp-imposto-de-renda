@@ -2,7 +2,7 @@
 
 | Transporte | Suporte | Plano |
 | --- | --- | --- |
-| stdio local | Completo, com atenção ao limite de 100 ferramentas do Cascade | Qualquer plano. Em contas Enterprise, o MCP precisa ser ligado nas configurações; em Teams e Enterprise, o administrador pode exigir allowlist. |
+| stdio local | Completo, com o perfil `essencial` por causa do limite de 100 ferramentas do Cascade | Qualquer plano. Em contas Enterprise, o MCP precisa ser ligado nas configurações; em Teams e Enterprise, o administrador pode exigir allowlist. |
 
 A documentação atual do editor da Cognition se refere a ele como **Devin Desktop**, com dois agentes:
 o **Devin Local** (padrão em abas novas) e o **Cascade** (legado). Os dois leem os servidores MCP do
@@ -32,7 +32,7 @@ lê esse arquivo, o formato é o mesmo.
   "mcpServers": {
     "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--somente-leitura"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--perfil", "essencial"]
     }
   }
 }
@@ -49,7 +49,8 @@ A partir do código:
         "/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js",
         "--dir",
         "/Users/voce/Documentos/IR-2026",
-        "--somente-leitura"
+        "--perfil",
+        "essencial"
       ]
     }
   }
@@ -59,7 +60,7 @@ A partir do código:
 Com o Devin CLI instalado, o mesmo resultado em escopo de usuário:
 
 ```sh
-devin mcp add -s user mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026 --somente-leitura
+devin mcp add -s user mcp-imposto-de-renda -- npx -y mcp-imposto-de-renda --dir /Users/voce/Documentos/IR-2026 --perfil essencial
 ```
 
 ## Passo a passo pela interface (Cascade)
@@ -74,12 +75,23 @@ No Devin Local, a lista de servidores carregados aparece na área de personaliza
 ## O limite de 100 ferramentas do Cascade
 
 O Cascade usa no máximo **100 ferramentas ao mesmo tempo**, somando todos os servidores. O servidor
-completo tem 154; com `--somente-leitura`, 59. Por isso os exemplos já vêm em modo somente leitura.
-Para gravar:
+completo tem 154. Por isso os exemplos usam `--perfil essencial`, com 78 ferramentas, que ainda cria,
+preenche qualquer ficha, valida, calcula e grava a declaração:
 
-- crie uma segunda entrada sem `--somente-leitura` e ligue só quando for preencher, desligando a outra
-  no interruptor; ou
-- esconda ferramentas com `"disabledTools": ["nome_da_ferramenta", ...]` até ficar abaixo do limite.
+| Perfil | Ferramentas | Para quê |
+| --- | --- | --- |
+| `completo` (padrão) | 154 | Tudo. Passa do limite do Cascade. |
+| `essencial` | 78 | A declaração inteira. Tira só os atalhos repetidos por ficha (`editar_bem`, `listar_dependentes` e afins, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as calculadoras avulsas. |
+| `consulta` | 37 | Só leitura e cálculo, nada grava. |
+
+Os 78 cabem com folga de 22 para as ferramentas de outros servidores. Se a soma passar de 100:
+
+- tire grupos inteiros com `--sem-grupos`, por exemplo `"--sem-grupos", "orientacao,arquivos"` (a
+  lista de grupos aparece em `mcp-imposto-de-renda --ajuda`); ou
+- esconda ferramentas com `"disabledTools": ["nome_da_ferramenta", ...]`.
+
+Para usar uma calculadora avulsa (carnê-leão, ganho de capital, preço médio), crie uma segunda entrada
+com `--perfil completo` e ligue só quando precisar, desligando a outra no interruptor.
 
 ## Como verificar
 
@@ -97,8 +109,8 @@ Para gravar:
 | Sintoma | Solução |
 | --- | --- |
 | Servidor não aparece | Confira se editou o arquivo do caminho atual (`~/.config/devin/...`) e não o antigo (`~/.codeium/windsurf/...`). |
-| Ferramentas cortadas | Limite de 100 ferramentas; use `--somente-leitura` ou `disabledTools`. |
-| Windows: `npx` não inicia | `"command": "cmd"` e `"args": ["/c", "npx", "-y", "mcp-imposto-de-renda", "--dir", "C:/Users/voce/Documentos/IR-2026"]`. |
+| Ferramentas cortadas | Limite de 100 ferramentas; use `--perfil essencial`, `--sem-grupos` ou `disabledTools`. |
+| Windows: `npx` não inicia | `"command": "cmd"` e `"args": ["/c", "npx", "-y", "mcp-imposto-de-renda", "--dir", "C:/Users/voce/Documentos/IR-2026", "--perfil", "essencial"]`. |
 
 ## Prompts para começar
 

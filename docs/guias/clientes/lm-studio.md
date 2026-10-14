@@ -20,14 +20,14 @@ O arquivo `mcp.json` do aplicativo, aberto pela interface: aba **Program** na ba
 
 ## Configuração
 
-Recomendado para modelos locais (somente leitura):
+Recomendado para modelos locais (perfil `consulta`, só leitura e cálculo):
 
 ```json
 {
   "mcpServers": {
     "mcp-imposto-de-renda": {
       "command": "npx",
-      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--somente-leitura"]
+      "args": ["-y", "mcp-imposto-de-renda", "--dir", "/Users/voce/Documentos/IR-2026", "--perfil", "consulta"]
     }
   }
 }
@@ -44,7 +44,8 @@ A partir do código:
         "/Users/voce/src/mcp-imposto-de-renda/apps/cli/dist/index.js",
         "--dir",
         "/Users/voce/Documentos/IR-2026",
-        "--somente-leitura"
+        "--perfil",
+        "consulta"
       ]
     }
   }
@@ -65,13 +66,15 @@ arquivos da pasta: o LM Studio mostra a chamada e pede confirmação.
 
 ## Modo somente leitura
 
-Já está nos exemplos. Para gravar, retire `--somente-leitura` e confirme cada chamada.
+Já está nos exemplos: o perfil `consulta` não registra nenhuma ferramenta que grave. Para gravar,
+troque por `--perfil essencial` e confirme cada chamada.
 
 ## Limitações
 
 - A própria documentação do LM Studio avisa que servidores pensados para modelos de nuvem podem
   gastar muitos tokens e estourar o contexto de modelos locais. Com 154 ferramentas, o servidor
-  completo dificilmente cabe; com `--somente-leitura`, são 59.
+  completo dificilmente cabe; o perfil `consulta` tem 37 e o `essencial`, 78 (veja os
+  [perfis](../clientes-mcp.md#quantidade-de-ferramentas)).
 - Modelos pequenos erram mais argumentos de ferramenta. Confira os valores antes de aprovar uma
   gravação e simule sempre antes de gravar.
 
@@ -79,7 +82,7 @@ Já está nos exemplos. Para gravar, retire `--somente-leitura` e confirme cada 
 
 | Sintoma | Solução |
 | --- | --- |
-| Estouro de contexto | Use `--somente-leitura`, um modelo com contexto maior ou aumente o contexto na configuração do modelo. |
+| Estouro de contexto | Use `--perfil consulta` (ou `essencial` para gravar), um modelo com contexto maior ou aumente o contexto na configuração do modelo. |
 | O modelo não chama ferramentas | Escolha um modelo marcado com suporte a ferramentas (tool use). |
 | `npx` não encontrado | Use o caminho absoluto do `node` em `command`. |
 

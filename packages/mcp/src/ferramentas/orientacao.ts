@@ -102,7 +102,9 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
     onde: "Programa GCAP 2025, instalado separadamente.",
     passos: [
       "Preencha a alienação no GCAP e pague o Darf 4600 até o último dia útil do mês seguinte.",
-      "No programa da declaração, use Importações > Ganhos de Capital; grave a cópia de segurança.",
+      "No GCAP 2025, use Exportar para o IRPF2026 (não a cópia de segurança do GCAP) para cada CPF, do titular e dos dependentes.",
+      "No programa da declaração, use Importações > Ganhos de Capital (Ctrl+Shift+G); importar de novo o mesmo CPF substitui os dados dele. Grave a cópia de segurança.",
+      "Traga o .DBK para a pasta autorizada e confira o demonstrativo inteiro com listar_ganhos_capital.",
     ],
     trazer:
       "O .DBK com o demonstrativo importado (a conversão do MCP Imposto de Renda preserva o detalhe do GCAP).",

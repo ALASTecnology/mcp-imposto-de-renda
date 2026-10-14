@@ -83,7 +83,12 @@ export function validarCampo(
     }
     case "cnpj": {
       const ok = validarCnpj(dig);
-      return res(tipo, ok, dig, ok ? "CNPJ válido." : "CNPJ inválido: confira os 14 dígitos e o DV.");
+      return res(
+        tipo,
+        ok,
+        dig,
+        ok ? "CNPJ válido." : "CNPJ inválido: confira os 14 dígitos e o DV.",
+      );
     }
     case "recibo": {
       const ok = /^\d{12}$/.test(dig) && !/^0+$/.test(dig);
@@ -119,7 +124,12 @@ export function validarCampo(
     case "nome": {
       const n = valor.trim().replace(/\s+/g, " ");
       const problema = problemaNome(n);
-      return res(tipo, problema === undefined, n, problema ?? "Nome conforme as regras do programa.");
+      return res(
+        tipo,
+        problema === undefined,
+        n,
+        problema ?? "Nome conforme as regras do programa.",
+      );
     }
     case "data": {
       const iso = dataIso(valor);
@@ -133,7 +143,12 @@ export function validarCampo(
     case "renavam": {
       const r = /^\d{9,11}$/.test(dig) ? dig.padStart(11, "0") : dig;
       const ok = /^\d{11}$/.test(r) && !/^0+$/.test(r) && dvRenavam(r.slice(0, 10)) === r[10];
-      return res(tipo, ok, r, ok ? "Renavam válido." : "Renavam inválido: confira os dígitos e o DV.");
+      return res(
+        tipo,
+        ok,
+        r,
+        ok ? "Renavam válido." : "Renavam inválido: confira os dígitos e o DV.",
+      );
     }
     case "conta_bancaria": {
       const banco = somenteDigitos(complemento.banco ?? "").padStart(3, "0");

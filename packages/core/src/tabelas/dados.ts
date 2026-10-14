@@ -29,13 +29,13 @@ import bensDireitos from "../../../../docs/mapeamento/tabelas/bens-direitos.json
 import datasPrazos from "../../../../docs/mapeamento/tabelas/datas-prazos.json" with {
   type: "json",
 };
-import dolar2025 from "../../../../docs/mapeamento/tabelas/dolar-2025.json" with { type: "json" };
 import dependentes from "../../../../docs/mapeamento/tabelas/dependentes.json" with {
   type: "json",
 };
 import dividasOnus from "../../../../docs/mapeamento/tabelas/dividas-onus.json" with {
   type: "json",
 };
+import dolar2025 from "../../../../docs/mapeamento/tabelas/dolar-2025.json" with { type: "json" };
 import fundosEca from "../../../../docs/mapeamento/tabelas/fundos-eca.json" with { type: "json" };
 import fundosIdoso from "../../../../docs/mapeamento/tabelas/fundos-idoso.json" with {
   type: "json",

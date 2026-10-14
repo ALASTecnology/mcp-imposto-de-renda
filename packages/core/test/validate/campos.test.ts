@@ -33,7 +33,10 @@ describe("validarCampo", () => {
   });
 
   it("CEP com 8 dígitos", () => {
-    expect(validarCampo("cep", "70040-010")).toMatchObject({ valido: true, normalizado: "70040010" });
+    expect(validarCampo("cep", "70040-010")).toMatchObject({
+      valido: true,
+      normalizado: "70040010",
+    });
     expect(validarCampo("cep", "7004001").valido).toBe(false);
     expect(validarCampo("cep", "00000000").valido).toBe(false);
   });
@@ -55,7 +58,10 @@ describe("validarCampo", () => {
     const n = validarCampo("nome", "MARIAAA SILVA");
     expect(n.valido).toBe(false);
     expect(n.mensagem).toMatch(/3 caracteres iguais/);
-    expect(validarCampo("data", "29/02/2024")).toMatchObject({ valido: true, normalizado: "2024-02-29" });
+    expect(validarCampo("data", "29/02/2024")).toMatchObject({
+      valido: true,
+      normalizado: "2024-02-29",
+    });
     expect(validarCampo("data", "29/02/2025").valido).toBe(false);
     expect(validarCampo("data", "2025-13-01").valido).toBe(false);
   });
@@ -82,7 +88,9 @@ describe("validarCampo", () => {
     const dvErrado = validarCampo("conta_bancaria", "210169-5", { banco: "001", agencia: "1234" });
     expect(dvErrado.valido).toBe(false);
     expect(dvErrado.mensagem).toMatch(/DV/);
-    expect(validarCampo("conta_bancaria", "123", { banco: "999", agencia: "1" }).valido).toBe(false);
+    expect(validarCampo("conta_bancaria", "123", { banco: "999", agencia: "1" }).valido).toBe(
+      false,
+    );
     expect(validarCampo("conta_bancaria", "123", {}).mensagem).toMatch(/banco e agência/);
   });
 });

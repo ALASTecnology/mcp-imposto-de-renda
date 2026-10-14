@@ -179,7 +179,10 @@ describe("validar_documento", () => {
     const cep = await chamar("validar_documento", { documento: "7004", tipo: "cep" });
     expect(cep.structuredContent).toMatchObject({ tipo: "cep", valido: false });
     // Renavam 0063972448 + DV: soma 0*3+0*2+6*9+3*8+9*7+7*6+2*5+4*4+4*3+8*2 = 237; 2370 mod 11 = 5.
-    const renavam = await chamar("validar_documento", { documento: "00639724485", tipo: "renavam" });
+    const renavam = await chamar("validar_documento", {
+      documento: "00639724485",
+      tipo: "renavam",
+    });
     expect(renavam.structuredContent).toMatchObject({ valido: true });
     const conta = await chamar("validar_documento", {
       documento: "210169-6",
@@ -187,7 +190,10 @@ describe("validar_documento", () => {
       banco: "001",
       agencia: "1234",
     });
-    expect(conta.structuredContent).toMatchObject({ valido: true, normalizado: "001/1234/210169-6" });
+    expect(conta.structuredContent).toMatchObject({
+      valido: true,
+      normalizado: "001/1234/210169-6",
+    });
   });
 });
 

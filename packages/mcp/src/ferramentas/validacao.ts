@@ -16,7 +16,8 @@ import type { GrupoFerramentas } from "./tipos.js";
 
 export const grupoValidacao: GrupoFerramentas = {
   nome: "validacao",
-  descricao: "Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração.",
+  descricao:
+    "Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração.",
   registrar(r) {
     r.ferramenta(
       "validar_documento",

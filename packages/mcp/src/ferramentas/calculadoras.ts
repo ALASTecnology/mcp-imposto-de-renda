@@ -689,7 +689,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
       {
         titulo: "Converter valor em moeda estrangeira",
         descricao:
-          "Converte para reais um valor em moeda estrangeira e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, atividade rural, bem ou aplicação financeira (Lei 14.754/2023). Sem `cotacao`, usa a tabela oficial \"Conversão para Reais do Dólar dos Estados Unidos da América em 2025\" (Ajuda do PGD, pág. 356): compra do mês para rendimento e imposto pago, venda do mês para dedução e compra de 31/12/2025 para atividade rural; nesse caso o valor deve estar em dólares. Bens e aplicações exigem a cotação da data, informada pelo usuário.",
+          'Converte para reais um valor em moeda estrangeira e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, atividade rural, bem ou aplicação financeira (Lei 14.754/2023). Sem `cotacao`, usa a tabela oficial "Conversão para Reais do Dólar dos Estados Unidos da América em 2025" (Ajuda do PGD, pág. 356): compra do mês para rendimento e imposto pago, venda do mês para dedução e compra de 31/12/2025 para atividade rural; nesse caso o valor deve estar em dólares. Bens e aplicações exigem a cotação da data, informada pelo usuário.',
         entrada: {
           valor: z
             .string()
@@ -701,7 +701,9 @@ export const grupoCalculadoras: GrupoFerramentas = {
             .string()
             .max(16)
             .optional()
-            .describe('Cotação em reais por unidade ("5,1234"); omita para usar a tabela do dólar de 2025.'),
+            .describe(
+              'Cotação em reais por unidade ("5,1234"); omita para usar a tabela do dólar de 2025.',
+            ),
           mes: z
             .number()
             .int()
@@ -723,7 +725,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
       (a) => {
         const valor = valorEstrangeiro(a.valor);
         const FONTE_TABELA =
-          "tabela \"Conversão para Reais do Dólar dos Estados Unidos da América em 2025\" (Ajuda do PGD IRPF 2026, pág. 356)";
+          'tabela "Conversão para Reais do Dólar dos Estados Unidos da América em 2025" (Ajuda do PGD IRPF 2026, pág. 356)';
         let cot: bigint;
         let fonte: string;
         if (a.cotacao !== undefined) {

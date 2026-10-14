@@ -157,6 +157,24 @@ describe("autoir-mcp via stdio", () => {
     expect(log).not.toContain("52998224725");
   }, 30_000);
 
+  it("responde as chamadas em andamento antes de sair quando o stdin fecha (revisão M4)", async () => {
+    const p = iniciar(["--dir", pasta]);
+    await inicializar(p);
+    for (let id = 2; id <= 6; id++) {
+      p.enviar({
+        jsonrpc: "2.0",
+        id,
+        method: "tools/call",
+        params: { name: "listar_arquivos", arguments: {} },
+      });
+    }
+    p.filho.stdin.end();
+    for (let id = 2; id <= 6; id++) {
+      expect((await p.resposta(id)).result).toBeDefined();
+    }
+    expect(await p.saida()).toEqual({ codigo: 0, sinal: null });
+  }, 30_000);
+
   it("no modo somente leitura não anuncia a ferramenta que grava", async () => {
     const p = iniciar(["--dir", pasta, "--somente-leitura"]);
     await inicializar(p);

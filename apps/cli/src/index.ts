@@ -1,5 +1,6 @@
 import { createServer, VERSAO_SERVIDOR } from "@autoir/mcp";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import type { JSONRPCMessage } from "@modelcontextprotocol/sdk/types.js";
 import { AJUDA, interpretarArgs } from "./args.js";
 
 // stdout é exclusivo do protocolo MCP: qualquer mensagem humana vai para stderr. Os logs nunca
@@ -7,6 +8,9 @@ import { AJUDA, interpretarArgs } from "./args.js";
 function log(mensagem: string): void {
   process.stderr.write(`autoir-mcp: ${mensagem}\n`);
 }
+
+/** Tempo máximo de espera pelas chamadas em andamento ao encerrar. */
+const PRAZO_PENDENTES_MS = 30_000;
 
 function classeDoErro(e: unknown): string {
   return e instanceof Error ? e.name : typeof e;
@@ -36,11 +40,27 @@ async function main(): Promise<void> {
   });
   const transport = new StdioServerTransport();
 
+  // Requisições recebidas e ainda sem resposta: ao fechar o stdin, o processo só sai depois de
+  // respondê-las (com prazo), para não abandonar uma gravação no meio (revisão M4).
+  const pendentes = new Set<string | number>();
+  let aoEsvaziar: (() => void) | undefined;
+  const esperarPendentes = (prazoMs: number) =>
+    pendentes.size === 0
+      ? Promise.resolve()
+      : new Promise<void>((ok) => {
+          const t = setTimeout(ok, prazoMs);
+          aoEsvaziar = () => {
+            clearTimeout(t);
+            ok();
+          };
+        });
+
   let encerrando = false;
   const encerrar = async (motivo: string): Promise<void> => {
     if (encerrando) return;
     encerrando = true;
     log(`encerrando (${motivo})`);
+    await esperarPendentes(PRAZO_PENDENTES_MS);
     try {
       await server.close();
     } catch {
@@ -52,9 +72,22 @@ async function main(): Promise<void> {
   process.on("SIGTERM", () => void encerrar("SIGTERM"));
   process.stdin.on("end", () => void encerrar("stdin fechado"));
   process.stdin.on("close", () => void encerrar("stdin fechado"));
-  transport.onclose = () => void encerrar("transporte fechado");
 
   await server.connect(transport);
+  // Instrumenta o transporte depois de conectado (o servidor já instalou o seu onmessage).
+  const receber = transport.onmessage;
+  transport.onmessage = (msg: JSONRPCMessage) => {
+    if ("method" in msg && "id" in msg) pendentes.add(msg.id);
+    receber?.(msg);
+  };
+  const enviar = transport.send.bind(transport);
+  transport.send = async (msg: JSONRPCMessage) => {
+    await enviar(msg);
+    if (!("method" in msg) && "id" in msg && pendentes.delete(msg.id) && pendentes.size === 0) {
+      aoEsvaziar?.();
+    }
+  };
+  transport.onclose = () => void encerrar("transporte fechado");
   log(`pronto (versão ${VERSAO_SERVIDOR}${args.somenteLeitura ? ", somente leitura" : ""})`);
 }
 

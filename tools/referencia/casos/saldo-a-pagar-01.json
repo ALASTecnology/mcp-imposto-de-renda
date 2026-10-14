@@ -1,0 +1,147 @@
+{
+  "id": "saldo-a-pagar-01",
+  "descricao": "Rendimentos de pessoa física sem carnê-leão: saldo de imposto a pagar.",
+  "entrada": {
+    "titular": {
+      "cpf": "10259091197",
+      "nome": "XAVIER FICTICIO DEVEDOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "50689005000141",
+        "nome": "EMPRESA FICTICIA 22 LTDA",
+        "rendimento": "5000000",
+        "previdenciaOficial": "500000",
+        "irrf": "300000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": 1,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 2,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 3,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 4,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 5,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 6,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 7,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 8,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 9,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 10,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 11,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        },
+        {
+          "mes": 12,
+          "pessoaFisica": "300000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "0"
+        }
+      ]
+    }
+  }
+}

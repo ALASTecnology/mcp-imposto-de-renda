@@ -1,0 +1,39 @@
+{
+  "id": "faixa-075-01",
+  "descricao": "Base de cálculo na faixa de 7,5% da tabela anual.",
+  "entrada": {
+    "titular": {
+      "cpf": "10045059900",
+      "nome": "DANIEL FICTICIO SETE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "71943471000181",
+        "nome": "EMPRESA FICTICIA 04 LTDA",
+        "rendimento": "3200000",
+        "previdenciaOficial": "0",
+        "irrf": "20000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "3200000",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "3200000",
+    "impostoDevidoCompleto": "26496",
+    "descontoSimplificado": "640000",
+    "baseCalculoSimplificado": "2560000",
+    "impostoDevidoSimplificado": "0",
+    "impostoRetidoTotal": "20000",
+    "saldoPagarCompleto": "6496",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "20000",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "0"
+  }
+}

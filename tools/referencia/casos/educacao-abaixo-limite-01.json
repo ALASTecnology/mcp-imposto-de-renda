@@ -1,0 +1,32 @@
+{
+  "id": "educacao-abaixo-limite-01",
+  "descricao": "Despesa de instrução do titular abaixo do limite individual.",
+  "entrada": {
+    "titular": {
+      "cpf": "10135178304",
+      "nome": "LEONARDO FICTICIO ESTUDANTE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95830375000195",
+        "nome": "EMPRESA FICTICIA 12 LTDA",
+        "rendimento": "7000000",
+        "previdenciaOficial": "700000",
+        "irrf": "600000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "01",
+        "cpfCnpj": "99779032000102",
+        "valor": "200000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

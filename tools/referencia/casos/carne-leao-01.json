@@ -1,0 +1,135 @@
+{
+  "id": "carne-leao-01",
+  "descricao": "Profissional autônomo com rendimentos de pessoas físicas e carnê-leão recolhido.",
+  "entrada": {
+    "titular": {
+      "cpf": "10214031993",
+      "nome": "TIAGO FICTICIO AUTONOMO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": 1,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 2,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 3,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 4,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 5,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 6,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 7,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 8,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 9,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 10,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 11,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        },
+        {
+          "mes": 12,
+          "pessoaFisica": "600000",
+          "exterior": "0",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "80000"
+        }
+      ]
+    }
+  }
+}

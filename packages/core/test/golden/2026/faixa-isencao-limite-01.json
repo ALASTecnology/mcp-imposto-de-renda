@@ -1,0 +1,39 @@
+{
+  "id": "faixa-isencao-limite-01",
+  "descricao": "Base de cálculo próxima do topo da faixa de isenção da tabela anual.",
+  "entrada": {
+    "titular": {
+      "cpf": "10033795169",
+      "nome": "CARLA FICTICIA LIMITE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "56457608000102",
+        "nome": "EMPRESA FICTICIA 03 LTDA",
+        "rendimento": "2846720",
+        "previdenciaOficial": "0",
+        "irrf": "0",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "2846720",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "2846720",
+    "impostoDevidoCompleto": "0",
+    "descontoSimplificado": "569344",
+    "baseCalculoSimplificado": "2277376",
+    "impostoDevidoSimplificado": "0",
+    "impostoRetidoTotal": "0",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "0"
+  }
+}

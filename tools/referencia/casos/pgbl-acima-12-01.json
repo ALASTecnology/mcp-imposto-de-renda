@@ -1,0 +1,32 @@
+{
+  "id": "pgbl-acima-12-01",
+  "descricao": "Contribuição a PGBL acima de 12% dos rendimentos tributáveis: dedução limitada.",
+  "entrada": {
+    "titular": {
+      "cpf": "10168972786",
+      "nome": "OSCAR FICTICIO PREVIDENTE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "42287964000102",
+        "nome": "EMPRESA FICTICIA 15 LTDA",
+        "rendimento": "10000000",
+        "previdenciaOficial": "900000",
+        "irrf": "1500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "36",
+        "cpfCnpj": "77208347000159",
+        "valor": "2000000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

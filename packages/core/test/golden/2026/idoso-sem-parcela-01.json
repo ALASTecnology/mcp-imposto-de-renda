@@ -1,0 +1,48 @@
+{
+  "id": "idoso-sem-parcela-01",
+  "descricao": "Titular com mais de 65 anos sem parcela isenta informada, com despesa médica.",
+  "entrada": {
+    "titular": {
+      "cpf": "10349209529",
+      "nome": "JULIA FICTICIA SENIOR",
+      "nascimento": "01011950"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "05547635000127",
+        "nome": "EMPRESA FICTICIA 32 LTDA",
+        "rendimento": "7500000",
+        "previdenciaOficial": "0",
+        "irrf": "600000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "11",
+        "cpfCnpj": "10266277373",
+        "valor": "450000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "7500000",
+    "deducoesCompleto": "450000",
+    "baseCalculoCompleto": "7050000",
+    "impostoDevidoCompleto": "853372",
+    "descontoSimplificado": "1500000",
+    "baseCalculoSimplificado": "6000000",
+    "impostoDevidoSimplificado": "564622",
+    "impostoRetidoTotal": "600000",
+    "saldoPagarCompleto": "253372",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "35378",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "752"
+  }
+}

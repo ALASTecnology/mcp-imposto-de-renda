@@ -1,0 +1,59 @@
+{
+  "id": "doacoes-eca-idoso-01",
+  "descricao": "Doações diretamente na declaração ao fundo da criança e do adolescente e ao fundo da pessoa idosa.",
+  "entrada": {
+    "titular": {
+      "cpf": "10270355901",
+      "nome": "YARA FICTICIA DOADORA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "66174868000116",
+        "nome": "EMPRESA FICTICIA 23 LTDA",
+        "rendimento": "18000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "3500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "10",
+        "cpfCnpj": "10243747772",
+        "valor": "3000000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      },
+      {
+        "codigo": "36",
+        "cpfCnpj": "08180073000114",
+        "valor": "1500000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "doacoesDiretas": {
+      "eca": "50000",
+      "idoso": "50000"
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "18000000",
+    "deducoesCompleto": "5500000",
+    "baseCalculoCompleto": "12500000",
+    "impostoDevidoCompleto": "2252122",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "16324566",
+    "impostoDevidoSimplificado": "3403877",
+    "impostoRetidoTotal": "3500000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "1247878",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "96123",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "1251"
+  }
+}

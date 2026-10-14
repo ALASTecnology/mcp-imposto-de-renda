@@ -1,0 +1,163 @@
+{
+  "id": "carne-leao-livro-caixa-01",
+  "descricao": "Autônomo com livro-caixa, previdência oficial no carnê-leão e um rendimento PJ.",
+  "entrada": {
+    "titular": {
+      "cpf": "10225296764",
+      "nome": "URSULA FICTICIA LIVRO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "04231416000171",
+        "nome": "EMPRESA FICTICIA 19 LTDA",
+        "rendimento": "3000000",
+        "previdenciaOficial": "0",
+        "irrf": "100000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": "1",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "2",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "3",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "4",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "5",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "6",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "7",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "8",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "9",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "10",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "11",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        },
+        {
+          "mes": "12",
+          "pessoaFisica": "500000",
+          "exterior": "0",
+          "previdenciaOficial": "50000",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "150000",
+          "carneLeao": "30000"
+        }
+      ]
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "9000000",
+    "deducoesCompleto": "2400000",
+    "baseCalculoCompleto": "6600000",
+    "impostoDevidoCompleto": "729622",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "7324566",
+    "impostoDevidoSimplificado": "928877",
+    "impostoRetidoTotal": "460000",
+    "saldoPagarCompleto": "269622",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "468877",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "810"
+  }
+}

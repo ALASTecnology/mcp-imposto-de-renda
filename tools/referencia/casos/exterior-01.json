@@ -1,0 +1,92 @@
+{
+  "id": "exterior-01",
+  "descricao": "Rendimentos recebidos do exterior com imposto pago no exterior a compensar.",
+  "entrada": {
+    "titular": {
+      "cpf": "10236561596",
+      "nome": "VITOR FICTICIO EXTERIOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "19717279000157",
+        "nome": "EMPRESA FICTICIA 20 LTDA",
+        "rendimento": "4000000",
+        "previdenciaOficial": "400000",
+        "irrf": "100000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosPF": {
+      "meses": [
+        {
+          "mes": 1,
+          "pessoaFisica": "0",
+          "exterior": "400000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "40000"
+        },
+        {
+          "mes": 2,
+          "pessoaFisica": "0",
+          "exterior": "400000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "40000"
+        },
+        {
+          "mes": 3,
+          "pessoaFisica": "0",
+          "exterior": "400000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "40000"
+        },
+        {
+          "mes": 4,
+          "pessoaFisica": "0",
+          "exterior": "400000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "40000"
+        },
+        {
+          "mes": 5,
+          "pessoaFisica": "0",
+          "exterior": "400000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "40000"
+        },
+        {
+          "mes": 6,
+          "pessoaFisica": "0",
+          "exterior": "400000",
+          "previdenciaOficial": "0",
+          "dependentes": "0",
+          "pensao": "0",
+          "livroCaixa": "0",
+          "carneLeao": "40000"
+        }
+      ]
+    },
+    "impostoPago": {
+      "complementar": "0",
+      "exterior": "150000",
+      "irrfLei11033": "0"
+    }
+  }
+}

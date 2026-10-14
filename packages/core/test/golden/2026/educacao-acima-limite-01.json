@@ -1,0 +1,64 @@
+{
+  "id": "educacao-acima-limite-01",
+  "descricao": "Despesas de instrução do titular e de dependente acima do limite individual.",
+  "entrada": {
+    "titular": {
+      "cpf": "10146443136",
+      "nome": "MARCOS FICTICIO PAI",
+      "nascimento": "15031985"
+    },
+    "dependentes": [
+      {
+        "cpf": "10144403862",
+        "nome": "NINA FICTICIA ESTUDANTE",
+        "nascimento": "05042010",
+        "codigo": "21"
+      }
+    ],
+    "rendimentosPJ": [
+      {
+        "cnpj": "11316238000147",
+        "nome": "EMPRESA FICTICIA 13 LTDA",
+        "rendimento": "12000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "2000000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "01",
+        "cpfCnpj": "15264895000149",
+        "valor": "1000000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      },
+      {
+        "codigo": "01",
+        "cpfCnpj": "30750758000108",
+        "valor": "800000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "D",
+        "cpfDependente": "10144403862"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "12000000",
+    "deducoesCompleto": "1939808",
+    "baseCalculoCompleto": "10060192",
+    "impostoDevidoCompleto": "1681174",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "10324566",
+    "impostoDevidoSimplificado": "1753877",
+    "impostoRetidoTotal": "2000000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "318826",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "246123",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "1400"
+  }
+}

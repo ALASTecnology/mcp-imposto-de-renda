@@ -1,0 +1,23 @@
+{
+  "id": "faixa-275-01",
+  "descricao": "Base de cálculo na faixa de 27,5% da tabela anual, com IRRF relevante.",
+  "entrada": {
+    "titular": {
+      "cpf": "10078854326",
+      "nome": "GABRIELA FICTICIA ALTA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "18401060000181",
+        "nome": "EMPRESA FICTICIA 07 LTDA",
+        "rendimento": "15000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "3000000",
+        "decimoTerceiro": "1250000",
+        "irrfDecimoTerceiro": "300000",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "completo-vantajoso-01",
+  "descricao": "Muitas deduções (dependentes, saúde, instrução, PGBL): o modelo completo é o mais vantajoso.",
+  "entrada": {
+    "titular": {
+      "cpf": "10315415193",
+      "nome": "GUSTAVO FICTICIO COMPLETO",
+      "nascimento": "15031985"
+    },
+    "dependentes": [
+      {
+        "cpf": "10178198234",
+        "nome": "DAVI FICTICIO FILHO",
+        "nascimento": "12122013",
+        "codigo": "21"
+      },
+      {
+        "cpf": "10189463066",
+        "nome": "EVA FICTICIA FILHA",
+        "nascimento": "08092018",
+        "codigo": "21"
+      },
+      {
+        "cpf": "10200727842",
+        "nome": "FATIMA FICTICIA CONJUGE",
+        "nascimento": "20021984",
+        "codigo": "11"
+      }
+    ],
+    "rendimentosPJ": [
+      {
+        "cnpj": "43604183000167",
+        "nome": "EMPRESA FICTICIA 28 LTDA",
+        "rendimento": "14000000",
+        "previdenciaOficial": "1100000",
+        "irrf": "2500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "10",
+        "cpfCnpj": "10255012500",
+        "valor": "800000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "D",
+        "cpfDependente": "10178198234"
+      },
+      {
+        "codigo": "26",
+        "cpfCnpj": "23665936000137",
+        "valor": "1800000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      },
+      {
+        "codigo": "01",
+        "cpfCnpj": "39151799000152",
+        "valor": "400000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "D",
+        "cpfDependente": "10189463066"
+      },
+      {
+        "codigo": "36",
+        "cpfCnpj": "54637662000104",
+        "valor": "1000000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

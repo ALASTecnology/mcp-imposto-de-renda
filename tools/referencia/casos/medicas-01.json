@@ -1,0 +1,55 @@
+{
+  "id": "medicas-01",
+  "descricao": "Despesas médicas: profissional, plano de saúde com parcela não dedutível e hospital para dependente.",
+  "entrada": {
+    "titular": {
+      "cpf": "10157707970",
+      "nome": "NADIA FICTICIA SAUDE",
+      "nascimento": "15031985"
+    },
+    "dependentes": [
+      {
+        "cpf": "10155668633",
+        "nome": "OTAVIO FICTICIO FILHO",
+        "nascimento": "17112014",
+        "codigo": "21"
+      }
+    ],
+    "rendimentosPJ": [
+      {
+        "cnpj": "26802101000170",
+        "nome": "EMPRESA FICTICIA 14 LTDA",
+        "rendimento": "11000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "1500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "10",
+        "cpfCnpj": "10232482985",
+        "valor": "500000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      },
+      {
+        "codigo": "26",
+        "cpfCnpj": "46236621000170",
+        "valor": "1200000",
+        "parcelaNaoDedutivel": "100000",
+        "beneficiario": "T"
+      },
+      {
+        "codigo": "21",
+        "cpfCnpj": "61722484000177",
+        "valor": "300000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "D",
+        "cpfDependente": "10155668633"
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "doacoes-eca-idoso-01",
+  "descricao": "Doações diretamente na declaração ao fundo da criança e do adolescente e ao fundo da pessoa idosa.",
+  "entrada": {
+    "titular": {
+      "cpf": "10270355901",
+      "nome": "YARA FICTICIA DOADORA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "66174868000116",
+        "nome": "EMPRESA FICTICIA 23 LTDA",
+        "rendimento": "18000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "3500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "10",
+        "cpfCnpj": "10243747772",
+        "valor": "3000000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      },
+      {
+        "codigo": "36",
+        "cpfCnpj": "08180073000114",
+        "valor": "1500000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "doacoesDiretas": {
+      "eca": "50000",
+      "idoso": "50000"
+    }
+  }
+}

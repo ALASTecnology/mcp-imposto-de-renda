@@ -1,0 +1,23 @@
+{
+  "id": "faixa-225-01",
+  "descricao": "Base de cálculo na faixa de 22,5% da tabela anual.",
+  "entrada": {
+    "titular": {
+      "cpf": "10067589502",
+      "nome": "FABIO FICTICIO VINTE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "02915197000114",
+        "nome": "EMPRESA FICTICIA 06 LTDA",
+        "rendimento": "5200000",
+        "previdenciaOficial": "0",
+        "irrf": "350000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "dependente-com-rendimento-01",
+  "descricao": "Dependente universitário com rendimento próprio de pessoa jurídica somado à declaração.",
+  "entrada": {
+    "titular": {
+      "cpf": "10304150304",
+      "nome": "CAIO FICTICIO RESPONSAVEL",
+      "nascimento": "15031985"
+    },
+    "dependentes": [
+      {
+        "cpf": "10166933465",
+        "nome": "BEATRIZ FICTICIA ESTAGIARIA",
+        "nascimento": "03032003",
+        "codigo": "22"
+      }
+    ],
+    "rendimentosPJ": [
+      {
+        "cnpj": "12632457000106",
+        "nome": "EMPRESA FICTICIA 26 LTDA",
+        "rendimento": "9000000",
+        "previdenciaOficial": "900000",
+        "irrf": "1000000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      },
+      {
+        "cnpj": "28118320000160",
+        "nome": "EMPRESA FICTICIA 27 LTDA",
+        "rendimento": "1800000",
+        "previdenciaOficial": "0",
+        "irrf": "0",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "D",
+        "cpfDependente": "10166933465"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "10800000",
+    "deducoesCompleto": "1127508",
+    "baseCalculoCompleto": "9672492",
+    "impostoDevidoCompleto": "1574557",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "9124566",
+    "impostoDevidoSimplificado": "1423877",
+    "impostoRetidoTotal": "1000000",
+    "saldoPagarCompleto": "574557",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "423877",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "1318"
+  }
+}

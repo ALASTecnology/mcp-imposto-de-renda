@@ -1,0 +1,47 @@
+{
+  "id": "tributacao-exclusiva-01",
+  "descricao": "Décimo terceiro, aplicações financeiras, JCP e PLR em tributação exclusiva; isentos de poupança e lucros.",
+  "entrada": {
+    "titular": {
+      "cpf": "10281620733",
+      "nome": "ZECA FICTICIO INVESTIDOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "81660731000165",
+        "nome": "EMPRESA FICTICIA 24 LTDA",
+        "rendimento": "9000000",
+        "previdenciaOficial": "900000",
+        "irrf": "1100000",
+        "decimoTerceiro": "750000",
+        "irrfDecimoTerceiro": "90000",
+        "beneficiario": "T"
+      }
+    ],
+    "tributacaoExclusiva": [
+      {
+        "codigo": "06",
+        "valor": "350000"
+      },
+      {
+        "codigo": "10",
+        "valor": "120000"
+      },
+      {
+        "codigo": "11",
+        "valor": "800000"
+      }
+    ],
+    "rendimentosIsentos": [
+      {
+        "codigo": "12",
+        "valor": "90000"
+      },
+      {
+        "codigo": "09",
+        "valor": "2500000"
+      }
+    ]
+  }
+}

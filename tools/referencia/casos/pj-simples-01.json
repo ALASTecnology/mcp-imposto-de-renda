@@ -1,0 +1,23 @@
+{
+  "id": "pj-simples-01",
+  "descricao": "Assalariado com um único rendimento de pessoa jurídica, sem deduções além da previdência oficial.",
+  "entrada": {
+    "titular": {
+      "cpf": "10011265566",
+      "nome": "ANA FICTICIA PRIMEIRA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "25485882000153",
+        "nome": "EMPRESA FICTICIA 01 LTDA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "660000",
+        "irrf": "500000",
+        "decimoTerceiro": "500000",
+        "irrfDecimoTerceiro": "40000",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "isento-01",
+  "descricao": "Rendimento anual abaixo do limite de isenção; nenhum imposto devido nos dois modelos.",
+  "entrada": {
+    "titular": {
+      "cpf": "10022530398",
+      "nome": "BRUNO FICTICIO ISENTO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "40971745000112",
+        "nome": "EMPRESA FICTICIA 02 LTDA",
+        "rendimento": "2000000",
+        "previdenciaOficial": "160000",
+        "irrf": "0",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

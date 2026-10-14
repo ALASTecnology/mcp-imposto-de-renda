@@ -1,0 +1,33 @@
+{
+  "id": "pensao-alimenticia-01",
+  "descricao": "Pensão alimentícia judicial paga a alimentando residente no Brasil.",
+  "entrada": {
+    "titular": {
+      "cpf": "10191502383",
+      "nome": "RAFAEL FICTICIO ALIMENTANTE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "73259690000171",
+        "nome": "EMPRESA FICTICIA 17 LTDA",
+        "rendimento": "13000000",
+        "previdenciaOficial": "1000000",
+        "irrf": "2200000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "30",
+        "cpfCnpj": "10343091615",
+        "valor": "2400000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "A",
+        "cpfDependente": "10343091615"
+      }
+    ]
+  }
+}

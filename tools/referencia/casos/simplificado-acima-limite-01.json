@@ -1,0 +1,23 @@
+{
+  "id": "simplificado-acima-limite-01",
+  "descricao": "Rendimentos altos: desconto simplificado limitado ao teto do exercício.",
+  "entrada": {
+    "titular": {
+      "cpf": "10101383916",
+      "nome": "IARA FICTICIA ACIMA",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "49372786000167",
+        "nome": "EMPRESA FICTICIA 09 LTDA",
+        "rendimento": "20000000",
+        "previdenciaOficial": "0",
+        "irrf": "4000000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

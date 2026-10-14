@@ -1,0 +1,39 @@
+{
+  "id": "simplificado-limite-exato-01",
+  "descricao": "Rendimentos em que 20% coincidem com o teto do desconto simplificado.",
+  "entrada": {
+    "titular": {
+      "cpf": "10090119100",
+      "nome": "HEITOR FICTICIO TETO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "33886923000141",
+        "nome": "EMPRESA FICTICIA 08 LTDA",
+        "rendimento": "8377170",
+        "previdenciaOficial": "0",
+        "irrf": "800000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "8377170",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "8377170",
+    "impostoDevidoCompleto": "1218343",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "6701736",
+    "impostoDevidoSimplificado": "757599",
+    "impostoRetidoTotal": "800000",
+    "saldoPagarCompleto": "418343",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "42401",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "904"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "dependentes-02",
+  "descricao": "Dois filhos dependentes, dedução por dependente no modelo completo.",
+  "entrada": {
+    "titular": {
+      "cpf": "10123913535",
+      "nome": "KATIA FICTICIA MAE",
+      "nascimento": "15031985"
+    },
+    "dependentes": [
+      {
+        "cpf": "10121874206",
+        "nome": "LUCAS FICTICIO FILHO",
+        "nascimento": "10062012",
+        "codigo": "21"
+      },
+      {
+        "cpf": "10133139093",
+        "nome": "MARINA FICTICIA FILHA",
+        "nascimento": "22082016",
+        "codigo": "21"
+      }
+    ],
+    "rendimentosPJ": [
+      {
+        "cnpj": "80344512000104",
+        "nome": "EMPRESA FICTICIA 11 LTDA",
+        "rendimento": "9000000",
+        "previdenciaOficial": "900000",
+        "irrf": "900000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "9000000",
+    "deducoesCompleto": "1355016",
+    "baseCalculoCompleto": "7644984",
+    "impostoDevidoCompleto": "1016992",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "7324566",
+    "impostoDevidoSimplificado": "928877",
+    "impostoRetidoTotal": "900000",
+    "saldoPagarCompleto": "116992",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "28877",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "1032"
+  }
+}

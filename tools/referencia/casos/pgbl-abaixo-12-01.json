@@ -1,0 +1,32 @@
+{
+  "id": "pgbl-abaixo-12-01",
+  "descricao": "Contribuição a PGBL abaixo de 12% dos rendimentos tributáveis: dedução integral.",
+  "entrada": {
+    "titular": {
+      "cpf": "10180237551",
+      "nome": "PAULA FICTICIA PREVIDENTE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "57773827000155",
+        "nome": "EMPRESA FICTICIA 16 LTDA",
+        "rendimento": "10000000",
+        "previdenciaOficial": "900000",
+        "irrf": "1500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "36",
+        "cpfCnpj": "92694210000145",
+        "valor": "500000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "faixa-15-01",
+  "descricao": "Base de cálculo na faixa de 15% da tabela anual.",
+  "entrada": {
+    "titular": {
+      "cpf": "10056324723",
+      "nome": "ELISA FICTICIA QUINZE",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "87429334000163",
+        "nome": "EMPRESA FICTICIA 05 LTDA",
+        "rendimento": "4200000",
+        "previdenciaOficial": "0",
+        "irrf": "150000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "4200000",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "4200000",
+    "impostoDevidoCompleto": "162097",
+    "descontoSimplificado": "840000",
+    "baseCalculoSimplificado": "3360000",
+    "impostoDevidoSimplificado": "38496",
+    "impostoRetidoTotal": "150000",
+    "saldoPagarCompleto": "12097",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "111504",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "91"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "simplificado-abaixo-limite-01",
+  "descricao": "Rendimentos médios: desconto simplificado de 20% abaixo do teto.",
+  "entrada": {
+    "titular": {
+      "cpf": "10112648703",
+      "nome": "JOAO FICTICIO ABAIXO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "64858649000120",
+        "nome": "EMPRESA FICTICIA 10 LTDA",
+        "rendimento": "5000000",
+        "previdenciaOficial": "0",
+        "irrf": "200000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

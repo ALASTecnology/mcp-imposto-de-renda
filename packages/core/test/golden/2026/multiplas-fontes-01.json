@@ -1,0 +1,49 @@
+{
+  "id": "multiplas-fontes-01",
+  "descricao": "Dois empregos no ano, com IRRF em ambas as fontes.",
+  "entrada": {
+    "titular": {
+      "cpf": "10326679901",
+      "nome": "HELENA FICTICIA DUAS",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "59090046000191",
+        "nome": "EMPRESA FICTICIA 29 LTDA",
+        "rendimento": "4500000",
+        "previdenciaOficial": "450000",
+        "irrf": "200000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      },
+      {
+        "cnpj": "74575909000104",
+        "nome": "EMPRESA FICTICIA 30 LTDA",
+        "rendimento": "3500000",
+        "previdenciaOficial": "350000",
+        "irrf": "100000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "8000000",
+    "deducoesCompleto": "800000",
+    "baseCalculoCompleto": "7200000",
+    "impostoDevidoCompleto": "894622",
+    "descontoSimplificado": "1600000",
+    "baseCalculoSimplificado": "6400000",
+    "impostoDevidoSimplificado": "674622",
+    "impostoRetidoTotal": "300000",
+    "saldoPagarCompleto": "594622",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "374622",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "843"
+  }
+}

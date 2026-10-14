@@ -1,0 +1,32 @@
+{
+  "id": "previdencia-oficial-alta-01",
+  "descricao": "Previdência oficial elevada reduz a base do completo abaixo da do simplificado.",
+  "entrada": {
+    "titular": {
+      "cpf": "10337944733",
+      "nome": "IGOR FICTICIO SERVIDOR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "90061772000126",
+        "nome": "EMPRESA FICTICIA 31 LTDA",
+        "rendimento": "12000000",
+        "previdenciaOficial": "1650000",
+        "irrf": "1800000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "pagamentos": [
+      {
+        "codigo": "21",
+        "cpfCnpj": "70123525000108",
+        "valor": "600000",
+        "parcelaNaoDedutivel": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

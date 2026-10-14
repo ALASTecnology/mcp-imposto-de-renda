@@ -1,0 +1,23 @@
+{
+  "id": "restituicao-irrf-maior-01",
+  "descricao": "IRRF retido maior que o imposto devido: imposto a restituir nos dois modelos.",
+  "entrada": {
+    "titular": {
+      "cpf": "10247826383",
+      "nome": "WANDA FICTICIA RESTITUI",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "35203142000130",
+        "nome": "EMPRESA FICTICIA 21 LTDA",
+        "rendimento": "8000000",
+        "previdenciaOficial": "800000",
+        "irrf": "2000000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  }
+}

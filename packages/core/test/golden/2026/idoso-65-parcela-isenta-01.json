@@ -1,0 +1,45 @@
+{
+  "id": "idoso-65-parcela-isenta-01",
+  "descricao": "Aposentado com mais de 65 anos: parcela isenta de aposentadoria informada em rendimentos isentos.",
+  "entrada": {
+    "titular": {
+      "cpf": "10202767116",
+      "nome": "SILVIA FICTICIA APOSENTADA",
+      "nascimento": "10051955"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "88745553000114",
+        "nome": "INSTITUTO FICTICIO DE PREVIDENCIA",
+        "rendimento": "6000000",
+        "previdenciaOficial": "0",
+        "irrf": "300000",
+        "decimoTerceiro": "500000",
+        "irrfDecimoTerceiro": "20000",
+        "beneficiario": "T"
+      }
+    ],
+    "rendimentosIsentos": [
+      {
+        "codigo": "10",
+        "valor": "2475174"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "6000000",
+    "deducoesCompleto": "0",
+    "baseCalculoCompleto": "6000000",
+    "impostoDevidoCompleto": "564622",
+    "descontoSimplificado": "1200000",
+    "baseCalculoSimplificado": "4800000",
+    "impostoDevidoSimplificado": "274503",
+    "impostoRetidoTotal": "300000",
+    "saldoPagarCompleto": "264622",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "25497",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "457"
+  }
+}

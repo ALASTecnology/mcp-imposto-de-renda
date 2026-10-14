@@ -1,0 +1,39 @@
+{
+  "id": "isento-01",
+  "descricao": "Rendimento anual abaixo do limite de isenção; nenhum imposto devido nos dois modelos.",
+  "entrada": {
+    "titular": {
+      "cpf": "10022530398",
+      "nome": "BRUNO FICTICIO ISENTO",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "40971745000112",
+        "nome": "EMPRESA FICTICIA 02 LTDA",
+        "rendimento": "2000000",
+        "previdenciaOficial": "160000",
+        "irrf": "0",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "2000000",
+    "deducoesCompleto": "160000",
+    "baseCalculoCompleto": "1840000",
+    "impostoDevidoCompleto": "0",
+    "descontoSimplificado": "400000",
+    "baseCalculoSimplificado": "1600000",
+    "impostoDevidoSimplificado": "0",
+    "impostoRetidoTotal": "0",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "completo",
+    "aliquotaEfetiva": "0"
+  }
+}

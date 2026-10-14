@@ -1,0 +1,28 @@
+{
+  "id": "imposto-complementar-01",
+  "descricao": "Imposto complementar recolhido durante o ano compensado no ajuste.",
+  "entrada": {
+    "titular": {
+      "cpf": "10292885504",
+      "nome": "ALICE FICTICIA COMPLEMENTAR",
+      "nascimento": "15031985"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "97146594000185",
+        "nome": "EMPRESA FICTICIA 25 LTDA",
+        "rendimento": "7000000",
+        "previdenciaOficial": "700000",
+        "irrf": "500000",
+        "decimoTerceiro": "0",
+        "irrfDecimoTerceiro": "0",
+        "beneficiario": "T"
+      }
+    ],
+    "impostoPago": {
+      "complementar": "120000",
+      "exterior": "0",
+      "irrfLei11033": "0"
+    }
+  }
+}

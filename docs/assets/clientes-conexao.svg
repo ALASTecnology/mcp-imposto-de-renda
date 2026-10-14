@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="#0F172A" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+  <title id="t">Como cada cliente se conecta ao MCP Imposto de Renda</title>
+  <desc id="d">Clientes com suporte a stdio iniciam o mcp-imposto-de-renda diretamente na sua máquina. Clientes locais que só falam HTTP usam uma ponte local escutando em 127.0.0.1, que inicia o servidor por stdio. Clientes na nuvem só aceitam URL pública HTTPS e não são recomendados, porque exigiriam expor a pasta autorizada. O servidor só lê e grava dentro da pasta passada em --dir.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#DC2626"/>
+    </marker>
+  </defs>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+    .h{font-size:26px;font-weight:700}
+    .sub{font-size:16px;fill:#475569}
+    .b{font-size:19px;font-weight:700}
+    .s{font-size:15px;fill:#334155}
+    .xs{font-size:13px;fill:#475569}
+    .c{font-size:15px;font-weight:600;fill:#4C1D95}
+    .w{font-size:15px;font-weight:600;fill:#991B1B}
+    .ws{font-size:13px;fill:#7F1D1D}
+    .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ln{stroke:#475569;stroke-width:2;fill:none}
+    .rl{stroke:#DC2626;stroke-width:2;fill:none}
+  </style>
+  <rect x="1" y="1" width="1198" height="698" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="40" y="52" class="h">Como cada cliente se conecta</text>
+  <text x="40" y="78" class="sub">Três famílias de clientes. Só as duas primeiras mantêm a declaração dentro da sua máquina.</text>
+
+  <rect x="30" y="100" width="860" height="580" rx="16" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text x="50" y="128" class="xs" style="font-weight:700;letter-spacing:1px">SUA MÁQUINA</text>
+
+  <rect x="50" y="146" width="300" height="320" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="70" y="180" class="b">1. stdio direto</text>
+  <text x="70" y="204" class="xs">o cliente inicia o servidor sozinho</text>
+  <text x="70" y="238" class="s">Claude Desktop</text>
+  <text x="70" y="262" class="s">Claude Code</text>
+  <text x="70" y="286" class="s">ChatGPT (app) e Codex</text>
+  <text x="70" y="310" class="s">Gemini e Antigravity CLI</text>
+  <text x="70" y="334" class="s">VS Code com Copilot</text>
+  <text x="70" y="358" class="s">Cursor e Windsurf</text>
+  <text x="70" y="382" class="s">Zed e JetBrains</text>
+  <text x="70" y="406" class="s">Cline, Continue, Goose</text>
+  <text x="70" y="430" class="s">LM Studio, Kiro CLI, ollmcp</text>
+  <text x="70" y="452" class="xs">configuração: comando e argumentos</text>
+
+  <rect x="50" y="500" width="300" height="160" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="70" y="534" class="b">2. HTTP local</text>
+  <text x="70" y="558" class="xs">o cliente só aceita uma URL</text>
+  <text x="70" y="592" class="s">Open WebUI</text>
+  <text x="70" y="616" class="s">outros clientes só HTTP</text>
+  <text x="70" y="644" class="xs">exige uma ponte local</text>
+
+  <rect x="430" y="176" width="300" height="120" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="580" y="214" class="b m" text-anchor="middle">mcp-imposto-de-renda</text>
+  <text x="580" y="242" class="s" text-anchor="middle">processo local, sem rede</text>
+  <rect x="470" y="256" width="220" height="28" rx="8" fill="#EDE9FE" stroke="#C4B5FD"/>
+  <text x="580" y="275" class="c m" text-anchor="middle" style="font-size:13px">--somente-leitura opcional</text>
+
+  <rect x="430" y="356" width="300" height="110" rx="14" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="580" y="394" class="b" text-anchor="middle">Pasta autorizada</text>
+  <text x="580" y="420" class="s m" text-anchor="middle">--dir ~/Documentos/IR-2026</text>
+  <text x="580" y="446" class="xs" text-anchor="middle">.DBK e backups; nada fora dela</text>
+
+  <rect x="430" y="520" width="300" height="140" rx="14" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="580" y="556" class="b" text-anchor="middle">Ponte local</text>
+  <text x="580" y="582" class="s" text-anchor="middle">supergateway, mcp-proxy ou mcpo</text>
+  <rect x="465" y="596" width="230" height="28" rx="8" fill="#EDE9FE" stroke="#C4B5FD"/>
+  <text x="580" y="615" class="c m" text-anchor="middle" style="font-size:13px">127.0.0.1:8765, com chave</text>
+  <text x="580" y="646" class="xs" text-anchor="middle">nunca 0.0.0.0</text>
+
+  <path d="M350 236H424" class="ln" marker-end="url(#a)"/>
+  <text x="387" y="226" class="xs" text-anchor="middle">stdio</text>
+  <path d="M350 590H424" class="ln" marker-end="url(#a)"/>
+  <text x="387" y="580" class="xs" text-anchor="middle">HTTP</text>
+  <path d="M450 520V492H400V276H424" class="ln" marker-end="url(#a)"/>
+  <text x="460" y="510" class="xs">stdio</text>
+  <path d="M580 296V350" class="ln" stroke-dasharray="6 5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="592" y="330" class="xs">lê e grava</text>
+
+  <rect x="760" y="146" width="110" height="300" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="815" y="178" class="xs" text-anchor="middle" style="font-weight:700">Atenção</text>
+  <text x="815" y="214" class="xs" text-anchor="middle">o provedor</text>
+  <text x="815" y="232" class="xs" text-anchor="middle">do LLM recebe</text>
+  <text x="815" y="250" class="xs" text-anchor="middle">o que as</text>
+  <text x="815" y="268" class="xs" text-anchor="middle">ferramentas</text>
+  <text x="815" y="286" class="xs" text-anchor="middle">devolvem</text>
+  <text x="815" y="340" class="xs" text-anchor="middle">modelo local</text>
+  <text x="815" y="358" class="xs" text-anchor="middle">(LM Studio,</text>
+  <text x="815" y="376" class="xs" text-anchor="middle">Ollama) fica</text>
+  <text x="815" y="394" class="xs" text-anchor="middle">na máquina</text>
+
+  <rect x="920" y="146" width="250" height="250" rx="12" fill="#FEF2F2" stroke="#F87171" stroke-width="1.5"/>
+  <text x="940" y="180" class="b" style="fill:#991B1B">3. Nuvem</text>
+  <text x="940" y="204" class="ws">só aceitam URL pública HTTPS</text>
+  <text x="940" y="238" class="w">ChatGPT na web</text>
+  <text x="940" y="262" class="w">Copilot Studio</text>
+  <text x="940" y="286" class="w">App Gemini e AI Studio</text>
+  <text x="940" y="310" class="w">Gemini Enterprise</text>
+  <text x="940" y="344" class="ws">não recomendado: exigiria</text>
+  <text x="940" y="362" class="ws">expor a pasta na internet</text>
+  <text x="940" y="380" class="ws">(exceção: túnel de saída da OpenAI)</text>
+
+  <path d="M920 300H896" class="rl" stroke-dasharray="6 5" marker-end="url(#r)"/>
+  <path d="M902 288l12 12M914 288l-12 12" stroke="#DC2626" stroke-width="2.5"/>
+
+  <rect x="920" y="420" width="250" height="240" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="940" y="452" class="b" style="font-size:17px">Regras</text>
+  <text x="940" y="482" class="s">Prefira stdio direto.</text>
+  <text x="940" y="508" class="s">Ponte só em 127.0.0.1,</text>
+  <text x="940" y="528" class="s">com chave de acesso.</text>
+  <text x="940" y="554" class="s">Sem túnel público.</text>
+  <text x="940" y="580" class="s">Para consultar, use</text>
+  <text x="940" y="600" class="s m" style="font-size:14px">--somente-leitura</text>
+  <text x="940" y="626" class="s">Aprove cada gravação.</text>
+</svg>

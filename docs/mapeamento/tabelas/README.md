@@ -92,7 +92,7 @@ limite da faixa isenta passou de 2.259,20 para 2.428,80.
 
 ## Como regenerar
 
-Scripts mantidos fora do repositório (scratchpad da sessão de mapeamento):
+Scripts auxiliares mantidos fora do repositório, porque leem o programa oficial extraído localmente:
 `gerar_tabelas.py <lib/resources> <raiz do irpf.jar extraída> <saída>` e
 `validar.py <saída>`, que confere parse, campos obrigatórios, caracteres invisíveis e
 códigos duplicados.

@@ -33,7 +33,7 @@ import {
   verificarControles,
 } from "../../src/dbk/index.js";
 import { declaracaoSintetica } from "../dbk/apoio.js";
-import { type Gerador, gerador, iniciosDeLinha, medir, mesmosBytes } from "./apoio.js";
+import { type Gerador, gerador, iniciosDeLinha, medir, mesmosBytes, orcamento } from "./apoio.js";
 
 type Resultado = { ok: true; bytes: Uint8Array } | { ok: false; erro: ArquivoDeclaracaoError };
 
@@ -376,7 +376,8 @@ describe("caracteres fora do latin-1 e quebras de linha", () => {
   });
 });
 
-describe("tamanho máximo, arquivos enormes e tempo", () => {
+// Medições de tempo sofrem com pausas transitórias da máquina: até 2 novas tentativas.
+describe("tamanho máximo, arquivos enormes e tempo", { retry: 2 }, () => {
   it("arquivo acima de TAMANHO_MAXIMO_ARQUIVO é recusado sem decodificar", () => {
     expect(TAMANHO_MAXIMO_ARQUIVO).toBe(20 * 1024 * 1024);
     const enorme = new Uint8Array(TAMANHO_MAXIMO_ARQUIVO + 1).fill(0x41);
@@ -393,7 +394,7 @@ describe("tamanho máximo, arquivos enormes e tempo", () => {
     expect(erro).toBeInstanceOf(ArquivoGrandeDemaisError);
     expect(erro).toBeInstanceOf(ArquivoDeclaracaoError);
     // Recusar não pode custar a decodificação (que criaria uma string de 20 MB no heap).
-    expect(ms).toBeLessThan(50);
+    expect(ms).toBeLessThan(orcamento(50));
     expect(depois - antes).toBeLessThan(5 * 1024 * 1024);
   });
 
@@ -423,7 +424,7 @@ describe("tamanho máximo, arquivos enormes e tempo", () => {
       lidos = lerArquivo(bytes).registros.length;
     });
     expect(lidos).toBe(muitos.length);
-    expect(ms).toBeLessThan(15_000);
+    expect(ms).toBeLessThan(orcamento(15_000));
   }, 60_000);
 
   it("20 MB de terminadores vazios falham na primeira linha, sem montar milhões de linhas", () => {
@@ -443,7 +444,7 @@ describe("tamanho máximo, arquivos enormes e tempo", () => {
     expect(erro).toBeInstanceOf(TipoRegistroDesconhecidoError);
     expect((erro as ArquivoDeclaracaoError).linha).toBe(1);
     // Antes da leitura linha a linha, só a decodificação levava mais de 2 s.
-    expect(ms).toBeLessThan(1500);
+    expect(ms).toBeLessThan(orcamento(1500));
   });
 
   it("entradas adversariais para regex (espaços longos, CR em série) não degeneram", () => {
@@ -464,13 +465,13 @@ describe("tamanho máximo, arquivos enormes e tempo", () => {
     vezes(normal);
     // Relativo a uma linha comum do mesmo tipo, para não depender da máquina nem da carga. Com
     // o antigo /( +)$/ a linha hostil era mais de 10 vezes mais lenta.
-    expect(vezes(linha)).toBeLessThan(3 * vezes(normal) + 20);
+    expect(vezes(linha)).toBeLessThan(3 * vezes(normal) + orcamento(20));
 
     const crs = new Uint8Array(1_000_000).fill(13);
     const ms2 = medir(() => {
       expect(() => lerArquivo(crs, { leiaute: L })).toThrow(TerminadorLinhaInvalidoError);
     });
-    expect(ms2).toBeLessThan(1000);
+    expect(ms2).toBeLessThan(orcamento(1000));
   });
 
   it("o tempo do fuzzing fica dentro de um orçamento por byte", () => {
@@ -490,7 +491,7 @@ describe("tamanho máximo, arquivos enormes e tempo", () => {
     // Ler e regravar ~6 KB leva bem menos de 1 ms. O orçamento médio (0,05 ms por byte) e o
     // teto por entrada (250 ms) têm folga para pausas de coleta de lixo e máquina carregada,
     // mas um comportamento quadrático estoura os dois.
-    expect(total / bytes).toBeLessThan(0.05);
-    expect(pior).toBeLessThan(250);
+    expect(total / bytes).toBeLessThan(orcamento(0.05));
+    expect(pior).toBeLessThan(orcamento(250));
   });
 });

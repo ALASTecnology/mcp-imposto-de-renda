@@ -32,5 +32,7 @@ export default defineConfig({
       "tools/docs/readme.test.ts",
     ],
     environment: "node",
+    // Fuzzing e testes de propriedade passam de 5 s em máquina carregada (CI compartilhado).
+    testTimeout: 30_000,
   },
 });

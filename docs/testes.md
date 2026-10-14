@@ -91,6 +91,9 @@ byte num arquivo do programa passa despercebida por `verificarControles`.
   primeira linha; o campo de 512 posições com espaços e um caractere no fim (o pior caso de uma
   regex de espaços finais) custa o mesmo que uma linha comum; o tempo médio por byte do fuzzing
   fica abaixo de 0,05 ms.
+- Os testes de tempo têm até 2 novas tentativas para absorver pausas transitórias. Em máquina
+  lenta ou muito carregada, multiplique os orçamentos com `MCP_IMPOSTO_DE_RENDA_FATOR_TEMPO`
+  (por exemplo `MCP_IMPOSTO_DE_RENDA_FATOR_TEMPO=3 pnpm test`). O padrão é 1.
 
 A semente e a iteração aparecem na mensagem de qualquer falha, o que torna o caso reproduzível
 (`gerador(semente)` em `integridade/apoio.ts`, mulberry32, sem dependência externa).

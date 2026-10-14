@@ -52,6 +52,18 @@ export function lerFixture(nome: string): Uint8Array {
 }
 
 /** Tempo, em milissegundos, de uma execução de `fn`. */
+/**
+ * Fator aplicado aos orçamentos de tempo. Em máquina lenta ou muito carregada, defina
+ * `MCP_IMPOSTO_DE_RENDA_FATOR_TEMPO` (por exemplo 3). O padrão 1 mantém os limites originais,
+ * que já têm folga para pausas de coleta de lixo.
+ */
+export const FATOR_TEMPO = Math.max(1, Number(process.env.MCP_IMPOSTO_DE_RENDA_FATOR_TEMPO) || 1);
+
+/** Orçamento de tempo em milissegundos, ajustado por {@link FATOR_TEMPO}. */
+export function orcamento(ms: number): number {
+  return ms * FATOR_TEMPO;
+}
+
 export function medir(fn: () => void): number {
   const inicio = process.hrtime.bigint();
   fn();

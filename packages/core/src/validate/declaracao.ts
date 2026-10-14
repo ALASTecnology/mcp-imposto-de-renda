@@ -21,8 +21,21 @@ import { REGRAS_RENDIMENTOS, validarRendimentos } from "./regras/rendimentos.js"
 import { REGRAS_RESUMO, validarResumo } from "./regras/resumo.js";
 import { criarContexto } from "./util.js";
 
+/**
+ * Pendência de forma: a entrada não passa no schema do modelo (`zDeclaracao`). Entra no
+ * catálogo `REGRAS` para que toda pendência possível tenha descrição e fonte documentadas.
+ */
+export const REGRA_FORMA_MODELO: Regra = regra({
+  codigo: "MODELO-FORMA",
+  gravidade: "erro",
+  ficha: "identificacao",
+  descricao: "A entrada não segue o modelo da declaração (tipo, tamanho, formato ou data).",
+  fonte: "Schema zDeclaracao (packages/core/src/model)",
+});
+
 /** Catálogo de todas as regras de validação. */
 export const REGRAS: readonly Regra[] = Object.freeze([
+  REGRA_FORMA_MODELO,
   ...REGRAS_IDENTIFICACAO,
   ...REGRAS_PESSOAS,
   ...REGRAS_RENDIMENTOS,
@@ -32,18 +45,6 @@ export const REGRAS: readonly Regra[] = Object.freeze([
   ...REGRAS_DEMONSTRATIVOS,
   ...REGRAS_RESUMO,
 ]);
-
-/**
- * Pendência de forma: a entrada não passa no schema do modelo (`zDeclaracao`). Fica fora de
- * `REGRAS`, que cataloga as regras de consistência de uma declaração já bem formada.
- */
-export const REGRA_FORMA_MODELO: Regra = regra({
-  codigo: "MODELO-FORMA",
-  gravidade: "erro",
-  ficha: "identificacao",
-  descricao: "A entrada não segue o modelo da declaração (tipo, tamanho, formato ou data).",
-  fonte: "Schema zDeclaracao (packages/core/src/model)",
-});
 
 /** Converte os problemas do schema em pendências, sem repetir o valor recebido. */
 function pendenciasDeForma(problemas: readonly { path: PropertyKey[]; message: string }[]) {

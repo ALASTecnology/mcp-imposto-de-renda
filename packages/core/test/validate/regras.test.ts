@@ -112,7 +112,8 @@ function saida(e: Entrada): void {
 function rodar(montar?: (e: Entrada) => void): Pendencia[] {
   const entrada = declaracaoBase() as Entrada;
   montar?.(entrada);
-  return validarDeclaracao(zDeclaracao.parse(entrada));
+  const forma = zDeclaracao.safeParse(entrada);
+  return validarDeclaracao(forma.success ? forma.data : entrada);
 }
 
 function codigos(p: readonly Pendencia[]): string[] {
@@ -121,6 +122,9 @@ function codigos(p: readonly Pendencia[]): string[] {
 
 /** Um cenário mínimo que dispara cada regra do catálogo. */
 const CENARIOS: Record<string, (e: Entrada) => void> = {
+  "MODELO-FORMA": (e) => {
+    e.identificacao.dataNascimento = "15/01/1980";
+  },
   "IDENT-CPF": (e) => {
     e.identificacao.cpf = cpfInvalido("397104821");
   },

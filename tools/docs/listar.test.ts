@@ -27,6 +27,8 @@ it("lista as ferramentas por grupo", async () => {
     const grupos = [];
     let prompts: string[] = [];
     let recursos: string[] = [];
+    let promptsDetalhe: unknown[] = [];
+    let recursosDetalhe: unknown[] = [];
     for (const g of GRUPOS) {
       const c = await conectar({ diretorioAutorizado: dir, grupos: [g] });
       const t = await c.listTools().catch(() => ({ tools: [] }));
@@ -39,11 +41,18 @@ it("lista as ferramentas por grupo", async () => {
           titulo: x.title,
           descricao: x.description,
           escrita: x.annotations?.readOnlyHint === false,
+          anotacoes: x.annotations ?? {},
+          entrada: x.inputSchema,
+          saida: x.outputSchema ?? null,
         })),
       });
       if (g.nome === "calculo") {
-        prompts = (await c.listPrompts()).prompts.map((p) => p.name);
-        recursos = (await c.listResources()).resources.map((r) => r.uri);
+        const ps = (await c.listPrompts()).prompts;
+        const rs = (await c.listResources()).resources;
+        prompts = ps.map((p) => p.name);
+        recursos = rs.map((r) => r.uri);
+        promptsDetalhe = ps;
+        recursosDetalhe = rs;
       }
       await c.close();
     }
@@ -54,7 +63,15 @@ it("lista as ferramentas por grupo", async () => {
     const totalSemPasta = (await semPasta.listTools()).tools.length;
     await semPasta.close();
     mkdirSync(SAIDA, { recursive: true });
-    const saida = { grupos, prompts, recursos, totalSomenteLeitura, totalSemPasta };
+    const saida = {
+      grupos,
+      prompts,
+      recursos,
+      promptsDetalhe,
+      recursosDetalhe,
+      totalSomenteLeitura,
+      totalSemPasta,
+    };
     writeFileSync(join(SAIDA, "ferramentas.json"), `${JSON.stringify(saida, null, 2)}\n`);
     expect(grupos.length).toBeGreaterThan(0);
   } finally {

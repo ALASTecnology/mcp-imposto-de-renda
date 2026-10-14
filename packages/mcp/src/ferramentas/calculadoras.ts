@@ -144,7 +144,9 @@ export const grupoCalculadoras: GrupoFerramentas = {
             .number()
             .positive()
             .max(9999)
-            .describe("Meses a que se referem (uma casa decimal)."),
+            .describe(
+              "Meses a que se referem, com uma casa decimal; mínimo 0,1 (IN RFB 1.500/2014, art. 45).",
+            ),
           mes_recebimento: z.number().int().min(1).max(12),
           previdencia: zVOpc("Contribuição previdenciária oficial descontada."),
           pensao: zVOpc("Pensão alimentícia descontada."),

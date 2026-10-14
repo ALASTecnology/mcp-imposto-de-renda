@@ -91,9 +91,18 @@ export interface EntradaRra {
   irrf: bigint;
 }
 
-/** RRA pela tabela acumulada: a tabela do mês do recebimento vezes o número de meses. */
+/**
+ * RRA pela tabela acumulada: a tabela do mês do recebimento vezes o número de meses (IN RFB
+ * 1.500/2014, art. 37). A quantidade de meses tem uma casa decimal (art. 45, I, e parágrafo
+ * único), então o mínimo é 0,1 mês; abaixo disso o produto pelas faixas daria zero e todo o
+ * valor cairia na alíquota de 27,5% sem parcela a deduzir.
+ */
 export function calcularRra(e: EntradaRra) {
-  if (!(e.meses > 0)) throw new EntradaInvalidaError("numero_meses: informe um número positivo.");
+  if (!(e.meses >= 0.1)) {
+    throw new EntradaInvalidaError(
+      "numero_meses: informe ao menos 0,1 mês. A quantidade de meses do RRA usa uma casa decimal (IN RFB 1.500/2014, art. 45).",
+    );
+  }
   const decimos = BigInt(Math.round(e.meses * 10));
   const base = e.rendimentos - e.previdencia - e.pensao;
   const b = base > 0n ? base : 0n;

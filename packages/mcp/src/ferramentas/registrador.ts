@@ -20,11 +20,15 @@ export const ANOTACOES_LEITURA: ToolAnnotations = {
   openWorldHint: false,
 };
 
-/** Ferramenta que grava na pasta autorizada (sobrescreve, com backup automático). */
+/**
+ * Ferramenta que grava na pasta autorizada (sobrescreve, com backup automático). Não é
+ * idempotente por padrão: repetir uma inclusão ou importação duplica lançamentos e consome
+ * cópias de segurança (revisão B5).
+ */
 export const ANOTACOES_ESCRITA: ToolAnnotations = {
   readOnlyHint: false,
   destructiveHint: true,
-  idempotentHint: true,
+  idempotentHint: false,
   openWorldHint: false,
 };
 

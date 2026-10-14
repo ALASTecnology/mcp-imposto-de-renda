@@ -51,6 +51,7 @@ import {
   zArquivoDestino,
   zArquivoEdicao,
 } from "./fluxo.js";
+import { registrosGcapComplementares } from "./gcap-complementares.js";
 import type { GrupoFerramentas, RegistroFerramentas } from "./tipos.js";
 
 type Item = Record<string, unknown>;
@@ -78,6 +79,17 @@ const SAIDA_LISTA = {
   nome: z.string(),
   total: z.number(),
   itens: z.array(z.object({ indice: z.number(), item: zItemJson })),
+  complementares: z
+    .array(
+      z.object({
+        tipo: z.string(),
+        descricao: z.string(),
+        cpfBeneficiario: z.string().nullable(),
+        campos: z.record(z.string(), z.string()),
+      }),
+    )
+    .optional()
+    .describe("Só em Ganhos de Capital: registros 64, 67, 70 a 73 e 75 a 78 decodificados."),
 };
 
 function itemJson(item: unknown): { [k: string]: ReturnType<typeof paraJson> } {
@@ -209,11 +221,26 @@ async function remover(
 }
 
 async function listar(r: RegistroFerramentas, f: FichaLista, arquivo: string) {
-  const { declaracao } = await abrirDeclaracao(r.ctx, arquivo);
+  const { declaracao, registros } = await abrirDeclaracao(r.ctx, arquivo);
   const itens = f.ler(declaracao).map((item, i) => ({ indice: i + 1, item: itemJson(item) }));
+  // Ganhos de Capital: os registros que o modelo não tipa (64, 67, 70 a 73, 75 a 78) vêm
+  // decodificados pelo leiaute, para o demonstrativo aparecer inteiro.
+  const complementares =
+    f.id === "ganhosCapital" ? registrosGcapComplementares(registros) : undefined;
+  const extra =
+    complementares && complementares.length > 0
+      ? `\nRegistros complementares do demonstrativo (${complementares.length}):\n${blocoDeDados(arquivo, JSON.stringify(complementares, null, 2))}`
+      : "";
   return {
-    texto: `${f.nome}: ${itens.length} item(ns).\n${blocoDeDados(arquivo, JSON.stringify(itens, null, 2))}`,
-    dados: { arquivo, ficha: f.id, nome: f.nome, total: itens.length, itens },
+    texto: `${f.nome}: ${itens.length} item(ns).\n${blocoDeDados(arquivo, JSON.stringify(itens, null, 2))}${extra}`,
+    dados: {
+      arquivo,
+      ficha: f.id,
+      nome: f.nome,
+      total: itens.length,
+      itens,
+      ...(complementares ? { complementares } : {}),
+    },
   };
 }
 

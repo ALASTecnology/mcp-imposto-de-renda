@@ -222,6 +222,8 @@ ferr("calcular_multa_atraso", "Calcula a multa por atraso na entrega (1% ao mês
 ferr("calcular_rra", "Simula o imposto de RRA pela tabela acumulada (exclusiva) e compara com a opção pelo ajuste.", "rendimentos, numero_meses, mes_recebimento, previdencia, pensao, irrf, parcelas?", "não", "calc")
 ferr("transferir_excedente_isencao_65", "Aplica o limite da parcela isenta de 65 anos (R$ 1.903,98 por mês) somando as fontes e transfere o excedente para Rendimentos PJ, como a pergunta do PGD.", "id_declaracao, beneficiario?", "sim", "calc")
 ferr("converter_moeda", "Converte valores pela tabela oficial do dólar de 2025 (compra para rendimentos e imposto, venda para deduções) ou por cotação informada para outras regras.", "valor, moeda, data_ou_mes, finalidade (rendimento|deducao|bem|aplicacao), cotacao?", "não", "tabelas")
+ferr("calcular_expressao", "Calculadora com aritmética decimal exata (+, -, *, /, parênteses e porcentagem), equivalente à Calculadora do programa.", "expressao, casas?", "não", "nenhum")
+ferr("consultar_atalhos", "Atalhos de teclado, botões da barra de ferramentas e recursos de acessibilidade do programa oficial com a ferramenta equivalente do MCP.", "consulta?", "não", "nenhum")
 ferr("atualizar_custo_bem", "Atualiza custo de bem adquirido até 1995 pela Tabela de Atualização do Custo de Bens e Direitos.", "valor_original, moeda_epoca, mes, ano", "não", "tabelas")
 ferr("calcular_condicao_residencia", "Determina datas de aquisição de residência ou de não residência a partir de entradas, saídas, vistos e vínculos.", "eventos[], visto?, vinculo_empregaticio?", "não", "calc")
 ferr("calcular_ganho_capital", "Simulador próprio de ganho de capital (imóvel, móvel, participação, moeda em espécie) com isenções e reduções, apenas para orientação; não substitui o GCAP oficial.", "tipo, dados_alienacao, dados_aquisicao, perguntas_isencao", "não", "calc")
@@ -235,6 +237,7 @@ ferr("verificar_versao_tabelas", "Informa a versão das tabelas e parâmetros em
 # saídas
 ferr("gerar_dbk", "Gera o arquivo da declaração no layout oficial de 2026 (registros IR, 16 a 99 e T9) com o nome padrão, bloqueando se houver erros impeditivos.", "id_declaracao, destino", "sim", "dbk")
 ferr("gerar_relatorio_declaracao", "Gera relatório da declaração (toda ou partes, inclusive rendimentos de PF e demonstrativos) em PDF ou HTML com layout próprio.", "id_declaracao, partes?, formato (pdf|html), destino", "sim", "model")
+ferr("gravar_relatorio", "Grava na pasta, em PDF ou HTML com layout próprio, o relatório da declaração (resumo ou partes) ou o texto de outra ferramenta (Darf, comunicação de saída, relação de declarações).", "arquivo|declaracao|texto, partes?, formato (pdf|html), arquivo_destino", "sim", "nenhum")
 ferr("gerar_comunicacao_saida", "Gera a comunicação à fonte pagadora de saída definitiva do país, uma por fonte.", "id_declaracao, fontes?, destino", "sim", "model")
 ferr("instruir_transmissao", "Gera o passo a passo e o checklist para concluir no PGD oficial: abrir ou restaurar a declaração, verificar pendências, entregar com ou sem certificado, guardar o recibo e pagar o Darf.", "id_declaracao", "não", "dbk")
 ferr("orientar_servico_externo", "Explica como usar um serviço que só existe fora do MCP Imposto de Renda (gov.br, pré-preenchida, Carnê-Leão Web, e-CAC, débito automático, extrato, Darf oficial, GCAP, LCAR, Sicalc, Correios) e o que trazer de volta.", "servico, contexto?", "não", "tabelas")
@@ -258,14 +261,15 @@ EXISTENTES = [
     "definir_espolio", "definir_saida_definitiva", "definir_informacoes_conjuge", "definir_receitas_despesas_rurais",
     "definir_apuracao_rural", "definir_rebanho", "definir_partilha_bem", "aplicar_caso_especial_bem",
     "buscar_nome_por_documento",
-    # ciclo
+    # ciclo e importações
+    "importar_declaracao_anterior", "importar_pre_preenchida",
     "criar_declaracao", "criar_retificadora", "excluir_declaracao", "gravar_copia_seguranca",
     "listar_copias_seguranca", "restaurar_copia_seguranca", "definir_opcao_tributacao",
     "definir_informacoes_bancarias", "definir_imposto_pago", "repetir_valores_bens",
     "importar_informe_rendimentos", "importar_informe_plano_saude", "transferir_excedente_isencao_65",
     # validação, tabelas e arquivos
     "validar_documento", "validar_declaracao", "listar_tabela", "buscar_codigo", "listar_arquivos",
-    "verificar_integridade_arquivo",
+    "verificar_integridade_arquivo", "listar_declaracoes", "gravar_relatorio",
     # saídas
     "gerar_darf", "instruir_transmissao", "gerar_relatorio_declaracao", "gerar_comunicacao_saida",
     # calculadoras
@@ -273,7 +277,8 @@ EXISTENTES = [
     "calcular_ganho_capital", "calcular_acrescimos_moratorios", "calcular_condicao_residencia",
     "verificar_obrigatoriedade", "converter_moeda",
     # orientação
-    "orientar_servico_externo", "verificar_versao_tabelas",
+    "orientar_servico_externo", "verificar_versao_tabelas", "obter_ajuda", "calcular_expressao",
+    "consultar_atalhos",
 ]
 EDICAO = "edição pelo fluxo abrir, alterar o modelo, validar e gravar o DBK com cópia de segurança"
 ONLINE = "serviço online: só orientação com `orientar_servico_externo`; o MCP Imposto de Renda não acessa a rede"
@@ -313,29 +318,32 @@ STATUS.update({
     "gerar_darf": ("implementada", ["gerar_darf"], "código, vencimentos e valores das quotas; o Darf oficial é emitido no programa ou no Sicalc"),
     "calcular_acrescimos_moratorios": ("implementada", ["calcular_acrescimos_moratorios"], "Selic acumulada informada pelo usuário"),
     "calcular_multa_atraso": ("implementada", ["calcular_multa_atraso"], ""),
-    "calcular_rra": ("parcial", ["calcular_rra"], "simulador; a ficha RRA é preenchida com `adicionar_rra`"),
+    "calcular_rra": ("implementada", ["calcular_rra", "adicionar_rra"], "tabela progressiva acumulada (art. 12-A da Lei 7.713/1988) e comparação com o ajuste anual; a ficha RRA é preenchida com `adicionar_rra`"),
     "transferir_excedente_isencao_65": ("implementada", ["transferir_excedente_isencao_65"], ""),
-    "converter_moeda": ("parcial", ["converter_moeda"], "só com cotação informada pelo usuário (sem download de cotações)"),
+    "converter_moeda": ("implementada", ["converter_moeda", "listar_tabela"], "tabela oficial do dólar de 2025 (Ajuda, pág. 356: compra, venda e atividade rural) embarcada como `dolar-2025`; bens e aplicações usam a cotação da data informada pelo usuário"),
     "calcular_condicao_residencia": ("implementada", ["calcular_condicao_residencia"], ""),
     "calcular_ganho_capital": ("parcial", ["calcular_ganho_capital"], "simulador de orientação; o demonstrativo oficial é o GCAP"),
     "calcular_preco_medio": ("implementada", ["calcular_preco_medio", "apurar_renda_variavel"], ""),
     "calcular_carne_leao": ("implementada", ["calcular_carne_leao"], "tabelas mensais de 2025"),
-    "validar_documento": ("parcial", ["validar_documento"], "só CPF e CNPJ; a conta bancária é validada em `definir_informacoes_bancarias`"),
+    "validar_documento": ("implementada", ["validar_documento"], "CPF, CNPJ, NIT/PIS, recibo, CEP, telefone, e-mail, nome, data, Renavam e conta bancária (rede autorizada e DV público do banco)"),
     "consultar_tabela": ("implementada", ["listar_tabela", "buscar_codigo", "consultar_parametros"], ""),
-    "buscar_nome_por_documento": ("parcial", ["buscar_nome_por_documento"], "busca só nas declarações da pasta; a consulta à Receita é " + ONLINE),
+    "buscar_nome_por_documento": ("implementada", ["buscar_nome_por_documento"], "como a Recuperação de Nomes do programa, usa só o que já foi digitado ou importado nas declarações da pasta; não há cache a limpar"),
     "verificar_versao_tabelas": ("implementada", ["verificar_versao_tabelas"], "versão embarcada, sem consulta online"),
     "gerar_dbk": ("implementada", ["converter_modelo_para_dbk", "gerar_arquivo_entrega", "verificar_integridade_arquivo"], "conversão de todas as fichas; registros sem campo no modelo são preservados do arquivo base; totais recalculados com o motor; o .DEC de entrega sai de gerar_arquivo_entrega, igual ao do programa nos 48 casos"),
-    "gerar_relatorio_declaracao": ("parcial", ["gerar_relatorio_declaracao"], "relatório em texto; sem PDF ou HTML"),
+    "gerar_relatorio_declaracao": ("implementada", ["gerar_relatorio_declaracao", "gravar_relatorio"], "resumo ou partes (todas, rendimentos de PF, qualquer ficha) em Markdown, HTML ou PDF com layout próprio; `gravar_relatorio` também grava em PDF o texto do Darf, da comunicação de saída e da relação de declarações"),
     "gerar_comunicacao_saida": ("implementada", ["gerar_comunicacao_saida"], "só o texto"),
     "instruir_transmissao": ("implementada", ["instruir_transmissao"], ""),
     "orientar_servico_externo": ("implementada", ["orientar_servico_externo"], ""),
-    "importar_declaracao_anterior": ("parcial", ["converter_dbk_para_modelo"], "lê DBK/DEC do exercício 2026; falta o leiaute 2025 e a regra de quais dados migrar"),
-    "listar_declaracoes": ("parcial", ["listar_arquivos"], "lista arquivos da pasta autorizada, sem situação em preenchimento ou transmitida"),
-    "listar_ganhos_capital": ("parcial", ["listar_ganhos_capital"], "demonstrativos 64, 67 e 70 a 78 do GCAP preservados sem campo no modelo"),
-    "importar_pre_preenchida": ("parcial", ["abrir_declaracao", "orientar_servico_externo"], ONLINE + "; o DBK gravado pelo programa é aberto normalmente"),
-    "importar_carne_leao": ("parcial", ["definir_rendimentos_pf_exterior", "orientar_servico_externo"], ONLINE + "; os totais mensais são informados na ficha"),
-    "importar_gcap": ("parcial", ["abrir_declaracao", "orientar_servico_externo"], "o DBK com o GCAP importado no programa é preservado; sem leitura do arquivo do GCAP"),
-    "importar_livro_caixa_rural": ("parcial", ["definir_receitas_despesas_rurais", "orientar_servico_externo"], "totais mensais informados na ficha; sem leitura do arquivo do LCAR"),
+    "gravar_relatorio": ("implementada", ["gravar_relatorio"], "PDF 1.4 A4 ou HTML autocontido, sem metadados de autor ou ferramenta"),
+    "calcular_expressao": ("implementada", ["calcular_expressao"], "aritmética racional exata com arredondamento nas casas pedidas; dispensa o botão transportar porque o valor vai direto para a ferramenta da ficha"),
+    "consultar_atalhos": ("implementada", ["consultar_atalhos", "obter_ajuda"], "atalhos extraídos das notas de mapeamento com o status de cobertura de cada função"),
+    "importar_declaracao_anterior": ("implementada", ["importar_declaracao_anterior", "listar_declaracoes"], "lê o DEC/DBK de 2025 com o leiaute de 2025 e migra o que o programa recupera (identificação, dependentes, alimentandos, fontes e beneficiários sem valores, bens e dívidas com saldo, atividade rural e recibo), com relatório do que falta preencher e sem sobrescrever em silêncio"),
+    "listar_declaracoes": ("implementada", ["listar_declaracoes"], "situação em preenchimento, gravada para entrega ou transmitida (recibo registrado), filtro por nome, CPF e situação, ordenação e aviso de declarações do exercício anterior; sem limite de uma aberta por vez"),
+    "listar_ganhos_capital": ("implementada", ["listar_ganhos_capital"], "demonstrativos tipados (60 a 63, 65, 66, 68, 69 e 74) e os registros 64, 67, 70 a 73 e 75 a 78 decodificados campo a campo pelo leiaute; todos preservados na gravação"),
+    "importar_pre_preenchida": ("parcial", ["importar_pre_preenchida", "orientar_servico_externo"], "baixar a pré-preenchida exige login gov.br (Ouro ou Prata) em serviço autenticado da Receita, impossível num servidor local sem credenciais; alternativa implementada: `orientar_servico_externo` dá o passo a passo para obtê-la no programa oficial ou no Meu Imposto de Renda e `importar_pre_preenchida` cria a declaração a partir do arquivo trazido, sem apagar a existente e com a lista de fichas para conferir"),
+    "importar_carne_leao": ("parcial", ["definir_rendimentos_pf_exterior", "calcular_carne_leao", "orientar_servico_externo"], "o programa traz o Carnê-Leão Web direto do serviço autenticado da Receita (login gov.br ou código de acesso), impossível num servidor local sem credenciais, e o formato dos dados não é público; alternativa implementada: `orientar_servico_externo` (serviço carne_leao_web) explica como consultar o demonstrativo anual no e-CAC ou importar no programa e trazer o DBK, `definir_rendimentos_pf_exterior` grava os totais mensais na ficha e `calcular_carne_leao` confere o imposto de cada mês"),
+    "importar_gcap": ("parcial", ["abrir_declaracao", "listar_ganhos_capital", "orientar_servico_externo"], "a correspondência entre o arquivo \"Exportar para o IRPF2026\" do GCAP 2025 e os registros 60 a 78 da declaração só existe no código do programa, que as regras do projeto proíbem descompilar, e sem pares reais de referência a conversão seria palpite; alternativa implementada: `orientar_servico_externo` (serviço gcap) dá o passo a passo para importar no programa oficial e gravar a cópia de segurança, `abrir_declaracao` lê o DBK preservando todos os registros do GCAP, `listar_ganhos_capital` mostra o demonstrativo inteiro e `calcular_ganho_capital` simula a apuração"),
+    "importar_livro_caixa_rural": ("parcial", ["definir_receitas_despesas_rurais", "orientar_servico_externo"], "o leiaute do arquivo exportado pelo programa da Atividade Rural 2025 e a forma como o PGD o distribui pelo demonstrativo só existem no código do programa, que as regras do projeto proíbem descompilar, e sem pares reais de referência a conversão seria palpite; alternativa implementada: `orientar_servico_externo` (serviço livro_caixa_rural) explica como importar no programa oficial e trazer o DBK, e `definir_receitas_despesas_rurais` grava os totais mensais de receitas e despesas"),
 })
 for _n in STATUS:
     assert _n in F, _n
@@ -385,7 +393,7 @@ regra(r"M-MENU-IMPORTACOES", T("importar_carne_leao", "importar_livro_caixa_rura
 regra(r"M-MENU-FICHAS", T("listar_fichas"), "model", "P1", "Navegação substituída por consulta de fichas aplicáveis.")
 regra(r"M-MENU-FERRAMENTAS", T("gravar_copia_seguranca", "restaurar_copia_seguranca"), "model", "P1", "Calculadora e preferências de UI não têm equivalente.")
 regra(r"M-MENU-AJUDA", T("obter_ajuda"), "tabelas", "P2", "Conteúdo de ajuda como dados versionados.")
-regra(r"M-TOOLBAR", NA, "nenhum", "P2", "Atalhos visuais; as ações estão cobertas pelas ferramentas de ciclo de vida.")
+regra(r"M-TOOLBAR", T("consultar_atalhos"), "nenhum", "P2", "Cada ícone da barra (Nova, Abrir, Importar, Pendências, Entregar, Imprimir, Calculadora, Ajuda) é explicado com a ferramenta equivalente.")
 regra(r"M-RODAPE-COMPARATIVO", T("calcular_imposto"), "calc", "P0", "Modelo `ambos` devolve os dois saldos e a recomendação.")
 regra(r"M-INICIAL", T("criar_declaracao", "listar_declaracoes"), "model", "P0", "")
 regra(r"M-INICIAL-NOVA", T("criar_declaracao", "importar_declaracao_anterior", "importar_pre_preenchida"), "model", "P0", "Modo pré-preenchida depende de arquivo obtido pelo usuário (ver M-IMP-PREPREENCHIDA).")
@@ -394,16 +402,16 @@ regra(r"M-INICIAL-TRANSMITIDAS", T("listar_declaracoes", "registrar_recibo", "cr
 regra(r"M-INICIAL-BOASVINDAS", T("obter_ajuda"), "tabelas", "P2", "Botão gov.br: " + IMP_GOVBR)
 regra(r"M-DECL-NOVA", T("criar_declaracao"), "model", "P0")
 regra(r"M-DECL-ABRIR", T("abrir_declaracao"), "model", "P0", "Sem a restrição de uma declaração aberta por vez.")
-regra(r"M-DECL-FECHAR", NA, "model", "P2", "Persistência imediata dispensa fechar.")
+regra(r"M-DECL-FECHAR", NA, "model", "P2", "Mantida como não se aplica: cada ferramenta abre, altera e grava o arquivo na mesma chamada, então não existe declaração aberta para fechar.")
 regra(r"M-DECL-EXCLUIR", T("excluir_declaracao"), "model", "P1", "Exige confirmação explícita.")
 regra(r"M-DECL-RETIFICAR", T("criar_retificadora"), "model", "P1")
 regra(r"M-DECL-PENDENCIAS", T("listar_pendencias"), "validate", "P0", "Catálogo de mensagens próprio, com severidade erro ou aviso.")
 regra(r"M-DECL-ENTREGAR", T("gerar_dbk", "listar_pendencias", "instruir_transmissao"), "dbk", "P0", IMP_TRANSMISSAO)
 regra(r"M-DECL-SALVAR-ONLINE", T("gravar_copia_seguranca", "orientar_servico_externo"), "model", "P2", IMP_GOVBR)
 regra(r"M-DECL-RECUPERAR-ONLINE", T("restaurar_copia_seguranca", "orientar_servico_externo"), "model", "P2", IMP_GOVBR)
-regra(r"M-DECL-SAIR", NA, "nenhum", "P2", "Encerramento de UI.")
+regra(r"M-DECL-SAIR", NA, "nenhum", "P2", "Mantida como não se aplica: encerrar o programa é ação da janela; o servidor MCP é encerrado pelo cliente e não guarda estado entre chamadas.")
 regra(r"M-DECL-CONVERTER", T("definir_identificacao"), "model", "P2", "Função inferida; confirmar no programa.")
-regra(r"M-IMPR-DECLARACAO", T("gerar_relatorio_declaracao"), "model", "P1", "Layout próprio; renderização em PDF fica na camada MCP ou em módulo de relatórios a criar.")
+regra(r"M-IMPR-DECLARACAO", T("gerar_relatorio_declaracao"), "model", "P1", "Layout próprio, toda ou por partes, em Markdown, HTML ou PDF (`gravar_relatorio`).")
 regra(r"M-IMPR-REND-PF", T("gerar_relatorio_declaracao"), "model", "P2", "Parte `rendimentos_pf`.")
 regra(r"M-IMPR-RECIBO", T("registrar_recibo", "instruir_transmissao"), "importacao", "P1", IMP_RECIBO)
 regra(r"M-IMPR-DARF", T("gerar_darf", "simular_quotas"), "calc", "P0", IMP_DARF)
@@ -414,27 +422,30 @@ regra(r"M-IMPR-COMUNICACAO-SAIDA", T("gerar_comunicacao_saida"), "model", "P1")
 regra(r"M-IMPR-INFORME-(REND|PS)", T("ler_informe"), "importacao", "P2")
 regra(r"M-IMPR-DARF-AUXILIO", T("orientar_servico_externo"), "nenhum", "P2", "Fora do escopo do exercício 2026 (função herdada, inferida).")
 regra(r"M-IMPR-CRITERIOS-OBRIG", T("verificar_obrigatoriedade"), "validate", "P2", "Função inferida.")
-regra(r"M-IMPR-SALVAR-PDF", T("gerar_relatorio_declaracao", "gerar_darf"), "model", "P2")
+regra(r"M-IMPR-SALVAR-PDF", T("gerar_relatorio_declaracao", "gerar_darf"), "model", "P2", "`gravar_relatorio` grava em PDF o relatório e o texto do Darf, da comunicação de saída e da relação de declarações.")
 regra(r"M-IMP-ANO-ANTERIOR", T("importar_declaracao_anterior"), "importacao", "P0", "Leitor do layout 2025; nunca apagar dados sem confirmação (o PGD apaga).")
 regra(r"M-IMP-PREPREENCHIDA", T("importar_pre_preenchida", "orientar_servico_externo"), "importacao", "P1", IMP_GOVBR)
 regra(r"M-IMP-INFORME-REND", T("importar_informe_rendimentos"), "importacao", "P1", "Detectar duplicidade (o PGD duplica).")
 regra(r"M-IMP-INFORME-PS", T("importar_informe_plano_saude"), "importacao", "P1", "Detectar duplicidade.")
-regra(r"M-IMP-CARNE-LEAO", T("importar_carne_leao", "orientar_servico_externo"), "importacao", "P1", imp("o PGD baixa o Carnê-Leão Web com gov.br ou código de acesso", "o usuário obtém o demonstrativo no e-CAC e o MCP Imposto de Renda importa o arquivo; formato a mapear"))
+regra(r"M-IMP-CARNE-LEAO", T("importar_carne_leao", "orientar_servico_externo"), "importacao", "P1", imp("o PGD baixa o Carnê-Leão Web com gov.br ou código de acesso, em serviço autenticado da Receita", "o usuário consulta o demonstrativo anual no e-CAC e o MCP Imposto de Renda grava os totais mensais com `definir_rendimentos_pf_exterior`, ou o usuário importa no programa e traz o DBK"))
 regra(r"M-IMP-AR", T("importar_livro_caixa_rural"), "importacao", "P1")
 regra(r"M-IMP-GCAP", T("importar_gcap"), "importacao", "P1", "Substituição por CPF, como no PGD.")
 regra(r"M-IMP-SUGESTAO", T("listar_declaracoes", "importar_declaracao_anterior"), "importacao", "P2", "Função inferida.")
 regra(r"M-FERR-COPIA-GRAVAR", T("gravar_copia_seguranca", "gerar_dbk"), "model", "P1", "Formato de cópia do PGD não é reproduzido; a cópia para entrega equivale a `gerar_dbk`.")
-regra(r"M-FERR-COPIA-RESTAURAR", T("restaurar_copia_seguranca", "importar_declaracao_anterior"), "model", "P1", "Restaurar cópia do PGD 2026 depende de mapear o formato (lacuna).")
-regra(r"M-FERR-CALCULADORA", NA, "nenhum", "P2", "O assistente faz os cálculos.")
+regra(r"M-FERR-COPIA-RESTAURAR", T("restaurar_copia_seguranca", "importar_declaracao_anterior"), "model", "P1", "A cópia de segurança do programa é o próprio .DBK, lido por `abrir_declaracao`; a de 2025 entra por `importar_declaracao_anterior`.")
+regra(r"M-FERR-CALCULADORA", T("calcular_expressao"), "nenhum", "P2", "Aritmética decimal exata, sem erro de arredondamento binário.")
 regra(r"M-FERR-ATUALIZACOES", T("verificar_versao_tabelas"), "tabelas", "P2", "Atualização do PGD é do programa oficial; o MCP Imposto de Renda só versiona as próprias tabelas.")
 regra(r"M-FERR-RECNOMES", T("buscar_nome_por_documento"), "model", "P2")
 regra(r"M-FERR-LOGIN-GOVBR", T("orientar_servico_externo"), "nenhum", "P2", IMP_GOVBR)
 regra(r"M-FERR-PAGINAS", T("obter_ajuda"), "tabelas", "P2", "Links públicos.")
-regra(r"M-FERR-(MEMORIA|LEAOZINHO|AVALIACAO)", NA, "nenhum", "P2", "Função inferida do nome da ação; sem efeito na declaração.")
+regra(r"M-FERR-LEAOZINHO", T("obter_ajuda", "consultar_atalhos"), "nenhum", "P2", "Função inferida do nome da ação (LeaozinhoAction), sem texto na Ajuda; o papel de assistente é do próprio MCP, com a ajuda por ficha, os atalhos e os prompts preparar_declaracao e revisar_malha_fina.")
+regra(r"M-FERR-MEMORIA", NA, "nenhum", "P2", "Mantida como não se aplica: a função só é conhecida pelo nome da ação MemoriaIRPFAction, sem citação na Ajuda nem efeito na declaração, e não há como saber o que ela faz sem ler o código do programa, o que as regras do projeto vedam.")
+regra(r"M-FERR-AVALIACAO", NA, "nenhum", "P2", "Mantida como não se aplica: é a pesquisa de satisfação do programa oficial enviada à Receita, sem efeito na declaração; o MCP não coleta opinião nem fala com a Receita.")
 regra(r"M-FERR-INFO-CALCULO", T("consultar_tabela"), "tabelas", "P2")
 regra(r"M-AJUDA-CONTEXTUAL", T("obter_ajuda", "calcular_imposto"), "tabelas", "P1", "`calcular_imposto` com `detalhar` cumpre o F1 do Resumo (procedência dos valores).")
 regra(r"M-AJUDA-(DOCUMENTOS|SOBRE)", T("obter_ajuda"), "tabelas", "P2")
-regra(r"M-AJUDA-(ATALHOS|ACESSIBILIDADE)", NA, "nenhum", "P2", "Respostas textuais do MCP já são acessíveis.")
+regra(r"M-AJUDA-ATALHOS", T("consultar_atalhos"), "nenhum", "P2", "Busca por tecla ou por função.")
+regra(r"M-AJUDA-ACESSIBILIDADE", T("consultar_atalhos", "obter_ajuda"), "nenhum", "P2", "As respostas do MCP são texto, legíveis por leitor de tela; para concluir no programa, `consultar_atalhos` explica F11, os menus por Alt e as versões acessíveis de pendências e imposto.")
 regra(r"M-DEMO-ACOES", T("calcular_ganho_capital", "orientar_servico_externo"), "calc", "P2", "Função inferida; demonstrativo oficial do GCAP continua no PGD.")
 # 2 tipos e regras
 regra(r"S-TIPO-AJUSTE", T("criar_declaracao"), "model", "P0")
@@ -587,17 +598,17 @@ regra(r"S-GRAVAR-ENTREGA", T("gerar_dbk"), "dbk", "P0", "Nome padrão CPF-IRPF-A
 regra(r"S-TRANSMISSAO", T("instruir_transmissao"), "dbk", "P0", IMP_TRANSMISSAO)
 regra(r"S-RECIBO", T("registrar_recibo", "validar_documento"), "importacao", "P1", IMP_RECIBO)
 regra(r"S-NOTIFICACAO-MAED", T("calcular_multa_atraso"), "calc", "P2", "Notificação oficial só existe após a entrega.")
-regra(r"S-VALIDADOR", NA, "nenhum", "P2", "Produzido pela RFB na recepção.")
+regra(r"S-VALIDADOR", NA, "nenhum", "P2", "Mantida como não se aplica: os registros VC e MC são escritos pela Receita na recepção da declaração e não existem antes da entrega; depois dela, `registrar_recibo` guarda o número do recibo.")
 regra(r"S-CALAMIDADE", T("listar_pendencias", "consultar_tabela"), "validate", "P2", "Regra inferida; confirmar.")
 regra(r"S-ERROS-FREQ", T("listar_pendencias", "validar_documento"), "validate", "P0", "Também normalização de valores monetários na entrada.")
 regra(r"S-REQUISITOS", T("instruir_transmissao"), "nenhum", "P2")
-regra(r"S-PROBLEMAS-IMPRESSAO", NA, "nenhum", "P2", "O MCP Imposto de Renda gera PDF/HTML.")
+regra(r"S-PROBLEMAS-IMPRESSAO", T("gravar_relatorio", "obter_ajuda"), "nenhum", "P2", "O relatório sai em PDF ou HTML, sem depender de driver de impressora; `obter_ajuda` repete a orientação do programa (modo normal, driver do sistema ou do fabricante).")
 # 7 nuvem
 regra(r"S-NUVEM-(PREPREENCHIDA|CARNELEAO|DECONLINE)", T("orientar_servico_externo"), "nenhum", "P2", IMP_GOVBR)
 regra(r"S-NUVEM-DARF", T("gerar_darf", "orientar_servico_externo"), "calc", "P2", IMP_DARF)
 regra(r"S-NUVEM-MUNICIPIOS", T("consultar_tabela", "verificar_versao_tabelas"), "tabelas", "P2", "Tabela local versionada.")
 regra(r"S-NUVEM-VENC-DFE", T("listar_pendencias"), "validate", "P1", "Cálculo local pelas regras de prazo da DFE.")
-regra(r"S-NUVEM-CAPTCHA-TOKEN", NA, "nenhum", "P2", IMP_GOVBR)
+regra(r"S-NUVEM-CAPTCHA-TOKEN", NA, "nenhum", "P2", "Mantida como não se aplica. " + IMP_GOVBR)
 # 8 arquivo
 regra(r"S-ARQ-GERAL", T("gerar_dbk", "importar_declaracao_anterior"), "dbk", "P0")
 regra(r"S-ARQ-REG-(IDENT|TOTAIS|RENDIMENTOS|ISENTOS-EXCL|PESSOAS|PAGAMENTOS-DOACOES|BENS-DIVIDAS)", T("gerar_dbk"), "dbk", "P0")
@@ -705,7 +716,7 @@ m.append("| Função | Por que é impossível | Alternativa no MCP Imposto de Re
 m.append("|---|---|---|")
 m.append("| Transmissão (com ou sem certificado digital) | O Receitanet incorporado ao PGD usa protocolo, envelope, hash e assinatura próprios da RFB; reimplementar exigiria engenharia reversa do programa, vedada pelas regras do projeto, e a RFB só aceita a entrega pelo PGD ou pelo Meu Imposto de Renda. | `gerar_dbk` grava o arquivo no layout 2026; `instruir_transmissao` dá o passo a passo: instalar ou atualizar o PGD 2026, abrir ou restaurar a declaração, rodar Verificar Pendências (F5), Entregar Declaração, guardar e imprimir o recibo; depois `registrar_recibo`. |")
 m.append("| Assinatura e certificado digital | Credenciais pessoais do contribuinte, usadas só pelo PGD ou e-CAC. | Orientar o uso do certificado no próprio PGD. |")
-m.append("| Login gov.br, pré-preenchida, Carnê-Leão Web, salvar e recuperar on-line | Serviços autenticados (Ouro ou Prata) da RFB; o MCP Imposto de Renda é um servidor 100% local e não guarda credenciais. | `orientar_servico_externo` explica como baixar ou exportar o arquivo; `importar_pre_preenchida` e `importar_carne_leao` leem o arquivo trazido pelo usuário. |")
+m.append("| Login gov.br, pré-preenchida, Carnê-Leão Web, salvar e recuperar on-line | Serviços autenticados (Ouro ou Prata) da RFB; o MCP Imposto de Renda é um servidor 100% local e não guarda credenciais. | `orientar_servico_externo` explica como obter a pré-preenchida e o demonstrativo do Carnê-Leão; `importar_pre_preenchida` cria a declaração a partir do arquivo trazido pelo usuário e `definir_rendimentos_pf_exterior` grava os totais mensais do Carnê-Leão. |")
 m.append("| Darf oficial (número do documento e código de barras), Darf da notificação de multa | Emitidos pelo PGD, pelo serviço da RFB ou pelo Sicalc a partir de dados oficiais. | `gerar_darf` calcula código, período, vencimento, principal, multa e juros e instrui a emissão no PGD, e-CAC ou Sicalc. |")
 m.append("| Recibo de entrega, notificação de lançamento da multa, dados do validador | Gerados pela RFB na recepção. | `registrar_recibo` guarda o número informado pelo usuário para retificação e para o ano seguinte. |")
 m.append("| Inclusão ou alteração de débito automático após a entrega, extrato, consulta de débitos | Serviços do e-CAC (Meu Imposto de Renda). | `orientar_servico_externo` com o caminho no e-CAC e prazos (dia 14 de cada mês). |")
@@ -729,6 +740,9 @@ for rid in ordem:
     st_txt, st = status_linha(fs)
     cont_status[st] += 1
     cont_status_prio[(st, pr)] += 1
+    if st == "parcial":
+        just = [f"`{n}` parcial: {status_ferr(n)[2]}" for n in re.findall(r"`([a-z0-9_]+)`", fs) if status_ferr(n)[0] == "parcial" and status_ferr(n)[2]]
+        ob = " ".join(x for x in [ob, *just] if x)
     m.append(f"| {rid} | {esc(reg['nome'])} | {fs} | {mod} | {pr} | {st_txt} | {esc(ob)} |")
 m.append("")
 m.append(f"Itens por prioridade: P0 {cont_prio['P0']}, P1 {cont_prio['P1']}, P2 {cont_prio['P2']} (total {len(registros)}).")
@@ -749,8 +763,8 @@ grupos = [
     ("Fichas da declaração", ["definir_identificacao", "adicionar_dependente", "adicionar_alimentando", "adicionar_rendimento_pj", "definir_rendimentos_pf_exterior", "adicionar_rendimento_isento", "adicionar_rendimento_exclusivo", "adicionar_rendimento_exigibilidade_suspensa", "adicionar_rra", "definir_imposto_pago", "adicionar_pagamento", "adicionar_doacao", "adicionar_doacao_direta_declaracao", "adicionar_bem", "aplicar_caso_especial_bem", "repetir_valores_bens", "adicionar_divida", "definir_espolio", "adicionar_herdeiro", "definir_partilha_bem", "adicionar_doacao_eleitoral", "definir_saida_definitiva", "definir_informacoes_bancarias", "definir_opcao_tributacao"]),
     ("Demonstrativos", ["adicionar_imovel_rural", "definir_receitas_despesas_rurais", "definir_apuracao_rural", "definir_rebanho", "adicionar_bem_rural", "adicionar_divida_rural", "definir_renda_variavel", "definir_fii_fiagro", "listar_ganhos_capital"]),
     ("Importações", ["importar_declaracao_anterior", "importar_pre_preenchida", "importar_informe_rendimentos", "importar_informe_plano_saude", "importar_carne_leao", "importar_gcap", "importar_livro_caixa_rural", "ler_informe"]),
-    ("Cálculo, validação e tabelas", ["calcular_imposto", "listar_pendencias", "verificar_obrigatoriedade", "simular_quotas", "gerar_darf", "calcular_acrescimos_moratorios", "calcular_multa_atraso", "calcular_rra", "transferir_excedente_isencao_65", "converter_moeda", "atualizar_custo_bem", "calcular_condicao_residencia", "calcular_ganho_capital", "calcular_preco_medio", "calcular_carne_leao", "validar_documento", "consultar_tabela", "obter_ajuda", "buscar_nome_por_documento", "verificar_versao_tabelas"]),
-    ("Saídas e etapa final no PGD", ["gerar_dbk", "gerar_relatorio_declaracao", "gerar_comunicacao_saida", "instruir_transmissao", "orientar_servico_externo"]),
+    ("Cálculo, validação e tabelas", ["calcular_imposto", "listar_pendencias", "verificar_obrigatoriedade", "simular_quotas", "gerar_darf", "calcular_acrescimos_moratorios", "calcular_multa_atraso", "calcular_rra", "transferir_excedente_isencao_65", "converter_moeda", "calcular_expressao", "consultar_atalhos", "atualizar_custo_bem", "calcular_condicao_residencia", "calcular_ganho_capital", "calcular_preco_medio", "calcular_carne_leao", "validar_documento", "consultar_tabela", "obter_ajuda", "buscar_nome_por_documento", "verificar_versao_tabelas"]),
+    ("Saídas e etapa final no PGD", ["gerar_dbk", "gerar_relatorio_declaracao", "gravar_relatorio", "gerar_comunicacao_saida", "instruir_transmissao", "orientar_servico_externo"]),
 ]
 listadas = [n for _, ns in grupos for n in ns]
 if sorted(listadas) != sorted(F):

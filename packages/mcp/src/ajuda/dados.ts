@@ -8413,10 +8413,12 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "status": "parcial",
   "ferramentas": [
    "abrir_declaracao",
+   "calcular_carne_leao",
    "definir_receitas_despesas_rurais",
    "definir_rendimentos_pf_exterior",
    "importar_informe_plano_saude",
    "importar_informe_rendimentos",
+   "listar_ganhos_capital",
    "orientar_servico_externo"
   ]
  },
@@ -8662,18 +8664,20 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+P",
   "id": "M-IMPR-DECLARACAO",
   "funcao": "Imprimir Declaração",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
-   "gerar_relatorio_declaracao"
+   "gerar_relatorio_declaracao",
+   "gravar_relatorio"
   ]
  },
  {
   "tecla": "Ctrl+Shift+F",
   "id": "M-IMPR-REND-PF",
   "funcao": "Imprimir Rendimentos Recebidos de PF",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
-   "gerar_relatorio_declaracao"
+   "gerar_relatorio_declaracao",
+   "gravar_relatorio"
   ]
  },
  {
@@ -8729,9 +8733,9 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+L",
   "id": "M-IMPR-RELACAO",
   "funcao": "Imprimir Relação de Declarações",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
-   "listar_arquivos"
+   "listar_declaracoes"
   ]
  },
  {
@@ -8794,6 +8798,7 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "funcao": "Importar Carnê-Leão 2025",
   "status": "parcial",
   "ferramentas": [
+   "calcular_carne_leao",
    "definir_rendimentos_pf_exterior",
    "orientar_servico_externo"
   ]
@@ -8804,6 +8809,7 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "funcao": "Importar Carnê-Leão 2025",
   "status": "parcial",
   "ferramentas": [
+   "calcular_carne_leao",
    "definir_rendimentos_pf_exterior",
    "orientar_servico_externo"
   ]
@@ -8825,6 +8831,7 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "status": "parcial",
   "ferramentas": [
    "abrir_declaracao",
+   "listar_ganhos_capital",
    "orientar_servico_externo"
   ]
  },
@@ -8844,10 +8851,11 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+T",
   "id": "M-FERR-COPIA-RESTAURAR",
   "funcao": "Restaurar Cópia de Segurança",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
-   "converter_dbk_para_modelo",
+   "importar_declaracao_anterior",
    "listar_copias_seguranca",
+   "listar_declaracoes",
    "restaurar_copia_seguranca"
   ]
  },
@@ -8855,8 +8863,10 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+Alt+A",
   "id": "M-FERR-CALCULADORA",
   "funcao": "Calculadora",
-  "status": "não se aplica",
-  "ferramentas": []
+  "status": "implementada",
+  "ferramentas": [
+   "calcular_expressao"
+  ]
  },
  {
   "tecla": "Alt, T, V",
@@ -8871,7 +8881,7 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Alt, T, R, T",
   "id": "M-FERR-RECNOMES",
   "funcao": "Recuperação de Nomes (Ativar/Desativar, Limpar)",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
    "buscar_nome_por_documento"
   ]
@@ -8880,7 +8890,7 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Alt, T, R, L",
   "id": "M-FERR-RECNOMES",
   "funcao": "Recuperação de Nomes (Ativar/Desativar, Limpar)",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
    "buscar_nome_por_documento"
   ]
@@ -8901,8 +8911,11 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "F11",
   "id": "M-AJUDA-ACESSIBILIDADE",
   "funcao": "Acessibilidade (F11) e leitura de tela",
-  "status": "não se aplica",
-  "ferramentas": []
+  "status": "implementada",
+  "ferramentas": [
+   "consultar_atalhos",
+   "obter_ajuda"
+  ]
  },
  {
   "tecla": "Ctrl+Shift+B",

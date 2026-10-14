@@ -92,7 +92,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: barra de menu (Alt+P) e seção "Importações" da barra lateral
 - Itens: Carnê-Leão 2025, Atividade Rural 2025, Ganhos de Capital 2025, Informe de Rendimentos, Informe de Plano de Saúde (pág. 389)
 - Exige do MCP: ferramentas `importar_*`
-- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `importar_livro_caixa_rural`, `importar_gcap`, `importar_informe_rendimentos`, `importar_informe_plano_saude`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `definir_receitas_despesas_rurais`, `definir_rendimentos_pf_exterior`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `importar_livro_caixa_rural`, `importar_gcap`, `importar_informe_rendimentos`, `importar_informe_plano_saude`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `calcular_carne_leao`, `definir_receitas_despesas_rurais`, `definir_rendimentos_pf_exterior`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### M-MENU-FICHAS Menu Fichas e navegação
 
@@ -125,7 +125,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: topo da janela (classes JIRPFToolbar e JIRPFToolbarCustom, toolbar personalizável inferido)
 - Itens: ícones de Nova, Abrir, Fechar, Excluir, Importar declaração 2025, Pré-preenchida, Verificar Pendências, Entregar, Imprimir (com itens), Calculadora, Ajuda (págs. 371 a 388)
 - Exige do MCP: sem equivalente (atalhos de UI)
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `consultar_atalhos`; módulo nenhum; prioridade P2; status implementada (`consultar_atalhos`, `obter_ajuda`) (ver matriz)
 
 #### M-RODAPE-COMPARATIVO Painel de imposto e comparativo no rodapé
 
@@ -146,7 +146,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: login gov.br obrigatório para obter a pré-preenchida (Identidade Digital Ouro ou Prata) e importar demonstrativo do Carnê-Leão; para obter rendimentos de dependentes na pré-preenchida, os dependentes devem dar procuração eletrônica ao CPF do titular
 - Exige do MCP: listar declarações em preenchimento e transmitidas; criar nova (3 tipos x 3 modos); abrir, excluir, entregar (gerar arquivo), imprimir, cópia de segurança, retificar; não faz login gov.br (orientar o usuário a baixar o arquivo)
 - Observações: nenhuma
-- Cobertura no MCP Imposto de Renda: `criar_declaracao`, `listar_declaracoes`; módulo model; prioridade P0; status parcial (`criar_declaracao`, `listar_arquivos`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `criar_declaracao`, `listar_declaracoes`; módulo model; prioridade P0; status implementada (`criar_declaracao`, `listar_declaracoes`) (ver matriz)
 
 #### M-INICIAL-NOVA Aba "Nova" (tela "O que você deseja fazer?")
 
@@ -155,7 +155,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: tipo (Ajuste Anual, Final de Espólio, Saída Definitiva); modo: Iniciar a partir da Pré-Preenchida ("Declaração própria" ou "Declaração por procuração", com CPF do declarante), Iniciar Importando Declaração de 2025 (pasta e unidade), Iniciar em Branco (CPF e Nome)
 - Validações conhecidas: pré-preenchida exige login gov.br Ouro ou Prata; rendimentos de dependentes na pré-preenchida exigem procuração eletrônica ou autorização no Meu Imposto de Renda
 - Exige do MCP: `criar_declaracao` (tipo, modo, cpf, nome, arquivo de origem)
-- Cobertura no MCP Imposto de Renda: `criar_declaracao`, `importar_declaracao_anterior`, `importar_pre_preenchida`; módulo model; prioridade P0; status parcial (`abrir_declaracao`, `converter_dbk_para_modelo`, `criar_declaracao`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `criar_declaracao`, `importar_declaracao_anterior`, `importar_pre_preenchida`; módulo model; prioridade P0; status parcial (`criar_declaracao`, `importar_declaracao_anterior`, `importar_pre_preenchida`, `listar_declaracoes`, `orientar_servico_externo`) (ver matriz)
 
 #### M-INICIAL-EMPREENCH Aba "Em Preenchimento"
 
@@ -163,7 +163,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: tela de entrada; telas PainelDeclaracoesPreenchimento, SubpainelDeclaracoesPreenchimento, PainelPesquisaPorNome
 - Campos: pesquisa por nome; lista de declarações; ícones Abrir, Excluir, Entregar, Imprimir, Gravar Cópia de Segurança
 - Exige do MCP: `listar_declaracoes` com filtro
-- Cobertura no MCP Imposto de Renda: `listar_declaracoes`, `abrir_declaracao`; módulo model; prioridade P1; status parcial (`abrir_declaracao`, `listar_arquivos`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `listar_declaracoes`, `abrir_declaracao`; módulo model; prioridade P1; status implementada (`abrir_declaracao`, `listar_declaracoes`) (ver matriz)
 
 #### M-INICIAL-TRANSMITIDAS Aba "Transmitidas"
 
@@ -171,7 +171,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: tela de entrada; telas PainelDeclaracoesTransmitidas, SubpainelDeclaracoesTransmitidas
 - Campos: pesquisa por nome; ícones Abrir, Retificar, Imprimir (Declaração, Recibo, Darf do IRPF), Gravar Cópia de Segurança e Recibo; símbolo de transmitida
 - Exige do MCP: estado "transmitida" registrado a partir do recibo informado pelo usuário (`registrar_recibo`)
-- Cobertura no MCP Imposto de Renda: `listar_declaracoes`, `registrar_recibo`, `criar_retificadora`; módulo model; prioridade P1; status parcial (`criar_retificadora`, `listar_arquivos`, `registrar_recibo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `listar_declaracoes`, `registrar_recibo`, `criar_retificadora`; módulo model; prioridade P1; status implementada (`criar_retificadora`, `listar_declaracoes`, `registrar_recibo`) (ver matriz)
 
 #### M-INICIAL-BOASVINDAS Aba "Boas-vindas", links úteis e "Entrar com gov.br"
 
@@ -277,7 +277,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ctrl+P; págs. 378 e 415; telas PainelImprimirDeclaracao, PainelSelecaoTipoImpressao, PainelSelecaoTipoImpressaoNova; relatórios DIRPF2026, FolhaDeRosto e 60 sub-relatórios por ficha (relDeclaracao*)
 - Campos: Toda a declaração ou Partes da declaração (seleção de fichas, inclusive Ganhos de Capital); Visualizar; salvar em PDF (SalvarImagemDeclaracaoAction)
 - Exige do MCP: `gerar_relatorio_declaracao` (PDF ou HTML, todo ou por fichas), sem reproduzir layout oficial protegido (layout próprio)
-- Cobertura no MCP Imposto de Renda: `gerar_relatorio_declaracao`; módulo model; prioridade P1; status parcial (`gerar_relatorio_declaracao`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `gerar_relatorio_declaracao`; módulo model; prioridade P1; status implementada (`gerar_relatorio_declaracao`, `gravar_relatorio`) (ver matriz)
 
 #### M-IMPR-REND-PF Imprimir Rendimentos Recebidos de PF
 
@@ -285,7 +285,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ctrl+Shift+F; pág. 379; tela PainelImprimirRendimentosRecebidosPF; relatórios relDeclaracaoRendimentosTributaveisPF*
 - Campos: escolha da declaração; visualizar; PDF
 - Exige do MCP: `gerar_relatorio_declaracao` com parte "rendimentos_pf"
-- Cobertura no MCP Imposto de Renda: `gerar_relatorio_declaracao`; módulo model; prioridade P2; status parcial (`gerar_relatorio_declaracao`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `gerar_relatorio_declaracao`; módulo model; prioridade P2; status implementada (`gerar_relatorio_declaracao`, `gravar_relatorio`) (ver matriz)
 
 #### M-IMPR-RECIBO Imprimir Recibo de Entrega
 
@@ -333,7 +333,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ctrl+L; pág. 387; tela PainelImprimirRelacaoDeclaracoes; relatório relDeclaracoes
 - Campos: relação das declarações em preenchimento e transmitidas, ordenável por tipo, modelo, nome ou CPF
 - Exige do MCP: `listar_declaracoes` (formato de relatório opcional)
-- Cobertura no MCP Imposto de Renda: `listar_declaracoes`; módulo model; prioridade P2; status parcial (`listar_arquivos`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `listar_declaracoes`; módulo model; prioridade P2; status implementada (`listar_declaracoes`) (ver matriz)
 
 #### M-IMPR-COMUNICACAO-SAIDA Imprimir Comunicação à Fonte Pagadora de Saída do País
 
@@ -377,7 +377,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ações SalvarImagemDeclaracaoAction, SalvarImagemReciboAction, SalvarImagemDarfCodBarrasAction, SalvarImagemDarfECAAction, SalvarImagemDarfMultaAction, SalvarImagemRelacaoDeclaracoesAction, SalvarImagemComunicacaoSaidaAction
 - Exige do MCP: saída em PDF das ferramentas de relatório
-- Cobertura no MCP Imposto de Renda: `gerar_relatorio_declaracao`, `gerar_darf`; módulo model; prioridade P2; status parcial (`gerar_darf`, `gerar_relatorio_declaracao`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `gerar_relatorio_declaracao`, `gerar_darf`; módulo model; prioridade P2; status implementada (`gerar_darf`, `gerar_relatorio_declaracao`, `gravar_relatorio`) (ver matriz)
 
 ### 1.5 Importações
 
@@ -389,7 +389,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Dados recuperados: Identificação (todos); dependentes e alimentandos (nome, CPF, nascimento); fontes pagadoras PJ (CNPJ/CPF e nome); Pagamentos (nome e CPF/CNPJ do beneficiário); bens e dívidas com Situação 31/12/2024 diferente de zero (código, discriminação, localização, país, valor); imóveis rurais explorados (todos os dados); bens da AR (código e discriminação); estoque final do rebanho; dívidas rurais; saldo de prejuízo rural (Como fazer pág. 373, embora a nota 06 diga que o prejuízo não é importado: divergência); nº do recibo de 2025 se importado do arquivo transmitido ou da cópia "última declaração transmitida e recibo"
 - Validações conhecidas: aceita arquivo gravado para entrega, transmitido ou cópia da última transmitida com recibo; nome do arquivo `CPF-IRPF-A-2025-2024-ORIGI.DEC` (A ajuste, E espólio, S saída; ORIGI ou RETIF); apaga dados já digitados do CPF (com aviso); campos importados editáveis; relatório de importadas e não importadas
 - Exige do MCP: `importar_declaracao_anterior` (leitor do formato .DEC do ano anterior) sem apagar silenciosamente; relatório do que falta preencher
-- Cobertura no MCP Imposto de Renda: `importar_declaracao_anterior`; módulo importacao; prioridade P0; status parcial (`converter_dbk_para_modelo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_declaracao_anterior`; módulo importacao; prioridade P0; status implementada (`importar_declaracao_anterior`, `listar_declaracoes`) (ver matriz)
 
 #### M-IMP-PREPREENCHIDA Importar Declaração Pré-Preenchida
 
@@ -398,7 +398,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Dados recuperados: cadastro CPF; dados da declaração de 2025 (identificação, dependentes, fontes, pagamentos, bens, recibo); informações de 2025 de eSocial, EFD-Reinf, Dmed, Dimob, Carnê-Leão (rendimentos do profissional e pagamentos dos clientes), e-Financeira, DOI, DBF, criptoativos (IN RFB 1.888/2019) e convênios
 - Validações conhecidas: gov.br Ouro ou Prata; uso opcional; apaga dados já digitados (com aviso); conferência e completude são responsabilidade do contribuinte; dependentes exigem procuração
 - Exige do MCP: impossível baixar (autenticado); alternativa: usuário obtém o arquivo da pré-preenchida (Meu Imposto de Renda ou PGD) e o MCP `importar_pre_preenchida` lê o arquivo, ou o usuário importa no PGD e grava cópia para o MCP
-- Cobertura no MCP Imposto de Renda: `importar_pre_preenchida`, `orientar_servico_externo`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_pre_preenchida`, `orientar_servico_externo`; módulo importacao; prioridade P1; status parcial (`importar_pre_preenchida`, `orientar_servico_externo`) (ver matriz)
 
 #### M-IMP-INFORME-REND Importar Informe de Rendimentos
 
@@ -422,7 +422,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Importações > Carnê-Leão 2025 (Ctrl+Shift+C); botão na ficha PF/Exterior (Alt+I); ação ImportarCarneLeaoAction; telas PainelImportacaoCarneLeao, PainelLoginGovBrOuCodigoAcesso, PainelSolicitarCodigoAcesso, PainelInformarVersaoCarneLeao; serviços `importarCarneLeaoComLoginGovBr` e `importarCarneLeaoComCodigoAcesso`
 - Regras: dados do Carnê-Leão Web do titular e de dependentes (CPF na ficha Dependentes); autenticação por gov.br ou código de acesso (inferido pelos nomes); não sobrescreve CNPJ já presente em Rendimentos PJ nem imposto pago no exterior já informado (nota 02)
 - Exige do MCP: impossível baixar; alternativa: usuário exporta/baixa o demonstrativo no e-CAC e o MCP `importar_carne_leao` lê o arquivo (formato a mapear; classes RepositorioTxtDadosCarneLeao e RepositorioTxtDadosCarneLeaoWeb indicam formatos TXT antigo e Web)
-- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `orientar_servico_externo`; módulo importacao; prioridade P1; status parcial (`definir_rendimentos_pf_exterior`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `orientar_servico_externo`; módulo importacao; prioridade P1; status parcial (`calcular_carne_leao`, `definir_rendimentos_pf_exterior`, `orientar_servico_externo`) (ver matriz)
 
 #### M-IMP-AR Importar Atividade Rural 2025
 
@@ -437,7 +437,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Importações (Ctrl+Shift+G); botão Importar em cada tela do demonstrativo; ação ImportarGCAPAction; FAQ págs. 409 a 411
 - Validações conhecidas: só arquivo "Exportar para o IRPF2026" do GCAP2025 (não cópia de segurança, que pode ter erros); arquivo do CPF da declaração ou de dependente cadastrado; nova importação do mesmo CPF substitui todos os dados de GCAP daquele CPF (outros CPF intactos); excluir o dependente exclui seu GCAP; GCAP2026 não importa no IRPF2026; para alterar, corrigir no GCAP2025, exportar e reimportar; o demonstrativo só é preenchido por importação; impressão pelo GCAP ou por Imprimir > Partes > Ganhos de Capital
 - Exige do MCP: `importar_gcap` (XML; mapeamento `mapeamentoXmlGCAP.xml`); substituição por CPF
-- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### M-IMP-SUGESTAO Sugestão de importação (inferido)
 
@@ -445,7 +445,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: ação SugereImportacaoAction; tela PainelConfirmacaoImportacao
 - Regras: provável oferta automática de importar a declaração anterior encontrada na pasta padrão (inferido, coerente com pág. 373)
 - Exige do MCP: `listar_declaracoes` pode apontar arquivos .DEC do ano anterior encontrados na pasta indicada
-- Cobertura no MCP Imposto de Renda: `listar_declaracoes`, `importar_declaracao_anterior`; módulo importacao; prioridade P2; status parcial (`converter_dbk_para_modelo`, `listar_arquivos`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `listar_declaracoes`, `importar_declaracao_anterior`; módulo importacao; prioridade P2; status implementada (`importar_declaracao_anterior`, `listar_declaracoes`) (ver matriz)
 
 ### 1.6 Ferramentas
 
@@ -463,7 +463,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ferramentas > Cópia de Segurança > Restaurar; barra lateral Restaurar; Ctrl+T; págs. 381 e 418
 - Validações conhecidas: lista por CPF em ordem crescente; restaurar sobre declaração existente substitui todos os dados (com alerta); transmitidas também podem ser restauradas
 - Exige do MCP: `restaurar_copia_seguranca` (formato próprio) e leitura de cópias do PGD via `importar_declaracao_anterior` ou leitor de .DEC (lacuna: formato de cópia do PGD 2026 a validar)
-- Cobertura no MCP Imposto de Renda: `restaurar_copia_seguranca`, `importar_declaracao_anterior`; módulo model; prioridade P1; status parcial (`converter_dbk_para_modelo`, `listar_copias_seguranca`, `restaurar_copia_seguranca`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `restaurar_copia_seguranca`, `importar_declaracao_anterior`; módulo model; prioridade P1; status implementada (`importar_declaracao_anterior`, `listar_copias_seguranca`, `listar_declaracoes`, `restaurar_copia_seguranca`) (ver matriz)
 
 #### M-FERR-CALCULADORA Calculadora
 
@@ -471,7 +471,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ferramentas > Calculadora; ícone; Ctrl+Alt+A; pág. 388; telas CalculadoraForm, DisplayForm, HistoricoForm, TecladoForm, CancelarTransporteForm
 - Regras: botão transportar leva o valor ao campo numérico
 - Exige do MCP: não se aplica (o assistente calcula)
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `calcular_expressao`; módulo nenhum; prioridade P2; status implementada (`calcular_expressao`) (ver matriz)
 
 #### M-FERR-ATUALIZACOES Verificar Atualizações
 
@@ -487,7 +487,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ferramentas > Recuperação de Nomes; Alt, T, R, T (ativar) e Alt, T, R, L (limpar); pág. 368; ações AtivarRecuperarNomesAction, LimparCacheNomesAction
 - Regras: preenche Nome a partir de CPF/CNPJ já digitados ou importados (cache local, não vem da RFB); ativado por padrão
 - Exige do MCP: `buscar_nome_por_documento` no histórico local da declaração (P2)
-- Cobertura no MCP Imposto de Renda: `buscar_nome_por_documento`; módulo model; prioridade P2; status parcial (`buscar_nome_por_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `buscar_nome_por_documento`; módulo model; prioridade P2; status implementada (`buscar_nome_por_documento`) (ver matriz)
 
 #### M-FERR-LOGIN-GOVBR Entrar e sair com gov.br
 
@@ -515,7 +515,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ação LeaozinhoAction (sem citação na Ajuda)
 - Exige do MCP: a confirmar (P2); o próprio MCP cumpre papel de assistente
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `obter_ajuda`, `consultar_atalhos`; módulo nenhum; prioridade P2; status implementada (`consultar_atalhos`, `obter_ajuda`) (ver matriz)
 
 #### M-FERR-AVALIACAO Avaliação do programa (inferido)
 
@@ -552,7 +552,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ação ExibirAtalhosPGDIRPFAction; AtalhosIRPF.pdf
 - Exige do MCP: não se aplica
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `consultar_atalhos`; módulo nenhum; prioridade P2; status implementada (`consultar_atalhos`, `obter_ajuda`) (ver matriz)
 
 #### M-AJUDA-ACESSIBILIDADE Acessibilidade (F11) e leitura de tela
 
@@ -560,7 +560,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: ação AjudaAcessibilidadeAction; telas PainelAjudaAcessibilidade, PainelAjudaLeituraTela, versões acessíveis de pendências e imposto a pagar; pág. 387
 - Regras: menus acessíveis pela tecla Alt; conteúdo específico por ficha com F11
 - Exige do MCP: respostas textuais já são acessíveis
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `consultar_atalhos`, `obter_ajuda`; módulo nenhum; prioridade P2; status implementada (`consultar_atalhos`, `obter_ajuda`) (ver matriz)
 
 #### M-AJUDA-SOBRE Sobre, Novidades, Tutorial
 
@@ -764,7 +764,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: nenhuma
 - Exige do MCP: cálculo automático do split 25%/75%; campo de código do posto MRE; tabela de postos (não está nesta parte)
 - Observações: formas de pagamento iguais a S-PAG-FORMAS, inclusive remessa de ordem de pagamento via Banco do Brasil, Gecex Brasília-DF, prefixo 1608-X, em reais ou moeda estrangeira
-- Cobertura no MCP Imposto de Renda: `definir_rendimentos_pf_exterior`, `adicionar_rendimento_isento`, `converter_moeda`; módulo calc; prioridade P2; status parcial (`adicionar_rendimento_isento`, `converter_moeda`, `definir_rendimentos_pf_exterior`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_rendimentos_pf_exterior`, `adicionar_rendimento_isento`, `converter_moeda`; módulo calc; prioridade P2; status implementada (`adicionar_rendimento_isento`, `converter_moeda`, `definir_rendimentos_pf_exterior`, `listar_tabela`) (ver matriz)
 
 #### S-REGRA-AUSENTE-OUTROS Contribuinte ausente no exterior exceto a serviço do Brasil
 
@@ -808,7 +808,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: tabela "Conversão para Reais do Dólar dos Estados Unidos da América em 2025" (seção Tabelas)
 - Exige do MCP: ferramenta de conversão com a tabela mensal de compra e venda de 2025
 - Observações: nenhuma
-- Cobertura no MCP Imposto de Renda: `converter_moeda`; módulo tabelas; prioridade P1; status parcial (`converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `converter_moeda`; módulo tabelas; prioridade P1; status implementada (`converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### S-REGRA-REND-TRAB Rendimentos do trabalho (tributáveis)
 
@@ -845,7 +845,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: rendimento tributável inclui acréscimos, juros e 13º, excluídas despesas com a ação judicial (inclusive advogados) pagas e não indenizadas; essas despesas são proporcionalizadas entre tributáveis, exclusivos e isentos
 - Códigos: Pagamentos Efetuados 60 (honorários de ações judiciais, exceto trabalhistas) e 61 (honorários de ações trabalhistas), com CPF do advogado ou CNPJ do escritório, nome e valor
 - Exige do MCP: rateio proporcional das despesas judiciais; lançamento automático em Pagamentos 60/61
-- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `adicionar_pagamento`, `calcular_rra`; módulo calc; prioridade P1; status parcial (`adicionar_pagamento`, `adicionar_rra`, `calcular_rra`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `adicionar_pagamento`, `calcular_rra`; módulo calc; prioridade P1; status implementada (`adicionar_pagamento`, `adicionar_rra`, `calcular_rra`) (ver matriz)
 
 #### S-REGRA-OUTROS-REND Outros rendimentos tributáveis
 
@@ -899,7 +899,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: importação de comprovante eletrônico de rendimentos (informe da fonte pagadora) e de pagamentos de serviços médicos e de saúde (informe do plano de saúde)
 - Exige do MCP: importar arquivo da pré-preenchida obtido pelo usuário; importar informes eletrônicos de rendimentos e plano de saúde; orientar o login gov.br (fora do MCP)
 - Observações: o MCP não autentica no gov.br (inferido); depende do arquivo baixado pelo usuário
-- Cobertura no MCP Imposto de Renda: `importar_pre_preenchida`, `importar_informe_rendimentos`, `importar_informe_plano_saude`, `orientar_servico_externo`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_pre_preenchida`, `importar_informe_rendimentos`, `importar_informe_plano_saude`, `orientar_servico_externo`; módulo importacao; prioridade P1; status parcial (`importar_informe_plano_saude`, `importar_informe_rendimentos`, `importar_pre_preenchida`, `orientar_servico_externo`) (ver matriz)
 
 #### S-REGRA-PRAZO Prazo e local de apresentação
 
@@ -973,7 +973,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos (grupos): Tipo de declaração e nº do recibo; Nome; Data de nascimento; Doença grave ou deficiência; Raça/Cor; Houve alteração de dados cadastrais; Possui cônjuge ou companheiro(a) e CPF do cônjuge; Era residente no exterior e passou a ser residente em 2025 e Data de retorno; Endereço (Brasil ou Exterior); Ocupação principal (natureza e ocupação).
 - Validações conhecidas: período de informações: Final de Espólio, de 1º de janeiro até a data da decisão judicial da partilha, sobrepartilha ou adjudicação, ou da lavratura da escritura pública de inventário/partilha (se ainda houver bens a inventariar que gerem rendimentos, informar o ano todo); Saída Definitiva, de 1º de janeiro até o dia anterior ao da caracterização da condição de não residente.
 - Exige do MCP: ferramenta de leitura/gravação da identificação (`definir_identificacao`), validação de cada campo, seleção do tipo de declaração.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-TIPO Que Tipo de Declaração Você Deseja Fazer?
 
@@ -996,7 +996,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: na importação da declaração de 2025 pelo arquivo transmitido, o recibo de 2025 é recuperado automaticamente; não há recuperação se a importação for por cópia de segurança.
 - Exige do MCP: escolha do tipo, validação do recibo (12 dígitos), alerta sobre cancelamento do débito automático em retificadora fora do prazo, bloqueio de alteração de bens em retificadora de Espólio fora do prazo; recuperar recibo ao importar a declaração anterior.
 - Observações: recibo pode ser obtido na folha 2 do recibo impresso ou em Declaração > Abrir do programa do ano.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-NOME Nome
 
@@ -1005,7 +1005,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: Nome completo (alfanumérico; layout NM_NOME tamanho 60).
 - Validações conhecidas: de 1 a 15 partes; a primeira parte pode ter 1 caractere; nenhuma parte com mais de 20 caracteres; proibidos 3 caracteres iguais e consecutivos, exceto o numeral romano "III" na última parte.
 - Exige do MCP: validador de nome conforme essas regras.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo validate; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo validate; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-NASC Data de Nascimento
 
@@ -1015,7 +1015,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: formato 2 dígitos dia, 2 mês, 4 ano; data válida (inferido).
 - Regras de cálculo afetadas: idade influencia parcela isenta de 65 anos e obrigatoriedade/prioridade (inferido, tratado em outras fichas).
 - Exige do MCP: validador de data.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-DOENCA Há declarante ou dependente com doença grave ou deficiência física ou mental?
 
@@ -1025,7 +1025,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: base em conclusão da medicina especializada.
 - Regras de cálculo afetadas: prioridade na restituição (art. 69-A da Lei 9.784/1999); não altera o imposto.
 - Exige do MCP: campo booleano com explicação ao usuário.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-RACA Raça/Cor
 
@@ -1033,7 +1033,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Identificação; pág. 43
 - Campos: seleção autodeclarada: Amarela, Branca, Indígena, Parda, Preta (tabela racaCor.xml).
 - Exige do MCP: enumeração validada.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-ALTCAD Houve alteração de dados cadastrais?
 
@@ -1043,7 +1043,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: SIM se endereço, telefone, celular, e-mail ou ocupação principal diferente da última declaração. Se NÃO e o cadastro CPF da RFB tiver endereço diferente, a declaração NÃO pode ser apresentada (rejeição na transmissão). Solução: conferir o endereço; se correto, marcar SIM, gravar novamente para entrega e retransmitir.
 - Regras de cálculo afetadas: nenhuma; com SIM, também atualiza dados do dependente que mora com o titular no Cadastro CPF.
 - Exige do MCP: alerta quando dados de contato/endereço mudarem em relação à declaração importada do ano anterior; sugestão automática de SIM (inferido).
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-CONJ Possui cônjuge ou companheiro(a)?
 
@@ -1052,7 +1052,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: SIM/NÃO; CPF do cônjuge ou companheiro(a) (11 dígitos) se SIM.
 - Validações conhecidas: CPF obrigatório com 11 dígitos quando SIM; dígito verificador (inferido).
 - Exige do MCP: validação de CPF; ligação com a ficha Informações do Cônjuge (inferido) e com dependentes comuns.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-RETORNO Era residente no exterior e passou a ser residente no país em 2025?
 
@@ -1061,7 +1061,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: SIM/NÃO; Data de retorno ao Brasil (se SIM).
 - Validações conhecidas: data obrigatória se SIM; dentro de 2025 (inferido).
 - Exige do MCP: campo condicional com validação de data.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status parcial (`definir_identificacao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`; módulo model; prioridade P0; status implementada (`definir_identificacao`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-END-BR Endereço - Brasil
 
@@ -1073,7 +1073,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Códigos: UF, municípios (tabelas por UF), tipo de logradouro.
 - Exige do MCP: validação de endereço, consulta às tabelas de UF/município, validação de CEP; botão "Consulta CEP" (abre site dos Correios): o MCP pode apenas orientar ou consultar serviço externo opcional (inferido).
 - Observações: celular e e-mail podem ser usados pela RFB para avisar mensagem na Caixa Postal do e-CAC.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`, `consultar_tabela`; módulo tabelas; prioridade P0; status parcial (`buscar_codigo`, `consultar_parametros`, `definir_identificacao`, `listar_tabela`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`, `consultar_tabela`; módulo tabelas; prioridade P0; status implementada (`buscar_codigo`, `consultar_parametros`, `definir_identificacao`, `listar_tabela`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-END-EXT Endereço - Exterior
 
@@ -1083,7 +1083,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: CPF do procurador com 11 dígitos; e-mail válido; Espólio: último endereço da pessoa falecida.
 - Exige do MCP: validação, tabelas de países e representações diplomáticas; orientação sobre Domicílio Tributário Eletrônico ou procurador no Brasil.
 - Observações: se o endereço do titular é no Exterior e o dependente mora com o titular, celular/e-mail do dependente ficam desabilitados.
-- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`, `consultar_tabela`; módulo tabelas; prioridade P0; status parcial (`buscar_codigo`, `consultar_parametros`, `definir_identificacao`, `listar_tabela`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_identificacao`, `validar_documento`, `consultar_tabela`; módulo tabelas; prioridade P0; status implementada (`buscar_codigo`, `consultar_parametros`, `definir_identificacao`, `listar_tabela`, `validar_documento`) (ver matriz)
 
 #### F-IDENT-OCUP Ocupação Principal
 
@@ -1204,7 +1204,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: dados do ano-calendário 2025 do Carnê-Leão online para a ficha PF/Exterior.
 - Exige do MCP: importador do arquivo/exportação do Carnê-Leão online (formato a mapear; o PGD baixa via gov.br, o MCP não deve autenticar no gov.br: alternativa é o usuário exportar o arquivo e o MCP importar, inferido); aplicar as regras de não sobrescrita (CNPJ e imposto pago no exterior).
 - Observações: módulo irpf-gui-carne-leao.jar.
-- Cobertura no MCP Imposto de Renda: `importar_carne_leao`; módulo importacao; prioridade P1; status parcial (`definir_rendimentos_pf_exterior`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_carne_leao`; módulo importacao; prioridade P1; status parcial (`calcular_carne_leao`, `definir_rendimentos_pf_exterior`, `orientar_servico_externo`) (ver matriz)
 
 #### F-RTPF-TNA Aba "Rendimentos do Trabalho Não Assalariado" (titular e dependentes)
 
@@ -1252,7 +1252,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: NÃO incluir: transferência para o Brasil de saldo de depósito não remunerado no exterior (ganho de capital); ganho cambial de depósitos não remunerados em instituição não reconhecida (ganho de capital); alienação de moeda estrangeira em espécie (não incidência até US$ 5.000,00 no ano; acima, ganho de capital); rendimentos de aplicações financeiras no exterior e lucros/dividendos de controladas (Bens e Direitos, Lei 14.754/2023); liquidação/resgate de aplicações e alienação de bens adquiridos em moeda estrangeira e ativos em bolsa no exterior (ganho de capital).
 - Regras de cálculo afetadas: conversão: moeda de origem para dólar dos EUA pela cotação da autoridade monetária do país na data do recebimento; dólar para real pela cotação de COMPRA do Banco Central do último dia útil da 1ª quinzena do mês anterior ao do recebimento (Tabela de Conversão do Dólar 2025). Total transportado ao Resumo. Imposto pago no exterior compensável (ver Carnê-Leão e Imposto Pago/Retido).
 - Exige do MCP: conversor de moeda com a tabela oficial de 2025 (compra para rendimentos), alertas de classificação errada (aplicações no exterior, moeda em espécie).
-- Cobertura no MCP Imposto de Renda: `definir_rendimentos_pf_exterior`, `converter_moeda`; módulo calc; prioridade P1; status parcial (`converter_moeda`, `definir_rendimentos_pf_exterior`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_rendimentos_pf_exterior`, `converter_moeda`; módulo calc; prioridade P1; status implementada (`converter_moeda`, `definir_rendimentos_pf_exterior`, `listar_tabela`) (ver matriz)
 
 #### F-RTPF-PREV Deduções - Previdência Oficial
 
@@ -1378,7 +1378,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras de cálculo afetadas: total de isentos
 - Importações: GCAP (opcional, operação dispensada) transporta o valor
 - Exige do MCP: campo duplo (manual + transportado); cálculo auxiliar do ganho isento; checagem do limite mensal por natureza
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `adicionar_rendimento_isento`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `adicionar_rendimento_isento`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `adicionar_rendimento_isento`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `adicionar_rendimento_isento`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### F-ISENTO-06 Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos
 
@@ -1388,7 +1388,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: único imóvel; valor de venda até R$ 440.000,00; sem outra alienação de imóvel em 5 anos. Valor = venda menos custo (DIRPF 2025) mais parcelas pagas em 2025, se positivo
 - Importações: GCAP (inclusive redução de imóvel adquirido em moeda estrangeira até 1988)
 - Exige do MCP: campo duplo; validação dos três requisitos (perguntas ao usuário); cálculo auxiliar
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `adicionar_rendimento_isento`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `adicionar_rendimento_isento`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `adicionar_rendimento_isento`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `adicionar_rendimento_isento`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### F-ISENTO-07 Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital
 
@@ -1398,7 +1398,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: abrange ganho de imóveis adquiridos até 1969; terra nua (diferença quando ganho apurado pelo Diat); redução para imóveis adquiridos até 1988; fatores de redução do art. 40 da Lei nº 11.196/2005; ganho na venda de imóvel residencial com aplicação em 180 dias em outro residencial no Brasil; redução de imóvel adquirido em moeda estrangeira até 1988. Preencher manual só se dispensado do GCAP
 - Importações: GCAP
 - Exige do MCP: campo duplo; cálculo de fatores de redução (FR1/FR2, inferido), percentual de redução até 1988; controle do prazo de 180 dias
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `adicionar_rendimento_isento`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `adicionar_rendimento_isento`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `adicionar_rendimento_isento`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `adicionar_rendimento_isento`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### F-ISENTO-08 Ganho de capital na alienação de moeda estrangeira em espécie com total anual até US$ 5,000.00
 
@@ -1408,7 +1408,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: total de alienações no ano convertido em dólar (cotação da autoridade monetária do país emissor na data de cada alienação) até US$ 5.000,00
 - Importações: NÃO é transportado pelo programa (GCAP não transporta); informar manualmente
 - Exige do MCP: CRUD; cálculo/checagem do limite em US$
-- Cobertura no MCP Imposto de Renda: `adicionar_rendimento_isento`, `converter_moeda`; módulo model; prioridade P2; status parcial (`adicionar_rendimento_isento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_rendimento_isento`, `converter_moeda`; módulo model; prioridade P2; status implementada (`adicionar_rendimento_isento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-ISENTO-09 Lucros e dividendos recebidos
 
@@ -1623,7 +1623,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Importações: GCAP 2025, inclusive ganhos na integralização de capital de PJ por valor superior ao declarado, sucessão e doação em adiantamento da legítima por valor superior ao da DIRPF 2025, e dissolução conjugal/união estável quando o bem é incluído por valor superior à Situação em 31/12/2024 do cônjuge
 - Exige do MCP: cálculo GCAP e transporte
-- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### F-EXCL-03 Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira
 
@@ -1631,7 +1631,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Importações: GCAP 2025
 - Exige do MCP: cálculo GCAP moeda estrangeira e transporte
-- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### F-EXCL-04 Ganhos de capital na alienação de moeda estrangeira em espécie
 
@@ -1639,7 +1639,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Importações: GCAP 2025
 - Exige do MCP: cálculo GCAP espécie e transporte
-- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### F-EXCL-05 Ganhos líquidos em renda variável (bolsa, mercadorias, futuros, FII e Fiagro)
 
@@ -1765,7 +1765,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Despesas judiciais e honorários: proporcionalizar entre tributável e isento; lançar em Pagamentos Efetuados código 60 (honorários de ações judiciais, exceto trabalhistas) ou 61 (ações trabalhistas), com nome e CPF/CNPJ do advogado/escritório e valor
 - Parcela isenta incluída no RRA: lançar nas linhas da ficha Isentos, exceto parcela isenta 65 anos (campo próprio na ficha RRA) e juros de mora (campo próprio, transportado para Isentos código 27)
 - Exige do MCP: CRUD nas duas abas; cálculo do imposto exclusivo por tabela acumulada; transportes; validação de opção uniforme
-- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `calcular_rra`; módulo calc; prioridade P1; status parcial (`adicionar_rra`, `calcular_rra`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `calcular_rra`; módulo calc; prioridade P1; status implementada (`adicionar_rra`, `calcular_rra`) (ver matriz)
 
 #### F-RRA-TIT Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelo Titular
 
@@ -1781,7 +1781,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - RRA complementar: imposto = incidente sobre o total pago (inclusive superveniente) menos retidos anteriores.
   - Juros vão para Isentos código 27.
 - Exige do MCP: CRUD; calculadora de imposto RRA (tabela acumulada mensal por número de meses, com tabela do mês do recebimento); comparador ajuste x exclusiva para sugestão; arredondamento de meses; transportes para Exclusivos 07, Isentos 27 e resumo; validação de data limite da opção
-- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `calcular_rra`; módulo calc; prioridade P1; status parcial (`adicionar_rra`, `calcular_rra`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `calcular_rra`; módulo calc; prioridade P1; status implementada (`adicionar_rra`, `calcular_rra`) (ver matriz)
 
 #### F-RRA-DEP Rendimentos Tributáveis de PJ Recebidos Acumuladamente pelos Dependentes
 
@@ -1791,7 +1791,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: mesmas do titular; abrange RRA de PJ e de PF (texto da Ajuda); opção individual por dependente
 - Regras de cálculo afetadas: idem titular; líquido exclusivo vai para Exclusivos código 09
 - Exige do MCP: CRUD; mesma calculadora; validação de dependente cadastrado
-- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `calcular_rra`; módulo calc; prioridade P1; status parcial (`adicionar_rra`, `calcular_rra`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_rra`, `calcular_rra`; módulo calc; prioridade P1; status implementada (`adicionar_rra`, `calcular_rra`) (ver matriz)
 
 ### 3.9 Imposto Pago/Retido
 
@@ -1819,7 +1819,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Validações conhecidas: compensável só se relativo a rendimentos informados em "Outras Informações", coluna Exterior, da ficha Rendimentos Tributáveis de PF e do Exterior; país com acordo ou reciprocidade, imposto não restituível/compensável no país de origem. Países listados: África do Sul, Argentina, Áustria, Bélgica, Canadá, Chile, China, Coreia do Sul, Dinamarca, Emirados Árabes Unidos, Equador, Eslováquia, Espanha, Filipinas, Finlândia, França, Hungria, Índia, Israel, Itália, Japão, Luxemburgo, México, Noruega, Países Baixos (Holanda), Peru, Portugal, República Tcheca, Rússia, Singapura, Suécia, Suíça, Trinidad e Tobago, Turquia, Ucrânia, Uruguai, Venezuela. Reciprocidade sem prova: Alemanha, Estados Unidos e Reino Unido. Reciprocidade não alcança tributos estaduais e municipais. País sem acordo/reciprocidade: rendimento informado, imposto não compensável
 - Regras de cálculo afetadas: limite de compensação = imposto apurado com rendimentos do exterior menos imposto apurado sem eles; o Resumo mostra o valor limitado, enquanto a ficha mantém o valor digitado. Conversão: moeda para dólar (autoridade monetária do país, data do recebimento) e dólar para real (compra Bacen, último dia útil da 1ª quinzena do mês anterior)
 - Exige do MCP: campo editável; cálculo do limite (dois cálculos do imposto); tabela de países com acordo/reciprocidade; conversor cambial
-- Cobertura no MCP Imposto de Renda: `definir_imposto_pago`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status parcial (`comparar_modelos`, `converter_moeda`, `definir_imposto_pago`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_imposto_pago`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status implementada (`comparar_modelos`, `converter_moeda`, `definir_imposto_pago`, `explicar_calculo`, `listar_tabela`, `simular_imposto`) (ver matriz)
 
 #### F-IMPPAGO-03 Linha 03: Imposto sobre a renda na fonte (Lei nº 11.033/2004)
 
@@ -1921,7 +1921,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: titular/dependente/alimentando; nome da instituição; descrição; valor pago; parcela não dedutível (sem CPF/CNPJ)
 - Regras: ver F-PAG-INSTR; conversão em moeda estrangeira pela cotação de venda (pág. 147, por analogia, inferido)
 - Exige do MCP: conversor de câmbio (venda)
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-MED Despesas Médicas (regras comuns aos códigos 09 a 22 e 26)
 
@@ -1984,37 +1984,37 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos: titular/dependente/alimentando; nome do profissional; descrição; valor; parcela não dedutível (sem CPF/CNPJ)
 - Regras: ver F-PAG-MED; conversão cambial pela cotação de venda
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-16 Código 16, Dentistas no exterior
 
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos e regras: idem F-PAG-15
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-17 Código 17, Psicólogos no exterior
 
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos e regras: idem F-PAG-15
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-18 Código 18, Fisioterapeutas no exterior
 
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos e regras: idem F-PAG-15
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-19 Código 19, Terapeutas ocupacionais no exterior
 
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos e regras: idem F-PAG-15
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-20 Código 20, Fonoaudiólogos no exterior
 
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos e regras: idem F-PAG-15
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-21 Código 21, Hospitais, clínicas e laboratórios com saúde humana no Brasil
 
@@ -2028,7 +2028,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/04-pagamentos-doacoes-bens.md
 - Campos: titular/dependente/alimentando; nome da instituição; descrição; valor; parcela não dedutível (sem CNPJ)
 - Regras: ver F-PAG-MED; conversão cambial
-- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_pagamento`, `converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_pagamento`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_pagamento`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-PAG-26 Código 26, Planos de saúde no Brasil
 
@@ -2396,7 +2396,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - No exterior: aplicações financeiras, ações/quotas e ouro ativo financeiro, criptoativos, independentemente do valor; bens de controladas em transparência fiscal; bens de trust não enquadrado como controlada; participações em controladas diretas sujeitas aos regimes anual ou de disponibilização; controladas indiretas sujeitas aos regimes.
   - Dispensa: saldos até R$ 140,00; bens móveis e direitos (exceto veículos, embarcações e aeronaves) abaixo de R$ 5.000,00; conjunto de ações/quotas/ouro abaixo de R$ 1.000,00.
 - Exige do MCP: aviso de dispensa e de obrigatoriedade por valor e grupo
-- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `listar_pendencias`, `validar_documento`; módulo validate; prioridade P0; status parcial (`adicionar_bem`, `validar_declaracao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `listar_pendencias`, `validar_documento`; módulo validate; prioridade P0; status implementada (`adicionar_bem`, `validar_declaracao`, `validar_documento`) (ver matriz)
 
 #### F-BENS-DADOS Dados do bem: campos condicionais
 
@@ -2416,7 +2416,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Declaração Final de Espólio: não há campo titular/dependente.
   - "Negociados em Bolsa?" Sim exige Código de Negociação para: 03.01 Ações; 04.04 Ativos negociados em bolsa (BDRs, opções e outros); 07.02 Fiagro; 07.03 FII; 07.04 FIA e FMP-FGTS; 07.06 FIP, FIDC e ETF entidades de investimento; 07.07 FIP-IE e FIP-PD&I; 07.08 ETF de renda fixa; 07.10 Fundos de infraestrutura, FIDC e outros alíquota 0%; 07.12 FIEE; 07.13 Fundo multimercado; 07.99 Fundos no exterior.
 - Exige do MCP: schema dinâmico por grupo/código e país; validação de CNPJ/CPF, Renavam, CEP, município x UF, banco/agência/conta; tabelas altcoin e stablecoin
-- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `listar_pendencias`, `validar_documento`; módulo validate; prioridade P0; status parcial (`adicionar_bem`, `validar_declaracao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `listar_pendencias`, `validar_documento`; módulo validate; prioridade P0; status implementada (`adicionar_bem`, `validar_declaracao`, `validar_documento`) (ver matriz)
 
 #### F-BENS-RENDASSOC Rendimentos associados ao bem
 
@@ -2573,7 +2573,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Depósitos no exterior: saldo convertido pela cotação do dia anterior à não residência (pág. 203 diz fechamento de venda; pág. 347 diz compra: divergência do texto).
 - Exige do MCP: modelo de bem com campo de data de não residência; conversões cambiais por data; ação "repetir valores"
 - Observações: divergência compra x venda registrada para conferência
-- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `repetir_valores_bens`, `converter_moeda`; módulo model; prioridade P1; status parcial (`adicionar_bem`, `converter_moeda`, `repetir_valores_bens`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `repetir_valores_bens`, `converter_moeda`; módulo model; prioridade P1; status implementada (`adicionar_bem`, `converter_moeda`, `listar_tabela`, `repetir_valores_bens`) (ver matriz)
 
 #### F-BENS-ALIEN-DFE Bens e direitos alienados no ano (Final de Espólio)
 
@@ -2756,7 +2756,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: nenhuma
 - Exige do MCP: marcador estruturado "opção transparência fiscal" por item; calculadora de alocação proporcional de custo; validação de que a opção é mantida em anos seguintes
 - Observações: base legal arts. 36 a 39 (e 36 a 49 citado em outro trecho) da IN RFB 2.180/2024
-- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status parcial (`adicionar_bem`, `comparar_modelos`, `converter_moeda`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status implementada (`adicionar_bem`, `comparar_modelos`, `converter_moeda`, `explicar_calculo`, `listar_tabela`, `simular_imposto`) (ver matriz)
 
 #### F-BENS-ESP-DEP-NAO-REMUNERADO Depósitos não remunerados em moeda estrangeira (conta, cartão de débito ou crédito no exterior)
 
@@ -2817,7 +2817,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: nenhuma específica (possível relação com a ficha de tributação exclusiva código 12, ver notas 03)
 - Exige do MCP: motor de apuração da Lei 14.754 (15%, compensação de perdas, limite de crédito do imposto estrangeiro por aplicação); cotações Bacen compra e venda por data; validação de não uso cruzado do crédito
 - Observações: base IN RFB 2.180/2024
-- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status parcial (`adicionar_bem`, `comparar_modelos`, `converter_moeda`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status implementada (`adicionar_bem`, `comparar_modelos`, `converter_moeda`, `explicar_calculo`, `listar_tabela`, `simular_imposto`) (ver matriz)
 
 #### F-BENS-ESP-CONTROLADAS Participação em entidades controladas no exterior
 
@@ -2843,7 +2843,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Importações/exportações: GCAP (alienação da participação)
 - Exige do MCP: classificador de regime (anual x disponibilização) a partir de país e percentual de renda ativa; motor de cálculo 15% por controlada; controle de crédito de lucros a receber (grupo 05/99) e de prejuízos por controlada desde 2025; limite de dedução do imposto estrangeiro; lista de países de tributação favorecida (tabela pública, inferido)
 - Observações: o texto tem pequenas inconsistências de data (31/12/2024 x 31/12/2025 em "resultados abrangentes")
-- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status parcial (`adicionar_bem`, `comparar_modelos`, `converter_moeda`, `explicar_calculo`, `simular_imposto`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `adicionar_bem`, `calcular_imposto`, `converter_moeda`; módulo calc; prioridade P1; status implementada (`adicionar_bem`, `comparar_modelos`, `converter_moeda`, `explicar_calculo`, `listar_tabela`, `simular_imposto`) (ver matriz)
 
 #### F-BENS-ESP-DESINCORPORADOS Bens e direitos desincorporados do patrimônio em 2025
 
@@ -3097,7 +3097,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: pág. 331
 - Regras: moeda estrangeira para US$ pela autoridade monetária do país na data do recebimento/pagamento; depois para R$ pelo dólar BCB do último dia útil da primeira quinzena do mês anterior; compra para rendimentos e imposto pago, venda para deduções (tabela de conversão do dólar 2025).
 - Exige do MCP: tabela de cotações 2025 e conversor.
-- Cobertura no MCP Imposto de Renda: `converter_moeda`; módulo tabelas; prioridade P2; status parcial (`converter_moeda`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `converter_moeda`; módulo tabelas; prioridade P2; status implementada (`converter_moeda`, `listar_tabela`) (ver matriz)
 
 #### F-DFE-BENS Ficha Bens e Direitos (Final de Espólio)
 
@@ -3325,7 +3325,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Códigos: tabela de bancos (bancos.xml), cálculo de DV (bancos_calculo_dv.xml)
 - Exige do MCP: validação de banco autorizado e de DV de conta por banco; opção Pix
 - Observações: nenhuma
-- Cobertura no MCP Imposto de Renda: `definir_informacoes_bancarias`, `validar_documento`; módulo validate; prioridade P0; status parcial (`definir_informacoes_bancarias`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `definir_informacoes_bancarias`, `validar_documento`; módulo validate; prioridade P0; status implementada (`definir_informacoes_bancarias`, `validar_documento`) (ver matriz)
 
 #### F-RESUMO-SIMPL Resumo, Cálculo do Imposto (Desconto Simplificado)
 
@@ -3691,7 +3691,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Itens a preencher manualmente: imóveis adquiridos em 2025; saldo de prejuízo de exercícios anteriores; limite de 20% em R$ no exterior; rebanho (aquisições, nascimentos, consumo e perdas, vendas); bens adquiridos e alienações de 2025; dívidas (situação 31/12/2025 e dívidas de 2025).
 - Exige do MCP: importador do arquivo exportado pelo LCAR 2025 (formato a mapear, ver layout); importador da declaração anterior; relatório do que falta preencher após importação.
 - Observações: LCAR é programa separado da RFB (download no gov.br).
-- Cobertura no MCP Imposto de Renda: `importar_livro_caixa_rural`, `importar_declaracao_anterior`; módulo importacao; prioridade P1; status parcial (`converter_dbk_para_modelo`, `definir_receitas_despesas_rurais`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_livro_caixa_rural`, `importar_declaracao_anterior`; módulo importacao; prioridade P1; status parcial (`definir_receitas_despesas_rurais`, `importar_declaracao_anterior`, `listar_declaracoes`, `orientar_servico_externo`) (ver matriz)
 
 ### 4.2 Ganhos de Capital
 
@@ -3962,7 +3962,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: módulo `irpf-gui-carne-leao.jar`, telas PainelDadosEscrituracaoTitular, PainelDadosEscrituracaoMensalTitular, PainelAbaLancamentosEscrituracaoTitular, PainelAbaEscrituracaoDetalheTitular, PainelDadosEscrituracaoDependente, PainelDadosEscrituracaoMensalDependentes, PainelAbaSelecaoEscrituracaoDependentes, PainelAbaLancamentosEscrituracaoDependentes(Detalhe), PainelAbaRendPFTitular, PainelAbaRendPFDependentesLista(Detalhe), PainelAbaSelecaoDependente
 - Regras: a ficha Rendimentos Tributáveis de PF e do Exterior recebe os totais mensais do Carnê-Leão Web (rendimentos, deduções, livro Caixa, imposto pago 0190); lançamentos de escrituração mensal e por pagador (CPF do titular do pagamento e do beneficiário, registro 49 do layout); seleção de dependente para importar (inferido pelos nomes)
 - Exige do MCP: modelo mensal (F-RTPF) e importador (M-IMP-CARNE-LEAO); `calcular_carne_leao` opcional (P2) com tabela mensal
-- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `definir_rendimentos_pf_exterior`; módulo importacao; prioridade P1; status parcial (`definir_rendimentos_pf_exterior`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `definir_rendimentos_pf_exterior`; módulo importacao; prioridade P1; status parcial (`calcular_carne_leao`, `definir_rendimentos_pf_exterior`, `orientar_servico_externo`) (ver matriz)
 
 #### D-CL-PROGRAMA Programa Carnê-Leão (e-CAC)
 
@@ -4058,7 +4058,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
   - Doação a entidade assistencial não é dedutível.
   - Imposto Complementar: só Darf 0246.
 - Exige do MCP: regras de `listar_pendencias` derivadas destes erros; normalização de valores monetários na entrada
-- Cobertura no MCP Imposto de Renda: `listar_pendencias`, `validar_documento`; módulo validate; prioridade P0; status parcial (`validar_declaracao`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `listar_pendencias`, `validar_documento`; módulo validate; prioridade P0; status implementada (`validar_declaracao`, `validar_documento`) (ver matriz)
 
 ### S-REQUISITOS Requisitos e instalação do programa oficial
 
@@ -4074,7 +4074,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Ajuda pág. 425
 - Regras: trocar modo rascunho por normal; trocar o driver do fabricante pelo do sistema ou vice-versa; atualizar o driver
 - Exige do MCP: não se aplica (o MCP gera PDF ou HTML)
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `gravar_relatorio`, `obter_ajuda`; módulo nenhum; prioridade P2; status implementada (`gravar_relatorio`, `obter_ajuda`) (ver matriz)
 
 ### S-SALVAMENTO Salvamento automático
 
@@ -4090,7 +4090,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: págs. 377 e 403
 - Regras: abrir outra fecha a atual; base em pasta do programa; transmitidas em `...\IRPF2026\Transmitidas`
 - Exige do MCP: sem a restrição; armazenamento local por CPF e exercício
-- Cobertura no MCP Imposto de Renda: `listar_declaracoes`; módulo model; prioridade P2; status parcial (`listar_arquivos`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `listar_declaracoes`; módulo model; prioridade P2; status implementada (`listar_declaracoes`) (ver matriz)
 
 ### S-GRAVAR-ENTREGA Gravação da declaração para entrega (arquivo .DEC)
 
@@ -4114,7 +4114,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: págs. 383, 403, 405; layout registros HR, DR, R9, HC, RC, NC, VC, MC, TC; relatório relRecibo
 - Regras: recibo de 12 dígitos usado para retificar e como segurança na declaração seguinte; ausência do recibo de 2025 não impede a entrega
 - Exige do MCP: `registrar_recibo` (o usuário informa o número ou aponta o arquivo .REC para leitura); validação do formato
-- Cobertura no MCP Imposto de Renda: `registrar_recibo`, `validar_documento`; módulo importacao; prioridade P1; status parcial (`criar_retificadora`, `registrar_recibo`, `validar_documento`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `registrar_recibo`, `validar_documento`; módulo importacao; prioridade P1; status implementada (`criar_retificadora`, `registrar_recibo`, `validar_documento`) (ver matriz)
 
 ### S-NOTIFICACAO-MAED Notificação de lançamento da multa por atraso emitida pelo PGD
 
@@ -4198,7 +4198,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: `LayoutDadosDIRPF2026.xml`; registros IR (header, 160 campos: sistema, exercício, ano-base, código Receitanet, indicador de retificadora, CPF, tipo de NI, versão etc.) e T9 (trailer com quantidades por tipo de registro, QT_R16 em diante); campos com nome, observação, formato (C, N etc.) e tamanho
 - Exige do MCP: `gerar_dbk` e leitor do mesmo layout (`importar_declaracao_anterior` usa o layout de 2025)
-- Cobertura no MCP Imposto de Renda: `gerar_dbk`, `importar_declaracao_anterior`; módulo dbk; prioridade P0; status parcial (`converter_dbk_para_modelo`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `gerar_dbk`, `importar_declaracao_anterior`; módulo dbk; prioridade P0; status implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `importar_declaracao_anterior`, `listar_declaracoes`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-IDENT Registro 16 (identificação do contribuinte)
 
@@ -4282,7 +4282,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Campos: 60 identificação do demonstrativo e transportes (94 campos); 62 bens móveis; 63 participações societárias; 64 operações em moeda estrangeira; 65 adquirentes; 66 e 67 reduções e parcelas; 68 a 72 apuração, cálculo e parcelas; 73 a 77 moeda estrangeira em espécie e consolidação; 78 transportes para a declaração (VR_BENSISENTO, VR_BENSIMPOSTO, VR_BENSEXCLUSIVO, VR_ESPIMPOSTO, VR_ESPEXCLUSIVO)
 - Exige do MCP: preservação integral dos registros importados do GCAP (o MCP Imposto de Renda não recalcula o demonstrativo importado)
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `gerar_dbk`; módulo dbk; prioridade P1; status parcial (`abrir_declaracao`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `orientar_servico_externo`, `verificar_integridade_arquivo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `gerar_dbk`; módulo dbk; prioridade P1; status parcial (`abrir_declaracao`, `converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `listar_ganhos_capital`, `orientar_servico_externo`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-ARQ-REG-RECIBO Registros FR, HR, DR, R9, HC, RC, NC, VC, MC, TC
 
@@ -4296,7 +4296,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: `informe_fontes_pagadoras.xsd`, `informe_planos_saude.xsd`, `informe_tipos.xsd`, `mapeamentoXml.xml`, `mapeamentoTxt.xml`, `mapeamentoXmlGCAP.xml`
 - Exige do MCP: validação de XML contra os xsd públicos e mapeamento campo a campo para as fichas
-- Cobertura no MCP Imposto de Renda: `importar_informe_rendimentos`, `importar_informe_plano_saude`, `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_informe_rendimentos`, `importar_informe_plano_saude`, `importar_gcap`; módulo importacao; prioridade P1; status parcial (`abrir_declaracao`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 ## 9 Tabelas
 
@@ -4319,7 +4319,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Valores (compra / venda): jan 6,0394 / 6,0400; fev 6,0371 / 6,0377; mar 5,7277 / 5,7283; abr 5,7413 / 5,7419; mai 5,8701 / 5,8707; jun 5,6322 / 5,6328; jul 5,5646 / 5,5652; ago 5,5569 / 5,5576; set 5,3922 / 5,3928; out 5,3202 / 5,3208; nov 5,4458 / 5,4464; dez 5,2946 / 5,2952
 - Regras: cotação do mês do recebimento ou pagamento (já corresponde ao último dia útil da 1ª quinzena do mês anterior); compra para rendimentos e imposto pago; venda para deduções; Atividade Rural usa 5,5018 (compra de 31/12/2025)
 - Exige do MCP: `converter_moeda` com esta tabela; não está entre os 32 JSON de `docs/mapeamento/tabelas` (lacuna: gerar tabela própria)
-- Cobertura no MCP Imposto de Renda: `converter_moeda`, `consultar_tabela`; módulo tabelas; prioridade P1; status parcial (`buscar_codigo`, `consultar_parametros`, `converter_moeda`, `listar_tabela`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `converter_moeda`, `consultar_tabela`; módulo tabelas; prioridade P1; status implementada (`buscar_codigo`, `consultar_parametros`, `converter_moeda`, `listar_tabela`) (ver matriz)
 
 ### S-TAB-ATUALIZACAO Tabela de Atualização do Custo de Bens e Direitos
 

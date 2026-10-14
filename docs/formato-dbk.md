@@ -9,7 +9,7 @@ exercícios seguem a mesma estrutura com leiautes próprios.
   complemento do recibo.
 - **DBK**: cópia de segurança. Mesmos registros da DEC até o `T9`, sem `HR`, `DR` e `R9`.
 
-Comparando os 37 pares DBK/DEC gravados pelo programa (`packages/core/test/fixtures/dbk/2026`),
+Comparando os 37 primeiros pares DBK/DEC gravados pelo programa (`packages/core/test/fixtures/dbk/2026`),
 as únicas diferenças são: o `NR_CONTROLE` do header (o tipo de arquivo entra no cálculo, ver
 abaixo) e os registros `HR`, `DR` e `R9`, presentes só na DEC. Header, fichas e `T9` são
 idênticos byte a byte.
@@ -210,7 +210,8 @@ produz a DEC do programa **byte a byte**. A origem de cada campo do `DR`:
 | --- | --- |
 | `NR_CPF`, `IN_COMPLETA` | header `IR` |
 | `NM_NOME`, `TIP_LOGRA`, `NM_LOGRA`, `NR_NUMERO`, `NM_COMPLEM`, `NM_BAIRRO`, `NR_CEP`, `CD_MUNICIP`, `NM_MUNICIP`, `SG_UF` | ficha 16, mesmo nome |
-| `NM_EMAIL`, `NR_DDD_TELEFONE`, `NR_TELEFONE` | ficha 16, mesmo nome |
+| `NR_DDD_TELEFONE`, `NR_TELEFONE` | ficha 16, mesmo nome |
+| `NM_EMAIL` | em branco: o programa não copia o e-mail da ficha 16 |
 | `IN_RETIFICADORA`, `NR_QUOTAS`, `IN_DEBITO_PRIMEIRA_QUOTA` | ficha 16, mesmo nome |
 | `NR_BANCO`, `NR_AGENCIA`, `NR_CONTA`, `NR_DV_CONTA` | ficha 16, mesmo nome |
 | `VR_TOTTRIB` | `VR_TOTAL_RENDTRIB_PFPJ_TITDEP` do header |
@@ -218,14 +219,23 @@ produz a DEC do programa **byte a byte**. A origem de cada campo do `DR`:
 | `VR_IMPPAGAR` | `VR_SOMA_IMPOSTO_PAGAR` do header |
 | `VR_IMPREST` | `VR_IMPREST` do registro 20 (completa) ou `VR_IMPRESTIT` do 18 (simplificada) |
 | `VR_QUOTA` | `VR_QUOTA` do registro 20 ou 18, conforme o modelo |
-| `VR_GCIMPOSTOPAGO`, `VR_VCMOEDAEST` | zerados (ver abaixo) |
+| `VR_GCIMPOSTOPAGO`, `VR_VCMOEDAEST` | zerados: nenhum caso do harness tem imposto pago de ganho de capital (ver abaixo) |
 | `FILLER*`, `HR.FILLER`, `R9.FILLER` | em branco |
 
 `HR` e `R9` levam só o CPF do header; os controles saem de `recalcularControles`, na ordem
 descrita em "Hash do recibo (R9)".
 
-Campos não cobertos pelos 37 pares e conferidos à parte, com casos sintéticos do harness
-(`tools/referencia`), estão em "Casos de referência". Nenhum campo do recibo depende do
+Os 11 casos acrescentados depois (48 pares no total) conferem os campos que os 37 primeiros não
+preenchiam: e-mail, telefone e complemento (`conta-restituicao-01`), conta de restituição, Pix
+e Caixa, débito automático e quotas, atividade rural, renda variável e isentos detalhados. A
+conversão continua igual à DEC do programa byte a byte nos 48. Um ajuste foi observado: com
+saldo a pagar e sem débito automático, o programa grava a conta do Resumo na cópia de segurança
+mas a descarta no arquivo de entrega (header e ficha 16); `ajustarParaEntrega` reproduz isso, e
+por isso a DEC de `conta-sem-debito-pagar-01` convertida de volta em DBK não traz a conta.
+
+`VR_GCIMPOSTOPAGO` e `VR_VCMOEDAEST` ficam zerados porque o harness não consegue fazer o
+programa calcular um ganho de capital: a apuração do GCAP só roda pela interface gráfica do
+programa. A origem desses dois campos continua não confirmada. Nenhum campo do recibo depende do
 sistema operacional ou da JVM: esses dados (`NOME_SO`, `VERSAO_SO`, `VERSAO_JVM`,
 `ENDERECO_MAC`) ficam no header, que a conversão preserva como está no DBK. Por isso uma DEC
 gerada a partir de um DBK gravado em outra máquina continua igual à que o programa gravaria

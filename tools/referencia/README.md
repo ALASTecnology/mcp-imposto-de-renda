@@ -109,10 +109,26 @@ Os arquivos de `casos/` trazem só `entrada`; o harness grava em `golden/2026/` 
 | `previdenciaOficial` (no mês) | coluna "Previdência oficial"; o harness preenche um NIT sintético, exigido pelo PGD |
 | `pagamentos[]` | Pagamentos Efetuados; `beneficiario` `T` titular, `D` dependente, `A` alimentando |
 | `beneficiario` `A` | o harness cadastra o alimentando (`cpfDependente`) com decisão judicial fictícia e residência no Brasil |
-| `rendimentosIsentos[]` | Rendimentos Isentos, quadros dos códigos 01, 02, 04, 09, 10, 11, 12, 13, 14 e 26 |
-| `tributacaoExclusiva[]` | Rendimentos de Tributação Exclusiva, quadros dos códigos 06, 10, 11 e 12 |
+| `rendimentosIsentos[]` | Rendimentos Isentos, quadros dos códigos 01, 02, 04, 09, 10, 11, 12, 13, 14, 19, 20, 21 e 26 |
+| `tributacaoExclusiva[]` | Rendimentos de Tributação Exclusiva, quadros dos códigos 06, 10, 11, 12 e 13 (apostas; o programa grava 14) |
+| `atividadeRural` | Atividade Rural no Brasil: um imóvel fictício, `meses[]` com `mes`, `receita` e `despesa`, e `opcao` (`resultado` ou `limite20`) |
+| `pgd[]` | operações genéricas sobre a API pública do programa (ver abaixo), antes do cálculo |
+| `pgdFinal[]` | idem, depois do cálculo final e antes de gravar (o programa limpa a conta de restituição a cada recálculo) |
 | `impostoPago` | Imposto Pago/Retido: complementar, pago no exterior e IRRF da Lei 11.033 |
 | `doacoesDiretas` | Doações Diretamente na Declaração, fundo estadual (UF DF) da criança e do adolescente e da pessoa idosa |
+
+Cada operação de `pgd`/`pgdFinal` usa caminhos de getters públicos sem argumentos a partir da
+declaração, com valores no formato do programa (`"1234,56"`, datas `DDMMAAAA`):
+
+```json
+{"definir": {"getResumo.getCalculoImposto.getBanco": "001"}}
+{"incluir": "getAtividadeRural.getBrasil.getIdentificacaoImovel", "campos": {"getNome": "SITIO"}}
+{"chamar": "getGCAP.recalcularConsolidacoes"}
+```
+
+O motor ignora essas operações: elas só servem a fichas que não mudam o ajuste (conta, contato,
+renda variável). O ganho de capital não tem caso: a apuração do GCAP só roda pela interface
+gráfica do programa, e o arquivo sai com os valores zerados.
 
 Itens de isentos e exclusivos aceitam, opcionalmente, `beneficiario` (`T|D`), `cpfDependente`,
 `cnpj` e `nome` da fonte; sem eles o harness usa titular e uma fonte fictícia. Códigos fora das
@@ -146,8 +162,9 @@ O `.DBK`/`.DEC` é gravado com o modelo mais vantajoso selecionado, como faria o
 
 ## Casos gerados
 
-37 casos em `casos/`, todos com golden e fixtures (37 `.DBK` e 37 `.DEC`, 74 arquivos). O motor
-do AutoIR reproduz os 37 ao centavo (`packages/core/test/calc/golden.test.ts`).
+48 casos em `casos/`, todos com golden e fixtures (48 `.DBK` e 48 `.DEC`, 96 arquivos). O motor
+do AutoIR reproduz os 48 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
+cada DBK em DEC reproduz a DEC do programa byte a byte.
 
 Os 31 casos iniciais cobrem: isento, cada faixa da tabela anual (isenção, 7,5%, 15%, 22,5%,
 27,5%), desconto simplificado abaixo, exatamente no teto e acima, dependentes, instrução abaixo e
@@ -170,6 +187,22 @@ um confirmou está em `docs/regras/irpf-2026.md`:
 | `exterior-limite-01` | imposto pago no exterior maior que a diferença de imposto atribuível aos rendimentos do exterior: limite de compensação em cada modelo |
 | `faixa-limite-075-01` | base exatamente no teto da faixa de 7,5% (R$ 33.919,80), com meio centavo exato: o imposto da tabela é truncado |
 | `livro-caixa-excesso-01` | livro-caixa maior que a receita do trabalho não assalariado: o Resumo não limita a dedução e o excesso não passa ao mês seguinte |
+
+Os 11 casos seguintes conferem o leiaute de campos que os anteriores não preenchiam:
+
+| Caso | O que confere |
+|---|---|
+| `conta-restituicao-01` | conta corrente de restituição, e-mail, telefone, celular e complemento |
+| `pix-restituicao-01` | Pix pela chave CPF (`IN_TIPO_CONTA` 4) |
+| `caixa-poupanca-01` | poupança da Caixa com operação 013 (prefixo do número da conta) |
+| `debito-automatico-01` | 3 quotas com débito automático (conta com 11 dígitos, `IN_RESULTADO_IMPOSTO` 3) |
+| `conta-sem-debito-pagar-01` | conta sem débito automático com saldo a pagar: some na DEC |
+| `imposto-pago-carne-completo-01` | `IN_IMPOSTO_PAGO` 2 (carnê-leão na completa) |
+| `imposto-pago-complementar-completo-01` | `IN_IMPOSTO_PAGO` 4 (complementar na completa) |
+| `imposto-pago-complementar-simplificado-01` | `IN_IMPOSTO_PAGO` 6 (complementar na simplificada) |
+| `atividade-rural-resultado-01` | resultado rural positivo tributado pelo resultado |
+| `renda-variavel-comum-01` | lucro em operação comum de ações, com imposto pago |
+| `isentos-detalhados-01` | registros 83, 85, 86 e 89 (isentos 11, 19, 20, 21, 26; exclusivos outros e apostas) |
 
 Limitações observadas:
 

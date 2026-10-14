@@ -27,6 +27,7 @@ import { interpretarDeclaracao } from "../conversao/dbk-modelo.js";
 import { EntradaInvalidaError } from "../erros.js";
 import { normalizarValor } from "../esquemas.js";
 import { objetoJson } from "../serializacao.js";
+import { registrarImportacoesDeclaracao } from "./ciclo-importacao.js";
 import {
   type InformeRendimentos,
   interpretarInforme,
@@ -256,6 +257,7 @@ export const grupoCiclo: GrupoFerramentas = {
     "Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações.",
   exigePasta: true,
   registrar(r) {
+    registrarImportacoesDeclaracao(r);
     r.ferramenta(
       "criar_declaracao",
       {

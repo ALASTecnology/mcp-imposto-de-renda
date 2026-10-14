@@ -26,7 +26,7 @@ const nomes = (perfil: (typeof NOMES_PERFIS)[number]) =>
 describe("perfis de ferramentas", () => {
   it("expõe a contagem documentada de cada perfil", () => {
     const contagem = Object.fromEntries(NOMES_PERFIS.map((p) => [p, nomes(p).length]));
-    expect(contagem).toEqual({ completo: 155, essencial: 79, consulta: 38 });
+    expect(contagem).toEqual({ completo: 158, essencial: 82, consulta: 38 });
   });
 
   it("completo é o padrão e cada perfil tem descrição", () => {

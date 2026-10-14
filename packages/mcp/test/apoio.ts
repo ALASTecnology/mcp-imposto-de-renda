@@ -1,6 +1,13 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { calcularDvCpf, type DeclaracaoEntrada } from "@mcp-imposto-de-renda/core";
+import {
+  calcularDvCpf,
+  type DeclaracaoEntrada,
+  gravarArquivo,
+  LEIAUTES,
+  lerArquivo,
+  type Registro,
+} from "@mcp-imposto-de-renda/core";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
@@ -146,4 +153,29 @@ export async function conectar(opcoes: OpcoesServidor = {}): Promise<Conexao> {
 export function textoDe(r: CallToolResult): string {
   const c = r.content[0];
   return c?.type === "text" ? c.text : "";
+}
+
+/**
+ * Leva um DBK/DEC de 2026 ao leiaute de 2025, campo a campo, para simular o arquivo do ano
+ * anterior: campos que não existem em 2025 caem e os que só existem lá ficam em branco.
+ */
+export function paraLeiaute2025(bytes2026: Uint8Array): Uint8Array {
+  const leiaute = LEIAUTES[2025];
+  if (!leiaute) throw new Error("sem leiaute 2025");
+  const convertidos: Registro[] = [];
+  for (const reg of lerArquivo(bytes2026).registros) {
+    const tipo = leiaute.tipos.find((t) => t.id === reg.tipo);
+    if (!tipo) continue;
+    const campos: Record<string, Registro["campos"][string]> = {};
+    for (const c of tipo.campos) {
+      const v = reg.campos[c.chave] ?? null;
+      campos[c.chave] = typeof v === "bigint" && c.formato !== "N" ? null : v;
+    }
+    if (reg.tipo === "IR") {
+      campos.EXERCICIO = 2025n;
+      campos.ANO_BASE = 2024n;
+    }
+    convertidos.push({ ...reg, campos });
+  }
+  return gravarArquivo(convertidos, { leiaute });
 }

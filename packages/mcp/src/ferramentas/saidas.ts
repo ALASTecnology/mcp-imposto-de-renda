@@ -506,7 +506,7 @@ export const grupoSaidas: GrupoFerramentas = {
       {
         titulo: "Relatório da declaração",
         descricao:
-          "Monta o relatório da declaração para conferência ou impressão, com layout próprio. Sem `partes`, devolve o resumo (identificação, fichas preenchidas, totais e resultado simulado). Com `partes`, detalha cada lançamento das fichas pedidas: 'todas' (declaração inteira), 'rendimentos_pf' (Rendimentos Recebidos de PF e do Exterior) ou o nome de qualquer ficha (por exemplo 'bens', 'rendimentosPJ', 'ganhosCapital'). `formato` 'markdown' (padrão) ou 'html'. Só devolve o conteúdo; para gravar em PDF ou HTML na pasta use gravar_relatorio.",
+          "Monta o relatório da declaração para conferência ou impressão, com layout próprio. Sem `partes`, devolve o resumo (identificação, fichas preenchidas, totais e resultado simulado). Com `partes`, detalha cada lançamento das fichas pedidas: 'todas' (declaração inteira), 'rendimentos_pf' (Rendimentos Recebidos de PF e do Exterior) ou o nome de qualquer ficha (por exemplo 'bens', 'rendimentosPJ', 'ganhosCapital'). `formato` 'markdown' (padrão) ou 'html'. Só devolve o conteúdo; a gravação em PDF ou HTML na pasta é feita pela ferramenta de gravar relatório.",
         entrada: {
           arquivo: zNomeArquivo("DBK/DEC/JSON da pasta.").optional(),
           declaracao: zDeclaracaoJson.optional(),

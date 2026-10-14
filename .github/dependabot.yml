@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # Dependências do monorepo (pnpm usa o ecossistema npm do Dependabot).
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 10
+    # As versões ficam fixadas: o Dependabot só propõe a troca exata, nunca um intervalo.
+    versioning-strategy: increase
+    # Espera 14 dias após a publicação antes de propor uma versão nova.
+    cooldown:
+      default-days: 14
+    groups:
+      desenvolvimento:
+        dependency-type: development
+        update-types: [minor, patch]
+    labels: [dependencies]
+
+  # Actions dos workflows, fixadas por SHA.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 14
+    groups:
+      actions:
+        patterns: ["*"]
+    labels: [dependencies]

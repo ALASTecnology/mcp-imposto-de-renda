@@ -14,6 +14,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { somenteCodigo } from "./apoio.js";
 
 const SRC = fileURLToPath(new URL("../../src/", import.meta.url));
 
@@ -22,64 +23,6 @@ function arquivosTs(pasta: string): string[] {
     const p = join(pasta, n);
     return statSync(p).isDirectory() ? arquivosTs(p) : p.endsWith(".ts") ? [p] : [];
   });
-}
-
-/**
- * Remove comentários e o conteúdo literal de strings e templates, preservando as quebras de
- * linha (para os números de linha) e as expressões `${...}` dos templates.
- */
-export function somenteCodigo(fonte: string): string {
-  let saida = "";
-  let i = 0;
-  const pilhaTemplate: number[] = [];
-  let chaves = 0;
-  const pular = (fim: number) => {
-    saida += fonte.slice(i, fim).replace(/[^\n]/g, " ");
-    i = fim;
-  };
-  while (i < fonte.length) {
-    const c = fonte[i];
-    const d = fonte[i + 1];
-    if (c === "/" && d === "/") {
-      const fim = fonte.indexOf("\n", i);
-      pular(fim < 0 ? fonte.length : fim);
-    } else if (c === "/" && d === "*") {
-      const fim = fonte.indexOf("*/", i + 2);
-      pular(fim < 0 ? fonte.length : fim + 2);
-    } else if (c === '"' || c === "'") {
-      let j = i + 1;
-      while (j < fonte.length && fonte[j] !== c) j += fonte[j] === "\\" ? 2 : 1;
-      saida += c;
-      i++;
-      pular(j);
-      saida += c;
-      i = j + 1;
-    } else if (c === "`" || (c === "}" && pilhaTemplate.at(-1) === chaves)) {
-      // Início de template ou volta de uma expressão `${...}`: pula o texto até `${` ou "`".
-      if (c === "}") pilhaTemplate.pop();
-      saida += c;
-      i++;
-      let j = i;
-      while (j < fonte.length && fonte[j] !== "`" && !(fonte[j] === "$" && fonte[j + 1] === "{")) {
-        j += fonte[j] === "\\" ? 2 : 1;
-      }
-      pular(j);
-      if (fonte[j] === "$") {
-        saida += "${";
-        i = j + 2;
-        pilhaTemplate.push(chaves);
-      } else {
-        saida += "`";
-        i = j + 1;
-      }
-    } else {
-      if (c === "{") chaves++;
-      if (c === "}") chaves--;
-      saida += c;
-      i++;
-    }
-  }
-  return saida;
 }
 
 /** Construções proibidas em qualquer lugar do cálculo. */

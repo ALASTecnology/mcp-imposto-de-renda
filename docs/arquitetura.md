@@ -187,7 +187,7 @@ A cobertura por tipo de registro está em `COBERTURA_REGISTROS` e na tabela de
 
 ## Tabelas de códigos
 
-`packages/core/src/tabelas/`. As **31 tabelas** do exercício (dependentes, pagamentos, bens e
+`packages/core/src/tabelas/`. As **32 tabelas** do exercício (dependentes, pagamentos, bens e
 direitos, municípios, países, bancos, fundos da criança e da pessoa idosa, entre outras) vêm dos
 JSON de [mapeamento/tabelas](mapeamento/tabelas/README.md), extraídos dos XML de dados do programa.
 `listar(tabela)` devolve as entradas na ordem original e `buscarCodigo(tabela, codigo)` consulta com

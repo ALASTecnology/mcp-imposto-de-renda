@@ -73,3 +73,23 @@ export function buscarBem(grupo: string, codigo: string): EntradaBemDireito | un
 export function parametroCalculo(codigo: string): EntradaParametro | undefined {
   return buscarCodigo("aliquotas-parametros", codigo);
 }
+
+/**
+ * Cotação do dólar de 2025 em décimos de milésimo de real (5,2946 vira 52946n), pela tabela
+ * "Conversão para Reais do Dólar dos Estados Unidos da América em 2025" da Ajuda (pág. 356).
+ * `mes` de 1 a 12 é o mês do recebimento ou do pagamento (a tabela já traz a cotação do último
+ * dia útil da 1ª quinzena do mês anterior); `"AR"` é a cotação de compra de 31/12/2025 usada
+ * na Atividade Rural no exterior.
+ */
+export function cotacaoDolar2025(mes: number | "AR", tipo: "compra" | "venda"): bigint {
+  if (mes !== "AR" && (!Number.isInteger(mes) || mes < 1 || mes > 12)) {
+    throw new RangeError(`O mês da cotação deve ser de 1 a 12 (recebido ${mes}).`);
+  }
+  const codigo = mes === "AR" ? "AR" : String(mes).padStart(2, "0");
+  const e = buscarCodigo("dolar-2025", codigo);
+  const texto = tipo === "compra" ? e?.compra : e?.venda;
+  if (!texto) {
+    throw new RangeError("A cotação da Atividade Rural só existe na compra (31/12/2025).");
+  }
+  return BigInt(texto.replace(",", ""));
+}

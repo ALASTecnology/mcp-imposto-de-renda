@@ -29,6 +29,7 @@ import bensDireitos from "../../../../docs/mapeamento/tabelas/bens-direitos.json
 import datasPrazos from "../../../../docs/mapeamento/tabelas/datas-prazos.json" with {
   type: "json",
 };
+import dolar2025 from "../../../../docs/mapeamento/tabelas/dolar-2025.json" with { type: "json" };
 import dependentes from "../../../../docs/mapeamento/tabelas/dependentes.json" with {
   type: "json",
 };
@@ -78,6 +79,7 @@ import type {
   EntradaBanco,
   EntradaBancoDv,
   EntradaBemDireito,
+  EntradaCotacao,
   EntradaFundo,
   EntradaMunicipio,
   EntradaPais,
@@ -101,6 +103,7 @@ export interface MapaTabelas {
   "datas-prazos": EntradaTabela;
   dependentes: EntradaTabela;
   "dividas-onus": EntradaTabela;
+  "dolar-2025": EntradaCotacao;
   "fundos-eca": EntradaFundo;
   "fundos-idoso": EntradaFundo;
   moedas: EntradaTabela;
@@ -144,6 +147,7 @@ export const DADOS: Dados = {
   "datas-prazos": datasPrazos,
   dependentes,
   "dividas-onus": dividasOnus,
+  "dolar-2025": dolar2025,
   "fundos-eca": fundosEca,
   "fundos-idoso": fundosIdoso,
   moedas,

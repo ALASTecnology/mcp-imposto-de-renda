@@ -221,7 +221,7 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 | [`arquivos`](docs/ferramentas/arquivos.md) | 2 | Listar a pasta e conferir os controles de integridade |
 | [`fichas`](docs/ferramentas/fichas.md) | 1 | Ler uma ficha isolada |
 | [`edicao`](docs/ferramentas/edicao.md) | 105 | Incluir, alterar, remover e listar em 22 fichas em lista, mais as fichas únicas |
-| [`tabelas`](docs/ferramentas/tabelas.md) | 2 | Consultar as 31 tabelas de códigos |
+| [`tabelas`](docs/ferramentas/tabelas.md) | 2 | Consultar as 32 tabelas de códigos |
 | [`validacao`](docs/ferramentas/validacao.md) | 2 | Pendências da declaração e dígitos de CPF e CNPJ |
 | [`calculo`](docs/ferramentas/calculo.md) | 6 | Simular, comparar modelos, explicar o cálculo, quotas, multa e parâmetros |
 | [`calculadoras`](docs/ferramentas/calculadoras.md) | 10 | Carnê-leão, RRA, preço médio, renda variável, ganho de capital, acréscimos, residência, obrigatoriedade, câmbio |

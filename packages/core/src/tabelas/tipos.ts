@@ -63,3 +63,12 @@ export interface EntradaParametro extends EntradaTabela {
   readonly grupo: string;
   readonly mes?: number;
 }
+
+/**
+ * Cotação mensal do dólar dos EUA para conversão em reais (Ajuda do PGD, pág. 356): `compra`
+ * para rendimentos e imposto pago no exterior, `venda` para deduções; texto com 4 casas.
+ */
+export interface EntradaCotacao extends EntradaTabela {
+  readonly compra: string;
+  readonly venda?: string;
+}

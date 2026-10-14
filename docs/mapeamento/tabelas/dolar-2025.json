@@ -1,0 +1,79 @@
+[
+ {
+  "codigo": "01",
+  "descricao": "janeiro de 2025",
+  "compra": "6,0394",
+  "venda": "6,0400"
+ },
+ {
+  "codigo": "02",
+  "descricao": "fevereiro de 2025",
+  "compra": "6,0371",
+  "venda": "6,0377"
+ },
+ {
+  "codigo": "03",
+  "descricao": "março de 2025",
+  "compra": "5,7277",
+  "venda": "5,7283"
+ },
+ {
+  "codigo": "04",
+  "descricao": "abril de 2025",
+  "compra": "5,7413",
+  "venda": "5,7419"
+ },
+ {
+  "codigo": "05",
+  "descricao": "maio de 2025",
+  "compra": "5,8701",
+  "venda": "5,8707"
+ },
+ {
+  "codigo": "06",
+  "descricao": "junho de 2025",
+  "compra": "5,6322",
+  "venda": "5,6328"
+ },
+ {
+  "codigo": "07",
+  "descricao": "julho de 2025",
+  "compra": "5,5646",
+  "venda": "5,5652"
+ },
+ {
+  "codigo": "08",
+  "descricao": "agosto de 2025",
+  "compra": "5,5569",
+  "venda": "5,5576"
+ },
+ {
+  "codigo": "09",
+  "descricao": "setembro de 2025",
+  "compra": "5,3922",
+  "venda": "5,3928"
+ },
+ {
+  "codigo": "10",
+  "descricao": "outubro de 2025",
+  "compra": "5,3202",
+  "venda": "5,3208"
+ },
+ {
+  "codigo": "11",
+  "descricao": "novembro de 2025",
+  "compra": "5,4458",
+  "venda": "5,4464"
+ },
+ {
+  "codigo": "12",
+  "descricao": "dezembro de 2025",
+  "compra": "5,2946",
+  "venda": "5,2952"
+ },
+ {
+  "codigo": "AR",
+  "descricao": "Atividade rural no exterior: cotação de compra de 31/12/2025",
+  "compra": "5,5018"
+ }
+]

@@ -86,7 +86,7 @@ cada registro estão em [../formato-dbk.md](../formato-dbk.md#tipos-de-registro-
 
 ## Tabelas de códigos
 
-`listar_tabela` e `buscar_codigo` aceitam estas 31 tabelas do exercício 2026, extraídas dos dados
+`listar_tabela` e `buscar_codigo` aceitam estas 32 tabelas do exercício 2026, extraídas dos dados
 públicos do programa ([../mapeamento/tabelas/README.md](../mapeamento/tabelas/README.md)):
 
 `aliquotas-parametros`, `altcoins`, `atividade-rural-bens`, `atividade-rural-condicoes-exploracao`,

@@ -76,7 +76,7 @@
     <rect x="610" y="332" width="265" height="140" rx="12" class="box"/>
     <rect x="610" y="332" width="265" height="7" rx="3" fill="#168821"/>
     <text x="630" y="370" class="g">tabelas</text>
-    <text x="630" y="394" class="c">2 ferramentas, 31 tabelas</text>
+    <text x="630" y="394" class="c">2 ferramentas, 32 tabelas</text>
     <text x="630" y="420" class="t">listar_tabela</text>
     <text x="630" y="438" class="t">buscar_codigo</text>
   </g>

@@ -3,7 +3,8 @@
 Dados extraídos dos arquivos de recurso (XML) que acompanham o programa oficial
 IRPF 2026, versão 1.5 (`vendor/rfb/irpf/IRPF2026-1.5.zip`). São tabelas públicas,
 divulgadas pela Receita Federal no próprio programa e em atos normativos. Nenhum
-código executável foi lido ou copiado: apenas os XMLs de tabela.
+código executável foi lido ou copiado: apenas os XMLs de tabela. A exceção é
+`dolar-2025.json`, que não tem XML no programa e foi transcrita da Ajuda (pág. 356).
 
 ## Formato
 
@@ -57,6 +58,7 @@ Caminhos de origem: `lib/resources/` é o diretório `IRPF2026/lib/resources/` d
 | `raca-cor.json` | `irpf.jar!/racaCor.xml` | 6 | 2025-12-10 | Ficha Identificação | Código 0 tem descrição em branco no original (opção não informada). |
 | `tipos-logradouro.json` | `irpf.jar!/tipoLogradouro.xml` | 50 | sem data | Ficha Identificação (endereço) | `codigo` textual (ex.: `ALAMEDA`). |
 | `ufs.json` | `irpf.jar!/ufs.xml` | 27 | sem data | | Sigla e nome. `irpf.jar!/ufssigla.xml` repete a tabela com rótulo "UF - Nome" e não foi exportado. |
+| `dolar-2025.json` | Ajuda do programa (AjudaIRPF.pdf), pág. 356, tabela "Conversão para Reais do Dólar dos Estados Unidos da América em 2025" | 13 | 2025 | Lei 9.250/1995, art. 6º, e IN SRF 208/2002 (conversão de rendimentos e deduções em moeda estrangeira) | Não há XML desta tabela no programa: os valores foram transcritos da Ajuda. `compra` e `venda` com 4 casas; códigos `01` a `12` são o mês do recebimento ou pagamento (já com a cotação do último dia útil da 1ª quinzena do mês anterior); `AR` é a compra de 31/12/2025 usada na Atividade Rural no exterior, sem venda. |
 | `representacoes-diplomaticas.json` | `irpf.jar!/representacoes.xml` | 198 | 2020-01-17 | Ficha Identificação (residente no exterior) | Campos extras `pais` e `tipoRepresentacao` (embaixada, consulado etc.). |
 
 ## Resumo da tabela progressiva anual (ano-calendário 2025)

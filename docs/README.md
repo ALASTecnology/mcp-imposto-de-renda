@@ -22,7 +22,7 @@
 | [Referência das ferramentas](ferramentas/README.md) | As 154 ferramentas, uma página por grupo: parâmetros, anotações, exemplo real de chamada e resposta e funções do programa oficial correspondentes. |
 | [Regras do IRPF 2026](regras/irpf-2026.md) | Parâmetros e regras de cálculo do exercício, com fonte legal, e as divergências investigadas. |
 | [Notas do IRPF 2027](regras/irpf-2027.md) | Mudanças já conhecidas para o próximo exercício. |
-| [Tabelas de códigos](mapeamento/tabelas/README.md) | As 31 tabelas embarcadas, com origem e vigência. |
+| [Tabelas de códigos](mapeamento/tabelas/README.md) | As 32 tabelas embarcadas, com origem e vigência. |
 | [Matriz de cobertura](mapeamento/matriz-cobertura.md) | Cada uma das 416 funções do programa oficial e a ferramenta que a atende, ou por que não há. |
 | [Inventário de funções](mapeamento/funcoes-pgd-2026.md) e [notas de mapeamento](mapeamento/README.md) | Descrição funcional do programa oficial, ficha a ficha. |
 

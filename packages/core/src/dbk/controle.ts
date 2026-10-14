@@ -5,20 +5,20 @@
  * - `NR_CONTROLE` (últimos 10 caracteres) de cada registro, exceto o header: CRC-32 padrão
  *   (polinômio 0xEDB88320, o mesmo do zlib) dos bytes latin-1 da linha sem esses 10
  *   caracteres, em decimal com 10 dígitos. Vale também para os registros do recibo.
+ * - `NR_CONTROLE` do header `IR`: CRC-32 de `<8 primeiros dígitos do CPF>.<EXTENSÃO>`
+ *   (`DBK` ou `DEC`, em maiúsculas) seguido da linha do header sem os 10 dígitos finais. Por
+ *   isso um DBK e um DEC com a mesma linha de header têm controles diferentes.
  * - `T9`: `QT_R<tipo>` conta os registros de cada tipo; `QT_TOTAL` conta os registros da
  *   declaração antes do `T9`, header incluído (recibo excluído).
  * - `NR_HASH` do header `IR`: CRC-32 da concatenação, sem terminadores, das linhas
  *   completas que seguem o header até o `T9` inclusive (recibo excluído).
- *
- * Não determinado: o `NR_CONTROLE` do próprio header. Um DBK e um DEC com a linha de header
- * idêntica trazem controles diferentes, logo o valor depende de algo fora da linha (e não é
- * o CRC-32 dela). Por isso `recalcularControles` preserva esse campo por padrão e
- * `verificarControles` não o conta como divergência. Também não determinado: `NR_HASH` do
- * `R9` (recibo, emitido pela Receita Federal e nunca recalculado aqui).
+ * - `NR_HASH` do `R9` (só no DEC): CRC-32 da concatenação das linhas completas entre o
+ *   header e o `R9`, ou seja, fichas, `T9`, `HR` e `DR`.
  * Ver docs/formato-dbk.md.
  */
 
 import { codificarRegistro, leiauteDosRegistros, type Registro, type ValorCampo } from "./codec.js";
+import { ArquivoDeclaracaoError } from "./erros.js";
 import { type Leiaute, tipoDoLeiaute } from "./leiaute.js";
 
 /** Tipos do recibo de entrega e do complemento do recibo, emitidos pela Receita Federal. */
@@ -88,17 +88,49 @@ export const VARIANTES_HASH: readonly VarianteHash[] = (
 
 export const VARIANTE_HASH_PADRAO: VarianteHash = VARIANTES_HASH[0] ?? variante("linhas", true);
 
+/** Tipo do arquivo: cópia de segurança (`DBK`) ou arquivo de entrega (`DEC`). */
+export type TipoArquivo = "DBK" | "DEC";
+
+/** `DEC` quando há registros do recibo (`HR`, `DR`, `R9`...), senão `DBK`. */
+export function inferirTipoArquivo(registros: readonly Registro[]): TipoArquivo {
+  return registros.some((r) => TIPOS_RECIBO.has(r.tipo)) ? "DEC" : "DBK";
+}
+
+/** Tipo pelo nome do arquivo (extensão `.dbk` ou `.dec`, sem distinguir caixa). */
+export function tipoArquivoPorNome(nome: string): TipoArquivo | undefined {
+  const m = /\.(dbk|dec)$/i.exec(nome);
+  return m?.[1] === undefined ? undefined : (m[1].toUpperCase() as TipoArquivo);
+}
+
+/**
+ * `NR_CONTROLE` do header `IR`, como o programa oficial o grava: CRC-32 de
+ * `<8 primeiros dígitos do CPF>.<tipoArquivo>` seguido da linha do header sem os 10 dígitos
+ * finais. Exemplo de prefixo: `10011265.DBK`.
+ */
+export function calcularControleHeader(
+  linhaSemControle: string,
+  cpf: string,
+  tipoArquivo: TipoArquivo,
+): bigint {
+  return BigInt(crc32Texto(`${cpf.slice(0, 8)}.${tipoArquivo}${linhaSemControle}`));
+}
+
 export interface OpcoesControle {
   readonly leiaute?: Leiaute;
+  /**
+   * Tipo do arquivo, que entra no `NR_CONTROLE` do header. Sem ele, vale
+   * `inferirTipoArquivo(registros)`; ao ler de disco, prefira `tipoArquivoPorNome`.
+   */
+  readonly tipoArquivo?: TipoArquivo | undefined;
 }
 
 export interface OpcoesRecalculo extends OpcoesControle {
   /**
-   * O que fazer com o `NR_CONTROLE` do header, cujo algoritmo não foi determinado:
-   * `preservar` (padrão) mantém o valor atual; `crc` grava o CRC-32 da linha, como nos
-   * demais registros (não reproduz o valor do programa oficial).
+   * O que fazer com o `NR_CONTROLE` do header: `programa` (padrão) aplica a fórmula do
+   * programa oficial (`calcularControleHeader`); `preservar` mantém o valor atual; `crc`
+   * grava o CRC-32 só da linha (não reproduz o programa oficial).
    */
-  readonly controleHeader?: "preservar" | "crc";
+  readonly controleHeader?: "programa" | "preservar" | "crc";
 }
 
 function temControle(leiaute: Leiaute, tipo: string): boolean {
@@ -117,6 +149,33 @@ function hashDeLinhas(linhas: readonly { tipo: string; texto: string }[], v: Var
     else crc = crc32Texto(texto.slice(-10), crc);
   }
   return BigInt(crc);
+}
+
+/** CRC-32 das linhas entre o header e o `R9` (exclusive), base do `NR_HASH` do `R9`. */
+function hashDoRecibo(linhas: readonly { tipo: string; texto: string }[]): bigint | undefined {
+  const fim = linhas.findIndex((l) => l.tipo === "R9");
+  if (fim < 0) return undefined;
+  let crc = 0;
+  for (const { tipo, texto } of linhas.slice(0, fim)) {
+    if (tipo !== "IR") crc = crc32Texto(texto, crc);
+  }
+  return BigInt(crc);
+}
+
+/** CPF do header, se o leiaute tiver o campo `NR_CPF` e ele estiver preenchido. */
+function cpfDoHeader(header: Registro | undefined): string | undefined {
+  const cpf = header?.campos.NR_CPF;
+  return typeof cpf === "string" && /^\d{8}/.test(cpf) ? cpf : undefined;
+}
+
+/** `NR_HASH` do `R9` calculado sobre os registros como estão; `undefined` sem `R9`. */
+export function calcularHashRecibo(
+  registros: readonly Registro[],
+  leiaute: Leiaute,
+): bigint | undefined {
+  return hashDoRecibo(
+    registros.map((r, i) => ({ tipo: r.tipo, texto: codificarRegistro(r, leiaute, i + 1) })),
+  );
 }
 
 /** `NR_HASH` do header calculado sobre os registros como estão, na variante pedida. */
@@ -151,18 +210,29 @@ function contagensT9(registros: readonly Registro[], leiaute: Leiaute): Map<stri
 }
 
 /**
- * Recalcula os controles da declaração: contagens do `T9`, `NR_CONTROLE` de cada registro
- * e `NR_HASH` do header (o `NR_CONTROLE` do header segue `opcoes.controleHeader`). Os
- * registros do recibo ficam intactos. Devolve novos registros; a entrada não é alterada.
+ * Recalcula os controles: contagens do `T9`, `NR_CONTROLE` de cada registro (inclusive
+ * `HR`, `DR` e `R9`), `NR_HASH` do `R9`, `NR_HASH` do header e, por último, o `NR_CONTROLE`
+ * do header (conforme `opcoes.controleHeader`, com o tipo de `opcoes.tipoArquivo` ou
+ * inferido). O conteúdo dos registros do recibo não muda, só os controles. Devolve novos
+ * registros; a entrada não é alterada.
  */
 export function recalcularControles(
   registros: readonly Registro[],
   opcoes: OpcoesRecalculo = {},
 ): Registro[] {
   const leiaute = opcoes.leiaute ?? leiauteDosRegistros(registros);
+  const tipoArquivo = opcoes.tipoArquivo ?? inferirTipoArquivo(registros);
   const novos = registros.map((r) => ({ tipo: r.tipo, campos: { ...r.campos } }));
   const atribuir = (r: { campos: Record<string, ValorCampo> }, chave: string, v: ValorCampo) => {
     r.campos[chave] = v;
+  };
+  const controlar = (r: Registro, i: number): string => {
+    let texto = codificarRegistro(r, leiaute, i + 1);
+    if (r.tipo !== "IR" && temControle(leiaute, r.tipo)) {
+      atribuir(r, "NR_CONTROLE", calcularNumeroControle(texto.slice(0, -10)));
+      texto = codificarRegistro(r, leiaute, i + 1);
+    }
+    return texto;
   };
 
   const t9 = novos.find((r) => r.tipo === "T9");
@@ -170,15 +240,15 @@ export function recalcularControles(
     for (const [chave, valor] of contagensT9(novos, leiaute)) atribuir(t9, chave, valor);
   }
 
-  const linhas: { tipo: string; texto: string }[] = [];
-  novos.forEach((r, i) => {
-    let texto = codificarRegistro(r, leiaute, i + 1);
-    if (r.tipo !== "IR" && !TIPOS_RECIBO.has(r.tipo) && temControle(leiaute, r.tipo)) {
-      atribuir(r, "NR_CONTROLE", calcularNumeroControle(texto.slice(0, -10)));
-      texto = codificarRegistro(r, leiaute, i + 1);
-    }
-    linhas.push({ tipo: r.tipo, texto });
-  });
+  const linhas = novos.map((r, i) => ({ tipo: r.tipo, texto: controlar(r, i) }));
+
+  const indiceR9 = novos.findIndex((r) => r.tipo === "R9");
+  const r9 = novos[indiceR9];
+  const hashRecibo = hashDoRecibo(linhas);
+  if (r9 && hashRecibo !== undefined && Object.hasOwn(r9.campos, "NR_HASH")) {
+    atribuir(r9, "NR_HASH", hashRecibo);
+    linhas[indiceR9] = { tipo: "R9", texto: controlar(r9, indiceR9) };
+  }
 
   const header = novos.find((r) => r.tipo === "IR");
   if (header) {
@@ -186,12 +256,46 @@ export function recalcularControles(
     if (Object.hasOwn(header.campos, "NR_HASH")) {
       atribuir(header, "NR_HASH", hashDeLinhas(linhas, VARIANTE_HASH_PADRAO));
     }
-    if (opcoes.controleHeader === "crc" && temControle(leiaute, "IR")) {
-      const texto = codificarRegistro(header, leiaute, indice + 1);
-      atribuir(header, "NR_CONTROLE", calcularNumeroControle(texto.slice(0, -10)));
+    const modo = opcoes.controleHeader ?? "programa";
+    if (modo !== "preservar" && temControle(leiaute, "IR")) {
+      const semControle = codificarRegistro(header, leiaute, indice + 1).slice(0, -10);
+      const cpf = cpfDoHeader(header);
+      if (modo === "crc") {
+        atribuir(header, "NR_CONTROLE", calcularNumeroControle(semControle));
+      } else if (cpf !== undefined) {
+        atribuir(header, "NR_CONTROLE", calcularControleHeader(semControle, cpf, tipoArquivo));
+      }
     }
   }
   return novos;
+}
+
+/**
+ * Converte entre cópia de segurança (DBK) e arquivo de entrega (DEC). Nos arquivos do
+ * programa oficial, a parte da declaração (header, fichas e `T9`) é idêntica nos dois,
+ * salvo o `NR_CONTROLE` do header; o DEC traz, além disso, os registros `HR`, `DR` e `R9`.
+ *
+ * - Para `DBK`: retira os registros do recibo e recalcula os controles como DBK.
+ * - Para `DEC`: só a partir de registros que já têm o recibo (recalcula como DEC). Um DBK
+ *   não traz `HR`, `DR` e `R9`, e o `DR` repete dados de cadastro e do resumo que o AutoIR
+ *   ainda não monta; por isso a conversão de DBK em DEC falha com erro explícito.
+ */
+export function converterTipoArquivo(
+  registros: readonly Registro[],
+  destino: TipoArquivo,
+  opcoes: OpcoesControle = {},
+): Registro[] {
+  const leiaute = opcoes.leiaute ?? leiauteDosRegistros(registros);
+  if (destino === "DBK") {
+    const declaracao = registros.filter((r) => !TIPOS_RECIBO.has(r.tipo));
+    return recalcularControles(declaracao, { leiaute, tipoArquivo: "DBK" });
+  }
+  if (!registros.some((r) => r.tipo === "R9")) {
+    throw new ArquivoDeclaracaoError(
+      "conversão para DEC exige os registros do recibo (HR, DR e R9), que o DBK não traz",
+    );
+  }
+  return recalcularControles(registros, { leiaute, tipoArquivo: "DEC" });
 }
 
 /** Um campo de controle cujo valor gravado difere do calculado. */
@@ -210,23 +314,32 @@ export interface RelatorioControles {
   readonly variantesHashQueConferem: readonly string[];
   /** Interpretações de `QT_TOTAL` do `T9` que reproduzem o valor gravado. */
   readonly variantesTotalQueConferem: readonly string[];
+  /** Tipo de arquivo usado na conferência do `NR_CONTROLE` do header. */
+  readonly tipoArquivo: TipoArquivo;
   /**
-   * Se o `NR_CONTROLE` do header é o CRC-32 da linha (informativo; o algoritmo do
-   * programa oficial para esse campo não foi determinado). `undefined` sem header.
+   * Se o `NR_CONTROLE` do header confere com a fórmula do programa oficial
+   * (`calcularControleHeader`). `undefined` sem header ou sem CPF no header.
+   */
+  readonly controleHeaderConfere: boolean | undefined;
+  /**
+   * Se o `NR_CONTROLE` do header é o CRC-32 só da linha (informativo, mantido por
+   * compatibilidade; o programa oficial usa `calcularControleHeader`). `undefined` sem header.
    */
   readonly controleHeaderConfereComCrc: boolean | undefined;
 }
 
 /**
  * Confere os controles dos registros como estão gravados: `NR_CONTROLE` de cada linha
- * (inclusive do recibo, exceto o header), contagens do `T9` e `NR_HASH` do header na
- * variante padrão. Também lista quais variantes de `NR_HASH` e de `QT_TOTAL` conferem.
+ * (inclusive do recibo), o do header pela fórmula do programa (com `opcoes.tipoArquivo` ou
+ * o tipo inferido), contagens do `T9`, `NR_HASH` do header na variante padrão e `NR_HASH`
+ * do `R9`. Também lista quais variantes de `NR_HASH` e de `QT_TOTAL` conferem.
  */
 export function verificarControles(
   registros: readonly Registro[],
   opcoes: OpcoesControle = {},
 ): RelatorioControles {
   const leiaute = opcoes.leiaute ?? leiauteDosRegistros(registros);
+  const tipoArquivo = opcoes.tipoArquivo ?? inferirTipoArquivo(registros);
   const linhas = registros.map((r, i) => ({
     tipo: r.tipo,
     texto: codificarRegistro(r, leiaute, i + 1),
@@ -272,14 +385,28 @@ export function verificarControles(
     }
   }
 
+  const indiceR9 = registros.findIndex((r) => r.tipo === "R9");
+  const hashRecibo = hashDoRecibo(linhas);
+  if (hashRecibo !== undefined && registros[indiceR9]?.campos.NR_HASH !== undefined) {
+    comparar(indiceR9, "NR_HASH", hashRecibo);
+  }
+
   let controleHeaderConfereComCrc: boolean | undefined;
+  let controleHeaderConfere: boolean | undefined;
   linhas.forEach(({ tipo, texto }, i) => {
     if (!temControle(leiaute, tipo)) return;
-    const esperado = calcularNumeroControle(texto.slice(0, -10));
+    const semControle = texto.slice(0, -10);
     if (tipo === "IR") {
-      controleHeaderConfereComCrc = registros[i]?.campos.NR_CONTROLE === esperado;
+      const gravado = registros[i]?.campos.NR_CONTROLE;
+      controleHeaderConfereComCrc = gravado === calcularNumeroControle(semControle);
+      const cpf = cpfDoHeader(registros[i]);
+      if (cpf !== undefined) {
+        const esperado = calcularControleHeader(semControle, cpf, tipoArquivo);
+        controleHeaderConfere = gravado === esperado;
+        comparar(i, "NR_CONTROLE", esperado);
+      }
     } else {
-      comparar(i, "NR_CONTROLE", esperado);
+      comparar(i, "NR_CONTROLE", calcularNumeroControle(semControle));
     }
   });
 
@@ -293,6 +420,8 @@ export function verificarControles(
     divergencias,
     variantesHashQueConferem: variantesHash,
     variantesTotalQueConferem: variantesTotal,
+    tipoArquivo,
+    controleHeaderConfere,
     controleHeaderConfereComCrc,
   };
 }

@@ -1,14 +1,20 @@
 import { crc32 as crc32Zlib } from "node:zlib";
 import { describe, expect, it } from "vitest";
 import {
+  ArquivoDeclaracaoError,
+  calcularControleHeader,
   calcularHashHeader,
+  calcularHashRecibo,
   calcularNumeroControle,
   codificarRegistro,
+  converterTipoArquivo,
   crc32,
   criarRegistro,
+  inferirTipoArquivo,
   LEIAUTE_2026,
   type Registro,
   recalcularControles,
+  tipoArquivoPorNome,
   VARIANTE_HASH_PADRAO,
   VARIANTES_HASH,
   verificarControles,
@@ -71,10 +77,22 @@ describe("recalcularControles", () => {
     expect(calcularHashHeader(registros, LEIAUTE_2026)).toBe(BigInt(esperado));
   });
 
-  it("preserva o NR_CONTROLE do header, salvo se pedido o CRC da linha", () => {
+  it("grava o NR_CONTROLE do header pela fórmula do programa (DBK sem recibo)", () => {
+    const l = linha(registros[0] as Registro);
+    const esperado = crc32(latin1(`${CPF_TESTE.slice(0, 8)}.DBK${l.slice(0, -10)}`));
+    expect(registros[0]?.campos.NR_CONTROLE).toBe(BigInt(esperado));
+  });
+
+  it("preserva o NR_CONTROLE do header ou grava o CRC da linha, quando pedido", () => {
     const ir = registros[0] as Registro;
     const marcado = { tipo: "IR", campos: { ...ir.campos, NR_CONTROLE: 123n } };
-    expect(recalcularControles([marcado, ...registros.slice(1)])[0]?.campos.NR_CONTROLE).toBe(123n);
+    const preservado = recalcularControles([marcado, ...registros.slice(1)], {
+      controleHeader: "preservar",
+    });
+    expect(preservado[0]?.campos.NR_CONTROLE).toBe(123n);
+    expect(recalcularControles([marcado, ...registros.slice(1)])[0]?.campos.NR_CONTROLE).toBe(
+      ir.campos.NR_CONTROLE,
+    );
     const comCrc = recalcularControles([marcado, ...registros.slice(1)], { controleHeader: "crc" });
     const l = linha(comCrc[0] as Registro);
     expect(comCrc[0]?.campos.NR_CONTROLE).toBe(BigInt(crc32(latin1(l.slice(0, -10)))));
@@ -91,13 +109,16 @@ describe("recalcularControles", () => {
     expect(deNovo).toEqual(registros);
   });
 
-  it("ignora os registros do recibo (HR, DR, R9) nas contagens e no hash", () => {
+  it("ignora os registros do recibo (HR, DR, R9) nas contagens e no hash do header", () => {
     const recibo = ["HR", "DR", "R9"].map((t) =>
       criarRegistro(LEIAUTE_2026, t, { NR_CPF: CPF_TESTE }),
     );
     const comRecibo = recalcularControles([...registros, ...recibo]);
-    expect(comRecibo.slice(0, registros.length)).toEqual(registros);
-    expect(comRecibo.slice(registros.length)).toEqual(recibo);
+    // Só o NR_CONTROLE do header muda: com recibo o arquivo é tratado como DEC.
+    expect(comRecibo.slice(1, registros.length)).toEqual(registros.slice(1));
+    expect(comRecibo[0]?.campos.NR_HASH).toBe(registros[0]?.campos.NR_HASH);
+    expect(comRecibo[0]?.campos.NR_CONTROLE).not.toBe(registros[0]?.campos.NR_CONTROLE);
+    expect(comRecibo.slice(registros.length).map((r) => r.tipo)).toEqual(["HR", "DR", "R9"]);
   });
 
   it("funciona com qualquer leiaute (leiaute mínimo)", () => {
@@ -148,5 +169,83 @@ describe("verificarControles", () => {
     expect(relatorio.divergencias).toContainEqual(
       expect.objectContaining({ tipo: "T9", campo: "QT_R21", esperado: "1", encontrado: "2" }),
     );
+  });
+});
+
+describe("NR_CONTROLE do header e tipo de arquivo", () => {
+  const registros = declaracaoSintetica();
+  const recibo = (): Registro[] =>
+    ["HR", "DR", "R9"].map((t) => criarRegistro(LEIAUTE_2026, t, { NR_CPF: CPF_TESTE }));
+
+  it("é o CRC-32 de <8 primeiros dígitos do CPF>.<EXTENSÃO> seguido da linha sem o controle", () => {
+    const l = "IRPF    linha qualquer";
+    expect(calcularControleHeader(l, "10011265566", "DBK")).toBe(
+      BigInt(crc32Zlib(Buffer.from(`10011265.DBK${l}`, "latin1"))),
+    );
+    expect(calcularControleHeader(l, "10011265566", "DEC")).toBe(
+      BigInt(crc32Zlib(Buffer.from(`10011265.DEC${l}`, "latin1"))),
+    );
+  });
+
+  it("infere o tipo pelo recibo e pela extensão do nome", () => {
+    expect(inferirTipoArquivo(registros)).toBe("DBK");
+    expect(inferirTipoArquivo([...registros, ...recibo()])).toBe("DEC");
+    expect(tipoArquivoPorNome("caminho/10011265566-IRPF-2026.dec")).toBe("DEC");
+    expect(tipoArquivoPorNome("x.DBK")).toBe("DBK");
+    expect(tipoArquivoPorNome("x.txt")).toBeUndefined();
+  });
+
+  it("recalcula conforme o tipo pedido e verificarControles acusa o header de outro tipo", () => {
+    const comoDec = recalcularControles(registros, { tipoArquivo: "DEC" });
+    const l = linha(comoDec[0] as Registro);
+    expect(comoDec[0]?.campos.NR_CONTROLE).toBe(
+      calcularControleHeader(l.slice(0, -10), CPF_TESTE, "DEC"),
+    );
+    expect(verificarControles(comoDec, { tipoArquivo: "DEC" }).valido).toBe(true);
+    const relatorio = verificarControles(comoDec, { tipoArquivo: "DBK" });
+    expect(relatorio.valido).toBe(false);
+    expect(relatorio.tipoArquivo).toBe("DBK");
+    expect(relatorio.divergencias).toEqual([
+      expect.objectContaining({ linha: 1, tipo: "IR", campo: "NR_CONTROLE" }),
+    ]);
+  });
+
+  it("acusa NR_CONTROLE do header alterado", () => {
+    const ir = registros[0] as Registro;
+    const alterado = [
+      { tipo: "IR", campos: { ...ir.campos, NR_CONTROLE: 1n } },
+      ...registros.slice(1),
+    ];
+    const relatorio = verificarControles(alterado);
+    expect(relatorio.valido).toBe(false);
+    expect(relatorio.controleHeaderConfere).toBe(false);
+    expect(relatorio.divergencias).toContainEqual(
+      expect.objectContaining({ linha: 1, tipo: "IR", campo: "NR_CONTROLE", encontrado: "1" }),
+    );
+  });
+
+  it("calcula o NR_HASH do R9 sobre as linhas entre o header e o R9", () => {
+    const dec = recalcularControles([...registros, ...recibo()]);
+    const linhas = dec.map(linha);
+    const esperado = BigInt(crc32Zlib(Buffer.from(linhas.slice(1, -1).join(""), "latin1")));
+    expect(dec.at(-1)?.campos.NR_HASH).toBe(esperado);
+    expect(calcularHashRecibo(dec, LEIAUTE_2026)).toBe(esperado);
+    expect(verificarControles(dec).valido).toBe(true);
+    const r9 = dec.at(-1) as Registro;
+    const adulterado = [...dec.slice(0, -1), { tipo: "R9", campos: { ...r9.campos, NR_HASH: 7n } }];
+    expect(verificarControles(adulterado).divergencias).toContainEqual(
+      expect.objectContaining({ tipo: "R9", campo: "NR_HASH" }),
+    );
+  });
+
+  it("converte DEC em DBK retirando o recibo e recalculando o header", () => {
+    const dec = recalcularControles([...registros, ...recibo()]);
+    expect(converterTipoArquivo(dec, "DBK")).toEqual(registros);
+    expect(converterTipoArquivo(registros, "DBK")).toEqual(registros);
+    expect(converterTipoArquivo(dec, "DEC")).toEqual(dec);
+  });
+
+  it("não converte DBK em DEC: o recibo (HR, DR, R9) não está no DBK", () => {
+    expect(() => converterTipoArquivo(registros, "DEC")).toThrow(ArquivoDeclaracaoError);
   });
 });

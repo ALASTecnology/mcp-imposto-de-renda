@@ -8,7 +8,14 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { gravarArquivo, lerArquivo, verificarControles } from "../../src/dbk/index.js";
+import {
+  converterTipoArquivo,
+  gravarArquivo,
+  lerArquivo,
+  recalcularControles,
+  tipoArquivoPorNome,
+  verificarControles,
+} from "../../src/dbk/index.js";
 
 const PASTA = fileURLToPath(new URL("../fixtures/dbk/2026/", import.meta.url));
 const arquivos = existsSync(PASTA)
@@ -31,7 +38,10 @@ describe("casos de referência do programa oficial (2026)", () => {
     const regravado = gravarArquivo(lido.registros, { terminadorFinal: lido.terminadorFinal });
     expect(Buffer.compare(Buffer.from(regravado), Buffer.from(bytes))).toBe(0);
 
-    const relatorio = verificarControles(lido.registros);
+    const tipoArquivo = tipoArquivoPorNome(nome);
+    const relatorio = verificarControles(lido.registros, { tipoArquivo });
+    expect(relatorio.tipoArquivo).toBe(tipoArquivo);
+    expect(relatorio.controleHeaderConfere).toBe(true);
     const diagnostico = [
       `variantes de NR_HASH que conferem: ${relatorio.variantesHashQueConferem.join(", ") || "nenhuma"}`,
       `interpretações de QT_TOTAL que conferem: ${relatorio.variantesTotalQueConferem.join(", ") || "nenhuma"}`,
@@ -45,5 +55,27 @@ describe("casos de referência do programa oficial (2026)", () => {
     expect(relatorio.divergencias, diagnostico).toEqual([]);
     expect(relatorio.variantesHashQueConferem, diagnostico).toContain("linhas+T9");
     expect(relatorio.variantesTotalQueConferem, diagnostico).toContain("declaracao-sem-T9");
+  });
+
+  it.each(arquivos)("%s: recalcular todos os controles reproduz o arquivo do programa", (nome) => {
+    const bytes = new Uint8Array(readFileSync(join(PASTA, nome)));
+    const lido = lerArquivo(bytes);
+    const recalculado = recalcularControles(lido.registros, {
+      tipoArquivo: tipoArquivoPorNome(nome),
+    });
+    const gravado = gravarArquivo(recalculado, { terminadorFinal: lido.terminadorFinal });
+    expect(Buffer.compare(Buffer.from(gravado), Buffer.from(bytes))).toBe(0);
+  });
+
+  const pares = arquivos.filter(
+    (n) => /\.dec$/i.test(n) && arquivos.includes(n.replace(/\.dec$/i, ".DBK")),
+  );
+  it.each(pares)("%s: convertido em DBK é igual, byte a byte, ao DBK do programa", (nome) => {
+    const dec = lerArquivo(new Uint8Array(readFileSync(join(PASTA, nome))));
+    const dbk = new Uint8Array(readFileSync(join(PASTA, nome.replace(/\.dec$/i, ".DBK"))));
+    const convertido = gravarArquivo(converterTipoArquivo(dec.registros, "DBK"), {
+      terminadorFinal: dec.terminadorFinal,
+    });
+    expect(Buffer.compare(Buffer.from(convertido), Buffer.from(dbk))).toBe(0);
   });
 });

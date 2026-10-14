@@ -110,7 +110,7 @@ describe("decodificarRegistro e codificarRegistro", () => {
   it("lê e regrava valor monetário negativo com o sinal na primeira posição", () => {
     // O programa oficial grava, por exemplo, a base mensal negativa do carnê-leão
     // (receita menor que o livro-caixa) como "-000000300000" (fixture livro-caixa-excesso-01).
-    const linha = DETALHE_MINI.slice(0, 12) + "-0123" + DETALHE_MINI.slice(17);
+    const linha = `${DETALHE_MINI.slice(0, 12)}-0123${DETALHE_MINI.slice(17)}`;
     const r = decodificarRegistro(linha, MINI);
     expect(r.campos.VR_VALOR).toBe(-123n);
     expect(codificarRegistro(r, MINI)).toBe(linha);
@@ -118,9 +118,9 @@ describe("decodificarRegistro e codificarRegistro", () => {
   });
 
   it("rejeita sinal fora da primeira posição ou em campo sem casas decimais", () => {
-    const meio = DETALHE_MINI.slice(0, 12) + "0-123" + DETALHE_MINI.slice(17);
+    const meio = `${DETALHE_MINI.slice(0, 12)}0-123${DETALHE_MINI.slice(17)}`;
     expect(() => decodificarRegistro(meio, MINI)).toThrow(CampoInvalidoError);
-    const so = DETALHE_MINI.slice(0, 12) + "-    " + DETALHE_MINI.slice(17);
+    const so = `${DETALHE_MINI.slice(0, 12)}-    ${DETALHE_MINI.slice(17)}`;
     expect(() => decodificarRegistro(so, MINI)).toThrow(CampoInvalidoError);
     const controle = `${DETALHE_MINI.slice(0, -10)}-000000001`;
     expect(() => decodificarRegistro(controle, MINI)).toThrow(CampoInvalidoError);

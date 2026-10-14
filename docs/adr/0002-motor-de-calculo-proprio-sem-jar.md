@@ -14,8 +14,12 @@ execução lenta e opaca e impediria explicar ao usuário de onde vem cada valor
 
 O AutoIR implementa o próprio codec do arquivo DBK e o próprio motor de cálculo em TypeScript.
 
-- Nenhum código, binário, JAR, recurso ou leiaute extraído do programa oficial entra no
-  repositório. A pasta `vendor/rfb/` é ignorada pelo git.
+- Nenhum código, binário ou JAR do programa oficial entra no repositório. A pasta `vendor/rfb/`
+  é ignorada pelo git, e nenhum bytecode é descompilado.
+- Entram no repositório apenas especificações funcionais derivadas de recursos de dados do
+  programa (posições, tamanhos e formatos dos registros, tabelas de códigos), do mesmo tipo que a
+  Receita Federal publica nos leiautes oficiais da DIRPF. O arquivo `packages/core/src/dbk/leiautes/2026.ts`
+  é gerado por `tools/leiaute/gerar.ts` a partir do JAR que o próprio desenvolvedor baixou.
 - O programa oficial pode ser executado **apenas localmente, no ambiente de desenvolvimento**, para
   gerar casos de referência (entrada e resultado esperado). Os casos usam dados sintéticos.
 - O software publicado nunca invoca, embute ou baixa o programa oficial.

@@ -1,13 +1,64 @@
 /**
- * dbk/: codec do arquivo da declaração (DBK/DEC) dirigido por leiaute declarativo.
+ * dbk/: codec do arquivo da declaração (DEC e cópia de segurança DBK) dirigido por leiaute
+ * declarativo.
  *
- * Destino: cada registro (por exemplo, o registro de identificação e o T9 de
- * fechamento) é descrito como dados (tipo do registro, campos, posição, tamanho,
- * formato) e um único codec genérico lê e escreve qualquer leiaute descrito.
- * Leiautes ficam versionados por exercício. Nenhum código ou binário da Receita
- * Federal entra aqui: os leiautes são escritos a partir de documentação pública
- * e validados contra casos de referência gerados localmente.
- *
- * Ainda sem implementação.
+ * Cada tipo de registro (header `IR`, fichas `16` a `99`, fechamento `T9`, recibo) é
+ * descrito como dados em `leiautes/<exercicio>.ts`, gerado por `tools/leiaute/gerar.ts`, e
+ * um único codec genérico lê e grava qualquer leiaute descrito. Nenhum código da Receita
+ * Federal entra aqui. Formato, controles e hipóteses estão em docs/formato-dbk.md.
  */
-export {};
+
+export {
+  type ArquivoDeclaracao,
+  centavosDoCampo,
+  codificarLatin1,
+  codificarRegistro,
+  criarRegistro,
+  decodificarLatin1,
+  decodificarRegistro,
+  gravarArquivo,
+  leiauteDosRegistros,
+  lerArquivo,
+  type OpcoesGravacao,
+  type OpcoesLeitura,
+  type Registro,
+  type ValorCampo,
+} from "./codec.js";
+export {
+  type ConteudoHash,
+  calcularHashHeader,
+  calcularNumeroControle,
+  crc32,
+  type DivergenciaControle,
+  type OpcoesControle,
+  type OpcoesRecalculo,
+  type RelatorioControles,
+  recalcularControles,
+  TIPOS_RECIBO,
+  VARIANTE_HASH_PADRAO,
+  VARIANTES_HASH,
+  type VarianteHash,
+  verificarControles,
+} from "./controle.js";
+export {
+  ArquivoDeclaracaoError,
+  CampoDesconhecidoError,
+  CampoInvalidoError,
+  CaractereInvalidoError,
+  type ContextoErroArquivo,
+  ExercicioNaoSuportadoError,
+  TamanhoLinhaInvalidoError,
+  TerminadorLinhaInvalidoError,
+  TipoRegistroDesconhecidoError,
+  ValorExcedeTamanhoError,
+  ValorNegativoError,
+} from "./erros.js";
+export {
+  type CampoLeiaute,
+  type FormatoCampo,
+  type FormatoData,
+  type Leiaute,
+  type TipoRegistroLeiaute,
+  tipoDoLeiaute,
+} from "./leiaute.js";
+export { LEIAUTE_2026, LEIAUTES, obterLeiaute } from "./leiautes/index.js";

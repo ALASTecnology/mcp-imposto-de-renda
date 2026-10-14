@@ -1,0 +1,28 @@
+# Mesmas convenções do Biome (biome.json): 2 espaços, LF, UTF-8.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 100
+
+[*.md]
+# Quebra de linha dura no Markdown usa dois espaços no fim.
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Arquivos do programa oficial: latin-1, CRLF e posições fixas; nunca reformatar.
+[*.{DBK,DEC,dbk,dec}]
+charset = unset
+end_of_line = unset
+indent_style = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+max_line_length = off
+
+[Makefile]
+indent_style = tab

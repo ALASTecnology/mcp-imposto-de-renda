@@ -7,6 +7,7 @@ import {
   formatCentavos,
   impostoTabelaAnual,
   centavos as paraCentavos,
+  parseCentavos,
 } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
 import {
@@ -50,6 +51,33 @@ function decimal(v: string, casas: number, campo: string): bigint {
     throw new EntradaInvalidaError(`${campo}: use número decimal com vírgula (ex.: "5,1234").`);
   const frac = (m[2] ?? "").slice(0, casas).padEnd(casas, "0");
   return BigInt(m[1] ?? "0") * 10n ** BigInt(casas) + BigInt(frac || "0");
+}
+
+/**
+ * Valor em moeda estrangeira, em centavos. Segue `parseCentavos` do core (milhar com ponto em
+ * grupos de 3 e até duas casas depois da vírgula) e aceita ainda o ponto decimal comum em
+ * extratos estrangeiros quando não há vírgula e o ponto é seguido de 1 ou 2 dígitos ("1234.56").
+ * Um único ponto seguido de 3 dígitos ("1.234") é ambíguo e é recusado.
+ */
+function valorEstrangeiro(texto: string): bigint {
+  const v = texto.trim();
+  const decimalComPonto = /^(\d+)\.(\d{1,2})$/.exec(v);
+  if (decimalComPonto) return parseCentavos(`${decimalComPonto[1]},${decimalComPonto[2]}`);
+  if (/^\d{1,3}\.\d{3}$/.test(v)) {
+    throw new EntradaInvalidaError(
+      `valor: "${v}" é ambíguo (ponto de milhar ou ponto decimal?). Escreva "${v},00" para o valor inteiro ou use vírgula para as casas decimais (ex.: "1,23").`,
+    );
+  }
+  let centavos: bigint;
+  try {
+    centavos = parseCentavos(v);
+  } catch {
+    throw new EntradaInvalidaError(
+      `valor: "${v}" não é um valor válido. Use vírgula decimal e ponto de milhar ("1.234,56"), ou ponto decimal sem separador de milhar ("1234.56").`,
+    );
+  }
+  if (centavos < 0n) throw new EntradaInvalidaError("valor: informe um valor positivo.");
+  return centavos;
 }
 
 export const grupoCalculadoras: GrupoFerramentas = {
@@ -646,14 +674,19 @@ export const grupoCalculadoras: GrupoFerramentas = {
         descricao:
           "Converte um valor em moeda estrangeira para reais pela cotação informada pelo usuário (o MCP Imposto de Renda não baixa cotações) e explica qual cotação a regra exige para cada finalidade: rendimento ou imposto pago no exterior, dedução, bem ou aplicação financeira (Lei 14.754/2023).",
         entrada: {
-          valor: z.string().max(32).describe('Valor na moeda estrangeira ("1.234,56").'),
+          valor: z
+            .string()
+            .max(32)
+            .describe(
+              'Valor na moeda estrangeira: "1.234,56" (vírgula decimal) ou "1234.56" (ponto decimal, sem separador de milhar). "1.234" é recusado por ser ambíguo.',
+            ),
           cotacao: z.string().max(16).describe('Cotação em reais por unidade ("5,1234").'),
           finalidade: z.enum(["rendimento", "imposto_exterior", "deducao", "bem", "aplicacao"]),
         },
         saida: { reais: zTexto, regra: z.string() },
       },
       (a) => {
-        const valor = decimal(a.valor.replace(/\./g, ""), 2, "valor");
+        const valor = valorEstrangeiro(a.valor);
         const cot = decimal(a.cotacao, 4, "cotacao");
         const reais = (valor * cot) / 10_000n;
         const REGRAS = {

@@ -27,5 +27,7 @@ export default defineConfig({
     root: fileURLToPath(new URL(".", import.meta.url)),
     include: ["listar.test.ts", "exemplos.test.ts", "markdown.test.ts", "readme.test.ts"],
     environment: "node",
+    // listar.test.ts sobe um servidor por grupo; em máquina carregada (CI) passa dos 5 s padrão.
+    testTimeout: 60_000,
   },
 });

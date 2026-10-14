@@ -11,7 +11,8 @@ teste são sintéticos: nenhum CPF, nome ou valor pertence a uma pessoa real.
 | Casos de referência (golden) | `packages/core/test/golden/2026/*.json` e `packages/core/test/fixtures/dbk/2026/*.DBK\|.DEC` | o motor e o codec reproduzem o programa oficial ao centavo e byte a byte |
 | Propriedades e fuzzing | `packages/core/test/integridade/` | leis que valem para qualquer entrada, em milhares de entradas geradas com semente fixa |
 | Segurança | `packages/core/test/seguranca/`, `packages/mcp/test/seguranca.test.ts` | entradas hostis, ausência de E/S no core e de rede no servidor |
-| Integração | `packages/mcp/test/` | ferramentas MCP pelo transporte em memória do SDK, pasta autorizada, backups |
+| Integração | `packages/mcp/test/` | ferramentas MCP pelo transporte em memória do SDK, pasta autorizada, backups; `calculadoras.test.ts` confere cada calculadora com casos calculados à mão |
+| Documentação | `tools/docs/*.test.ts` | catálogo e exemplos gerados pelo servidor real, tabelas de `docs/ferramentas/` alinhadas e contagens do README iguais às de `catalogoFerramentas()` |
 | Fumaça | `apps/cli/test/stdio.test.ts` | o executável sobe e responde via stdio |
 
 A base é larga: a maior parte da confiança vem do core, que é puro (sem disco, rede nem relógio)
@@ -27,7 +28,18 @@ pnpm vitest run packages/core/test/integridade  # propriedades e fuzzing
 pnpm vitest run packages/core/test/seguranca    # entradas hostis e varredura de E/S
 pnpm vitest run packages/core/test/calc/golden.test.ts packages/core/test/dbk/fixtures.test.ts
 pnpm lint && pnpm typecheck                   # biome e tsc
+pnpm test:docs                                # catálogo, exemplos, tabelas e contagens do README
+pnpm docs:links                               # links relativos da documentação
 ```
+
+`pnpm test` já inclui `tools/docs/markdown.test.ts` e `tools/docs/readme.test.ts`, que só leem
+arquivos. `pnpm test:docs` roda também `listar.test.ts` e `exemplos.test.ts`, que sobem o servidor e
+gravam o catálogo em `tools/docs/saida/` (ignorada pelo git). O job `docs` do CI roda
+`pnpm test:docs` e `pnpm docs:links`.
+
+O README não fixa o total de testes, que muda a cada teste novo: diz "mais de 1.100". Atualize o
+piso só quando ele ficar muito defasado; as contagens de ferramentas, ao contrário, são exatas e
+conferidas por `readme.test.ts`.
 
 Cobertura (a mesma linha de comando do job `coverage` do CI, em `.github/workflows/ci.yml`):
 
@@ -128,7 +140,8 @@ todos os grupos, imposto pago e doações):
 
 ## Cobertura atual
 
-Medida em 14/10/2026 com `@vitest/coverage-v8` (897 testes):
+Medida em 14/10/2026 com `@vitest/coverage-v8`, antes dos testes das calculadoras e das correções
+da segunda revisão (o total de testes cresceu depois; `pnpm test` mostra o atual):
 
 | Escopo | Linhas | Instruções | Funções | Ramos |
 | --- | ---: | ---: | ---: | ---: |
@@ -141,7 +154,8 @@ Medida em 14/10/2026 com `@vitest/coverage-v8` (897 testes):
 
 O CI exige, abaixo do medido: no core, 92% de linhas e instruções, 93% de funções e 78% de
 ramos; no total, 80%, 78%, 77% e 66%. O total é mais baixo porque o servidor MCP e o CLI estão em
-desenvolvimento (por exemplo, `packages/mcp/src/calculadoras` ainda sem testes). Suba os limites
+desenvolvimento (as calculadoras de `packages/mcp/src/calculadoras` ganharam testes depois desta
+medição). Suba os limites
 quando a cobertura subir; não os baixe para fazer um PR passar.
 
 ## Análise estática e dependências

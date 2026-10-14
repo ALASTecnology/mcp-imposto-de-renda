@@ -118,7 +118,7 @@ Calcula o imposto do RRA pela tabela progressiva acumulada (tabela mensal do mê
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
 | `rendimentos` | valor monetário | **sim** | Rendimentos tributáveis do RRA (sem juros de mora). |
-| `numero_meses` | número | **sim** | Meses a que se referem (uma casa decimal). |
+| `numero_meses` | número | **sim** | Meses a que se referem, com uma casa decimal; mínimo 0,1 (IN RFB 1.500/2014, art. 45). |
 | `mes_recebimento` | inteiro (1 a 12) | **sim** |   |
 | `previdencia` | valor monetário | não | Contribuição previdenciária oficial descontada. |
 | `pensao` | valor monetário | não | Pensão alimentícia descontada. |
@@ -293,7 +293,7 @@ Aparece em 2 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Apurar a renda variável mês a mês**. Não grava nada.
 
-Apura o imposto mensal sobre ganhos líquidos: operações comuns 15%, day-trade 20%, FII e Fiagro 20%, com compensação de prejuízos separada por tipo, compensação de IR na fonte (day-trade e Lei 11.033/2004), isenção de ganhos com ações à vista quando as vendas do mês não passam de R$ 20.000,00 e Darf 6015 com vencimento no último dia útil do mês seguinte (abaixo de R$ 10,00 acumula).
+Apura o imposto mensal sobre ganhos líquidos: operações comuns 15%, day-trade 20%, FII e Fiagro 20%, com compensação de prejuízos separada por tipo, compensação de IR na fonte (day-trade e Lei 11.033/2004), isenção de ganhos com ações à vista quando as vendas do mês não passam de R$ 20.000,00 e Darf 6015 com vencimento no último dia útil do mês seguinte. Imposto abaixo de R$ 10,00 não é recolhido no mês: soma-se ao dos meses seguintes até chegar a R$ 10,00 (Lei 9.430/1996, art. 68, § 1º).
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -365,8 +365,10 @@ Resposta em texto:
       "baseFii": 0,
       "impostoDevido": 0,
       "irrfCompensado": 0,
+      "impostoMesesAnteriores": 0,
       "impostoPagar": 0,
       "recolher": false,
+      "impostoPendente": 0,
       "prejuizoComunsSeguinte": 80000,
       "prejuizoDayTradeSeguinte": 0,
       "prejuizoFiiSeguinte": 0,
@@ -380,8 +382,10 @@ Resposta em texto:
       "baseFii": 0,
       "impostoDevido": 22500,
       "irrfCompensado": 0,
+      "impostoMesesAnteriores": 0,
       "impostoPagar": 22500,
       "recolher": true,
+      "impostoPendente": 0,
       "prejuizoComunsSeguinte": 0,
       "prejuizoDayTradeSeguinte": 0,
       "prejuizoFiiSeguinte": 0,
@@ -813,7 +817,7 @@ Converte um valor em moeda estrangeira para reais pela cotação informada pelo 
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `valor` | texto | **sim** | Valor na moeda estrangeira ("1.234,56"). (até 32 caracteres) |
+| `valor` | texto | **sim** | Valor na moeda estrangeira: "1.234,56" (vírgula decimal) ou "1234.56" (ponto decimal, sem separador de milhar). "1.234" é recusado por ser ambíguo. (até 32 caracteres) |
 | `cotacao` | texto | **sim** | Cotação em reais por unidade ("5,1234"). (até 16 caracteres) |
 | `finalidade` | `"rendimento"` \| `"imposto_exterior"` \| `"deducao"` \| `"bem"` \| `"aplicacao"` | **sim** |   |
 

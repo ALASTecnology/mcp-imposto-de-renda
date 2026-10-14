@@ -1,0 +1,89 @@
+{
+  "id": "gcap-imovel-unico-01",
+  "descricao": "Venda do único imóvel por até R$ 440.000,00, sem outra alienação em 5 anos: ganho isento (FR2 aplicado antes da isenção).",
+  "entrada": {
+    "titular": {
+      "cpf": "18166788136",
+      "nome": "CARLA FICTICIA GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "imovel",
+        "descricao": "APARTAMENTO FICTICIO UNICO",
+        "dataAquisicao": "15082012",
+        "dataAlienacao": "20052025",
+        "valorAlienacao": "42000000",
+        "custoCorretagem": "1200000",
+        "custoAquisicao": "25000000",
+        "unicoImovel": true,
+        "adquirente": {
+          "cpf": "18279436103",
+          "nome": "COMPRADOR FICTICIO DOIS"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "7200000",
+    "deducoesCompleto": "790000",
+    "baseCalculoCompleto": "6410000",
+    "impostoDevidoCompleto": "677372",
+    "descontoSimplificado": "1440000",
+    "baseCalculoSimplificado": "5760000",
+    "impostoDevidoSimplificado": "498622",
+    "impostoRetidoTotal": "620000",
+    "saldoPagarCompleto": "57372",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "121378",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "692"
+  },
+  "esperadoGcap": {
+    "programa": "GCAP 2025 (exportação para o IRPF 2026)",
+    "alienacoes": [
+      {
+        "tipo": "imovel",
+        "valorLiquido": "40800000",
+        "custoAquisicao": "25000000",
+        "ganhoBruto": "15800000",
+        "reducoes": {
+          "lei7713": "0",
+          "fr1": "0",
+          "fr2": "6574688",
+          "outroImovel": "0",
+          "unicoImovel": "9225312",
+          "pequenoValor": "0"
+        },
+        "percentuaisReducao": {
+          "lei7713": "0,000000",
+          "fr1": "0,000000",
+          "fr2": "41,611950"
+        },
+        "ganhoTributavel": "0",
+        "impostoDevido": "0",
+        "aliquotaMedia": "0,000000",
+        "rendimentoIsento": "15800000",
+        "rendimentoTributavel": "0"
+      }
+    ],
+    "consolidacao": {
+      "rendimentosIsentos": "15800000",
+      "rendimentosTributaveis": "0",
+      "impostoDevido": "0",
+      "impostoPago": "0"
+    },
+    "pendencias": []
+  }
+}

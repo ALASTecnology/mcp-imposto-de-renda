@@ -1,0 +1,88 @@
+{
+  "id": "gcap-movel-01",
+  "descricao": "Venda de bem móvel (obra de arte) acima de R$ 35.000,00 no mês: ganho tributado a 15%.",
+  "entrada": {
+    "titular": {
+      "cpf": "18178052903",
+      "nome": "DANIEL FICTICIO GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "descricao": "OBRA DE ARTE FICTICIA",
+        "dataAquisicao": "05042018",
+        "dataAlienacao": "10092025",
+        "valorAlienacao": "15000000",
+        "custoCorretagem": "750000",
+        "custoAquisicao": "6000000",
+        "adquirente": {
+          "cpf": "18290700962",
+          "nome": "COMPRADOR FICTICIO TRES"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "7200000",
+    "deducoesCompleto": "790000",
+    "baseCalculoCompleto": "6410000",
+    "impostoDevidoCompleto": "677372",
+    "descontoSimplificado": "1440000",
+    "baseCalculoSimplificado": "5760000",
+    "impostoDevidoSimplificado": "498622",
+    "impostoRetidoTotal": "620000",
+    "saldoPagarCompleto": "57372",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "121378",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "692"
+  },
+  "esperadoGcap": {
+    "programa": "GCAP 2025 (exportação para o IRPF 2026)",
+    "alienacoes": [
+      {
+        "tipo": "movel",
+        "valorLiquido": "14250000",
+        "custoAquisicao": "6000000",
+        "ganhoBruto": "8250000",
+        "reducoes": {
+          "lei7713": "0",
+          "fr1": "0",
+          "fr2": "0",
+          "outroImovel": "0",
+          "unicoImovel": "0",
+          "pequenoValor": "0"
+        },
+        "percentuaisReducao": {
+          "lei7713": "",
+          "fr1": "",
+          "fr2": ""
+        },
+        "ganhoTributavel": "8250000",
+        "impostoDevido": "1237500",
+        "aliquotaMedia": "15,000000",
+        "rendimentoIsento": "0",
+        "rendimentoTributavel": "8250000"
+      }
+    ],
+    "consolidacao": {
+      "rendimentosIsentos": "0",
+      "rendimentosTributaveis": "8250000",
+      "impostoDevido": "1237500",
+      "impostoPago": "0"
+    },
+    "pendencias": []
+  }
+}

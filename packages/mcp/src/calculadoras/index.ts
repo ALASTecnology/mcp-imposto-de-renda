@@ -317,79 +317,125 @@ export interface EntradaGanhoCapital {
   valorAplicadoOutroImovel?: bigint;
   /** Total de alienações de bens da mesma natureza no mês. */
   totalAlienadoNoMes?: bigint;
+  /** Imposto já pago em Darf (código 4600) sobre esta alienação. */
+  impostoPago?: bigint;
 }
 
-const meses = (de: string, ate: string) => {
+/** Meses-calendário de `de` até `ate` (AAAA-MM), contando os dois meses. */
+const mesesInclusivos = (de: string, ate: string) => {
   const [a1, m1] = de.split("-").map(Number) as [number, number];
   const [a2, m2] = ate.split("-").map(Number) as [number, number];
-  return (a2 - a1) * 12 + (m2 - m1);
+  return (a2 - a1) * 12 + (m2 - m1) + 1;
 };
 
-/** Simulador de ganho de capital com isenções e reduções principais (orientação, não GCAP). */
+/**
+ * Percentual de redução `1 - 1/(base/10000)^m`, em milionésimos de ponto percentual, com a
+ * sexta casa decimal do percentual arredondada (meio para cima), como no GCAP.
+ */
+function percentualFator(base: bigint, m: number): bigint {
+  if (m <= 0) return 0n;
+  const pot = base ** BigInt(m);
+  const um = 10_000n ** BigInt(m);
+  const num = (pot - um) * 100_000_000n;
+  return (num * 2n + pot) / (2n * pot);
+}
+
+/** Formata milionésimos de ponto percentual como o GCAP ("56,157121"). */
+const formatarPercentual = (micro: bigint) =>
+  `${micro / 1_000_000n},${(micro % 1_000_000n).toString().padStart(6, "0")}`;
+
+/**
+ * Simulador de ganho de capital (orientação; o demonstrativo oficial é o GCAP). Conferido ao
+ * centavo com o GCAP 2025 nos casos `gcap-*` de `packages/core/test/golden/2026`
+ * (docs/regras/irpf-2026.md, seção Ganho de capital): reduções aplicadas em cascata (Lei
+ * 7.713/1988, FR1 e FR2 da Lei 11.196/2005, com os meses contados inclusive e o percentual
+ * arredondado na sexta casa), cada redução truncada no centavo, isenção do único imóvel sobre o
+ * que resta e limite de pequeno valor de R$ 35.000,00 também para quotas fora de bolsa.
+ */
 export function calcularGanhoCapital(e: EntradaGanhoCapital) {
   const avisos: string[] = [];
   const liquido = e.valorAlienacao - e.custoCorretagem;
   const bruto = liquido - e.custoAquisicao;
-  if (bruto <= 0n) {
+  const detalhe = {
+    lei7713: 0n,
+    fr1: 0n,
+    fr2: 0n,
+    outroImovel: 0n,
+    unicoImovel: 0n,
+    pequenoValor: 0n,
+  };
+  const percentuais = { lei7713: 0n, fr1: 0n, fr2: 0n };
+  const impostoPago = e.impostoPago ?? 0n;
+  const montar = (ganhoTributavel: bigint, imposto: bigint) => {
+    const reducoes = Object.values(detalhe).reduce((s, v) => s + v, 0n);
     return {
       ganhoBruto: bruto,
-      reducoes: 0n,
-      ganhoTributavel: 0n,
-      isento: 0n,
-      imposto: 0n,
+      reducoes,
+      reducoesDetalhadas: { ...detalhe },
+      percentuaisReducao: {
+        lei7713: formatarPercentual(percentuais.lei7713),
+        fr1: formatarPercentual(percentuais.fr1),
+        fr2: formatarPercentual(percentuais.fr2),
+      },
+      ganhoTributavel,
+      isento: bruto > 0n ? reducoes : 0n,
+      imposto,
+      impostoPago,
+      /** Valor que o GCAP transporta para Rendimentos de Tributação Exclusiva. */
+      rendimentoExclusivo: ganhoTributavel > impostoPago ? ganhoTributavel - impostoPago : 0n,
       avisos,
     };
-  }
+  };
+  if (bruto <= 0n) return montar(0n, 0n);
   let ganho = bruto;
-  let reducoes = 0n;
+  const reduzir = (campo: "lei7713" | "fr1" | "fr2", micro: bigint) => {
+    percentuais[campo] = micro;
+    const r = (ganho * micro) / 100_000_000n;
+    detalhe[campo] = r;
+    ganho -= r;
+  };
   const ano = Number(e.dataAquisicao.slice(0, 4));
+  const mesAquisicao = e.dataAquisicao.slice(0, 7);
   if (e.tipo === "imovel") {
     if (ano <= 1988) {
       const pct = ano <= 1969 ? 100 : 5 * (1988 - ano + 1);
-      const r = (ganho * BigInt(pct)) / 100n;
-      reducoes += r;
-      ganho -= r;
+      reduzir("lei7713", BigInt(pct) * 1_000_000n);
       avisos.push(`Redução da Lei 7.713/1988 de ${pct}% por aquisição em ${ano}.`);
     }
-    const inicioFr1 = e.dataAquisicao < "1996-01-01" ? "1996-01" : e.dataAquisicao.slice(0, 7);
-    const m1 = Math.max(0, meses(inicioFr1, "2005-05"));
-    const fr1 = 1 / 1.006 ** m1;
-    const inicioFr2 = e.dataAquisicao < "2005-12-01" ? "2005-12" : e.dataAquisicao.slice(0, 7);
-    const m2 = Math.max(0, meses(inicioFr2, e.dataAlienacao.slice(0, 7)));
-    const fr2 = 1 / 1.0035 ** m2;
-    const fator = (e.dataAquisicao < "2005-06-01" ? fr1 : 1) * fr2;
-    const depois = BigInt(Math.floor(Number(ganho) * fator));
-    reducoes += ganho - depois;
-    ganho = depois;
+    // FR1: de janeiro de 1996 (ou do mês de aquisição) a novembro de 2005, inclusive.
+    if (mesAquisicao <= "2005-11") {
+      const inicio = mesAquisicao < "1996-01" ? "1996-01" : mesAquisicao;
+      reduzir("fr1", percentualFator(10_060n, mesesInclusivos(inicio, "2005-11")));
+    }
+    // FR2: de dezembro de 2005 (ou do mês de aquisição) ao mês da alienação, inclusive.
+    const inicioFr2 = mesAquisicao <= "2005-11" ? "2005-12" : mesAquisicao;
+    reduzir("fr2", percentualFator(10_035n, mesesInclusivos(inicioFr2, e.dataAlienacao.slice(0, 7))));
     if (e.unicoImovel && e.valorAlienacao <= 44_000_000n) {
       avisos.push(
         "Isenção do único imóvel até R$ 440.000,00 sem outra alienação nos últimos 5 anos.",
       );
-      return {
-        ganhoBruto: bruto,
-        reducoes,
-        ganhoTributavel: 0n,
-        isento: bruto,
-        imposto: 0n,
-        avisos,
-      };
+      detalhe.unicoImovel = ganho;
+      return montar(0n, 0n);
     }
     const aplicado = e.valorAplicadoOutroImovel ?? 0n;
     if (aplicado > 0n) {
       const prop = aplicado >= e.valorAlienacao ? ganho : (ganho * aplicado) / e.valorAlienacao;
-      reducoes += prop;
+      detalhe.outroImovel = prop;
       ganho -= prop;
       avisos.push(
         "Isenção proporcional do valor aplicado em outro imóvel residencial em até 180 dias (Lei 11.196/2005 art. 39).",
       );
     }
   }
-  const limitePequeno = e.tipo === "participacao" ? 2_000_000n : 3_500_000n;
+  // O GCAP aplica R$ 35.000,00 também às quotas de sociedade fora de bolsa
+  // (caso gcap-participacao-pequeno-valor-01).
+  const limitePequeno = 3_500_000n;
   if ((e.totalAlienadoNoMes ?? e.valorAlienacao) <= limitePequeno) {
     avisos.push(
       `Isenção de bens de pequeno valor (alienações do mês até ${limitePequeno / 100n} reais).`,
     );
-    return { ganhoBruto: bruto, reducoes, ganhoTributavel: 0n, isento: bruto, imposto: 0n, avisos };
+    detalhe.pequenoValor = ganho;
+    return montar(0n, 0n);
   }
   const faixas: [bigint, bigint][] = [
     [500_000_000n, 150n],
@@ -403,7 +449,7 @@ export function calcularGanhoCapital(e: EntradaGanhoCapital) {
     anterior = teto;
   }
   if (ganho > anterior) imposto += ((ganho - anterior) * 225n) / 1000n;
-  return { ganhoBruto: bruto, reducoes, ganhoTributavel: ganho, isento: reducoes, imposto, avisos };
+  return montar(ganho, imposto);
 }
 
 export interface RespostasObrigatoriedade {

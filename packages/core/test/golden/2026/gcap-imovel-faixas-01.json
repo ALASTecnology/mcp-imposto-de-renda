@@ -1,0 +1,88 @@
+{
+  "id": "gcap-imovel-faixas-01",
+  "descricao": "Venda de imóvel com ganho acima de R$ 5.000.000,00: faixas progressivas de 15% e 17,5%.",
+  "entrada": {
+    "titular": {
+      "cpf": "18200582558",
+      "nome": "FABIO FICTICIO GCAP",
+      "nascimento": "10101980"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "95425482000138",
+        "nome": "EMPRESA FICTICIA GCAP LTDA",
+        "rendimento": "7200000",
+        "previdenciaOficial": "790000",
+        "irrf": "620000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "imovel",
+        "descricao": "TERRENO FICTICIO",
+        "dataAquisicao": "10022020",
+        "dataAlienacao": "18032025",
+        "valorAlienacao": "800000000",
+        "custoCorretagem": "20000000",
+        "custoAquisicao": "100000000",
+        "adquirente": {
+          "cpf": "17297359246",
+          "nome": "COMPRADOR FICTICIO CINCO"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "7200000",
+    "deducoesCompleto": "790000",
+    "baseCalculoCompleto": "6410000",
+    "impostoDevidoCompleto": "677372",
+    "descontoSimplificado": "1440000",
+    "baseCalculoSimplificado": "5760000",
+    "impostoDevidoSimplificado": "498622",
+    "impostoRetidoTotal": "620000",
+    "saldoPagarCompleto": "57372",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "121378",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "692"
+  },
+  "esperadoGcap": {
+    "programa": "GCAP 2025 (exportação para o IRPF 2026)",
+    "alienacoes": [
+      {
+        "tipo": "imovel",
+        "valorLiquido": "780000000",
+        "custoAquisicao": "100000000",
+        "ganhoBruto": "680000000",
+        "reducoes": {
+          "lei7713": "0",
+          "fr1": "0",
+          "fr2": "132440206",
+          "outroImovel": "0",
+          "unicoImovel": "0",
+          "pequenoValor": "0"
+        },
+        "percentuaisReducao": {
+          "lei7713": "0,000000",
+          "fr1": "0,000000",
+          "fr2": "19,476501"
+        },
+        "ganhoTributavel": "547559794",
+        "impostoDevido": "83322963",
+        "aliquotaMedia": "15,217144",
+        "rendimentoIsento": "132440206",
+        "rendimentoTributavel": "547559794"
+      }
+    ],
+    "consolidacao": {
+      "rendimentosIsentos": "132440206",
+      "rendimentosTributaveis": "547559794",
+      "impostoDevido": "83322963",
+      "impostoPago": "0"
+    },
+    "pendencias": []
+  }
+}

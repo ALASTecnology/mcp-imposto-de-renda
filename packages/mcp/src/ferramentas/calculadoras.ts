@@ -355,7 +355,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
       {
         titulo: "Simular ganho de capital",
         descricao:
-          "Simulador de orientação para alienação de imóvel, móvel ou participação: ganho = valor de alienação menos corretagem e custo; reduções da Lei 7.713/1988 (aquisição até 1988) e fatores FR1/FR2 da Lei 11.196/2005 para imóveis; isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor; alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. O demonstrativo oficial é o GCAP.",
+          "Simulador de orientação para alienação de imóvel, móvel ou participação, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. O demonstrativo oficial é o GCAP.",
         entrada: {
           tipo: z.enum(["imovel", "movel", "participacao"]),
           valor_alienacao: zV("Valor de alienação."),
@@ -368,13 +368,29 @@ export const grupoCalculadoras: GrupoFerramentas = {
             "Valor aplicado em outro imóvel residencial em 180 dias.",
           ),
           total_alienado_no_mes: zVOpc("Total de alienações de bens da mesma natureza no mês."),
+          imposto_pago: zVOpc("Imposto já pago em Darf 4600 sobre esta alienação."),
         },
         saida: {
           ganhoBruto: zTexto,
           reducoes: zTexto,
+          reducoesDetalhadas: z.object({
+            lei7713: zTexto,
+            fr1: zTexto,
+            fr2: zTexto,
+            outroImovel: zTexto,
+            unicoImovel: zTexto,
+            pequenoValor: zTexto,
+          }),
+          percentuaisReducao: z
+            .object({ lei7713: z.string(), fr1: z.string(), fr2: z.string() })
+            .describe('Percentuais de redução com 6 casas, como no GCAP ("56,157121").'),
           ganhoTributavel: zTexto,
           isento: zTexto,
           imposto: zTexto,
+          impostoPago: zTexto,
+          rendimentoExclusivo: zTexto.describe(
+            "Ganho tributável menos o imposto pago: o valor que o GCAP transporta para Rendimentos de Tributação Exclusiva.",
+          ),
           codigoDarf: z.string(),
           vencimento: z.string(),
           avisos: z.array(z.string()),
@@ -397,6 +413,7 @@ export const grupoCalculadoras: GrupoFerramentas = {
           ...(a.total_alienado_no_mes !== undefined
             ? { totalAlienadoNoMes: BigInt(a.total_alienado_no_mes) }
             : {}),
+          ...(a.imposto_pago !== undefined ? { impostoPago: BigInt(a.imposto_pago) } : {}),
         });
         const vencimento = vencimentoMesSeguinte(alienacao.ano, alienacao.mes);
         return {

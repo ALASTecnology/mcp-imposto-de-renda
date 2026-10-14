@@ -85,6 +85,7 @@ function pastaSobDemanda(diretorio: string, opcoes: OpcoesPasta): PastaAutorizad
     localizarCopia: async (copia) => (await obter()).localizarCopia(copia),
     restaurarCopia: async (copia, destino, ext) =>
       (await obter()).restaurarCopia(copia, destino, ext),
+    transacao: async (nomes, operacao) => (await obter()).transacao(nomes, operacao),
   };
 }
 

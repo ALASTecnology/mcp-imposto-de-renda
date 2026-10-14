@@ -15,6 +15,7 @@
  *
  * Mensagens de erro citam só o nome relativo informado, nunca o caminho absoluto da máquina.
  */
+import { AsyncLocalStorage } from "node:async_hooks";
 import { randomUUID } from "node:crypto";
 import { constants, type Dirent, type Stats } from "node:fs";
 import {
@@ -56,7 +57,8 @@ export type CodigoErroArquivo =
   | "NAO_E_ARQUIVO"
   | "MUITO_GRANDE"
   | "PASTA_INVALIDA"
-  | "FALHA_ESCRITA";
+  | "FALHA_ESCRITA"
+  | "ARQUIVO_ALTERADO";
 
 /** Erro de acesso a arquivo, com código estável e mensagem segura para o LLM. */
 export class ErroArquivo extends ErroFerramenta {
@@ -134,6 +136,15 @@ export interface PastaAutorizada {
     destino: string,
     extensoes: readonly string[],
   ): Promise<ResultadoEscrita>;
+  /**
+   * Executa `operacao` (o ciclo inteiro de ler, alterar e gravar de uma ferramenta) com
+   * exclusividade sobre os arquivos `nomes`: uma fila por caminho real, para que duas gravações
+   * simultâneas no mesmo arquivo não percam alteração. Nomes inválidos são ignorados (a própria
+   * operação os recusa). Arquivos tocados pela operação e não listados em `nomes` entram na fila
+   * quando usados, se isso não puder causar espera circular; em qualquer caso, a gravação confere
+   * antes do `rename` se o arquivo mudou desde que a operação o leu e, se mudou, recusa.
+   */
+  transacao<T>(nomes: readonly string[], operacao: () => Promise<T>): Promise<T>;
 }
 
 export interface CopiaSeguranca {
@@ -280,7 +291,103 @@ const PREFIXO_TEMPORARIO = ".mcp-imposto-de-renda-";
 // Também reconhece os temporários deixados pelas versões com o nome antigo do projeto.
 const PADRAO_TEMPORARIO = /^\.(?:mcp-imposto-de-renda|autoir)-[0-9a-f-]{36}\.tmp$/;
 
+/**
+ * Identidade de um arquivo visto numa transação (inode, tamanho e data de modificação), ou
+ * `null` se ele não existia. Serve para perceber alteração feita por outro processo.
+ */
+type Assinatura = {
+  readonly ino: number;
+  readonly tamanho: number;
+  readonly mtimeMs: number;
+} | null;
+
+interface Transacao {
+  /** Chaves (caminho real normalizado) já travadas por esta transação. */
+  readonly chaves: Set<string>;
+  /** Maior chave travada: novas travas só esperam se vierem depois dela (sem espera circular). */
+  maior: string;
+  readonly liberar: (() => void)[];
+  /** Assinatura de cada arquivo na primeira vez em que a transação o viu. */
+  readonly vistos: Map<string, Assinatura>;
+}
+
+const transacaoAtual = new AsyncLocalStorage<Transacao>();
+/** Fila de cada caminho real: a promessa que termina quando o último da fila libera. */
+const filas = new Map<string, Promise<void>>();
+
+/** Chave da fila: o caminho real, sem distinguir maiúsculas (macOS e Windows não distinguem). */
+function chaveDe(caminho: string): string {
+  return caminho.normalize("NFC").toLowerCase();
+}
+
+function assinatura(st: Stats | undefined): Assinatura {
+  return st ? { ino: st.ino, tamanho: st.size, mtimeMs: st.mtimeMs } : null;
+}
+
+function mesmaAssinatura(a: Assinatura, b: Assinatura): boolean {
+  if (a === null || b === null) return a === b;
+  return a.ino === b.ino && a.tamanho === b.tamanho && a.mtimeMs === b.mtimeMs;
+}
+
+/** Entra na fila de `chave` e devolve a função que libera a vez. */
+async function travar(chave: string): Promise<() => void> {
+  const anterior = filas.get(chave) ?? Promise.resolve();
+  let liberar = () => {};
+  const minha = new Promise<void>((ok) => {
+    liberar = ok;
+  });
+  const cauda = anterior.then(() => minha);
+  filas.set(chave, cauda);
+  await anterior;
+  return () => {
+    liberar();
+    if (filas.get(chave) === cauda) filas.delete(chave);
+  };
+}
+
+async function garantirTrava(tx: Transacao, chave: string): Promise<void> {
+  if (tx.chaves.has(chave)) return;
+  // Fora de ordem: esperar poderia formar ciclo com outra transação. Segue sem a trava; a
+  // conferência da assinatura antes do rename continua protegendo a gravação.
+  if (tx.chaves.size > 0 && chave < tx.maior) return;
+  tx.liberar.push(await travar(chave));
+  tx.chaves.add(chave);
+  tx.maior = chave;
+}
+
+function registrarVisto(tx: Transacao | undefined, chave: string, st: Stats | undefined): void {
+  if (tx && !tx.vistos.has(chave)) tx.vistos.set(chave, assinatura(st));
+}
+
+function alterado(nome: string): ErroArquivo {
+  return new ErroArquivo(
+    "ARQUIVO_ALTERADO",
+    `"${nome}" foi alterado por outro programa durante esta operação; nada foi gravado. Repita a operação para partir da versão atual.`,
+  );
+}
+
+/** Confere, antes de gravar ou remover, se o arquivo continua como a transação o viu. */
+async function conferirAssinatura(
+  tx: Transacao | undefined,
+  chave: string,
+  caminho: string,
+  nome: string,
+): Promise<void> {
+  if (!tx) return;
+  const visto = tx.vistos.get(chave);
+  if (visto === undefined) return;
+  if (!mesmaAssinatura(visto, assinatura(await lstatOuNada(caminho)))) throw alterado(nome);
+}
+
 async function lerHandle(h: FileHandle, nome: string, limite: number): Promise<Uint8Array> {
+  return (await lerHandleComStat(h, nome, limite)).dados;
+}
+
+async function lerHandleComStat(
+  h: FileHandle,
+  nome: string,
+  limite: number,
+): Promise<{ dados: Uint8Array; st: Stats }> {
   const st = await h.stat();
   if (!st.isFile()) {
     throw new ErroArquivo("NAO_E_ARQUIVO", `"${nome}" não é um arquivo comum.`);
@@ -296,7 +403,7 @@ async function lerHandle(h: FileHandle, nome: string, limite: number): Promise<U
     if (total >= buffer.length) break;
   }
   if (total > limite) throw muitoGrande(limite);
-  return new Uint8Array(buffer.buffer, buffer.byteOffset, total);
+  return { dados: new Uint8Array(buffer.buffer, buffer.byteOffset, total), st };
 }
 
 class PastaAutorizadaImpl implements PastaAutorizada {
@@ -338,8 +445,45 @@ class PastaAutorizadaImpl implements PastaAutorizada {
     return join(pai, basename(alvo));
   }
 
+  async transacao<T>(nomes: readonly string[], operacao: () => Promise<T>): Promise<T> {
+    const atual = transacaoAtual.getStore();
+    const chaves = await this.chavesDe(nomes);
+    if (atual) {
+      for (const k of chaves) await garantirTrava(atual, k);
+      return operacao();
+    }
+    const tx: Transacao = { chaves: new Set(), maior: "", liberar: [], vistos: new Map() };
+    try {
+      // Em ordem crescente: duas transações nunca esperam uma pela outra em ciclo.
+      for (const k of chaves) await garantirTrava(tx, k);
+      return await transacaoAtual.run(tx, operacao);
+    } finally {
+      for (const liberar of tx.liberar.reverse()) liberar();
+    }
+  }
+
+  /** Chaves de fila dos nomes informados, em ordem, sem repetição; nomes inválidos ficam fora. */
+  private async chavesDe(nomes: readonly string[]): Promise<string[]> {
+    const chaves = new Set<string>();
+    for (const nome of nomes) {
+      let segmentos: string[];
+      try {
+        segmentos = validarNome(nome, [extname(nome)]);
+      } catch {
+        continue;
+      }
+      const alvo = join(this.raiz, ...segmentos);
+      const pai = await realpath(dirname(alvo)).catch(() => dirname(alvo));
+      chaves.add(chaveDe(join(pai, basename(alvo))));
+    }
+    return [...chaves].sort();
+  }
+
   async ler(nome: string, extensoes: readonly string[]): Promise<Uint8Array> {
     const caminho = await this.resolver(nome, extensoes);
+    const tx = transacaoAtual.getStore();
+    const chave = chaveDe(caminho);
+    if (tx) await garantirTrava(tx, chave);
     const st = await lstatOuNada(caminho);
     if (!st) throw naoEncontrado(nome);
     if (st.isSymbolicLink()) throw link(nome);
@@ -354,7 +498,9 @@ class PastaAutorizadaImpl implements PastaAutorizada {
       throw e;
     }
     try {
-      return await lerHandle(h, nome, this.limiteBytes);
+      const lido = await lerHandleComStat(h, nome, this.limiteBytes);
+      registrarVisto(tx, chave, lido.st);
+      return lido.dados;
     } finally {
       await h.close();
     }
@@ -368,7 +514,11 @@ class PastaAutorizadaImpl implements PastaAutorizada {
   ): Promise<ResultadoEscrita> {
     if (dados.length > this.limiteBytes) throw muitoGrande(this.limiteBytes);
     const destino = await this.resolver(nome, extensoes);
+    const tx = transacaoAtual.getStore();
+    const chave = chaveDe(destino);
+    if (tx) await garantirTrava(tx, chave);
     const atual = await lstatOuNada(destino);
+    registrarVisto(tx, chave, atual);
     if (atual?.isSymbolicLink()) throw link(nome);
     if (atual && !atual.isFile()) {
       throw new ErroArquivo("NAO_E_ARQUIVO", `"${nome}" existe e não é um arquivo comum.`);
@@ -391,6 +541,8 @@ class PastaAutorizadaImpl implements PastaAutorizada {
         await h.close();
       }
       await ganchos.antesDeRenomear?.();
+      // Defesa além da fila: se outro processo mudou o arquivo desde a leitura, não sobrescreve.
+      await conferirAssinatura(tx, chave, destino, nome);
       await rename(temporario, destino);
     } catch (e) {
       await unlink(temporario).catch(() => undefined);
@@ -400,18 +552,24 @@ class PastaAutorizadaImpl implements PastaAutorizada {
         `Não foi possível gravar "${nome}". O arquivo anterior foi preservado sem alteração.`,
       );
     }
+    if (tx) tx.vistos.set(chave, assinatura(await lstatOuNada(destino)));
     await this.sincronizarPasta(dirname(destino));
     return { arquivo: nome, bytes: dados.length, ...(backup ? { backup } : {}) };
   }
 
   async remover(nome: string, extensoes: readonly string[]): Promise<ResultadoRemocao> {
     const caminho = await this.resolver(nome, extensoes);
+    const tx = transacaoAtual.getStore();
+    const chave = chaveDe(caminho);
+    if (tx) await garantirTrava(tx, chave);
     const atual = await lstatOuNada(caminho);
+    registrarVisto(tx, chave, atual);
     if (!atual) throw naoEncontrado(nome);
     if (atual.isSymbolicLink()) throw link(nome);
     if (!atual.isFile())
       throw new ErroArquivo("NAO_E_ARQUIVO", `"${nome}" não é um arquivo comum.`);
     const backup = await this.fazerBackup(nome);
+    await conferirAssinatura(tx, chave, caminho, nome);
     try {
       await unlink(caminho);
     } catch {
@@ -420,6 +578,7 @@ class PastaAutorizadaImpl implements PastaAutorizada {
         `Não foi possível remover "${nome}". A cópia de segurança ficou em ${backup}.`,
       );
     }
+    if (tx) tx.vistos.set(chave, null);
     await this.sincronizarPasta(dirname(caminho));
     return { arquivo: nome, backup };
   }
@@ -535,10 +694,17 @@ class PastaAutorizadaImpl implements PastaAutorizada {
 
   private async pastaBackups(): Promise<string> {
     const caminho = join(this.raiz, PASTA_BACKUPS);
-    const st = await lstatOuNada(caminho);
+    let st = await lstatOuNada(caminho);
     if (!st) {
-      await mkdir(caminho, { mode: 0o700 });
-      return caminho;
+      // Duas primeiras gravações simultâneas (em arquivos diferentes) chegam aqui juntas: a que
+      // perde a corrida recebe EEXIST e confere de novo o que a outra criou.
+      try {
+        await mkdir(caminho, { mode: 0o700 });
+      } catch (e) {
+        if (codigoErro(e) !== "EEXIST") throw e;
+      }
+      st = await lstatOuNada(caminho);
+      if (!st) throw new ErroArquivo("FALHA_ESCRITA", "Não foi possível criar a pasta de cópias.");
     }
     if (st.isSymbolicLink()) throw link(PASTA_BACKUPS);
     if (!st.isDirectory()) {

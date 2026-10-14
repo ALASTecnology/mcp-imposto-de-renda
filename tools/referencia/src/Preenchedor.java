@@ -39,11 +39,15 @@ final class Preenchedor {
         QUADROS_ISENTOS.put("12", "getPoupancaQuadroAuxiliar");
         QUADROS_ISENTOS.put("13", "getRendSocioQuadroAuxiliar");
         QUADROS_ISENTOS.put("14", "getTransferenciasQuadroAuxiliar");
+        QUADROS_ISENTOS.put("19", "getMeacaoDissolucaoQuadroAuxiliar");
+        QUADROS_ISENTOS.put("20", "getGanhosLiquidosAcoesQuadroAuxiliar");
+        QUADROS_ISENTOS.put("21", "getGanhosCapitalOuroQuadroAuxiliar");
         QUADROS_ISENTOS.put("26", "getOutrosQuadroAuxiliar");
         QUADROS_EXCLUSIVOS.put("06", "getRendAplicacoesQuadroAuxiliar");
         QUADROS_EXCLUSIVOS.put("10", "getJurosCapitalProprioQuadroAuxiliar");
         QUADROS_EXCLUSIVOS.put("11", "getParticipacaoLucrosResultadosQuadroAuxiliar");
         QUADROS_EXCLUSIVOS.put("12", "getOutrosQuadroAuxiliar");
+        QUADROS_EXCLUSIVOS.put("13", "getGanhosLotericaQuadroAuxiliar");
     }
 
     private static final String[] MESES = {
@@ -89,6 +93,9 @@ final class Preenchedor {
         }
         impostoPago(Referencia.mapa(e, "impostoPago"));
         doacoes(Referencia.mapa(e, "doacoesDiretas"));
+        for (Object o : Referencia.lista(e, "pgd")) {
+            operacaoPgd(cast(o));
+        }
         if (!nomesAlimentandos.isEmpty()) {
             // Confirmação de que os alimentandos atendem aos requisitos ("S"); feita por último
             // porque a inclusão de pagamentos de pensão limpa o indicativo.
@@ -322,5 +329,63 @@ final class Preenchedor {
             valor(e.getValor(), m, "idoso");
             d.getColecaoEstatutoIdoso().add(e);
         }
+    }
+
+    // ------------------------------------------------- operações genéricas
+
+    /**
+     * Operação genérica sobre a API pública do programa, para fichas que o formato do caso não
+     * descreve (conta bancária, contato, ganhos de capital, atividade rural, renda variável).
+     * Caminhos são getters sem argumentos separados por ponto, a partir da declaração:
+     *
+     *   {"definir": {"getResumo.getCalculoImposto.getBanco": "001"}}
+     *   {"incluir": "getGCAP.getBensMoveis", "campos": {"getValorAlienacao": "1000,00"}}
+     *   {"chamar": "getGCAP.recalcularGCAPDeclaracaoIRPF"}
+     *
+     * Os valores vão como texto no formato do programa ("1234,56", datas DDMMAAAA). Em
+     * "incluir", o item é criado por instanciaNovoObjeto, preenchido e adicionado à coleção
+     * ("adicionarAntes": true adiciona antes de preencher).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void operacaoPgd(Map<String, Object> op) {
+        if (op.containsKey("definir")) {
+            definirCampos(d, Referencia.mapa(op, "definir"));
+        }
+        if (op.containsKey("incluir")) {
+            Colecao col = (Colecao) navegar(d, t(op, "incluir"));
+            serpro.ppgd.negocio.ObjetoNegocio item = (serpro.ppgd.negocio.ObjetoNegocio) col.instanciaNovoObjeto();
+            boolean antes = "true".equals(t(op, "adicionarAntes"));
+            if (antes) {
+                col.add(item);
+            }
+            definirCampos(item, Referencia.mapa(op, "campos"));
+            if (!antes) {
+                col.add(item);
+            }
+            for (Object o : Referencia.lista(op, "depois")) {
+                navegar(item, String.valueOf(o));
+            }
+        }
+        if (op.containsKey("chamar")) {
+            navegar(d, t(op, "chamar"));
+        }
+    }
+
+    private void definirCampos(Object raiz, Map<String, Object> campos) {
+        for (Map.Entry<String, Object> c : campos.entrySet()) {
+            Object alvo = navegar(raiz, c.getKey());
+            if (!(alvo instanceof Informacao)) {
+                throw new IllegalArgumentException(c.getKey() + " não é um campo do programa");
+            }
+            ((Informacao<?>) alvo).setConteudo(String.valueOf(c.getValue()));
+        }
+    }
+
+    private static Object navegar(Object raiz, String caminho) {
+        Object atual = raiz;
+        for (String metodo : caminho.split("\\.")) {
+            atual = Referencia.chamar(atual, metodo);
+        }
+        return atual;
     }
 }

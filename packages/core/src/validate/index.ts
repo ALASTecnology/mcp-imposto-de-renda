@@ -8,6 +8,14 @@
  * documenta a fonte de cada regra.
  */
 export {
+  type ComplementoConta,
+  dvRenavam,
+  type ResultadoCampo,
+  TIPOS_CAMPO,
+  type TipoCampo,
+  validarCampo,
+} from "./campos.js";
+export {
   type ContaParaValidar,
   dvContaBancoDoBrasil,
   dvContaBradesco,

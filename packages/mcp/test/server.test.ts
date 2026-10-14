@@ -168,6 +168,27 @@ describe("validar_documento", () => {
     expect(r.isError).toBeFalsy();
     expect(r.structuredContent).toMatchObject({ tipo: "desconhecido", valido: false });
   });
+
+  it("valida recibo, CEP, Renavam e conta bancária pelo tipo", async () => {
+    const { chamar } = await abrir();
+    const recibo = await chamar("validar_documento", {
+      documento: "12.34.56.78.90-12",
+      tipo: "recibo",
+    });
+    expect(recibo.structuredContent).toMatchObject({ valido: true, normalizado: "123456789012" });
+    const cep = await chamar("validar_documento", { documento: "7004", tipo: "cep" });
+    expect(cep.structuredContent).toMatchObject({ tipo: "cep", valido: false });
+    // Renavam 0063972448 + DV: soma 0*3+0*2+6*9+3*8+9*7+7*6+2*5+4*4+4*3+8*2 = 237; 2370 mod 11 = 5.
+    const renavam = await chamar("validar_documento", { documento: "00639724485", tipo: "renavam" });
+    expect(renavam.structuredContent).toMatchObject({ valido: true });
+    const conta = await chamar("validar_documento", {
+      documento: "210169-6",
+      tipo: "conta_bancaria",
+      banco: "001",
+      agencia: "1234",
+    });
+    expect(conta.structuredContent).toMatchObject({ valido: true, normalizado: "001/1234/210169-6" });
+  });
 });
 
 describe("prompts e recursos", () => {

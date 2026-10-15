@@ -8,6 +8,13 @@
  * 11.196/2005 art. 40 (fatores FR1 e FR2) e Lei 7.713/1988 art. 18 (redução por ano de
  * aquisição até 1988).
  */
+import {
+  apurarBemExterior,
+  apurarMoedaEspecie,
+  type EntradaBemExterior,
+  type EntradaMoedaEspecie,
+  impostoFaixasGanhoCapital,
+} from "@mcp-imposto-de-renda/core";
 import { EntradaInvalidaError } from "../erros.js";
 
 export interface FaixaMensal {
@@ -319,6 +326,11 @@ export interface EntradaGanhoCapital {
   totalAlienadoNoMes?: bigint;
   /** Imposto já pago em Darf (código 4600) sobre esta alienação. */
   impostoPago?: bigint;
+  /**
+   * Bem móvel adquirido no exterior: valores em dólar e cotações. Com ele, valor, corretagem e
+   * custo em reais são ignorados (o ganho é apurado em dólar, como no GCAP).
+   */
+  exterior?: EntradaBemExterior;
 }
 
 /** Meses-calendário de `de` até `ate` (AAAA-MM), contando os dois meses. */
@@ -354,8 +366,22 @@ const formatarPercentual = (micro: bigint) =>
  */
 export function calcularGanhoCapital(e: EntradaGanhoCapital) {
   const avisos: string[] = [];
-  const liquido = e.valorAlienacao - e.custoCorretagem;
-  const bruto = liquido - e.custoAquisicao;
+  if (e.exterior && e.tipo !== "movel") {
+    throw new EntradaInvalidaError(
+      "Bem no exterior: o simulador só apura bem móvel ou direito (conferido com o GCAP 2025); para imóvel ou participação no exterior use o GCAP.",
+    );
+  }
+  const cambio = e.exterior ? apurarBemExterior(e.exterior) : undefined;
+  const valorAlienacao = cambio ? cambio.valorAlienacaoReais : e.valorAlienacao;
+  const liquido = valorAlienacao - (cambio ? cambio.corretagemReais : e.custoCorretagem);
+  const bruto = cambio ? cambio.ganhoTotal : liquido - e.custoAquisicao;
+  if (cambio) {
+    avisos.push(
+      e.exterior?.origem === "nacional"
+        ? "Bem adquirido no exterior com rendimentos em reais: líquido convertido pela cotação da alienação menos o custo convertido pela cotação da aquisição (exclusivo 03)."
+        : "Bem adquirido no exterior: a parte comprada com moeda estrangeira tem o ganho apurado em dólar e convertido pela cotação da alienação (exclusivo 03).",
+    );
+  }
   const detalhe = {
     lei7713: 0n,
     fr1: 0n,
@@ -369,6 +395,7 @@ export function calcularGanhoCapital(e: EntradaGanhoCapital) {
   const montar = (ganhoTributavel: bigint, imposto: bigint) => {
     const reducoes = Object.values(detalhe).reduce((s, v) => s + v, 0n);
     return {
+      ...(cambio ? { exterior: cambio } : {}),
       ganhoBruto: bruto,
       reducoes,
       reducoesDetalhadas: { ...detalhe },
@@ -433,13 +460,18 @@ export function calcularGanhoCapital(e: EntradaGanhoCapital) {
   // O GCAP aplica R$ 35.000,00 também às quotas de sociedade fora de bolsa
   // (caso gcap-participacao-pequeno-valor-01).
   const limitePequeno = 3_500_000n;
-  if ((e.totalAlienadoNoMes ?? e.valorAlienacao) <= limitePequeno) {
+  if ((e.totalAlienadoNoMes ?? valorAlienacao) <= limitePequeno) {
     avisos.push(
       `Isenção de bens de pequeno valor (alienações do mês até ${limitePequeno / 100n} reais).`,
     );
     detalhe.pequenoValor = ganho;
     return montar(0n, 0n);
   }
+  return montar(ganho, impostoPorFaixa(ganho));
+}
+
+/** Imposto de cada faixa truncado separadamente, como na apuração de bens do GCAP. */
+function impostoPorFaixa(ganho: bigint): bigint {
   const faixas: [bigint, bigint][] = [
     [500_000_000n, 150n],
     [1_000_000_000n, 175n],
@@ -452,8 +484,44 @@ export function calcularGanhoCapital(e: EntradaGanhoCapital) {
     anterior = teto;
   }
   if (ganho > anterior) imposto += ((ganho - anterior) * 225n) / 1000n;
-  return montar(ganho, imposto);
+  return imposto;
 }
+
+/**
+ * Simulador da alienação de moeda estrangeira em espécie de um ano (orientação), conferido ao
+ * centavo com o GCAP 2025 (casos gcap-especie-*): custo médio ponderado, ganho de cada venda,
+ * alienações do mês em dólar e isenção quando o total do ano não passa de US$ 5.000,00. O IRPF
+ * 2026 transporta para o exclusivo 04 o ganho total, mesmo quando o GCAP o considera isento.
+ */
+export function calcularGanhoMoedaEspecie(e: EntradaMoedaEspecie) {
+  let estoque = e.estoqueInicial;
+  for (const o of e.operacoes) {
+    estoque += o.tipo === "compra" ? o.quantidade : -o.quantidade;
+    if (estoque < 0n) {
+      throw new EntradaInvalidaError(
+        `Venda de ${o.data} maior que o estoque de moeda: informe as compras anteriores ou o estoque de 1º de janeiro.`,
+      );
+    }
+    if (o.tipo === "venda" && (o.cotacaoDolar ?? 0n) <= 0n) {
+      throw new EntradaInvalidaError(`Informe a cotação do dólar da venda de ${o.data}.`);
+    }
+  }
+  const r = apurarMoedaEspecie(e);
+  const avisos = [
+    r.isento
+      ? `Alienações do ano somam US$ ${formatarDolar(r.totalAlienadoDolar)}, até US$ 5.000,00: o GCAP considera o ganho isento, mas o IRPF 2026 o transporta para Rendimentos de Tributação Exclusiva (código 04).`
+      : `Alienações do ano somam US$ ${formatarDolar(r.totalAlienadoDolar)}, acima de US$ 5.000,00: ganho tributado a partir de 15% (Darf 8523 até o último dia útil do mês seguinte).`,
+  ];
+  return { ...r, rendimentoExclusivo: r.ganhoCapital, avisos };
+}
+
+const formatarDolar = (c: bigint) => {
+  const inteiro = (c / 100n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return `${inteiro},${(c % 100n).toString().padStart(2, "0")}`;
+};
+
+/** Imposto das faixas truncado no total, como na moeda em espécie. */
+export const impostoGanhoCapitalTotal = impostoFaixasGanhoCapital;
 
 export interface RespostasObrigatoriedade {
   rendimentosTributaveis?: bigint;

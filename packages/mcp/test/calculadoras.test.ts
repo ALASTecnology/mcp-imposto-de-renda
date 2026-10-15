@@ -353,6 +353,69 @@ describe("calcular_preco_medio", () => {
 });
 
 describe("calcular_ganho_capital", () => {
+  it("bem móvel no exterior comprado com reais e moeda estrangeira (gcap-exterior-ambas-01)", async () => {
+    const s = await ok("calcular_ganho_capital", {
+      tipo: "movel",
+      data_aquisicao: "2015-03-10",
+      data_alienacao: "2025-06-16",
+      exterior: {
+        origem: "ambas",
+        cotacao_aquisicao: "2,9000",
+        cotacao_alienacao: "5,5000",
+        valor_alienacao_dolar: "30.000,00",
+        corretagem_dolar: "600,00",
+        custo_nacional_dolar: "10.000,00",
+        custo_estrangeira_dolar: "10.000,00",
+      },
+    });
+    expect(s).toMatchObject({
+      ganhoBruto: 7_770_000,
+      imposto: 1_165_500,
+      rendimentoExclusivo: 7_770_000,
+      codigoDarf: "8523",
+    });
+  });
+
+  it("moeda estrangeira em espécie acima de US$ 5.000,00 no ano (gcap-especie-01)", async () => {
+    const s = await ok("calcular_ganho_capital", {
+      tipo: "moeda_especie",
+      moeda_especie: {
+        estoque_inicial: "100000",
+        saldo_inicial: "5.000,00",
+        operacoes: [
+          { tipo: "compra", data: "2025-02-10", quantidade: "600000", valor: "34.200,00" },
+          {
+            tipo: "venda",
+            data: "2025-08-11",
+            quantidade: "600000",
+            valor: "34.800,00",
+            cotacao_dolar: "5,8000000",
+          },
+        ],
+      },
+    });
+    expect(s).toMatchObject({ ganhoBruto: 120_000, imposto: 18_000, rendimentoExclusivo: 120_000 });
+  });
+
+  it("recusa venda de moeda maior que o estoque", async () => {
+    const r = await c.chamar("calcular_ganho_capital", {
+      tipo: "moeda_especie",
+      moeda_especie: {
+        operacoes: [
+          {
+            tipo: "venda",
+            data: "2025-08-11",
+            quantidade: "100",
+            valor: "6,00",
+            cotacao_dolar: "5,8",
+          },
+        ],
+      },
+    });
+    expect(r.isError).toBe(true);
+    expect(textoDe(r)).toMatch(/maior que o estoque/);
+  });
+
   it("bem móvel acima do limite de pequeno valor: 15% sobre o ganho", async () => {
     // 50.000,00 - 30.000,00 = 20.000,00 x 15% = 3.000,00; Darf até 30/04/2025 (quarta-feira).
     const s = await ok("calcular_ganho_capital", {

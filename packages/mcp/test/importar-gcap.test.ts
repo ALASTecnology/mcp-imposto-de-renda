@@ -59,7 +59,9 @@ function antes(dec: Declaracao): Declaracao {
     rendimentosIsentos: dec.rendimentosIsentos.filter(
       (i) => !["05", "06", "07"].includes(i.codigo),
     ),
-    rendimentosExclusivos: dec.rendimentosExclusivos.filter((e) => e.codigo !== "02"),
+    rendimentosExclusivos: dec.rendimentosExclusivos.filter(
+      (e) => !["02", "03", "04"].includes(e.codigo),
+    ),
   };
 }
 
@@ -75,11 +77,31 @@ describe("importar_gcap", () => {
     const r = await c.chamar("importar_gcap", { arquivo: "decl.DBK", arquivo_gcap: exportado });
     expect(r.isError, textoDe(r)).toBeFalsy();
     const s = r.structuredContent as Record<string, unknown>;
-    expect(s.alienacoes).toBe(1);
+    expect(s.alienacoes).toBe(oficial.ganhosCapital[0]?.alienacoes.length);
     const depois = modeloDe(new Uint8Array(readFileSync(join(pasta, "decl.DBK"))));
     expect(depois.ganhosCapital).toEqual(oficial.ganhosCapital);
     expect(depois.rendimentosIsentos).toEqual(oficial.rendimentosIsentos);
     expect(depois.rendimentosExclusivos).toEqual(oficial.rendimentosExclusivos);
+  });
+
+  it("importa a moeda estrangeira em espécie e o bem no exterior", async () => {
+    for (const [caso, campo, valor] of [
+      ["gcap-especie-01", "ganhoMoedaEspecie", 120_000],
+      ["gcap-exterior-ambas-01", "rendimentoExclusivoExterior", 7_770_000],
+    ] as const) {
+      const oficial = modeloDe(fixture(`${caso}.DBK`));
+      writeFileSync(
+        join(pasta, "decl.DBK"),
+        gravarArquivo(modeloParaRegistros(antes(oficial)).registros),
+      );
+      writeFileSync(join(pasta, "x-GCAP-2025.DEC"), readFileSync(join(GCAP, `${caso}.DEC`)));
+      const r = await c.chamar("importar_gcap", {
+        arquivo: "decl.DBK",
+        arquivo_gcap: "x-GCAP-2025.DEC",
+      });
+      expect(r.isError, textoDe(r)).toBeFalsy();
+      expect((r.structuredContent as Record<string, unknown>)[campo]).toBe(valor);
+    }
   });
 
   it("o XML de dentro do zip é o mesmo gravado pelo harness", () => {

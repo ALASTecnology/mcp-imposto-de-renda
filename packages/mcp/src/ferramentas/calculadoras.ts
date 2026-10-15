@@ -24,6 +24,7 @@ import {
   apurarRendaVariavel,
   calcularCarneLeao,
   calcularGanhoCapital,
+  calcularGanhoMoedaEspecie,
   calcularPrecoMedio,
   calcularRra,
   verificarObrigatoriedade,
@@ -79,6 +80,75 @@ function valorEstrangeiro(texto: string): bigint {
   }
   if (centavos < 0n) throw new EntradaInvalidaError("valor: informe um valor positivo.");
   return centavos;
+}
+
+type EntradaMoedaFerramenta =
+  | {
+      estoque_inicial: string;
+      saldo_inicial?: string | undefined;
+      operacoes: {
+        tipo: "compra" | "venda";
+        data: string;
+        quantidade: string;
+        valor: string;
+        cotacao_dolar?: string | undefined;
+      }[];
+    }
+  | undefined;
+
+/** Ganho de capital da moeda estrangeira em espécie (tipo moeda_especie). */
+function moedaEspecie(m: EntradaMoedaFerramenta) {
+  if (!m) throw new EntradaInvalidaError("Informe 'moeda_especie' com as operações do ano.");
+  for (const o of m.operacoes) lerData(o.data, "moeda_especie.operacoes.data");
+  const c = calcularGanhoMoedaEspecie({
+    estoqueInicial: BigInt(m.estoque_inicial),
+    saldoInicial: big(m.saldo_inicial),
+    operacoes: m.operacoes.map((o) => ({
+      tipo: o.tipo,
+      data: o.data,
+      quantidade: BigInt(o.quantidade),
+      valor: BigInt(o.valor),
+      ...(o.cotacao_dolar !== undefined
+        ? { cotacaoDolar: decimal(o.cotacao_dolar, 7, "moeda_especie.operacoes.cotacao_dolar") }
+        : {}),
+    })),
+  });
+  const zero = {
+    lei7713: 0n,
+    fr1: 0n,
+    fr2: 0n,
+    outroImovel: 0n,
+    unicoImovel: 0n,
+    pequenoValor: 0n,
+  };
+  const ultima = [...m.operacoes].reverse().find((o) => o.tipo === "venda") ?? m.operacoes[0];
+  const fim = lerData(ultima?.data ?? "2025-12-31", "moeda_especie.operacoes.data");
+  const vencimento = vencimentoMesSeguinte(fim.ano, fim.mes);
+  const isento = c.ganhoCapital - c.ganhoTributavel;
+  return {
+    texto: `Ganho na moeda em espécie ${brl(c.ganhoCapital)}, tributável ${brl(c.ganhoTributavel)}, imposto ${brl(c.impostoDevido)} (Darf 8523 até o último dia útil do mês seguinte a cada venda). ${c.avisos.join(" ")} ${AVISO}`,
+    dados: objetoJson({
+      ganhoBruto: c.ganhoCapital,
+      reducoes: 0n,
+      reducoesDetalhadas: zero,
+      percentuaisReducao: { lei7713: "0,000000", fr1: "0,000000", fr2: "0,000000" },
+      ganhoTributavel: c.ganhoTributavel,
+      isento: isento > 0n ? isento : 0n,
+      imposto: c.impostoDevido,
+      impostoPago: 0n,
+      rendimentoExclusivo: c.rendimentoExclusivo,
+      moedaEspecie: {
+        custoMedioInicial: c.custoMedioInicial,
+        operacoes: c.operacoes,
+        meses: c.meses,
+        totalAlienadoDolar: c.totalAlienadoDolar,
+        isento: c.isento,
+      },
+      codigoDarf: "8523",
+      vencimento,
+      avisos: [...c.avisos, AVISO_FERIADOS, AVISO],
+    }),
+  };
 }
 
 export const grupoCalculadoras: GrupoFerramentas = {
@@ -355,20 +425,87 @@ export const grupoCalculadoras: GrupoFerramentas = {
       {
         titulo: "Simular ganho de capital",
         descricao:
-          "Simulador de orientação para alienação de imóvel, móvel ou participação, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. O demonstrativo oficial é o GCAP.",
+          "Simulador de orientação para alienação de imóvel, móvel, participação ou moeda estrangeira em espécie, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. Bem móvel adquirido no exterior (`exterior`): valores em dólar, parte comprada com reais pela cotação da aquisição e parte comprada com moeda estrangeira com o ganho apurado em dólar (exclusivo 03). Moeda em espécie (`tipo` moeda_especie): custo médio ponderado, ganho de cada venda e isenção até US$ 5.000,00 de alienações no ano (exclusivo 04). O demonstrativo oficial é o GCAP.",
         entrada: {
-          tipo: z.enum(["imovel", "movel", "participacao"]),
-          valor_alienacao: zV("Valor de alienação."),
+          tipo: z.enum(["imovel", "movel", "participacao", "moeda_especie"]),
+          valor_alienacao: zVOpc(
+            "Valor de alienação (obrigatório, exceto bem no exterior e moeda).",
+          ),
           custo_corretagem: zVOpc("Corretagem paga pelo vendedor."),
-          custo_aquisicao: zV("Custo de aquisição (com reformas)."),
-          data_aquisicao: zData,
-          data_alienacao: zData,
+          custo_aquisicao: zVOpc(
+            "Custo de aquisição com reformas (obrigatório, exceto bem no exterior e moeda).",
+          ),
+          data_aquisicao: zData.optional(),
+          data_alienacao: zData.optional(),
           unico_imovel: z.boolean().optional(),
           valor_aplicado_outro_imovel: zVOpc(
             "Valor aplicado em outro imóvel residencial em 180 dias.",
           ),
           total_alienado_no_mes: zVOpc("Total de alienações de bens da mesma natureza no mês."),
-          imposto_pago: zVOpc("Imposto já pago em Darf 4600 sobre esta alienação."),
+          imposto_pago: zVOpc("Imposto já pago em Darf sobre esta alienação."),
+          exterior: z
+            .object({
+              origem: z
+                .enum(["nacional", "estrangeira", "ambas"])
+                .describe(
+                  "Rendimentos com que o bem foi comprado: reais, moeda estrangeira ou ambos.",
+                ),
+              cotacao_aquisicao: z
+                .string()
+                .max(16)
+                .optional()
+                .describe(
+                  'Cotação do dólar na aquisição, até 4 casas ("2,9000"); exigida com origem nacional ou ambas.',
+                ),
+              cotacao_alienacao: z
+                .string()
+                .max(16)
+                .describe('Cotação do dólar na alienação, até 4 casas ("5,5000").'),
+              valor_alienacao_dolar: zV("Valor de alienação em dólares (centavos de dólar)."),
+              corretagem_dolar: zVOpc("Corretagem em dólares (centavos de dólar)."),
+              custo_nacional_dolar: zVOpc(
+                "Parte do custo paga com rendimentos em reais, em dólares (centavos de dólar).",
+              ),
+              custo_estrangeira_dolar: zVOpc(
+                "Parte do custo paga com moeda estrangeira, em dólares (centavos de dólar).",
+              ),
+            })
+            .optional()
+            .describe("Bem móvel adquirido no exterior (só com tipo movel)."),
+          moeda_especie: z
+            .object({
+              estoque_inicial: z
+                .string()
+                .regex(/^\d{1,15}$/)
+                .default("0")
+                .describe(
+                  'Quantidade de moeda em 1º de janeiro, em centésimos ("100000" = 1.000,00).',
+                ),
+              saldo_inicial: zVOpc("Custo em reais do estoque de 1º de janeiro."),
+              operacoes: z
+                .array(
+                  z.object({
+                    tipo: z.enum(["compra", "venda"]),
+                    data: zData,
+                    quantidade: z
+                      .string()
+                      .regex(/^\d{1,15}$/)
+                      .describe("Quantidade em centésimos da moeda."),
+                    valor: zV("Valor da operação em reais."),
+                    cotacao_dolar: z
+                      .string()
+                      .max(16)
+                      .optional()
+                      .describe('Cotação do dólar na venda, até 7 casas ("5,8000000").'),
+                  }),
+                )
+                .min(1)
+                .max(500),
+            })
+            .optional()
+            .describe(
+              "Moeda estrangeira em espécie (só com tipo moeda_especie), operações em ordem de data.",
+            ),
         },
         saida: {
           ganhoBruto: zTexto,
@@ -389,23 +526,47 @@ export const grupoCalculadoras: GrupoFerramentas = {
           imposto: zTexto,
           impostoPago: zTexto,
           rendimentoExclusivo: zTexto.describe(
-            "Ganho tributável menos o imposto pago: o valor que o GCAP transporta para Rendimentos de Tributação Exclusiva.",
+            "Valor que o GCAP transporta para Rendimentos de Tributação Exclusiva (02 no Brasil, 03 bem no exterior, 04 moeda em espécie).",
           ),
+          exterior: z
+            .record(z.string(), z.unknown())
+            .optional()
+            .describe("Apuração em dólar do bem no exterior, por origem dos rendimentos."),
+          moedaEspecie: z
+            .record(z.string(), z.unknown())
+            .optional()
+            .describe("Custo médio, ganho de cada venda e totalização mensal da moeda em espécie."),
           codigoDarf: z.string(),
           vencimento: z.string(),
           avisos: z.array(z.string()),
         },
       },
       (a) => {
-        lerData(a.data_aquisicao, "data_aquisicao");
-        const alienacao = lerData(a.data_alienacao, "data_alienacao");
+        if (a.tipo === "moeda_especie") return moedaEspecie(a.moeda_especie);
+        const exigir = <T>(v: T | undefined, campo: string): T => {
+          if (v === undefined) throw new EntradaInvalidaError(`Informe '${campo}'.`);
+          return v;
+        };
+        if (a.moeda_especie) {
+          throw new EntradaInvalidaError("'moeda_especie' só vale com tipo moeda_especie.");
+        }
+        const dataAquisicao = exigir(a.data_aquisicao, "data_aquisicao");
+        const dataAlienacao = exigir(a.data_alienacao, "data_alienacao");
+        lerData(dataAquisicao, "data_aquisicao");
+        const alienacao = lerData(dataAlienacao, "data_alienacao");
+        const ex = a.exterior;
+        if (ex && ex.origem !== "estrangeira" && ex.cotacao_aquisicao === undefined) {
+          throw new EntradaInvalidaError(
+            "Informe 'exterior.cotacao_aquisicao' (parte do custo paga com reais).",
+          );
+        }
         const c = calcularGanhoCapital({
           tipo: a.tipo,
-          valorAlienacao: BigInt(a.valor_alienacao),
+          valorAlienacao: ex ? 0n : BigInt(exigir(a.valor_alienacao, "valor_alienacao")),
           custoCorretagem: big(a.custo_corretagem),
-          custoAquisicao: BigInt(a.custo_aquisicao),
-          dataAquisicao: a.data_aquisicao,
-          dataAlienacao: a.data_alienacao,
+          custoAquisicao: ex ? 0n : BigInt(exigir(a.custo_aquisicao, "custo_aquisicao")),
+          dataAquisicao,
+          dataAlienacao,
           ...(a.unico_imovel !== undefined ? { unicoImovel: a.unico_imovel } : {}),
           ...(a.valor_aplicado_outro_imovel !== undefined
             ? { valorAplicadoOutroImovel: BigInt(a.valor_aplicado_outro_imovel) }
@@ -414,13 +575,31 @@ export const grupoCalculadoras: GrupoFerramentas = {
             ? { totalAlienadoNoMes: BigInt(a.total_alienado_no_mes) }
             : {}),
           ...(a.imposto_pago !== undefined ? { impostoPago: BigInt(a.imposto_pago) } : {}),
+          ...(ex
+            ? {
+                exterior: {
+                  origem: ex.origem,
+                  cotacaoAquisicao:
+                    ex.cotacao_aquisicao === undefined
+                      ? 0n
+                      : decimal(ex.cotacao_aquisicao, 4, "exterior.cotacao_aquisicao"),
+                  cotacaoAlienacao: decimal(ex.cotacao_alienacao, 4, "exterior.cotacao_alienacao"),
+                  valorAlienacaoDolar: BigInt(ex.valor_alienacao_dolar),
+                  corretagemDolar: big(ex.corretagem_dolar),
+                  custoNacionalDolar: big(ex.custo_nacional_dolar),
+                  custoEstrangeiraDolar: big(ex.custo_estrangeira_dolar),
+                },
+              }
+            : {}),
         });
         const vencimento = vencimentoMesSeguinte(alienacao.ano, alienacao.mes);
+        // Bens comprados com moeda estrangeira: Darf 8523; demais ganhos de capital: 4600.
+        const codigoDarf = ex && ex.origem !== "nacional" ? "8523" : "4600";
         return {
-          texto: `Ganho bruto ${brl(c.ganhoBruto)}, reduções ${brl(c.reducoes)}, tributável ${brl(c.ganhoTributavel)}, imposto ${brl(c.imposto)} (Darf 4600 até ${dataBr(vencimento)}). ${c.avisos.join(" ")} ${AVISO}`,
+          texto: `Ganho bruto ${brl(c.ganhoBruto)}, reduções ${brl(c.reducoes)}, tributável ${brl(c.ganhoTributavel)}, imposto ${brl(c.imposto)} (Darf ${codigoDarf} até ${dataBr(vencimento)}). ${c.avisos.join(" ")} ${AVISO}`,
           dados: objetoJson({
             ...c,
-            codigoDarf: "4600",
+            codigoDarf,
             vencimento,
             avisos: [...c.avisos, AVISO_FERIADOS, AVISO],
           }),

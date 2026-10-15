@@ -12,7 +12,8 @@
  * - `importar_gcap`: "Importar dados de Ganhos de Capital". Lê o arquivo que o GCAP 2025 grava em
  *   "Exportar para o IRPF2026" (`<CPF>-DDMM-DDMM-GCAP-2025.DEC`, zip com o XML do demonstrativo)
  *   e o inclui na declaração com `incluirDemonstrativoGcap` do core, conferido com os pares de
- *   arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/gcap/2026`).
+ *   arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/gcap/2026`),
+ *   inclusive bens no exterior e moeda estrangeira em espécie.
  */
 import { inflateRawSync } from "node:zlib";
 import {
@@ -248,7 +249,7 @@ export function registrarImportacoesDeclaracao(r: RegistroFerramentas): void {
     {
       titulo: "Importar o demonstrativo do GCAP",
       descricao:
-        'Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital), mantendo o que foi digitado nesses isentos. O CPF do demonstrativo precisa ser o do titular ou de um dependente. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança). Demonstrativos com moeda estrangeira em espécie ainda não são convertidos: importe-os no programa oficial.',
+        'Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital, 03 bens adquiridos em moeda estrangeira, 04 moeda estrangeira em espécie), mantendo o que foi digitado nesses isentos. Aceita bens adquiridos no exterior (com rendimentos em reais, em moeda estrangeira ou ambos) e moeda estrangeira em espécie. O CPF do demonstrativo precisa ser o do titular ou de um dependente. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança).',
       escreve: true,
       entrada: {
         arquivo: zArquivoEdicao,
@@ -264,6 +265,9 @@ export function registrarImportacoesDeclaracao(r: RegistroFerramentas): void {
         impostoDevido: z.union([z.number().int(), z.string()]),
         rendimentoIsento: z.union([z.number().int(), z.string()]),
         rendimentoExclusivo: z.union([z.number().int(), z.string()]),
+        rendimentoExclusivoExterior: z.union([z.number().int(), z.string()]),
+        ganhoMoedaEspecie: z.union([z.number().int(), z.string()]),
+        operacoesMoedaEspecie: z.number().int(),
       },
     },
     async (a) => {
@@ -285,10 +289,14 @@ export function registrarImportacoesDeclaracao(r: RegistroFerramentas): void {
         return incluirDemonstrativoGcap(dec, demonstrativo);
       });
       const t = demonstrativo.totais;
-      const isento = t.isentoPequenoValor + t.isentoUnicoImovel + t.isentoReducao;
+      const isento =
+        t.isentoPequenoValor + t.isentoUnicoImovel + t.isentoReducao + t.isentoExterior;
+      const vendasMoeda = demonstrativo.moedaEspecie.filter(
+        (m) => m.tipoOperacao !== "saldoInicial",
+      );
       const resumo = [
-        `Demonstrativo do GCAP do CPF ${demonstrativo.cpfBeneficiario} importado de ${a.arquivo_gcap}: ${demonstrativo.alienacoes.length} alienação(ões).`,
-        `Imposto devido ${t.impostoDevido} centavos, rendimento isento transportado ${isento}, exclusivo ${t.rendimentoExclusivo}.`,
+        `Demonstrativo do GCAP do CPF ${demonstrativo.cpfBeneficiario} importado de ${a.arquivo_gcap}: ${demonstrativo.alienacoes.length} alienação(ões)${vendasMoeda.length > 0 ? ` e ${vendasMoeda.length} operação(ões) com moeda estrangeira em espécie` : ""}.`,
+        `Imposto devido ${t.impostoDevido} centavos, rendimento isento transportado ${isento}, exclusivo ${t.rendimentoExclusivo} (02), ${t.rendimentoExclusivoExterior} (03, bens em moeda estrangeira) e ${t.ganhoMoedaEspecie} (04, moeda em espécie).`,
         "O imposto do ganho de capital é pago em Darf (código 4600) até o último dia útil do mês seguinte à alienação; a declaração só informa.",
       ].join("\n");
       const { declaracao: _gravada, ...gravacao } = res;
@@ -301,6 +309,9 @@ export function registrarImportacoesDeclaracao(r: RegistroFerramentas): void {
           impostoDevido: t.impostoDevido,
           rendimentoIsento: isento,
           rendimentoExclusivo: t.rendimentoExclusivo,
+          rendimentoExclusivoExterior: t.rendimentoExclusivoExterior,
+          ganhoMoedaEspecie: t.ganhoMoedaEspecie,
+          operacoesMoedaEspecie: vendasMoeda.length,
         }),
       };
     },

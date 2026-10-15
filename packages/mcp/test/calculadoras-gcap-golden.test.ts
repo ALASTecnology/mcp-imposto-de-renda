@@ -7,10 +7,14 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { calcularGanhoCapital, type EntradaGanhoCapital } from "../src/calculadoras/index.js";
+import {
+  calcularGanhoCapital,
+  calcularGanhoMoedaEspecie,
+  type EntradaGanhoCapital,
+} from "../src/calculadoras/index.js";
 
 interface AlienacaoCaso {
-  tipo: EntradaGanhoCapital["tipo"];
+  tipo: EntradaGanhoCapital["tipo"] | "moeda";
   dataAquisicao: string;
   dataAlienacao: string;
   valorAlienacao: string;
@@ -18,6 +22,25 @@ interface AlienacaoCaso {
   custoAquisicao: string;
   impostoPago?: string;
   unicoImovel?: boolean;
+  // Bem no exterior.
+  exterior?: boolean;
+  origem?: "nacional" | "estrangeira" | "ambas";
+  cotacaoAquisicao?: string;
+  cotacaoAlienacao?: string;
+  valorAlienacaoDolar?: string;
+  custoCorretagemDolar?: string;
+  custoAquisicaoNacionalDolar?: string;
+  custoAquisicaoDolar?: string;
+  // Moeda em espécie.
+  estoqueInicial?: string;
+  saldoInicial?: string;
+  operacoes?: {
+    tipo: "compra" | "venda";
+    data: string;
+    quantidade: string;
+    valor: string;
+    cotacaoDolar?: string;
+  }[];
 }
 
 interface AlienacaoOficial {
@@ -27,13 +50,27 @@ interface AlienacaoOficial {
   impostoDevido: string;
   rendimentoIsento: string;
   rendimentoTributavel: string;
+  exterior?: Record<string, string>;
+  // Moeda em espécie.
+  custoMedioInicial?: string;
+  operacoes?: Record<string, string>[];
+  ganhoCapital?: string;
 }
 
 interface CasoGcap {
   id: string;
   entrada: { ganhosCapital: AlienacaoCaso[] };
-  esperadoGcap: { alienacoes: AlienacaoOficial[] };
+  esperadoGcap: {
+    alienacoes: AlienacaoOficial[];
+    moedaEspecie?: Record<string, string>;
+  };
 }
+
+/** "5,500000" (programa) em inteiro com as casas pedidas. */
+const escala = (v: string, casas: number) => {
+  const [i = "0", f = ""] = v.split(",");
+  return BigInt(`${i}${f.padEnd(casas, "0").slice(0, casas)}`);
+};
 
 const PASTA = fileURLToPath(new URL("../../core/test/golden/2026/", import.meta.url));
 const casos: CasoGcap[] = readdirSync(PASTA)
@@ -52,6 +89,85 @@ describe("calcularGanhoCapital contra o GCAP 2025", () => {
   it.each(casos.map((c) => [c.id, c] as const))("%s", (_id, caso) => {
     caso.entrada.ganhosCapital.forEach((a, i) => {
       const oficial = caso.esperadoGcap.alienacoes[i] as AlienacaoOficial;
+      if (a.tipo === "moeda") {
+        const m = calcularGanhoMoedaEspecie({
+          estoqueInicial: BigInt(a.estoqueInicial ?? "0"),
+          saldoInicial: BigInt(a.saldoInicial ?? "0"),
+          operacoes: (a.operacoes ?? []).map((o) => ({
+            tipo: o.tipo,
+            data: iso(o.data),
+            quantidade: BigInt(o.quantidade),
+            valor: BigInt(o.valor),
+            ...(o.cotacaoDolar ? { cotacaoDolar: escala(o.cotacaoDolar, 7) } : {}),
+          })),
+        });
+        expect(m.custoMedioInicial).toBe(escala(oficial.custoMedioInicial ?? "0", 6));
+        expect(
+          m.operacoes.map((o) => ({
+            estoque: String(o.estoque),
+            saldo: String(o.saldo),
+            custoMedio: String(o.custoMedio),
+            custoAlienacao: String(o.custo),
+            ganhoCapital: String(o.ganho),
+          })),
+        ).toEqual(
+          (oficial.operacoes ?? []).map((o) => ({
+            ...o,
+            custoMedio: String(escala(o.custoMedio ?? "0", 6)),
+          })),
+        );
+        const esp = caso.esperadoGcap.moedaEspecie ?? {};
+        expect({
+          ganhoCapital: String(m.ganhoCapital),
+          ganhoTributavel: String(m.ganhoTributavel),
+          impostoDevido: String(m.impostoDevido),
+        }).toEqual({
+          ganhoCapital: esp.ganhoCapital,
+          ganhoTributavel: esp.ganhoTributavel,
+          impostoDevido: esp.impostoDevido,
+        });
+        return;
+      }
+      if (a.exterior) {
+        const r = calcularGanhoCapital({
+          tipo: a.tipo,
+          valorAlienacao: 0n,
+          custoCorretagem: 0n,
+          custoAquisicao: 0n,
+          dataAquisicao: iso(a.dataAquisicao),
+          dataAlienacao: iso(a.dataAlienacao),
+          exterior: {
+            origem: a.origem ?? "estrangeira",
+            cotacaoAquisicao: escala(a.cotacaoAquisicao ?? "0", 4),
+            cotacaoAlienacao: escala(a.cotacaoAlienacao ?? "0", 4),
+            valorAlienacaoDolar: BigInt(a.valorAlienacaoDolar ?? "0"),
+            corretagemDolar: BigInt(a.custoCorretagemDolar ?? "0"),
+            custoNacionalDolar: BigInt(a.custoAquisicaoNacionalDolar ?? "0"),
+            custoEstrangeiraDolar: BigInt(a.custoAquisicaoDolar ?? "0"),
+          },
+        });
+        const ex = oficial.exterior ?? {};
+        expect({
+          ganhoTotal: String(r.ganhoBruto),
+          ganhoNacionalReal: String(r.exterior?.nacional.ganhoReais),
+          ganhoEstrangeiraDolar: String(r.exterior?.estrangeira.ganhoDolar),
+          ganhoEstrangeiraReal: String(r.exterior?.estrangeira.ganhoReais),
+          custoNacionalReal: String(r.exterior?.nacional.custoReais),
+          impostoDevido: String(r.imposto),
+          rendimentoIsento: String(r.isento),
+          rendimentoTributavel: String(r.rendimentoExclusivo),
+        }).toEqual({
+          ganhoTotal: ex.ganhoTotal,
+          ganhoNacionalReal: ex.ganhoNacionalReal,
+          ganhoEstrangeiraDolar: ex.ganhoEstrangeiraDolar,
+          ganhoEstrangeiraReal: ex.ganhoEstrangeiraReal,
+          custoNacionalReal: ex.custoNacionalReal,
+          impostoDevido: oficial.impostoDevido,
+          rendimentoIsento: oficial.rendimentoIsento,
+          rendimentoTributavel: oficial.rendimentoTributavel,
+        });
+        return;
+      }
       const r = calcularGanhoCapital({
         tipo: a.tipo,
         valorAlienacao: BigInt(a.valorAlienacao),

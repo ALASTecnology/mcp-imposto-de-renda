@@ -6,7 +6,7 @@
 
 Arquivos da pasta autorizada. Lista os arquivos da pasta autorizada e confere os controles de integridade.
 
-**4 ferramentas**, 1 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
+**5 ferramentas**, 1 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
@@ -14,6 +14,7 @@ Arquivos da pasta autorizada. Lista os arquivos da pasta autorizada e confere os
 | [`listar_declaracoes`](#listar_declaracoes) | Listar declarações (em preenchimento e transmitidas) | não |
 | [`gravar_relatorio`](#gravar_relatorio) | Gravar relatório em PDF ou HTML | **sim** |
 | [`verificar_integridade_arquivo`](#verificar_integridade_arquivo) | Verificar integridade do DBK/DEC | não |
+| [`pre_validar_entrega`](#pre_validar_entrega) | Pré-validar o arquivo de entrega | não |
 
 ## `listar_arquivos`
 
@@ -297,16 +298,118 @@ Resposta em texto:
 
 ### Funções do programa oficial
 
-Aparece em 16 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 17 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-DECL-ENTREGAR` Declaração > Entregar Declaração (P0, implementada)
 - `M-FERR-COPIA-GRAVAR` Gravar Cópia de Segurança (P1, implementada)
 - `S-GRAVAR-ENTREGA` Gravação da declaração para entrega (arquivo .DEC) (P0, implementada)
+- `S-VALIDADOR` Dados do validador e mensagens pós-recepção (P2, implementada)
 - `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, implementada)
 - `S-ARQ-REG-IDENT` Registro 16 (identificação do contribuinte) (P0, implementada)
 - `S-ARQ-REG-TOTAIS` Registros 17, 18, 19 e 20 (totais, modelo, imposto pago e resumo) (P0, implementada)
 - `S-ARQ-REG-RENDIMENTOS` Registros 21, 32, 22, 49, 80, 81 (rendimentos PJ, PF/Exterior e exigibilidade suspensa) (P0, implementada)
-- `S-ARQ-REG-ISENTOS-EXCL` Registros 23, 24, 31, 33, 82 e 83 a 99 (isentos, exclusivos e detalhes) (P0, implementada)
-- e mais 8 linhas na matriz.
+- e mais 9 linhas na matriz.
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `pre_validar_entrega`
+
+**Pré-validar o arquivo de entrega**. Não grava nada. Exige `--dir`.
+
+Reúne num relatório único o que o validador da Receita confere na recepção e que dá para conferir localmente: tipo e exercício do arquivo, número de controle (CRC-32) de cada linha, NR_CONTROLE do header, contagens do T9, NR_HASH do header, NR_HASH do R9 (no .DEC), pendências de erro da validação e totais do Resumo refeitos pelo motor de cálculo. Responde se o arquivo está apto. A recepção final continua no servidor da Receita, que confere também o que só ela tem (recibo, situação cadastral, entrega em duplicidade). Use antes de transmitir pelo programa oficial.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| sim | não | sim | não |
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `arquivo` | texto | **sim** | Arquivo .DEC (ou .DBK) a pré-validar. Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `arquivo` | texto |   |
+| `exercicio` | número |   |
+| `tipoArquivo` | `"DBK"` \| `"DEC"` |   |
+| `apto` | booleano | Nenhuma conferência local falhou. |
+| `verificacoes` | lista de objeto |   |
+| `totalDivergenciasControle` | número |   |
+| `divergenciasControle` | lista de objeto |   |
+| `totalErros` | número |   |
+| `totalAvisos` | número |   |
+| `erros` | lista de objeto |   |
+| `totaisDivergentes` | lista de objeto |   |
+| `avisoRecepcao` | texto |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DEC"
+}
+```
+
+Resposta em texto:
+
+```text
+10234522275-IRPF-A-2026-2025-ORIGI.DEC: apto pelas conferências locais do validador.
+- [ok] Tipo do arquivo: Arquivo de entrega (.DEC) do exercício 2026.
+- [ok] Número de controle (CRC-32) de cada linha: 24 registros conferidos.
+- [ok] NR_CONTROLE do header: Confere para um .DEC.
+- [ok] Contagens do registro T9: Quantidade de registros por tipo e total conferem.
+- [ok] NR_HASH do header: Confere com as linhas da declaração.
+- [ok] NR_HASH do R9 (recibo): Confere com as fichas, o T9, o HR e o DR.
+- [ok] Pendências que impedem a entrega: Nenhum erro; 0 aviso(s) de risco de malha.
+- [ok] Totais do Resumo recalculados: Os totais gravados batem com o recálculo do motor.
+A recepção final é feita pelo servidor da Receita Federal ao transmitir pelo programa oficial; esta pré-validação não garante o recibo.
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DEC",
+  "exercicio": 2026,
+  "tipoArquivo": "DEC",
+  "apto": true,
+  "verificacoes": [
+    {
+      "id": "tipo_arquivo",
+      "titulo": "Tipo do arquivo",
+      "situacao": "ok",
+      "detalhe": "Arquivo de entrega (.DEC) do exercício 2026."
+    },
+    {
+      "id": "crc_linhas",
+      "titulo": "Número de controle (CRC-32) de cada linha",
+      "situacao": "ok",
+      "detalhe": "24 registros conferidos."
+    },
+    "(+6 itens omitidos)"
+  ],
+  "totalDivergenciasControle": 0,
+  "divergenciasControle": [],
+  "totalErros": 0,
+  "totalAvisos": 0,
+  "erros": [],
+  "totaisDivergentes": [],
+  "avisoRecepcao": "A recepção final é feita pelo servidor da Receita Federal ao transmitir pelo programa oficial; esta pré-validação não garante o recibo."
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `S-VALIDADOR` Dados do validador e mensagens pós-recepção (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

@@ -2,9 +2,9 @@
 
 # Referência das ferramentas
 
-Referência completa das **162 ferramentas** do servidor, em **11 grupos**, gerada a partir do `tools/list` real: nome, descrição, parâmetros com tipo e obrigatoriedade tirados do JSON Schema, anotações MCP, campos da resposta estruturada, um exemplo de chamada executado contra o servidor com dados fictícios e as funções correspondentes do programa oficial.
+Referência completa das **166 ferramentas** do servidor, em **11 grupos**, gerada a partir do `tools/list` real: nome, descrição, parâmetros com tipo e obrigatoriedade tirados do JSON Schema, anotações MCP, campos da resposta estruturada, um exemplo de chamada executado contra o servidor com dados fictícios e as funções correspondentes do programa oficial.
 
-100 ferramentas gravam na pasta autorizada e somem com `--somente-leitura` (que deixa 62). Sem `--dir`, os grupos que exigem pasta não são registrados e restam 29.
+100 ferramentas gravam na pasta autorizada e somem com `--somente-leitura` (que deixa 66). Sem `--dir`, os grupos que exigem pasta não são registrados e restam 31.
 
 ## Convenções
 
@@ -24,14 +24,14 @@ Referência completa das **162 ferramentas** do servidor, em **11 grupos**, gera
 | [`declaracao`](declaracao.md) | 4 | 2 | sim | Abrir, converter e gravar o arquivo da declaração (DBK/DEC). |
 | [`fichas`](fichas.md) | 1 | 0 | sim | Consulta de fichas da declaração. |
 | [`edicao`](edicao.md) | 105 | 80 | sim | Inclusão, edição, remoção e listagem de lançamentos de cada ficha da declaração. |
-| [`ciclo`](ciclo.md) | 19 | 17 | sim | Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. |
+| [`ciclo`](ciclo.md) | 20 | 17 | sim | Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. |
 | [`validacao`](validacao.md) | 2 | 0 | não | Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração. |
 | [`tabelas`](tabelas.md) | 2 | 0 | não | Tabelas de códigos do programa (dependentes, pagamentos, bens, municípios...). |
-| [`arquivos`](arquivos.md) | 4 | 1 | sim | Arquivos da pasta autorizada. |
+| [`arquivos`](arquivos.md) | 5 | 1 | sim | Arquivos da pasta autorizada. |
 | [`saidas`](saidas.md) | 4 | 0 | não | Etapa final: dados do Darf e passo a passo para transmitir pelo programa oficial. |
 | [`calculadoras`](calculadoras.md) | 10 | 0 | não | Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, RRA, ganho de capital e acréscimos. |
-| [`orientacao`](orientacao.md) | 5 | 0 | não | Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). |
-| **Total** | **162** | **100** | | |
+| [`orientacao`](orientacao.md) | 7 | 0 | não | Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). |
+| **Total** | **166** | **100** | | |
 
 ## Todas as ferramentas
 
@@ -96,6 +96,7 @@ Referência completa das **162 ferramentas** do servidor, em **11 grupos**, gera
 | [`definir_renda_variavel`](edicao.md#definir_renda_variavel) | `edicao` | Definir um mês da Renda Variável | **sim** |
 | [`definir_rendimentos_pf_exterior`](edicao.md#definir_rendimentos_pf_exterior) | `edicao` | Definir rendimentos de PF e do exterior | **sim** |
 | [`definir_saida_definitiva`](edicao.md#definir_saida_definitiva) | `edicao` | Definir a ficha Saída Definitiva do País | **sim** |
+| [`diagnosticar_servidor`](orientacao.md#diagnosticar_servidor) | `orientacao` | Diagnóstico do servidor | não |
 | [`editar_alimentando`](edicao.md#editar_alimentando) | `edicao` | Alterar item de Alimentandos | **sim** |
 | [`editar_bem`](edicao.md#editar_bem) | `edicao` | Alterar item de Bens e Direitos | **sim** |
 | [`editar_bem_rural`](edicao.md#editar_bem_rural) | `edicao` | Alterar item de Demonstrativo da Atividade Rural: Bens da atividade rural | **sim** |
@@ -119,8 +120,10 @@ Referência completa das **162 ferramentas** do servidor, em **11 grupos**, gera
 | [`editar_rendimento_isento`](edicao.md#editar_rendimento_isento) | `edicao` | Alterar item de Rendimentos Isentos e Não Tributáveis | **sim** |
 | [`editar_rendimento_pj`](edicao.md#editar_rendimento_pj) | `edicao` | Alterar item de Rendimentos Tributáveis Recebidos de Pessoa Jurídica | **sim** |
 | [`editar_rra`](edicao.md#editar_rra) | `edicao` | Alterar item de Rendimentos Recebidos Acumuladamente | **sim** |
+| [`enviar_sugestao`](orientacao.md#enviar_sugestao) | `orientacao` | Preparar sugestão ou relato para o projeto | não |
 | [`excluir_declaracao`](ciclo.md#excluir_declaracao) | `ciclo` | Excluir uma declaração da pasta | **sim** |
 | [`explicar_calculo`](calculo.md#explicar_calculo) | `calculo` | Explicar o cálculo passo a passo | não |
+| [`fechar_declaracao`](ciclo.md#fechar_declaracao) | `ciclo` | Fechar a declaração | não |
 | [`gerar_arquivo_entrega`](declaracao.md#gerar_arquivo_entrega) | `declaracao` | Gerar o arquivo de entrega (DEC) | **sim** |
 | [`gerar_comunicacao_saida`](saidas.md#gerar_comunicacao_saida) | `saidas` | Comunicação de saída definitiva | não |
 | [`gerar_darf`](saidas.md#gerar_darf) | `saidas` | Dados do Darf | não |
@@ -166,6 +169,7 @@ Referência completa das **162 ferramentas** do servidor, em **11 grupos**, gera
 | [`listar_tabela`](tabelas.md#listar_tabela) | `tabelas` | Listar tabela de códigos | não |
 | [`obter_ajuda`](orientacao.md#obter_ajuda) | `orientacao` | Ajuda por ficha | não |
 | [`orientar_servico_externo`](orientacao.md#orientar_servico_externo) | `orientacao` | Orientar sobre serviço externo | não |
+| [`pre_validar_entrega`](arquivos.md#pre_validar_entrega) | `arquivos` | Pré-validar o arquivo de entrega | não |
 | [`registrar_recibo`](ciclo.md#registrar_recibo) | `ciclo` | Registrar o recibo da declaração transmitida | **sim** |
 | [`remover_alimentando`](edicao.md#remover_alimentando) | `edicao` | Remover item de Alimentandos | **sim** |
 | [`remover_bem`](edicao.md#remover_bem) | `edicao` | Remover item de Bens e Direitos | **sim** |

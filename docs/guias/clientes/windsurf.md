@@ -75,16 +75,16 @@ No Devin Local, a lista de servidores carregados aparece na área de personaliza
 ## O limite de 100 ferramentas do Cascade
 
 O Cascade usa no máximo **100 ferramentas ao mesmo tempo**, somando todos os servidores. O servidor
-completo tem 162. Por isso os exemplos usam `--perfil essencial`, com 86 ferramentas, que ainda cria,
+completo tem 166. Por isso os exemplos usam `--perfil essencial`, com 90 ferramentas, que ainda cria,
 preenche qualquer ficha, valida, calcula e grava a declaração:
 
 | Perfil | Ferramentas | Para quê |
 | --- | --- | --- |
-| `completo` (padrão) | 162 | Tudo. Passa do limite do Cascade. |
-| `essencial` | 86 | A declaração inteira. Tira só os atalhos repetidos por ficha (`editar_bem`, `listar_dependentes` e afins, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as calculadoras avulsas. |
-| `consulta` | 40 | Só leitura e cálculo, nada grava. |
+| `completo` (padrão) | 166 | Tudo. Passa do limite do Cascade. |
+| `essencial` | 90 | A declaração inteira. Tira só os atalhos repetidos por ficha (`editar_bem`, `listar_dependentes` e afins, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as calculadoras avulsas. |
+| `consulta` | 44 | Só leitura e cálculo, nada grava. |
 
-Os 86 cabem com folga de 14 para as ferramentas de outros servidores. Se a soma passar de 100:
+Os 90 cabem com folga de 10 para as ferramentas de outros servidores. Se a soma passar de 100:
 
 - tire grupos inteiros com `--sem-grupos`, por exemplo `"--sem-grupos", "orientacao,arquivos"` (a
   lista de grupos aparece em `mcp-imposto-de-renda --ajuda`); ou

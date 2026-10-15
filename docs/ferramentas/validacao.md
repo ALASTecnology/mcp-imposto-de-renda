@@ -149,7 +149,7 @@ Sem erros impeditivos; 0 aviso(s).
 
 ### Funções do programa oficial
 
-Aparece em 20 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 21 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-DECL-PENDENCIAS` Declaração > Verificar Pendências (P0, implementada)
 - `M-DECL-ENTREGAR` Declaração > Entregar Declaração (P0, implementada)
@@ -159,6 +159,6 @@ Aparece em 20 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `S-REGRA-DIVORCIADO` Contribuinte separado judicialmente, divorciado, que dissolveu união estável ou separado/divorciado por escritura pública (P1, implementada)
 - `S-REGRA-VIUVO` Contribuinte viúvo (P1, implementada)
 - `S-REGRA-MENOR` Contribuinte menor (P1, implementada)
-- e mais 12 linhas na matriz.
+- e mais 13 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

@@ -36,11 +36,22 @@ adota o [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/). Enquan
 - `importar_livro_caixa_rural`: importa o arquivo que o Livro Caixa da Atividade Rural 2025
   exporta para o IRPF 2026 (meses da aba Brasil, adiantamentos, aba Exterior e isento 15),
   conferido byte a byte com 4 pares do programa oficial.
+- `pre_validar_entrega`: reúne num relatório o que o validador da Receita confere na recepção e
+  que dá para conferir localmente (CRC de cada linha, `NR_CONTROLE` do header, `T9`, `NR_HASH` do
+  header e do `R9`, pendências de erro e totais do Resumo recalculados) e diz se o arquivo está
+  apto; a recepção final continua no servidor da Receita.
+- `fechar_declaracao`: equivalente ao Fechar do programa; espera a gravação em andamento no
+  arquivo, confere os controles e informa a última cópia de segurança, sem alterar nada.
+- `diagnosticar_servidor`: versão, perfil, grupos e quantidade de ferramentas, pasta autorizada
+  (só o nome), modo somente leitura, memória do processo e versões do Node e da plataforma, sem
+  caminho absoluto nem dado pessoal.
+- `enviar_sugestao`: monta o texto de uma issue com modelo, sem CPF, CNPJ, valores e e-mails, e
+  devolve o link do repositório para o usuário abrir e enviar; não acessa a rede.
 - Harness de referência com o GCAP 2025 para bens no exterior e moeda em espécie e com o
   programa da Atividade Rural 2025 para o Livro Caixa: 65 casos, todos reproduzidos ao centavo.
-- Totais: **162 ferramentas MCP** em 11 grupos (100 gravam; 62 no modo `--somente-leitura`;
-  perfis `essencial` com 86 e `consulta` com 40). Matriz de cobertura: 403 funções atendidas, 7
-  parciais (com justificativa e alternativa) e 6 sem equivalente.
+- Totais: **166 ferramentas MCP** em 11 grupos (100 gravam; 66 no modo `--somente-leitura`;
+  perfis `essencial` com 90 e `consulta` com 44). Matriz de cobertura: 407 funções atendidas, 7
+  parciais (com justificativa e alternativa) e 2 sem equivalente.
 
 ### Alterado
 

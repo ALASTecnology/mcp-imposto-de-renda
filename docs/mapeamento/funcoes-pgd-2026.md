@@ -204,7 +204,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: menu, barra lateral, ícone, Ctrl+F; pág. 377
 - Validações conhecidas: não precisa salvar, dados gravados ao digitar; diferente de Sair do Programa
 - Exige do MCP: sem equivalente necessário (persistência imediata)
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo model; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `fechar_declaracao`; módulo model; prioridade P2; status implementada (`fechar_declaracao`, `listar_copias_seguranca`) (ver matriz)
 
 #### M-DECL-EXCLUIR Declaração > Excluir
 
@@ -508,7 +508,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ação MemoriaIRPFAction (sem citação na Ajuda)
 - Exige do MCP: a confirmar (P2)
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `diagnosticar_servidor`; módulo nenhum; prioridade P2; status implementada (`diagnosticar_servidor`) (ver matriz)
 
 #### M-FERR-LEAOZINHO Assistente "Leãozinho" (inferido)
 
@@ -522,7 +522,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: ação HabilitarAvaliacaoAction; tela PainelAvisoAvaliacao
 - Exige do MCP: não se aplica
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `enviar_sugestao`; módulo nenhum; prioridade P2; status implementada (`enviar_sugestao`) (ver matriz)
 
 #### M-FERR-INFO-CALCULO Constantes de cálculo (inferido, tela de testes)
 
@@ -4129,7 +4129,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: layout registros VC (pendência, quantidade de retificadoras, débito, saldo de restituição, Darf) e MC (mensagem)
 - Regras: informações devolvidas na recepção da declaração (inferido pelos nomes)
 - Exige do MCP: não se aplica (gerado pela RFB)
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `pre_validar_entrega`; módulo dbk; prioridade P2; status implementada (`pre_validar_entrega`, `validar_declaracao`, `verificar_integridade_arquivo`) (ver matriz)
 
 ### S-CALAMIDADE Contribuintes de municípios em calamidade (RS 2024)
 

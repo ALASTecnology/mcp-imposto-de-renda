@@ -8565,8 +8565,11 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+F",
   "id": "M-DECL-FECHAR",
   "funcao": "Declaração > Fechar",
-  "status": "não se aplica",
-  "ferramentas": []
+  "status": "implementada",
+  "ferramentas": [
+   "fechar_declaracao",
+   "listar_copias_seguranca"
+  ]
  },
  {
   "tecla": "Ctrl+E",

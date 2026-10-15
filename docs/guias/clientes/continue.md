@@ -66,8 +66,8 @@ Acrescente `- "--somente-leitura"` ao fim de `args`.
 ## Limitações
 
 - Só o modo agente usa MCP.
-- Com modelos locais de contexto pequeno, 162 descrições de ferramentas pesam; use `--perfil essencial`
-  (86, ainda grava) ou `--perfil consulta` (40, só leitura). Veja os
+- Com modelos locais de contexto pequeno, 166 descrições de ferramentas pesam; use `--perfil essencial`
+  (90, ainda grava) ou `--perfil consulta` (44, só leitura). Veja os
   [perfis](../clientes-mcp.md#quantidade-de-ferramentas).
 - O que as ferramentas devolvem vai para o provedor de modelo configurado (nada sai da máquina se o
   modelo for local).

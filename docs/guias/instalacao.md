@@ -71,7 +71,7 @@ node apps/cli/dist/index.js --dir ~/Documentos/IR-2026
 ```
 
 O segundo comando fica aguardando mensagens do protocolo em stdin e escreve
-`mcp-imposto-de-renda: pronto (versão 0.1.0, perfil completo, 162 ferramentas)` em stderr. Encerre com Ctrl+C. Isso confirma que o Node.js, o
+`mcp-imposto-de-renda: pronto (versão 0.1.0, perfil completo, 166 ferramentas)` em stderr. Encerre com Ctrl+C. Isso confirma que o Node.js, o
 build e a pasta estão certos.
 
 ## Opções
@@ -79,7 +79,7 @@ build e a pasta estão certos.
 | Opção | Efeito |
 | --- | --- |
 | `--dir <pasta>` | Obrigatória. A pasta precisa existir e, fora do modo somente leitura, permitir gravação. Caminho relativo é resolvido a partir da pasta em que o cliente inicia o processo; prefira caminho absoluto. |
-| `--perfil <nome>` | Escolhe quais ferramentas o cliente vê: `completo` (padrão, 162), `essencial` (86) ou `consulta` (40). Veja a tabela abaixo. |
+| `--perfil <nome>` | Escolhe quais ferramentas o cliente vê: `completo` (padrão, 166), `essencial` (90) ou `consulta` (44). Veja a tabela abaixo. |
 | `--grupos <lista>` | Expõe só os grupos citados, separados por vírgula (por exemplo `calculo,validacao`). |
 | `--sem-grupos <lista>` | Tira os grupos citados. Combina com `--perfil` e `--grupos`. |
 | `--somente-leitura` | Remove as ferramentas que gravam arquivos. Útil para consultar, simular e validar sem risco. |
@@ -95,15 +95,15 @@ Saída com código 2 indica argumento inválido; a mensagem em stderr diz qual (
 
 ### Perfis de ferramentas
 
-O servidor completo tem 162 ferramentas, e alguns clientes aceitam menos: o GitHub Copilot no VS Code
+O servidor completo tem 166 ferramentas, e alguns clientes aceitam menos: o GitHub Copilot no VS Code
 aceita até 128 por pedido e o Cascade do Windsurf, 100. Os perfis resolvem isso sem tirar a
 capacidade de editar:
 
 | Perfil | Ferramentas | O que expõe |
 | --- | --- | --- |
-| `completo` | 162 | Tudo. É o padrão. |
-| `essencial` | 86 | Cria, preenche qualquer ficha, valida, calcula e grava. Cada ficha mantém o seu `adicionar_*`; alterar, remover e listar passam pelas genéricas `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`. Ficam de fora só esses atalhos repetidos por ficha e as 10 calculadoras avulsas (carnê-leão, ganho de capital, preço médio e afins). |
-| `consulta` | 40 | Só leitura e cálculo; nada grava. A pasta só precisa permitir leitura. |
+| `completo` | 166 | Tudo. É o padrão. |
+| `essencial` | 90 | Cria, preenche qualquer ficha, valida, calcula e grava. Cada ficha mantém o seu `adicionar_*`; alterar, remover e listar passam pelas genéricas `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`. Ficam de fora só esses atalhos repetidos por ficha e as 10 calculadoras avulsas (carnê-leão, ganho de capital, preço médio e afins). |
+| `consulta` | 44 | Só leitura e cálculo; nada grava. A pasta só precisa permitir leitura. |
 
 `node apps/cli/dist/index.js --ajuda` mostra essas contagens e a lista de grupos para `--grupos` e
 `--sem-grupos`. A escolha por cliente está em [clientes-mcp.md](clientes-mcp.md#quantidade-de-ferramentas).

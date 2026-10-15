@@ -144,6 +144,10 @@ export const CENARIOS: readonly Cenario[] = [
     { ferramenta: "buscar_codigo", argumentos: { tabela: "bens-direitos", codigo: "01-11" } },
     { ferramenta: "gerar_arquivo_entrega", argumentos: { arquivo: ARQ } },
     {
+      ferramenta: "pre_validar_entrega",
+      argumentos: { arquivo: ARQ.replace(/\.DBK$/, ".DEC") },
+    },
+    {
       ferramenta: "importar_gcap",
       argumentos: { arquivo: ARQ, arquivo_gcap: ARQ_GCAP, arquivo_destino: "com-gcap.DBK" },
     },
@@ -558,6 +562,7 @@ export const CENARIOS: readonly Cenario[] = [
   [
     { ferramenta: "definir_opcao_tributacao", argumentos: { arquivo: ARQ, opcao: "simplificada" } },
     { ferramenta: "listar_copias_seguranca", argumentos: {} },
+    { ferramenta: "fechar_declaracao", argumentos: { arquivo: ARQ } },
     {
       ferramenta: "restaurar_copia_seguranca",
       argumentos: { copia: `${ARQ}.20260410T120000Z.bak` },
@@ -708,5 +713,16 @@ export const CENARIOS: readonly Cenario[] = [
     { ferramenta: "verificar_versao_tabelas", argumentos: {} },
     { ferramenta: "calcular_expressao", argumentos: { expressao: "1.903,98 * 13" } },
     { ferramenta: "consultar_atalhos", argumentos: { consulta: "Ctrl+P" } },
+    { ferramenta: "diagnosticar_servidor", argumentos: {} },
+    {
+      ferramenta: "enviar_sugestao",
+      argumentos: {
+        tipo: "sugestao",
+        titulo: "Ler o informe de rendimentos em PDF",
+        descricao:
+          "Seria útil importar o informe de rendimentos direto do PDF do banco, sem copiar o texto.",
+        ferramenta: "importar_informe_rendimentos",
+      },
+    },
   ],
 ];

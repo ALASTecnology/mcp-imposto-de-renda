@@ -34,14 +34,14 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | M-INICIAL-BOASVINDAS | Aba "Boas-vindas", links úteis e "Entrar com gov.br" | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) | Botão gov.br: IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário. |
 | M-DECL-NOVA | Declaração > Nova | `criar_declaracao` | model | P0 | implementada (`criar_declaracao`) |  |
 | M-DECL-ABRIR | Declaração > Abrir | `abrir_declaracao` | model | P0 | implementada (`abrir_declaracao`) | Sem a restrição de uma declaração aberta por vez. |
-| M-DECL-FECHAR | Declaração > Fechar | não se aplica | model | P2 | não se aplica | Mantida como não se aplica: cada ferramenta abre, altera e grava o arquivo na mesma chamada, então não existe declaração aberta para fechar. |
+| M-DECL-FECHAR | Declaração > Fechar | `fechar_declaracao` | model | P2 | implementada (`fechar_declaracao`, `listar_copias_seguranca`) | Cada ferramenta abre, altera e grava o arquivo na mesma chamada, então não há o que salvar ao fechar; o equivalente real é `fechar_declaracao`, que espera a gravação em andamento no arquivo, confere os controles do que ficou no disco e informa a última cópia de segurança. |
 | M-DECL-EXCLUIR | Declaração > Excluir | `excluir_declaracao` | model | P1 | implementada (`excluir_declaracao`) | Exige confirmação explícita. |
 | M-DECL-RETIFICAR | Declaração > Retificar | `criar_retificadora` | model | P1 | implementada (`criar_retificadora`) |  |
 | M-DECL-PENDENCIAS | Declaração > Verificar Pendências | `listar_pendencias` | validate | P0 | implementada (`validar_declaracao`) | Catálogo de mensagens próprio, com severidade erro ou aviso. |
 | M-DECL-ENTREGAR | Declaração > Entregar Declaração | `gerar_dbk`, `listar_pendencias`, `instruir_transmissao` | dbk | P0 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `instruir_transmissao`, `validar_declaracao`, `verificar_integridade_arquivo`) | IMPOSSÍVEL fora do PGD: a transmissão usa o Receitanet incorporado, com protocolo, hash, envelope e certificado da RFB, que não podem ser reimplementados nem copiados. Alternativa: `gerar_dbk` grava o arquivo e `instruir_transmissao` orienta abrir no PGD 2026, verificar pendências e entregar; depois `registrar_recibo`. |
 | M-DECL-SALVAR-ONLINE | Declaração > Salvar On-line (F6) | `gravar_copia_seguranca`, `orientar_servico_externo` | model | P2 | implementada (`gravar_copia_seguranca`, `orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário. |
 | M-DECL-RECUPERAR-ONLINE | Declaração > Recuperar On-line (F7) | `restaurar_copia_seguranca`, `orientar_servico_externo` | model | P2 | implementada (`listar_copias_seguranca`, `orientar_servico_externo`, `restaurar_copia_seguranca`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário. |
-| M-DECL-SAIR | Declaração > Sair do Programa | não se aplica | nenhum | P2 | não se aplica | Mantida como não se aplica: encerrar o programa é ação da janela; o servidor MCP é encerrado pelo cliente e não guarda estado entre chamadas. |
+| M-DECL-SAIR | Declaração > Sair do Programa | não se aplica | nenhum | P2 | não se aplica | Mantida como não se aplica: encerrar o programa é ação da janela; o servidor MCP é encerrado pelo cliente e não guarda estado entre chamadas, então não há nada a salvar nem a liberar ao sair. Para conferir um arquivo antes de encerrar, use `fechar_declaracao`. |
 | M-DECL-CONVERTER | Converter declaração (inferido) | `definir_identificacao` | model | P2 | implementada (`definir_identificacao`) | Função inferida; confirmar no programa. |
 | M-IMPR-DECLARACAO | Imprimir Declaração | `gerar_relatorio_declaracao` | model | P1 | implementada (`gerar_relatorio_declaracao`, `gravar_relatorio`) | Layout próprio, toda ou por partes, em Markdown, HTML ou PDF (`gravar_relatorio`). |
 | M-IMPR-REND-PF | Imprimir Rendimentos Recebidos de PF | `gerar_relatorio_declaracao` | model | P2 | implementada (`gerar_relatorio_declaracao`, `gravar_relatorio`) | Parte `rendimentos_pf`. |
@@ -72,9 +72,9 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | M-FERR-RECNOMES | Recuperação de Nomes (Ativar/Desativar, Limpar) | `buscar_nome_por_documento` | model | P2 | implementada (`buscar_nome_por_documento`) |  |
 | M-FERR-LOGIN-GOVBR | Entrar e sair com gov.br | `orientar_servico_externo` | nenhum | P2 | implementada (`orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário. |
 | M-FERR-PAGINAS | Links para páginas da RFB (IRPF, DTE) e navegador | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) | Links públicos. |
-| M-FERR-MEMORIA | Memória do IRPF (inferido) | não se aplica | nenhum | P2 | não se aplica | Mantida como não se aplica: a função só é conhecida pelo nome da ação MemoriaIRPFAction, sem citação na Ajuda nem efeito na declaração, e não há como saber o que ela faz sem ler o código do programa, o que as regras do projeto vedam. |
+| M-FERR-MEMORIA | Memória do IRPF (inferido) | `diagnosticar_servidor` | nenhum | P2 | implementada (`diagnosticar_servidor`) | Função inferida do nome da ação MemoriaIRPFAction, sem citação na Ajuda nem efeito na declaração. O equivalente útil a um assistente é `diagnosticar_servidor`, somente leitura: versão, perfil, grupos e quantidade de ferramentas, pasta autorizada (só o nome), modo somente leitura, memória do processo e versões do Node e da plataforma, sem caminho absoluto nem dado pessoal. |
 | M-FERR-LEAOZINHO | Assistente "Leãozinho" (inferido) | `obter_ajuda`, `consultar_atalhos` | nenhum | P2 | implementada (`consultar_atalhos`, `obter_ajuda`) | Função inferida do nome da ação (LeaozinhoAction), sem texto na Ajuda; o papel de assistente é do próprio MCP, com a ajuda por ficha, os atalhos e os prompts preparar_declaracao e revisar_malha_fina. |
-| M-FERR-AVALIACAO | Avaliação do programa (inferido) | não se aplica | nenhum | P2 | não se aplica | Mantida como não se aplica: é a pesquisa de satisfação do programa oficial enviada à Receita, sem efeito na declaração; o MCP não coleta opinião nem fala com a Receita. |
+| M-FERR-AVALIACAO | Avaliação do programa (inferido) | `enviar_sugestao` | nenhum | P2 | implementada (`enviar_sugestao`) | A pesquisa de satisfação do programa oficial vai para a Receita; o equivalente aqui é a opinião sobre o próprio MCP Imposto de Renda: `enviar_sugestao` monta o texto da issue com modelo, sem CPF, valores nem dados da declaração, e devolve o link do repositório para o usuário abrir e enviar. Não acessa a rede. |
 | M-FERR-INFO-CALCULO | Constantes de cálculo (inferido, tela de testes) | `consultar_tabela` | tabelas | P2 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`) |  |
 | M-AJUDA-CONTEXTUAL | Ajuda de campo (F1) e textos em azul | `obter_ajuda`, `calcular_imposto` | tabelas | P1 | implementada (`comparar_modelos`, `explicar_calculo`, `obter_ajuda`, `simular_imposto`) | `calcular_imposto` com `detalhar` cumpre o F1 do Resumo (procedência dos valores). |
 | M-AJUDA-DOCUMENTOS | Conteúdo, Instruções, Como Fazer, Perguntas e Respostas, FAQ | `obter_ajuda` | tabelas | P2 | implementada (`obter_ajuda`) |  |
@@ -405,7 +405,7 @@ Prioridades: **P0** essencial para entregar uma declaração de ajuste anual tí
 | S-TRANSMISSAO | Transmissão (Receitanet incorporado) | `instruir_transmissao` | dbk | P0 | implementada (`instruir_transmissao`) | IMPOSSÍVEL fora do PGD: a transmissão usa o Receitanet incorporado, com protocolo, hash, envelope e certificado da RFB, que não podem ser reimplementados nem copiados. Alternativa: `gerar_dbk` grava o arquivo e `instruir_transmissao` orienta abrir no PGD 2026, verificar pendências e entregar; depois `registrar_recibo`. |
 | S-RECIBO | Recibo de entrega e número do recibo | `registrar_recibo`, `validar_documento` | importacao | P1 | implementada (`criar_retificadora`, `registrar_recibo`, `validar_documento`) | IMPOSSÍVEL fora do PGD: o recibo é produzido pela RFB na recepção. Alternativa: imprimir no PGD e informar o número com `registrar_recibo`. |
 | S-NOTIFICACAO-MAED | Notificação de lançamento da multa por atraso emitida pelo PGD | `calcular_multa_atraso` | calc | P2 | implementada (`calcular_multa_atraso`) | Notificação oficial só existe após a entrega. |
-| S-VALIDADOR | Dados do validador e mensagens pós-recepção | não se aplica | nenhum | P2 | não se aplica | Mantida como não se aplica: os registros VC e MC são escritos pela Receita na recepção da declaração e não existem antes da entrega; depois dela, `registrar_recibo` guarda o número do recibo. |
+| S-VALIDADOR | Dados do validador e mensagens pós-recepção | `pre_validar_entrega` | dbk | P2 | implementada (`pre_validar_entrega`, `validar_declaracao`, `verificar_integridade_arquivo`) | O validador da Receita confere integridade, hash e regras na recepção. `pre_validar_entrega` reúne num relatório o que dá para conferir localmente (CRC de cada linha, NR_CONTROLE do header, T9, NR_HASH do header e do R9, pendências de erro e totais recalculados) e responde se o arquivo está apto. A recepção final continua no servidor da Receita, que grava os registros VC e MC e emite o recibo; depois dela, `registrar_recibo` guarda o número. |
 | S-CALAMIDADE | Contribuintes de municípios em calamidade (RS 2024) | `listar_pendencias`, `consultar_tabela` | validate | P2 | implementada (`buscar_codigo`, `consultar_parametros`, `listar_tabela`, `validar_declaracao`) | Regra inferida; confirmar. |
 | S-NUVEM-PREPREENCHIDA | Obter pré-preenchida | `orientar_servico_externo` | nenhum | P2 | implementada (`orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário. |
 | S-NUVEM-CARNELEAO | Importar Carnê-Leão Web (gov.br ou código de acesso) | `orientar_servico_externo` | nenhum | P2 | implementada (`orientar_servico_externo`) | IMPOSSÍVEL fora do PGD: exige autenticação gov.br (Ouro ou Prata) em serviço da RFB e o MCP Imposto de Renda é 100% local por desenho. Alternativa: `orientar_servico_externo` explica como obter o arquivo no e-CAC ou no PGD; o MCP Imposto de Renda importa o arquivo trazido pelo usuário. |
@@ -443,14 +443,14 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 
 | Status | P0 | P1 | P2 | Total |
 |---|---:|---:|---:|---:|
-| implementada | 114 | 220 | 69 | 403 |
+| implementada | 114 | 220 | 73 | 407 |
 | parcial | 1 | 6 | 0 | 7 |
 | pendente | 0 | 0 | 0 | 0 |
-| não se aplica | 0 | 0 | 6 | 6 |
+| não se aplica | 0 | 0 | 2 | 2 |
 
 ## Ferramentas MCP propostas (lista consolidada e deduplicada)
 
-81 ferramentas. "Escreve em disco" indica se a ferramenta altera a base local de declarações ou grava arquivo. "Itens" é o número de linhas da matriz que citam a ferramenta.
+85 ferramentas. "Escreve em disco" indica se a ferramenta altera a base local de declarações ou grava arquivo. "Itens" é o número de linhas da matriz que citam a ferramenta.
 
 ### Ciclo de vida e navegação
 
@@ -464,6 +464,7 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 | `registrar_recibo` | Registra o recibo de entrega informado pelo usuário (número de 12 dígitos ou arquivo do recibo gerado pelo PGD) e marca a declaração como transmitida. | id_declaracao, numero_recibo? \| arquivo_recibo? | sim | importacao | 4 | implementada (`registrar_recibo`, `criar_retificadora`): guarda o número informado pelo usuário em <declaração>.recibo.json; a retificadora o reaproveita |
 | `gravar_copia_seguranca` | Grava cópia de segurança (dados atuais, cópia para entrega ou transmitida com recibo) no formato do MCP Imposto de Renda. | ids, tipo (dados_atuais\|entrega\|transmitida_com_recibo), destino | sim | model | 3 | implementada (`gravar_copia_seguranca`) |
 | `restaurar_copia_seguranca` | Restaura cópia de segurança do MCP Imposto de Renda, avisando se substitui declaração existente do mesmo CPF. | arquivo, sobrescrever? | sim | model | 3 | implementada (`restaurar_copia_seguranca`, `listar_copias_seguranca`) |
+| `fechar_declaracao` | Equivalente ao Fechar: espera a gravação em andamento no arquivo, confere os controles do que ficou no disco e informa a última cópia de segurança. | arquivo | não | model | 1 | implementada (`fechar_declaracao`, `listar_copias_seguranca`): não há declaração aberta em memória: confirma que a fila de gravação do arquivo está livre, confere os controles e aponta a última cópia de segurança |
 | `listar_fichas` | Lista as fichas e demonstrativos aplicáveis ao tipo da declaração, com estado de preenchimento e sugestões (equivale à aba Início e ao menu Fichas). | id_declaracao | não | model | 3 | implementada (`listar_fichas`) |
 | `listar_lancamentos` | Lista os lançamentos de uma ficha ou demonstrativo, com chave de cada item. | id_declaracao, ficha, filtro? | não | model | 2 | implementada (`listar_lancamentos`, `ler_ficha`): também `listar_*` por ficha |
 | `editar_lancamento` | Altera campos de um lançamento existente em qualquer ficha, revalidando o item. | id_declaracao, ficha, id_lancamento, campos | sim | model | 5 | implementada (`editar_lancamento`): também `editar_*` por ficha |
@@ -551,12 +552,15 @@ Status por item (calculado a partir das ferramentas da linha): implementada quan
 | `obter_ajuda` | Responde com as regras oficiais de uma ficha, campo ou tópico (orientação equivalente à Ajuda do PGD), citando a página da Ajuda. | topico \| ficha + campo, busca? | não | tabelas | 25 | implementada (`obter_ajuda`): tópicos gerados das notas de mapeamento (tools/mapeamento/gera_ajuda.mjs) |
 | `buscar_nome_por_documento` | Sugere o nome já informado para um CPF ou CNPJ nas declarações locais (equivalente à Recuperação de Nomes). | cpf_cnpj | não | model | 1 | implementada (`buscar_nome_por_documento`): como a Recuperação de Nomes do programa, usa só o que já foi digitado ou importado nas declarações da pasta; não há cache a limpar |
 | `verificar_versao_tabelas` | Informa a versão das tabelas e parâmetros embarcados e alerta se o PGD conhecido for mais novo. | nenhum | não | tabelas | 2 | implementada (`verificar_versao_tabelas`): versão embarcada, sem consulta online |
+| `diagnosticar_servidor` | Mostra versão, perfil, grupos e quantidade de ferramentas, pasta autorizada (só o nome), modo somente leitura, memória do processo e versões do Node e da plataforma, sem dados pessoais. | nenhum | não | nenhum | 1 | implementada (`diagnosticar_servidor`): somente leitura; só o nome da pasta, nunca o caminho, e nenhum dado da declaração |
+| `enviar_sugestao` | Monta o texto de uma issue (sugestão, problema ou dúvida) com modelo e sem dados pessoais e devolve o link do repositório para o usuário abrir; não acessa a rede. | tipo, titulo, descricao, ferramenta? | não | nenhum | 1 | implementada (`enviar_sugestao`): somente leitura e sem rede: o texto sai sem CPF, CNPJ, valores, e-mails e números longos, e o usuário abre o link e envia |
 
 ### Saídas e etapa final no PGD
 
 | Ferramenta | Descrição | Parâmetros principais | Escreve em disco | Módulo | Itens | Status |
 |---|---|---|---|---|---:|---|
 | `gerar_dbk` | Gera o arquivo da declaração no layout oficial de 2026 (registros IR, 16 a 99 e T9) com o nome padrão, bloqueando se houver erros impeditivos. | id_declaracao, destino | sim | dbk | 16 | implementada (`converter_modelo_para_dbk`, `gerar_arquivo_entrega`, `verificar_integridade_arquivo`): conversão de todas as fichas; registros sem campo no modelo são preservados do arquivo base; totais recalculados com o motor; o .DEC de entrega sai de gerar_arquivo_entrega, igual ao do programa nos 48 casos |
+| `pre_validar_entrega` | Reúne num relatório o que o validador da Receita confere na recepção e que dá para conferir localmente (CRC de cada linha, NR_CONTROLE do header, T9, NR_HASH do header e do R9, pendências de erro e totais recalculados) e responde se o arquivo está apto. | arquivo | não | dbk | 1 | implementada (`pre_validar_entrega`, `verificar_integridade_arquivo`, `validar_declaracao`): confere localmente o que o validador confere na recepção (controles, hashes, pendências e totais); a recepção final continua no servidor da Receita |
 | `gerar_relatorio_declaracao` | Gera relatório da declaração (toda ou partes, inclusive rendimentos de PF e demonstrativos) em PDF ou HTML com layout próprio. | id_declaracao, partes?, formato (pdf\|html), destino | sim | model | 3 | implementada (`gerar_relatorio_declaracao`, `gravar_relatorio`): resumo ou partes (todas, rendimentos de PF, qualquer ficha) em Markdown, HTML ou PDF com layout próprio; `gravar_relatorio` também grava em PDF o texto do Darf, da comunicação de saída e da relação de declarações |
 | `gravar_relatorio` | Grava na pasta, em PDF ou HTML com layout próprio, o relatório da declaração (resumo ou partes) ou o texto de outra ferramenta (Darf, comunicação de saída, relação de declarações). | arquivo\|declaracao\|texto, partes?, formato (pdf\|html), arquivo_destino | sim | nenhum | 1 | implementada (`gravar_relatorio`): PDF 1.4 A4 ou HTML autocontido, sem metadados de autor ou ferramenta |
 | `gerar_comunicacao_saida` | Gera a comunicação à fonte pagadora de saída definitiva do país, uma por fonte. | id_declaracao, fontes?, destino | sim | model | 1 | implementada (`gerar_comunicacao_saida`): só o texto |
@@ -625,7 +629,7 @@ Ferramentas registradas hoje em `packages/mcp/src/ferramentas/*.ts` e a ferramen
 | `criar_retificadora` | `criar_retificadora`, `registrar_recibo` |
 | `excluir_declaracao` | `excluir_declaracao` |
 | `gravar_copia_seguranca` | `gravar_copia_seguranca` |
-| `listar_copias_seguranca` | `restaurar_copia_seguranca` |
+| `listar_copias_seguranca` | `fechar_declaracao`, `restaurar_copia_seguranca` |
 | `restaurar_copia_seguranca` | `restaurar_copia_seguranca` |
 | `definir_opcao_tributacao` | `definir_opcao_tributacao` |
 | `definir_informacoes_bancarias` | `definir_informacoes_bancarias` |
@@ -635,13 +639,15 @@ Ferramentas registradas hoje em `packages/mcp/src/ferramentas/*.ts` e a ferramen
 | `importar_informe_plano_saude` | `importar_informe_plano_saude` |
 | `transferir_excedente_isencao_65` | `transferir_excedente_isencao_65` |
 | `validar_documento` | `validar_documento` |
-| `validar_declaracao` | `listar_pendencias` |
+| `validar_declaracao` | `listar_pendencias`, `pre_validar_entrega` |
 | `listar_tabela` | `consultar_tabela`, `converter_moeda` |
 | `buscar_codigo` | `consultar_tabela` |
 | `listar_arquivos` | uso interno |
-| `verificar_integridade_arquivo` | `gerar_dbk` |
+| `verificar_integridade_arquivo` | `gerar_dbk`, `pre_validar_entrega` |
 | `listar_declaracoes` | `importar_declaracao_anterior`, `listar_declaracoes` |
 | `gravar_relatorio` | `gerar_relatorio_declaracao`, `gravar_relatorio` |
+| `pre_validar_entrega` | `pre_validar_entrega` |
+| `fechar_declaracao` | `fechar_declaracao` |
 | `gerar_darf` | `gerar_darf` |
 | `instruir_transmissao` | `instruir_transmissao` |
 | `gerar_relatorio_declaracao` | `gerar_relatorio_declaracao` |
@@ -660,6 +666,8 @@ Ferramentas registradas hoje em `packages/mcp/src/ferramentas/*.ts` e a ferramen
 | `obter_ajuda` | `consultar_atalhos`, `obter_ajuda` |
 | `calcular_expressao` | `calcular_expressao` |
 | `consultar_atalhos` | `consultar_atalhos` |
+| `diagnosticar_servidor` | `diagnosticar_servidor` |
+| `enviar_sugestao` | `enviar_sugestao` |
 
 ## Ferramentas pendentes e parciais por prioridade
 

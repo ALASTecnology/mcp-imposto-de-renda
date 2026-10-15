@@ -14,7 +14,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "@mcp-imposto-de-renda/mcp";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -25,6 +25,13 @@ import { BASE, CENARIOS } from "./exemplos-ferramentas.js";
 const SAIDA = fileURLToPath(new URL("./saida/", import.meta.url));
 const EXEMPLOS = fileURLToPath(new URL("../../exemplos/", import.meta.url));
 const RELOGIO = new Date("2026-04-10T12:00:00Z");
+/** Memória e versões fixas, para a resposta de diagnosticar_servidor não mudar a cada geração. */
+const AMBIENTE = {
+  memoria: { rss: 125_829_120, heapTotal: 62_914_560, heapUsed: 41_943_040, external: 3_145_728 },
+  node: "v22.20.0",
+  plataforma: "linux",
+  arquitetura: "x64",
+};
 
 interface Registro {
   argumentos: Record<string, unknown>;
@@ -37,7 +44,11 @@ it("executa um exemplo de cada ferramenta", async () => {
   const registros: Record<string, Registro> = {};
   for (const cenario of CENARIOS) {
     const dir = mkdtempSync(join(tmpdir(), "mcp-imposto-de-renda-ref-"));
-    const s = createServer({ diretorioAutorizado: dir, relogio: () => RELOGIO });
+    const s = createServer({
+      diretorioAutorizado: dir,
+      relogio: () => RELOGIO,
+      ambiente: () => AMBIENTE,
+    });
     const c = new Client({ name: "referencia", version: "1" });
     try {
       for (const [nome, origem] of Object.entries(BASE))
@@ -58,7 +69,8 @@ it("executa um exemplo de cada ferramenta", async () => {
           if (statSync(join(dir, nome)).isFile()) utimesSync(join(dir, nome), RELOGIO, RELOGIO);
         }
         if (registros[chamada.ferramenta]) continue;
-        const limpar = (t: string) => t.split(dir).join("<pasta>");
+        const limpar = (t: string) =>
+          t.split(dir).join("<pasta>").split(basename(dir)).join("<pasta>");
         registros[chamada.ferramenta] = {
           argumentos: chamada.argumentos,
           texto: limpar(

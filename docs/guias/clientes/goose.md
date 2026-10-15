@@ -75,8 +75,8 @@ Acrescente `--somente-leitura` ao fim do comando (ou de `args`).
 
 - Revise as permissões de ferramentas do goose: no modo autônomo ele executa ferramentas sem
   perguntar. Para este servidor, use um modo que peça aprovação.
-- Com modelos locais pequenos, reduza a lista de ferramentas com `--perfil essencial` (86, ainda
-  grava) ou `--perfil consulta` (40, só leitura). Veja os
+- Com modelos locais pequenos, reduza a lista de ferramentas com `--perfil essencial` (90, ainda
+  grava) ou `--perfil consulta` (44, só leitura). Veja os
   [perfis](../clientes-mcp.md#quantidade-de-ferramentas).
 - Se o modelo for local (por exemplo via Ollama), a declaração não sai da sua máquina.
 

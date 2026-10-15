@@ -6,7 +6,7 @@
 
 Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. Cria, retifica, copia, restaura e exclui declarações, define as opções do Resumo e importa informes colados como texto.
 
-**19 ferramentas**, 17 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
+**20 ferramentas**, 17 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
@@ -14,6 +14,7 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | [`importar_pre_preenchida`](#importar_pre_preenchida) | Importar a declaração pré-preenchida | **sim** |
 | [`importar_gcap`](#importar_gcap) | Importar o demonstrativo do GCAP | **sim** |
 | [`importar_livro_caixa_rural`](#importar_livro_caixa_rural) | Importar o Livro Caixa da Atividade Rural | **sim** |
+| [`fechar_declaracao`](#fechar_declaracao) | Fechar a declaração | não |
 | [`criar_declaracao`](#criar_declaracao) | Criar uma declaração nova | **sim** |
 | [`criar_retificadora`](#criar_retificadora) | Criar declaração retificadora | **sim** |
 | [`registrar_recibo`](#registrar_recibo) | Registrar o recibo da declaração transmitida | **sim** |
@@ -461,6 +462,80 @@ Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 - `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
 - `M-IMP-AR` Importar Atividade Rural 2025 (P1, implementada)
 - `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, implementada)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `fechar_declaracao`
+
+**Fechar a declaração**. Não grava nada. Exige `--dir`.
+
+Equivalente ao Fechar do programa oficial: espera terminar qualquer gravação em andamento no arquivo (a fila de gravação do servidor), confere os controles do que ficou no disco e informa a última cópia de segurança automática. Não altera nada: o MCP Imposto de Renda grava a cada chamada, então não há o que salvar. Use ao terminar de editar, antes de abrir o arquivo no programa oficial, copiá-lo ou movê-lo.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| sim | não | sim | não |
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `arquivo` | texto | **sim** | Arquivo .DBK ou .DEC. Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `arquivo` | texto |   |
+| `gravacaoPendente` | booleano |   |
+| `controlesValidos` | booleano |   |
+| `totalDivergencias` | número |   |
+| `bytes` | número |   |
+| `ultimaCopia` | objeto ou nulo |   |
+| `totalCopias` | número |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DBK"
+}
+```
+
+Resposta em texto:
+
+```text
+10234522275-IRPF-A-2026-2025-ORIGI.DBK: nenhuma gravação pendente; o arquivo está gravado (14309 bytes) e livre para abrir no programa oficial, copiar ou mover.
+Controles conferem (CRC de cada linha, T9 e hash do header).
+Última cópia de segurança: 10234522275-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak (2026-04-10T12:00:00Z), em .mcp-imposto-de-renda-backups; 1 cópia(s) deste arquivo (restaurar_copia_seguranca volta a qualquer uma).
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DBK",
+  "gravacaoPendente": false,
+  "controlesValidos": true,
+  "totalDivergencias": 0,
+  "bytes": 14309,
+  "ultimaCopia": {
+    "copia": "10234522275-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak",
+    "criadaEm": "2026-04-10T12:00:00Z"
+  },
+  "totalCopias": 1
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-DECL-FECHAR` Declaração > Fechar (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 
@@ -946,9 +1021,10 @@ Resposta em texto:
 
 ### Funções do programa oficial
 
-Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-FERRAMENTAS` Menu Ferramentas (P1, implementada)
+- `M-DECL-FECHAR` Declaração > Fechar (P2, implementada)
 - `M-DECL-RECUPERAR-ONLINE` Declaração > Recuperar On-line (F7) (P2, implementada)
 - `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, implementada)
 

@@ -240,6 +240,10 @@ ferr("gerar_relatorio_declaracao", "Gera relatório da declaração (toda ou par
 ferr("gravar_relatorio", "Grava na pasta, em PDF ou HTML com layout próprio, o relatório da declaração (resumo ou partes) ou o texto de outra ferramenta (Darf, comunicação de saída, relação de declarações).", "arquivo|declaracao|texto, partes?, formato (pdf|html), arquivo_destino", "sim", "nenhum")
 ferr("gerar_comunicacao_saida", "Gera a comunicação à fonte pagadora de saída definitiva do país, uma por fonte.", "id_declaracao, fontes?, destino", "sim", "model")
 ferr("instruir_transmissao", "Gera o passo a passo e o checklist para concluir no PGD oficial: abrir ou restaurar a declaração, verificar pendências, entregar com ou sem certificado, guardar o recibo e pagar o Darf.", "id_declaracao", "não", "dbk")
+ferr("pre_validar_entrega", "Reúne num relatório o que o validador da Receita confere na recepção e que dá para conferir localmente (CRC de cada linha, NR_CONTROLE do header, T9, NR_HASH do header e do R9, pendências de erro e totais recalculados) e responde se o arquivo está apto.", "arquivo", "não", "dbk")
+ferr("fechar_declaracao", "Equivalente ao Fechar: espera a gravação em andamento no arquivo, confere os controles do que ficou no disco e informa a última cópia de segurança.", "arquivo", "não", "model")
+ferr("diagnosticar_servidor", "Mostra versão, perfil, grupos e quantidade de ferramentas, pasta autorizada (só o nome), modo somente leitura, memória do processo e versões do Node e da plataforma, sem dados pessoais.", "nenhum", "não", "nenhum")
+ferr("enviar_sugestao", "Monta o texto de uma issue (sugestão, problema ou dúvida) com modelo e sem dados pessoais e devolve o link do repositório para o usuário abrir; não acessa a rede.", "tipo, titulo, descricao, ferramenta?", "não", "nenhum")
 ferr("orientar_servico_externo", "Explica como usar um serviço que só existe fora do MCP Imposto de Renda (gov.br, pré-preenchida, Carnê-Leão Web, e-CAC, débito automático, extrato, Darf oficial, GCAP, LCAR, Sicalc, Correios) e o que trazer de volta.", "servico, contexto?", "não", "tabelas")
 
 # ---------------------------------------------------------------- estado atual do servidor (packages/mcp/src/ferramentas)
@@ -269,7 +273,8 @@ EXISTENTES = [
     "importar_informe_rendimentos", "importar_informe_plano_saude", "transferir_excedente_isencao_65",
     # validação, tabelas e arquivos
     "validar_documento", "validar_declaracao", "listar_tabela", "buscar_codigo", "listar_arquivos",
-    "verificar_integridade_arquivo", "listar_declaracoes", "gravar_relatorio",
+    "verificar_integridade_arquivo", "listar_declaracoes", "gravar_relatorio", "pre_validar_entrega",
+    "fechar_declaracao",
     # saídas
     "gerar_darf", "instruir_transmissao", "gerar_relatorio_declaracao", "gerar_comunicacao_saida",
     # calculadoras
@@ -278,7 +283,7 @@ EXISTENTES = [
     "verificar_obrigatoriedade", "converter_moeda",
     # orientação
     "orientar_servico_externo", "verificar_versao_tabelas", "obter_ajuda", "calcular_expressao",
-    "consultar_atalhos",
+    "consultar_atalhos", "diagnosticar_servidor", "enviar_sugestao",
 ]
 EDICAO = "edição pelo fluxo abrir, alterar o modelo, validar e gravar o DBK com cópia de segurança"
 ONLINE = "serviço online: só orientação com `orientar_servico_externo`; o MCP Imposto de Renda não acessa a rede"
@@ -337,6 +342,10 @@ STATUS.update({
     "gravar_relatorio": ("implementada", ["gravar_relatorio"], "PDF 1.4 A4 ou HTML autocontido, sem metadados de autor ou ferramenta"),
     "calcular_expressao": ("implementada", ["calcular_expressao"], "aritmética racional exata com arredondamento nas casas pedidas; dispensa o botão transportar porque o valor vai direto para a ferramenta da ficha"),
     "consultar_atalhos": ("implementada", ["consultar_atalhos", "obter_ajuda"], "atalhos extraídos das notas de mapeamento com o status de cobertura de cada função"),
+    "pre_validar_entrega": ("implementada", ["pre_validar_entrega", "verificar_integridade_arquivo", "validar_declaracao"], "confere localmente o que o validador confere na recepção (controles, hashes, pendências e totais); a recepção final continua no servidor da Receita"),
+    "fechar_declaracao": ("implementada", ["fechar_declaracao", "listar_copias_seguranca"], "não há declaração aberta em memória: confirma que a fila de gravação do arquivo está livre, confere os controles e aponta a última cópia de segurança"),
+    "diagnosticar_servidor": ("implementada", ["diagnosticar_servidor"], "somente leitura; só o nome da pasta, nunca o caminho, e nenhum dado da declaração"),
+    "enviar_sugestao": ("implementada", ["enviar_sugestao"], "somente leitura e sem rede: o texto sai sem CPF, CNPJ, valores, e-mails e números longos, e o usuário abre o link e envia"),
     "importar_declaracao_anterior": ("implementada", ["importar_declaracao_anterior", "listar_declaracoes"], "lê o DEC/DBK de 2025 com o leiaute de 2025 e migra o que o programa recupera (identificação, dependentes, alimentandos, fontes e beneficiários sem valores, bens e dívidas com saldo, atividade rural e recibo), com relatório do que falta preencher e sem sobrescrever em silêncio"),
     "listar_declaracoes": ("implementada", ["listar_declaracoes"], "situação em preenchimento, gravada para entrega ou transmitida (recibo registrado), filtro por nome, CPF e situação, ordenação e aviso de declarações do exercício anterior; sem limite de uma aberta por vez"),
     "listar_ganhos_capital": ("implementada", ["listar_ganhos_capital"], "demonstrativos tipados (60 a 63, 65, 66, 68, 69, 73 a 76) e os registros 64, 67, 70 a 72, 77 e 78 decodificados campo a campo pelo leiaute; os não tipados são preservados na gravação"),
@@ -402,14 +411,14 @@ regra(r"M-INICIAL-TRANSMITIDAS", T("listar_declaracoes", "registrar_recibo", "cr
 regra(r"M-INICIAL-BOASVINDAS", T("obter_ajuda"), "tabelas", "P2", "Botão gov.br: " + IMP_GOVBR)
 regra(r"M-DECL-NOVA", T("criar_declaracao"), "model", "P0")
 regra(r"M-DECL-ABRIR", T("abrir_declaracao"), "model", "P0", "Sem a restrição de uma declaração aberta por vez.")
-regra(r"M-DECL-FECHAR", NA, "model", "P2", "Mantida como não se aplica: cada ferramenta abre, altera e grava o arquivo na mesma chamada, então não existe declaração aberta para fechar.")
+regra(r"M-DECL-FECHAR", T("fechar_declaracao"), "model", "P2", "Cada ferramenta abre, altera e grava o arquivo na mesma chamada, então não há o que salvar ao fechar; o equivalente real é `fechar_declaracao`, que espera a gravação em andamento no arquivo, confere os controles do que ficou no disco e informa a última cópia de segurança.")
 regra(r"M-DECL-EXCLUIR", T("excluir_declaracao"), "model", "P1", "Exige confirmação explícita.")
 regra(r"M-DECL-RETIFICAR", T("criar_retificadora"), "model", "P1")
 regra(r"M-DECL-PENDENCIAS", T("listar_pendencias"), "validate", "P0", "Catálogo de mensagens próprio, com severidade erro ou aviso.")
 regra(r"M-DECL-ENTREGAR", T("gerar_dbk", "listar_pendencias", "instruir_transmissao"), "dbk", "P0", IMP_TRANSMISSAO)
 regra(r"M-DECL-SALVAR-ONLINE", T("gravar_copia_seguranca", "orientar_servico_externo"), "model", "P2", IMP_GOVBR)
 regra(r"M-DECL-RECUPERAR-ONLINE", T("restaurar_copia_seguranca", "orientar_servico_externo"), "model", "P2", IMP_GOVBR)
-regra(r"M-DECL-SAIR", NA, "nenhum", "P2", "Mantida como não se aplica: encerrar o programa é ação da janela; o servidor MCP é encerrado pelo cliente e não guarda estado entre chamadas.")
+regra(r"M-DECL-SAIR", NA, "nenhum", "P2", "Mantida como não se aplica: encerrar o programa é ação da janela; o servidor MCP é encerrado pelo cliente e não guarda estado entre chamadas, então não há nada a salvar nem a liberar ao sair. Para conferir um arquivo antes de encerrar, use `fechar_declaracao`.")
 regra(r"M-DECL-CONVERTER", T("definir_identificacao"), "model", "P2", "Função inferida; confirmar no programa.")
 regra(r"M-IMPR-DECLARACAO", T("gerar_relatorio_declaracao"), "model", "P1", "Layout próprio, toda ou por partes, em Markdown, HTML ou PDF (`gravar_relatorio`).")
 regra(r"M-IMPR-REND-PF", T("gerar_relatorio_declaracao"), "model", "P2", "Parte `rendimentos_pf`.")
@@ -439,8 +448,8 @@ regra(r"M-FERR-RECNOMES", T("buscar_nome_por_documento"), "model", "P2")
 regra(r"M-FERR-LOGIN-GOVBR", T("orientar_servico_externo"), "nenhum", "P2", IMP_GOVBR)
 regra(r"M-FERR-PAGINAS", T("obter_ajuda"), "tabelas", "P2", "Links públicos.")
 regra(r"M-FERR-LEAOZINHO", T("obter_ajuda", "consultar_atalhos"), "nenhum", "P2", "Função inferida do nome da ação (LeaozinhoAction), sem texto na Ajuda; o papel de assistente é do próprio MCP, com a ajuda por ficha, os atalhos e os prompts preparar_declaracao e revisar_malha_fina.")
-regra(r"M-FERR-MEMORIA", NA, "nenhum", "P2", "Mantida como não se aplica: a função só é conhecida pelo nome da ação MemoriaIRPFAction, sem citação na Ajuda nem efeito na declaração, e não há como saber o que ela faz sem ler o código do programa, o que as regras do projeto vedam.")
-regra(r"M-FERR-AVALIACAO", NA, "nenhum", "P2", "Mantida como não se aplica: é a pesquisa de satisfação do programa oficial enviada à Receita, sem efeito na declaração; o MCP não coleta opinião nem fala com a Receita.")
+regra(r"M-FERR-MEMORIA", T("diagnosticar_servidor"), "nenhum", "P2", "Função inferida do nome da ação MemoriaIRPFAction, sem citação na Ajuda nem efeito na declaração. O equivalente útil a um assistente é `diagnosticar_servidor`, somente leitura: versão, perfil, grupos e quantidade de ferramentas, pasta autorizada (só o nome), modo somente leitura, memória do processo e versões do Node e da plataforma, sem caminho absoluto nem dado pessoal.")
+regra(r"M-FERR-AVALIACAO", T("enviar_sugestao"), "nenhum", "P2", "A pesquisa de satisfação do programa oficial vai para a Receita; o equivalente aqui é a opinião sobre o próprio MCP Imposto de Renda: `enviar_sugestao` monta o texto da issue com modelo, sem CPF, valores nem dados da declaração, e devolve o link do repositório para o usuário abrir e enviar. Não acessa a rede.")
 regra(r"M-FERR-INFO-CALCULO", T("consultar_tabela"), "tabelas", "P2")
 regra(r"M-AJUDA-CONTEXTUAL", T("obter_ajuda", "calcular_imposto"), "tabelas", "P1", "`calcular_imposto` com `detalhar` cumpre o F1 do Resumo (procedência dos valores).")
 regra(r"M-AJUDA-(DOCUMENTOS|SOBRE)", T("obter_ajuda"), "tabelas", "P2")
@@ -599,7 +608,7 @@ regra(r"S-GRAVAR-ENTREGA", T("gerar_dbk"), "dbk", "P0", "Nome padrão CPF-IRPF-A
 regra(r"S-TRANSMISSAO", T("instruir_transmissao"), "dbk", "P0", IMP_TRANSMISSAO)
 regra(r"S-RECIBO", T("registrar_recibo", "validar_documento"), "importacao", "P1", IMP_RECIBO)
 regra(r"S-NOTIFICACAO-MAED", T("calcular_multa_atraso"), "calc", "P2", "Notificação oficial só existe após a entrega.")
-regra(r"S-VALIDADOR", NA, "nenhum", "P2", "Mantida como não se aplica: os registros VC e MC são escritos pela Receita na recepção da declaração e não existem antes da entrega; depois dela, `registrar_recibo` guarda o número do recibo.")
+regra(r"S-VALIDADOR", T("pre_validar_entrega"), "dbk", "P2", "O validador da Receita confere integridade, hash e regras na recepção. `pre_validar_entrega` reúne num relatório o que dá para conferir localmente (CRC de cada linha, NR_CONTROLE do header, T9, NR_HASH do header e do R9, pendências de erro e totais recalculados) e responde se o arquivo está apto. A recepção final continua no servidor da Receita, que grava os registros VC e MC e emite o recibo; depois dela, `registrar_recibo` guarda o número.")
 regra(r"S-CALAMIDADE", T("listar_pendencias", "consultar_tabela"), "validate", "P2", "Regra inferida; confirmar.")
 regra(r"S-ERROS-FREQ", T("listar_pendencias", "validar_documento"), "validate", "P0", "Também normalização de valores monetários na entrada.")
 regra(r"S-REQUISITOS", T("instruir_transmissao"), "nenhum", "P2")
@@ -760,12 +769,12 @@ m.append("")
 m.append(f"{len(F)} ferramentas. \"Escreve em disco\" indica se a ferramenta altera a base local de declarações ou grava arquivo. \"Itens\" é o número de linhas da matriz que citam a ferramenta.")
 m.append("")
 grupos = [
-    ("Ciclo de vida e navegação", ["criar_declaracao", "listar_declaracoes", "abrir_declaracao", "excluir_declaracao", "criar_retificadora", "registrar_recibo", "gravar_copia_seguranca", "restaurar_copia_seguranca", "listar_fichas", "listar_lancamentos", "editar_lancamento", "remover_lancamento"]),
+    ("Ciclo de vida e navegação", ["criar_declaracao", "listar_declaracoes", "abrir_declaracao", "excluir_declaracao", "criar_retificadora", "registrar_recibo", "gravar_copia_seguranca", "restaurar_copia_seguranca", "fechar_declaracao", "listar_fichas", "listar_lancamentos", "editar_lancamento", "remover_lancamento"]),
     ("Fichas da declaração", ["definir_identificacao", "adicionar_dependente", "adicionar_alimentando", "adicionar_rendimento_pj", "definir_rendimentos_pf_exterior", "adicionar_rendimento_isento", "adicionar_rendimento_exclusivo", "adicionar_rendimento_exigibilidade_suspensa", "adicionar_rra", "definir_imposto_pago", "adicionar_pagamento", "adicionar_doacao", "adicionar_doacao_direta_declaracao", "adicionar_bem", "aplicar_caso_especial_bem", "repetir_valores_bens", "adicionar_divida", "definir_espolio", "adicionar_herdeiro", "definir_partilha_bem", "adicionar_doacao_eleitoral", "definir_saida_definitiva", "definir_informacoes_bancarias", "definir_opcao_tributacao"]),
     ("Demonstrativos", ["adicionar_imovel_rural", "definir_receitas_despesas_rurais", "definir_apuracao_rural", "definir_rebanho", "adicionar_bem_rural", "adicionar_divida_rural", "definir_renda_variavel", "definir_fii_fiagro", "listar_ganhos_capital"]),
     ("Importações", ["importar_declaracao_anterior", "importar_pre_preenchida", "importar_informe_rendimentos", "importar_informe_plano_saude", "importar_carne_leao", "importar_gcap", "importar_livro_caixa_rural", "ler_informe"]),
-    ("Cálculo, validação e tabelas", ["calcular_imposto", "listar_pendencias", "verificar_obrigatoriedade", "simular_quotas", "gerar_darf", "calcular_acrescimos_moratorios", "calcular_multa_atraso", "calcular_rra", "transferir_excedente_isencao_65", "converter_moeda", "calcular_expressao", "consultar_atalhos", "atualizar_custo_bem", "calcular_condicao_residencia", "calcular_ganho_capital", "calcular_preco_medio", "calcular_carne_leao", "validar_documento", "consultar_tabela", "obter_ajuda", "buscar_nome_por_documento", "verificar_versao_tabelas"]),
-    ("Saídas e etapa final no PGD", ["gerar_dbk", "gerar_relatorio_declaracao", "gravar_relatorio", "gerar_comunicacao_saida", "instruir_transmissao", "orientar_servico_externo"]),
+    ("Cálculo, validação e tabelas", ["calcular_imposto", "listar_pendencias", "verificar_obrigatoriedade", "simular_quotas", "gerar_darf", "calcular_acrescimos_moratorios", "calcular_multa_atraso", "calcular_rra", "transferir_excedente_isencao_65", "converter_moeda", "calcular_expressao", "consultar_atalhos", "atualizar_custo_bem", "calcular_condicao_residencia", "calcular_ganho_capital", "calcular_preco_medio", "calcular_carne_leao", "validar_documento", "consultar_tabela", "obter_ajuda", "buscar_nome_por_documento", "verificar_versao_tabelas", "diagnosticar_servidor", "enviar_sugestao"]),
+    ("Saídas e etapa final no PGD", ["gerar_dbk", "pre_validar_entrega", "gerar_relatorio_declaracao", "gravar_relatorio", "gerar_comunicacao_saida", "instruir_transmissao", "orientar_servico_externo"]),
 ]
 listadas = [n for _, ns in grupos for n in ns]
 if sorted(listadas) != sorted(F):

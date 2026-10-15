@@ -6,7 +6,7 @@
 
 Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). Ajuda do programa e orientação sobre serviços que só existem fora do servidor.
 
-**5 ferramentas**, 0 delas gravam na pasta autorizada. O grupo funciona mesmo sem `--dir`.
+**7 ferramentas**, 0 delas gravam na pasta autorizada. O grupo funciona mesmo sem `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
@@ -15,6 +15,8 @@ Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem a
 | [`verificar_versao_tabelas`](#verificar_versao_tabelas) | Versão das tabelas embarcadas | não |
 | [`calcular_expressao`](#calcular_expressao) | Calculadora | não |
 | [`consultar_atalhos`](#consultar_atalhos) | Atalhos e botões do programa oficial | não |
+| [`diagnosticar_servidor`](#diagnosticar_servidor) | Diagnóstico do servidor | não |
+| [`enviar_sugestao`](#enviar_sugestao) | Preparar sugestão ou relato para o projeto | não |
 
 ## `orientar_servico_externo`
 
@@ -448,5 +450,191 @@ Aparece em 4 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 - `M-FERR-LEAOZINHO` Assistente "Leãozinho" (inferido) (P2, implementada)
 - `M-AJUDA-ATALHOS` Exibir atalhos (P2, implementada)
 - `M-AJUDA-ACESSIBILIDADE` Acessibilidade (F11) e leitura de tela (P2, implementada)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `diagnosticar_servidor`
+
+**Diagnóstico do servidor**. Não grava nada.
+
+Mostra o estado do próprio servidor do MCP Imposto de Renda: versão, versão das tabelas, perfil, grupos e quantidade de ferramentas registradas, se há pasta autorizada (só o nome da pasta, nunca o caminho), modo somente leitura, uso de memória do processo e versões do Node e da plataforma. Não lê a declaração nem devolve dado pessoal. Útil para conferir a instalação, para entender por que uma ferramenta não aparece e para anexar a um relato de problema.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| sim | não | sim | não |
+
+### Parâmetros
+
+Sem parâmetros.
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `versao` | texto |   |
+| `tabelas` | texto |   |
+| `perfil` | texto |   |
+| `somenteLeitura` | booleano |   |
+| `totalFerramentas` | número |   |
+| `grupos` | lista de objeto |   |
+| `pasta` | objeto |   |
+| `memoria` | objeto |   |
+| `node` | texto |   |
+| `plataforma` | texto |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{}
+```
+
+Resposta em texto:
+
+```text
+MCP Imposto de Renda 0.1.0 (tabelas IRPF 2026 1.5), perfil completo.
+166 ferramenta(s) em 11 grupo(s): calculo 6, declaracao 4, fichas 1, edicao 105, ciclo 20, validacao 2, tabelas 2, arquivos 5, saidas 4, calculadoras 10, orientacao 7.
+Pasta autorizada: <pasta> (limite de 20 MB por arquivo).
+Memória do processo: 120 MB residentes, heap 40 de 60 MB, externa 3 MB.
+Node v22.20.0, plataforma linux x64.
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "versao": "0.1.0",
+  "tabelas": "IRPF 2026 1.5",
+  "perfil": "completo",
+  "somenteLeitura": false,
+  "totalFerramentas": 166,
+  "grupos": [
+    {
+      "nome": "calculo",
+      "ferramentas": 6
+    },
+    {
+      "nome": "declaracao",
+      "ferramentas": 4
+    },
+    "(+9 itens omitidos)"
+  ],
+  "pasta": {
+    "configurada": true,
+    "nome": "<pasta>",
+    "limiteArquivoMB": 20
+  },
+  "memoria": {
+    "rssMB": 120,
+    "heapUsadoMB": 40,
+    "heapTotalMB": 60,
+    "externaMB": 3
+  },
+  "node": "v22.20.0",
+  "plataforma": "linux x64"
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-FERR-MEMORIA` Memória do IRPF (inferido) (P2, implementada)
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `enviar_sugestao`
+
+**Preparar sugestão ou relato para o projeto**. Não grava nada.
+
+Monta o texto de uma issue para o repositório público do MCP Imposto de Renda (sugestão, problema ou dúvida), com modelo, versão, perfil e plataforma, e devolve o link para o usuário abrir e enviar ele mesmo. Não acessa a rede e não envia nada. Tira do título e da descrição CPF, CNPJ, valores em reais, e-mails e números longos; mesmo assim, peça ao usuário que releia antes de publicar, porque nomes não são detectados. Nunca inclua dados da declaração.
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| sim | não | sim | não |
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `tipo` | `"sugestao"` \| `"problema"` \| `"duvida"` | **sim** | sugestao, problema ou duvida. |
+| `titulo` | texto | **sim** | Resumo em uma linha, sem dados pessoais. (até 120 caracteres) |
+| `descricao` | texto | **sim** | O que aconteceu ou o que se espera, sem CPF, nomes, valores nem arquivos. (até 2000 caracteres) |
+| `ferramenta` | texto | não | Nome da ferramenta envolvida, se houver. (formato `^[a-z0-9_]{1,64}$`) |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `link` | texto |   |
+| `linkPreenchido` | texto |   |
+| `titulo` | texto |   |
+| `corpo` | texto |   |
+| `removidos` | número | Trechos sensíveis retirados do texto. |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "tipo": "sugestao",
+  "titulo": "Ler o informe de rendimentos em PDF",
+  "descricao": "Seria útil importar o informe de rendimentos direto do PDF do banco, sem copiar o texto.",
+  "ferramenta": "importar_informe_rendimentos"
+}
+```
+
+Resposta em texto:
+
+```text
+Texto da issue pronto. Abra https://github.com/ALASTecnology/mcp-imposto-de-renda/issues/new (ou o link preenchido abaixo), releia e envie: o MCP Imposto de Renda não envia nada.
+Nenhum trecho sensível encontrado; mesmo assim, confira se não há nomes.
+
+Título: [Sugestão] Ler o informe de rendimentos em PDF
+
+## Sugestão
+
+Seria útil importar o informe de rendimentos direto do PDF do banco, sem copiar o texto.
+
+## Contexto
+
+- Ferramenta: importar_informe_rendimentos
+- Versão do servidor: 0.1.0
+- Perfil: completo
+- Tabelas: IRPF 2026 1.5
+- Node e plataforma: v22.20.0, linux x64
+
+## Conferência
+
+- [ ] Reli o texto e ele não tem CPF, CNPJ, nomes, valores, número de recibo nem arquivo da declaração.
+
+Link preenchido: https://github.com/ALASTecnology/mcp-imposto-de-renda/issues/new?title=%5BSugest%C3%A3o%5D+Ler+o+informe+de+rendimentos+em+PDF&body=%23%23+Sugest%C3%A3o%0A%0ASeria+%C3%BAtil+importar+o+informe+de+rendimentos+direto+do+PDF+do+banco%2C+sem+copiar+o+texto.%0A%0A%23%23+Contexto%0A%0A-+Ferramenta%3A+importar_informe_rendimentos%0A-+Vers%C3%A3o+do+servidor%3A+0.1.0%0A-+Perfil%3A+completo%0A-+Tabelas%3A+IRPF+2026+1.5%0A-+Node+e+plataforma%3A+v22.20.0%2C+linux+x64%0A%0A%23%23+Confer%C3%AAncia%0A%0A-+%5B+%5D+Reli+o+texto+e+ele+n%C3%A3o+tem+CPF%2C+CNPJ%2C+nomes%2C+valores%2C+n%C3%BAmero+de+recibo+nem+arquivo+da+declara%C3%A7%C3%A3o.&labels=enhancement
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "link": "https://github.com/ALASTecnology/mcp-imposto-de-renda/issues/new",
+  "linkPreenchido": "https://github.com/ALASTecnology/mcp-imposto-de-renda/issues/new?title=%5BSugest%C3%A3o%5D+Ler+o+informe+de+rendimentos+em+PDF&body=%23%23+Sugest%C3%A3o%0A%0ASeria+%C3%BAtil+importar+o+informe+de+rendimentos+direto+do+PDF+do+banco%2C+sem+co (...)",
+  "titulo": "[Sugestão] Ler o informe de rendimentos em PDF",
+  "corpo": "## Sugestão\n\nSeria útil importar o informe de rendimentos direto do PDF do banco, sem copiar o texto.\n\n## Contexto\n\n- Ferramenta: importar_informe_rendimentos\n- Versão do servidor: 0.1.0\n- Perfil: completo\n- Tabelas: IRPF 2026 1.5\n- Node e  (...)",
+  "removidos": 0
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 1 linha da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-FERR-AVALIACAO` Avaliação do programa (inferido) (P2, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

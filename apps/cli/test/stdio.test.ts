@@ -198,13 +198,13 @@ describe("mcp-imposto-de-renda via stdio", () => {
     const nomes = ((await p.resposta(2)).result as { tools: { name: string }[] }).tools.map(
       (t) => t.name,
     );
-    expect(nomes).toHaveLength(84);
+    expect(nomes).toHaveLength(85);
     expect(nomes).toContain("adicionar_bem");
     expect(nomes).toContain("editar_lancamento");
     expect(nomes).not.toContain("editar_bem");
     p.filho.stdin.end();
     expect(await p.saida()).toEqual({ codigo: 0, sinal: null });
-    expect(p.stderr()).toContain("perfil essencial, 84 ferramentas");
+    expect(p.stderr()).toContain("perfil essencial, 85 ferramentas");
   }, 30_000);
 
   it("com perfil inválido explica o erro e sai com código 2", async () => {

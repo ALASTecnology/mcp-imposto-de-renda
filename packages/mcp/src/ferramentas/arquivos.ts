@@ -34,6 +34,8 @@ const EXERCICIO_ATUAL = 2026;
 
 /** Nome padrão do programa: `CPF-IRPF-A-2026-2025-ORIGI.DBK` (A ajuste, E espólio, S saída). */
 const RX_NOME_PADRAO = /^(\d{11})-IRPF-([AES])-(\d{4})-(\d{4})-(ORIGI|RETIF)\.(DBK|DEC)$/i;
+/** Arquivo exportado pelo GCAP para o IRPF (`<CPF>-DDMM-DDMM-GCAP-AAAA.DEC`): use importar_gcap. */
+const RX_EXPORTACAO_GCAP = /-\d{4}-\d{4}-GCAP-\d{4}\.DEC$/i;
 const TIPO_POR_LETRA = { A: "ajusteAnual", E: "finalEspolio", S: "saidaDefinitiva" } as const;
 
 type Situacao = "emPreenchimento" | "gravadaParaEntrega" | "transmitida";
@@ -138,7 +140,10 @@ export const grupoArquivos: GrupoFerramentas = {
       },
       async ({ nome, cpf, situacao, ordenar_por }) => {
         const pasta = exigirPasta(r.ctx);
-        const arquivos = (await pasta.listar(EXT_DECLARACAO)).slice(0, MAX_DECLARACOES);
+        // O arquivo que o GCAP exporta para o IRPF também termina em .DEC, mas não é declaração.
+        const arquivos = (await pasta.listar(EXT_DECLARACAO))
+          .filter((a) => !RX_EXPORTACAO_GCAP.test(a.nome))
+          .slice(0, MAX_DECLARACOES);
         const itens: ItemDeclaracao[] = [];
         for (const a of arquivos) {
           const padrao = RX_NOME_PADRAO.exec(a.nome);

@@ -956,7 +956,9 @@ export const grupoEdicao: GrupoFerramentas = {
           throw new EntradaInvalidaError("Informe um CPF (11 dígitos) ou CNPJ (14 dígitos).");
         }
         const pasta = exigirPasta(r.ctx);
-        const arquivos = (await pasta.listar(EXT_DECLARACAO)).slice(0, 100);
+        const arquivos = (await pasta.listar(EXT_DECLARACAO))
+          .filter((a) => !/-\d{4}-\d{4}-GCAP-\d{4}\.DEC$/i.test(a.nome))
+          .slice(0, 100);
         const encontrados: { arquivo: string; ficha: string; nome: string }[] = [];
         let lidos = 0;
         for (const a of arquivos) {

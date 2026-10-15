@@ -9,12 +9,20 @@
  *   esta ferramenta recebe o arquivo que o usuário trouxe (a declaração gravada pelo programa
  *   oficial depois de importar a pré-preenchida) e cria a declaração com o nome padrão, sem
  *   apagar em silêncio uma que já exista.
+ * - `importar_gcap`: "Importar dados de Ganhos de Capital". Lê o arquivo que o GCAP 2025 grava em
+ *   "Exportar para o IRPF2026" (`<CPF>-DDMM-DDMM-GCAP-2025.DEC`, zip com o XML do demonstrativo)
+ *   e o inclui na declaração com `incluirDemonstrativoGcap` do core, conferido com os pares de
+ *   arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/gcap/2026`).
  */
+import { inflateRawSync } from "node:zlib";
 import {
   type Declaracao,
+  ExportacaoGcapInvalidaError,
   FICHAS,
   type Ficha,
+  incluirDemonstrativoGcap,
   lerArquivo,
+  lerDemonstrativoGcapXml,
   migrarDeclaracaoAnterior,
 } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
@@ -23,7 +31,14 @@ import { EntradaInvalidaError } from "../erros.js";
 import { objetoJson } from "../serializacao.js";
 import { lerReciboRegistrado } from "./ciclo-recibo.js";
 import { EXT_DECLARACAO, exigirPasta, zNomeArquivo } from "./comum.js";
-import { gravarDeclaracao, SAIDA_GRAVACAO, textoGravacao, zArquivoDestino } from "./fluxo.js";
+import {
+  editarDeclaracao,
+  gravarDeclaracao,
+  SAIDA_GRAVACAO,
+  textoGravacao,
+  zArquivoDestino,
+  zArquivoEdicao,
+} from "./fluxo.js";
 import type { RegistroFerramentas } from "./tipos.js";
 
 const LETRA = { ajusteAnual: "A", saidaDefinitiva: "S", finalEspolio: "E" } as const;
@@ -68,6 +83,45 @@ function fichasPreenchidas(dec: Declaracao): string[] {
     }
   }
   return out;
+}
+
+/** XML do demonstrativo de dentro do zip exportado pelo GCAP (entradas deflate ou armazenadas). */
+export function xmlDaExportacaoGcap(bytes: Uint8Array): string {
+  const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  // Diretório central: tamanhos e posições confiáveis mesmo com descritor de dados.
+  let fim = -1;
+  for (let q = bytes.length - 22; q >= Math.max(0, bytes.length - 65_557); q--) {
+    if (dv.getUint32(q, true) === 0x06054b50) {
+      fim = q;
+      break;
+    }
+  }
+  if (fim < 0) {
+    throw new EntradaInvalidaError(
+      "O arquivo não é o exportado pelo GCAP (zip): use o .DEC que o GCAP 2025 grava em Exportar para o IRPF2026.",
+    );
+  }
+  const total = dv.getUint16(fim + 10, true);
+  let q = dv.getUint32(fim + 16, true);
+  for (let i = 0; i < total && q + 46 <= bytes.length; i++) {
+    const metodo = dv.getUint16(q + 10, true);
+    const comprimido = dv.getUint32(q + 20, true);
+    const nomeLen = dv.getUint16(q + 28, true);
+    const extraLen = dv.getUint16(q + 30, true);
+    const comentarioLen = dv.getUint16(q + 32, true);
+    const local = dv.getUint32(q + 42, true);
+    const nome = new TextDecoder().decode(bytes.subarray(q + 46, q + 46 + nomeLen));
+    if (/\.xml$/i.test(nome)) {
+      const inicio = local + 30 + dv.getUint16(local + 26, true) + dv.getUint16(local + 28, true);
+      const dados = bytes.subarray(inicio, inicio + comprimido);
+      if (metodo !== 0 && metodo !== 8) {
+        throw new EntradaInvalidaError(`Compressão ${metodo} não suportada no arquivo do GCAP.`);
+      }
+      return new TextDecoder("utf-8").decode(metodo === 8 ? inflateRawSync(dados) : dados);
+    }
+    q += 46 + nomeLen + extraLen + comentarioLen;
+  }
+  throw new EntradaInvalidaError("O arquivo do GCAP não contém o XML do demonstrativo.");
 }
 
 const zRecibo = z
@@ -185,6 +239,69 @@ export function registrarImportacoesDeclaracao(r: RegistroFerramentas): void {
       return {
         texto: textoGravacao(res, resumo),
         dados: objetoJson({ ...res, fichas }),
+      };
+    },
+  );
+
+  r.ferramenta(
+    "importar_gcap",
+    {
+      titulo: "Importar o demonstrativo do GCAP",
+      descricao:
+        'Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital), mantendo o que foi digitado nesses isentos. O CPF do demonstrativo precisa ser o do titular ou de um dependente. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança). Demonstrativos com moeda estrangeira em espécie ainda não são convertidos: importe-os no programa oficial.',
+      escreve: true,
+      entrada: {
+        arquivo: zArquivoEdicao,
+        arquivo_gcap: zNomeArquivo(
+          'Arquivo exportado pelo GCAP 2025 (ex.: "12345678909-0101-3112-GCAP-2025.DEC").',
+        ),
+        arquivo_destino: zArquivoDestino,
+      },
+      saida: {
+        ...SAIDA_GRAVACAO,
+        cpfDemonstrativo: z.string(),
+        alienacoes: z.number().int(),
+        impostoDevido: z.union([z.number().int(), z.string()]),
+        rendimentoIsento: z.union([z.number().int(), z.string()]),
+        rendimentoExclusivo: z.union([z.number().int(), z.string()]),
+      },
+    },
+    async (a) => {
+      const bytes = await exigirPasta(r.ctx).ler(a.arquivo_gcap, [".DEC"]);
+      let demonstrativo: ReturnType<typeof lerDemonstrativoGcapXml>;
+      try {
+        demonstrativo = lerDemonstrativoGcapXml(xmlDaExportacaoGcap(bytes));
+      } catch (e) {
+        if (e instanceof ExportacaoGcapInvalidaError) throw new EntradaInvalidaError(e.message);
+        throw e;
+      }
+      const res = await editarDeclaracao(r.ctx, a, (dec) => {
+        const cpfs = [dec.identificacao.cpf, ...dec.dependentes.map((d) => d.cpf)];
+        if (!cpfs.includes(demonstrativo.cpfBeneficiario)) {
+          throw new EntradaInvalidaError(
+            `O demonstrativo do GCAP é do CPF ${demonstrativo.cpfBeneficiario}, que não é o titular nem um dependente da declaração.`,
+          );
+        }
+        return incluirDemonstrativoGcap(dec, demonstrativo);
+      });
+      const t = demonstrativo.totais;
+      const isento = t.isentoPequenoValor + t.isentoUnicoImovel + t.isentoReducao;
+      const resumo = [
+        `Demonstrativo do GCAP do CPF ${demonstrativo.cpfBeneficiario} importado de ${a.arquivo_gcap}: ${demonstrativo.alienacoes.length} alienação(ões).`,
+        `Imposto devido ${t.impostoDevido} centavos, rendimento isento transportado ${isento}, exclusivo ${t.rendimentoExclusivo}.`,
+        "O imposto do ganho de capital é pago em Darf (código 4600) até o último dia útil do mês seguinte à alienação; a declaração só informa.",
+      ].join("\n");
+      const { declaracao: _gravada, ...gravacao } = res;
+      return {
+        texto: textoGravacao(res, resumo),
+        dados: objetoJson({
+          ...gravacao,
+          cpfDemonstrativo: demonstrativo.cpfBeneficiario,
+          alienacoes: demonstrativo.alienacoes.length,
+          impostoDevido: t.impostoDevido,
+          rendimentoIsento: isento,
+          rendimentoExclusivo: t.rendimentoExclusivo,
+        }),
       };
     },
   );

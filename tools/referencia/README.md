@@ -27,6 +27,10 @@ pelo próprio desenvolvedor, como **biblioteca** para:
 - Java 17 ou superior com `javac` (testado com OpenJDK 27); `unzip` e `timeout` no `PATH`.
 - O zip do programa em `vendor/rfb/irpf/IRPF2026-1.5.zip`, ou uma pasta já extraída com
   `irpf.jar`, `lib/` e `lib-modulos/`.
+- Só para os casos com `ganhosCapital`: o GCAP 2025 avulso em
+  `vendor/rfb/gcap/GCAP2025v1.6.zip` (ou `GCAP_DIR` com `GCAP.jar` e `lib/`). É o GCAP 2025, e não
+  o 2026, que exporta para o IRPF 2026: o GCAP 2026 abre "Exportar para o IRPF2027" e o IRPF 2026
+  só aceita arquivos `<CPF>-DDMM-DDMM-GCAP-2025.DEC`.
 
 ## Uso
 
@@ -50,6 +54,9 @@ Variáveis de ambiente:
 | `FIXTURES_DIR` | `packages/core/test/fixtures/dbk/2026` | destino dos `.DBK`/`.DEC` |
 | `JAVA`, `JAVAC` | `java`, `javac` | binários do JDK |
 | `TEMPO_MAXIMO` | `300` | limite em segundos de cada JVM |
+| `GCAP_DIR` | (vazio) | pasta já extraída do GCAP 2025; se vazia, o zip é extraído no cache |
+| `GCAP_ZIP` | `vendor/rfb/gcap/GCAP2025v1.6.zip` | zip do GCAP 2025 |
+| `GCAP_FIXTURES_DIR` | `packages/core/test/fixtures/gcap/2026` | destino dos arquivos exportados pelo GCAP |
 
 Cada caso roda numa JVM própria, headless (`-Djava.awt.headless=true`), com `user.home`,
 `user.dir` e `java.io.tmpdir` apontando para uma pasta temporária dentro do cache, apagada ao fim.
@@ -127,8 +134,56 @@ declaração, com valores no formato do programa (`"1234,56"`, datas `DDMMAAAA`)
 ```
 
 O motor ignora essas operações: elas só servem a fichas que não mudam o ajuste (conta, contato,
-renda variável). O ganho de capital não tem caso: a apuração do GCAP só roda pela interface
-gráfica do programa, e o arquivo sai com os valores zerados.
+renda variável). Ganho de capital usa o bloco `ganhosCapital` (seção seguinte): dentro do IRPF a
+apuração do GCAP só roda pela interface gráfica, e o arquivo sairia com os valores zerados.
+
+### Ganho de capital (`ganhosCapital`)
+
+Cada item é uma alienação, calculada pelo **GCAP 2025 avulso** e importada na declaração como faz
+o contribuinte ("Exportar para o IRPF2026" no GCAP e importação no IRPF):
+
+```json
+"ganhosCapital": [{"tipo": "imovel|movel|participacao", "descricao": "...", "natureza": "1",
+  "dataAquisicao": "DDMMAAAA", "dataAlienacao": "DDMMAAAA", "valorAlienacao": "...",
+  "custoCorretagem": "...", "custoAquisicao": "...", "impostoPago": "...",
+  "unicoImovel": false, "residencial": false, "conjuntoMesAcimaLimite": false,
+  "cnpj": "...", "quantidade": "...", "adquirente": {"cpf": "...", "nome": "..."},
+  "campos": [["getCaminho.doGetter", "valor no formato do programa"]]}]
+```
+
+`cnpj` e `quantidade` (quotas) valem só para participação; `campos` aplica operações extras na
+alienação, depois das demais. O fluxo, em `gcap/Gcap.java` e `src/ImportacaoGcap.java`:
+
+1. uma JVM com o GCAP (locale `pt_BR`, exigido para quantidades) cria o demonstrativo do titular
+   (01/01 a 31/12/2025, residente) e preenche cada alienação **na ordem da interface**: os
+   cálculos ficam nos observadores das entidades de negócio e disparam a cada campo; por exemplo,
+   "houve reforma" precisa vir antes do custo, e "possui outro imóvel" antes de "outra alienação
+   em 5 anos", senão o programa descarta o valor;
+2. confere que `VerificarPendenciasAction.obterPendencias` não aponta erros e grava o arquivo de
+   exportação com `GravadorCopiaSeguranca.exportarParaIRPF`, o mesmo método que a ação
+   "Exportar para o IRPF2026" chama (observado com JDI); o resultado sai em `gcap.json`;
+3. a JVM do IRPF descompacta o `.DEC` exportado (zip com o XML do demonstrativo e um
+   `config.properties`), lê o XML com `RepositorioXMLDadosGCAP.importaDados`, inclui o
+   demonstrativo na ficha GCAP e grava o golden com o bloco `esperadoGcap` e os DBK/DEC. A
+   consulta online da versão do GCAP, que o importador do programa faz antes, é pulada: sem rede
+   ela falha com "Não foi possível verificar a versão do demonstrativo de Ganhos de Capital.".
+
+O arquivo exportado e o XML de dentro dele vão para `packages/core/test/fixtures/gcap/2026/<id>.DEC`
+e `<id>.xml`: com o DBK/DEC gravado depois da importação, formam o par para conferir a importação
+do GCAP pelo MCP Imposto de Renda. O `config.properties` traz data, hora, versão da JVM e do
+sistema operacional, e o XML a data do último acesso; dois `gerar` seguidos não dão bytes iguais
+nesses arquivos (os DBK/DEC continuam determinísticos).
+
+Bloco `esperadoGcap` (valores em centavos; percentuais como o programa mostra, 6 casas):
+
+| Campo | Valor no GCAP |
+|---|---|
+| `alienacoes[].valorLiquido`, `custoAquisicao`, `ganhoBruto` | apuração: valor líquido, custo e ganho (resultado 1) |
+| `alienacoes[].reducoes.*` | Lei 7.713/1988, FR1, FR2, aplicação em outro imóvel, único imóvel e pequeno valor (só imóveis detalham) |
+| `alienacoes[].percentuaisReducao.*` | percentuais da Lei 7.713/1988, FR1 e FR2 |
+| `alienacoes[].ganhoTributavel`, `impostoDevido`, `aliquotaMedia` | cálculo do imposto |
+| `alienacoes[].rendimentoIsento`, `rendimentoTributavel` | consolidação: isento e valor transportado para tributação exclusiva |
+| `consolidacao.*` | consolidação do demonstrativo (isentos, tributáveis, imposto devido e pago) |
 
 Itens de isentos e exclusivos aceitam, opcionalmente, `beneficiario` (`T|D`), `cpfDependente`,
 `cnpj` e `nome` da fonte; sem eles o harness usa titular e uma fonte fictícia. Códigos fora das
@@ -162,8 +217,8 @@ O `.DBK`/`.DEC` é gravado com o modelo mais vantajoso selecionado, como faria o
 
 ## Casos gerados
 
-48 casos em `casos/`, todos com golden e fixtures (48 `.DBK` e 48 `.DEC`, 96 arquivos). O motor
-do MCP Imposto de Renda reproduz os 48 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
+55 casos em `casos/`, todos com golden e fixtures (55 `.DBK` e 55 `.DEC`, 110 arquivos). O motor
+do MCP Imposto de Renda reproduz os 55 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
 cada DBK em DEC reproduz a DEC do programa byte a byte.
 
 Os 31 casos iniciais cobrem: isento, cada faixa da tabela anual (isenção, 7,5%, 15%, 22,5%,
@@ -203,6 +258,19 @@ Os 11 casos seguintes conferem o leiaute de campos que os anteriores não preenc
 | `atividade-rural-resultado-01` | resultado rural positivo tributado pelo resultado |
 | `renda-variavel-comum-01` | lucro em operação comum de ações, com imposto pago |
 | `isentos-detalhados-01` | registros 83, 85, 86 e 89 (isentos 11, 19, 20, 21, 26; exclusivos outros e apostas) |
+
+Os 7 casos de ganho de capital, gerados com o GCAP 2025 e importados no IRPF (o simulador
+`calcular_ganho_capital` os reproduz ao centavo em `packages/mcp/test/calculadoras-gcap-golden.test.ts`):
+
+| Caso | O que confere |
+|---|---|
+| `gcap-imovel-reducao-01` | imóvel de 1985: Lei 7.713/1988 (20%), FR1 e FR2 em cascata, imposto pago em Darf (`VR_GCIMPOSTOPAGO`) |
+| `gcap-imovel-unico-01` | único imóvel até R$ 440.000,00: FR2 e isenção do restante (registro 87, código 06) |
+| `gcap-imovel-faixas-01` | ganho acima de R$ 5.000.000,00: faixas de 15% e 17,5% (registro 75) |
+| `gcap-movel-01` | bem móvel tributado a 15% |
+| `gcap-movel-pequeno-valor-01` | bem móvel até R$ 35.000,00 no mês: isento (registro 87, código 05) |
+| `gcap-participacao-01` | quotas fora de bolsa tributadas a 15% (registro 73) |
+| `gcap-participacao-pequeno-valor-01` | quotas de R$ 30.000,00: isentas, o limite é R$ 35.000,00 |
 
 Limitações observadas:
 
@@ -267,4 +335,6 @@ pendência (o usuário confirma de novo no PGD). É o caso de `pensao-alimentici
 | `src/Integridade.java` | CRC, hashes e NR_CONTROLE |
 | `src/Documentos.java` | CPF, CNPJ e NIT sintéticos determinísticos |
 | `src/Json.java` | leitor e escritor JSON mínimo, sem dependências |
+| `src/ImportacaoGcap.java` | importa no IRPF o arquivo exportado pelo GCAP e copia o par para as fixtures |
+| `gcap/Gcap.java` | JVM do GCAP 2025: preenche as alienações, confere pendências e exporta para o IRPF |
 | `casos/*.json` | entradas dos casos de referência |

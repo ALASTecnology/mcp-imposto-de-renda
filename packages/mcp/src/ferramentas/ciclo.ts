@@ -27,6 +27,7 @@ import { interpretarDeclaracao } from "../conversao/dbk-modelo.js";
 import { EntradaInvalidaError } from "../erros.js";
 import { normalizarValor } from "../esquemas.js";
 import { objetoJson } from "../serializacao.js";
+import { registrarFechamento } from "./ciclo-fechar.js";
 import { registrarImportacoesDeclaracao } from "./ciclo-importacao.js";
 import {
   type InformeRendimentos,
@@ -258,6 +259,7 @@ export const grupoCiclo: GrupoFerramentas = {
   exigePasta: true,
   registrar(r) {
     registrarImportacoesDeclaracao(r);
+    registrarFechamento(r);
     r.ferramenta(
       "criar_declaracao",
       {

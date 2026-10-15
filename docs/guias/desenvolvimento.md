@@ -177,3 +177,20 @@ cobertura.
 - **Formatação.** Biome (`pnpm format`). O CI (`.github/workflows/`) roda `lint`, `typecheck`,
   `test` e `build` em Node 22 e 24, além de cobertura, auditoria de dependências e análise estática;
   detalhes em [../testes.md](../testes.md).
+
+## Publicação no npm
+
+O pacote `mcp-imposto-de-renda` (pasta `apps/cli`) é publicado pelo workflow
+`.github/workflows/publicar.yml` quando uma tag de versão é enviada. O workflow roda lint,
+typecheck, testes e build, confere que a tag bate com a versão de `apps/cli/package.json` e
+publica com proveniência (`npm publish --provenance`).
+
+1. Crie um token de automação no npm (npmjs.com > Access Tokens > Generate New Token,
+   tipo *Automation* ou *Granular* com permissão de publicação).
+2. Cadastre-o no GitHub em Settings > Secrets and variables > Actions, com o nome `NPM_TOKEN`.
+3. Ajuste a versão em `apps/cli/package.json` e em `VERSAO_SERVIDOR` (`packages/mcp/src/servidor.ts`),
+   atualize o `CHANGELOG.md` e faça o commit.
+4. Crie e envie a tag: `git tag v0.1.0 && git push origin v0.1.0`.
+
+Para publicar manualmente, a partir de `apps/cli`: `npm login`, `pnpm build` na raiz e
+`npm publish --access public`.

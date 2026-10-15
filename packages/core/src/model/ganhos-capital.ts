@@ -33,6 +33,35 @@ export const zApuracaoGcap = z.object({
 });
 export type ApuracaoGcap = z.infer<typeof zApuracaoGcap>;
 
+/** Inteiro não negativo em escala fixa (cotações com 4 casas, custo médio com 6). */
+const zEscala = z
+  .union([z.bigint(), z.number().int().refine(Number.isSafeInteger, "inteiro seguro")])
+  .transform((v) => BigInt(v))
+  .refine((v) => v >= 0n, { message: "Valor não pode ser negativo" })
+  .default(0n);
+
+/**
+ * Bem adquirido no exterior (registros 64 e 69 com apuração em dólar): com que rendimentos o
+ * bem foi comprado, as cotações do dólar e os valores em dólar, em centavos de dólar. As
+ * cotações têm 4 casas decimais (`55000` = 5,5000). A parte de origem nacional é convertida
+ * pela cotação da aquisição; a de origem estrangeira é apurada em dólar e convertida pela
+ * cotação da alienação (casos gcap-exterior-* do GCAP 2025).
+ */
+export const zCambioGcap = z.object({
+  origem: z.enum(["nacional", "estrangeira", "ambas"]),
+  /** Código da moeda estrangeira na tabela do programa ("USA"). */
+  moeda: z.string().trim().min(1).max(7).default("USA"),
+  cotacaoAquisicao: zEscala,
+  cotacaoAlienacao: zEscala,
+  valorAlienacaoDolar: zValor,
+  corretagemDolar: zValor,
+  /** Custo de aquisição pago com rendimentos em reais, em dólar. */
+  custoNacionalDolar: zValor,
+  /** Custo de aquisição pago com rendimentos em moeda estrangeira, em dólar. */
+  custoEstrangeiraDolar: zValor,
+});
+export type CambioGcap = z.infer<typeof zCambioGcap>;
+
 /** Campos comuns às alienações de imóvel, móvel e participação societária. */
 const camposAlienacao = {
   /** CPF do titular ou dependente que alienou. */
@@ -67,6 +96,7 @@ export const zAlienacaoImovel = z.object({
   valorAplicadoOutroImovel: zValor,
   reformas: z.array(zReformaGcap).default([]),
   atualizadoLei14973: z.boolean().default(false),
+  cambio: zCambioGcap.optional(),
 });
 
 /** Alienação de bem móvel ou direito (registro 62). */
@@ -75,6 +105,7 @@ export const zAlienacaoMovel = z.object({
   ...camposAlienacao,
   possuiRegistroPublico: z.boolean().default(false),
   pequenoValor: z.boolean().default(false),
+  cambio: zCambioGcap.optional(),
 });
 
 /** Alienação de participação societária (registros 63 e 73). */
@@ -89,6 +120,11 @@ export const zAlienacaoParticipacao = z.object({
   especie: z.string().trim().max(1).optional(),
   quantidadeAlienada: z.number().int().nonnegative().optional(),
   impostoRetidoFonte: zValor,
+  /** UF e município da sede da sociedade. */
+  uf: zUf.optional(),
+  municipio: zCodigo(4).optional(),
+  /** Alienações do mês até R$ 35.000,00 (isenção de pequeno valor). */
+  pequenoValor: z.boolean().default(false),
 });
 
 /** Uma alienação do demonstrativo de ganhos de capital. */
@@ -109,8 +145,30 @@ export const zOperacaoMoedaEspecie = z.object({
   quantidade: z.number().int().nonnegative(),
   valorReais: zValor,
   adquirente: zAdquirente.optional(),
+  /** Cotação do dólar na venda, com 4 casas (`58000` = 5,8000). */
+  cotacaoDolar: zEscala,
+  /** Custo médio depois da operação, com 6 casas (`5600000` = 5,600000). */
+  custoMedio: zEscala,
+  /** Custo da quantidade vendida e ganho da venda. */
+  custoAlienacao: zValor,
+  ganhoCapital: zValor,
+  /** Saldo em reais e estoque (centésimos da moeda) depois da operação. */
+  saldoReais: zValor,
+  estoque: z.number().int().nonnegative().default(0),
 });
 export type OperacaoMoedaEspecie = z.infer<typeof zOperacaoMoedaEspecie>;
+
+/** Totalização de um mês das moedas alienadas em espécie (registro 76), valores em dólar e reais. */
+export const zMesMoedaEspecie = z.object({
+  alienacaoDolar: zValor,
+  /** Alienações em dólar acumuladas no ano até o mês. */
+  alienacaoConsolidadaDolar: zValor,
+  ganhoCapital: zValor,
+  ganhoTributavel: zValor,
+  impostoDevido: zValor,
+  impostoPago: zValor,
+});
+export type MesMoedaEspecie = z.infer<typeof zMesMoedaEspecie>;
 
 /** Totais que o demonstrativo transporta para a declaração (registros 60 e 78). */
 export const zTotaisGcap = z.object({
@@ -138,6 +196,8 @@ export const zDemonstrativoGcap = z.object({
   pais: zCodigoPais.optional(),
   alienacoes: z.array(zAlienacaoGcap).default([]),
   moedaEspecie: z.array(zOperacaoMoedaEspecie).default([]),
+  /** Os 12 meses da totalização de moedas em espécie; vazio sem moeda em espécie. */
+  moedaEspecieMensal: z.array(zMesMoedaEspecie).max(12).default([]),
   totais: zTotaisGcap.prefault({}),
 });
 export type DemonstrativoGcap = z.infer<typeof zDemonstrativoGcap>;

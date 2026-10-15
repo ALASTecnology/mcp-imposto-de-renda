@@ -41,6 +41,11 @@ const PROIBIDOS: [string, RegExp][] = [
 const PERMITIDOS: Record<string, { Number: number; "Math.floor": number; motivo: string }> = {
   "calc/datas.ts": { Number: 6, "Math.floor": 1, motivo: "dia, mês, ano e índice do mês" },
   "calc/index.ts": { Number: 1, "Math.floor": 0, motivo: "número do exercício" },
+  "calc/ganho-capital-cambio.ts": {
+    Number: 1,
+    "Math.floor": 0,
+    motivo: "mês da operação com moeda em espécie",
+  },
   "calc/2026/quotas.ts": {
     Number: 1,
     "Math.floor": 0,

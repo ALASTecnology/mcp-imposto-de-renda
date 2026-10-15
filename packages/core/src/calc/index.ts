@@ -13,6 +13,7 @@ import { CalculoInvalidoError } from "./aritmetica.js";
 
 export * from "./2026/index.js";
 export { CalculoInvalidoError, formatarCentesimosPercentual } from "./aritmetica.js";
+export * from "./ganho-capital-cambio.js";
 
 /** Motores disponíveis, por exercício (ano de entrega da declaração). */
 export const motores = {

@@ -17,8 +17,9 @@
  * - `VR_GCIMPOSTOPAGO`: soma de `GC_TRANSP_VR_IMPOSTOPAGO` dos registros 60 (imposto pago
  *   informado nos demonstrativos de ganhos de capital importados do GCAP), confirmado pelo
  *   caso `gcap-imovel-reducao-01` (R$ 10.000,00 pagos em Darf);
- * - `VR_VCMOEDAEST`: imposto sobre alienação de moeda estrangeira em espécie, que nenhum par
- *   dos fixtures preenche (fica zerado; ver docs/formato-dbk.md);
+ * - `VR_VCMOEDAEST`: imposto sobre alienação de moeda estrangeira em espécie, soma de
+ *   `GC_IMPOSTO_DEVIDO_MOEDA` dos registros 60, confirmado pelo caso `gcap-especie-01`
+ *   (R$ 180,00) e zerado quando o ganho é isento (`gcap-especie-isento-01`);
  * - `HR` e `R9`: CPF do header; os controles (`NR_CONTROLE`, `NR_HASH` do `R9`) saem de
  *   `recalcularControles`.
  */
@@ -101,6 +102,7 @@ export function montarRecibo(registros: readonly Registro[], leiaute: Leiaute): 
     VR_IMPREST: valor(resumo, completa ? "VR_IMPREST" : "VR_IMPRESTIT"),
     VR_QUOTA: valor(resumo, "VR_QUOTA"),
     VR_GCIMPOSTOPAGO: somaGcap(registros, "GC_TRANSP_VR_IMPOSTOPAGO"),
+    VR_VCMOEDAEST: somaGcap(registros, "GC_IMPOSTO_DEVIDO_MOEDA"),
   };
   for (const chave of CAMPOS_DA_FICHA_16) doRecibo[chave] = valor(ficha16.campos, chave);
 

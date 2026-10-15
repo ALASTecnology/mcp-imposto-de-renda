@@ -317,7 +317,6 @@ const MOTIVOS_PRESERVACAO: Readonly<Record<string, string>> = {
   "31": "detalhe de isento de leiaute anterior; o programa 2026 não o grava (o T9 não o conta)",
   "33": "detalhe de isento de leiaute anterior; o programa 2026 não o grava (o T9 não o conta)",
   "37": "demonstrativo calculado da Lei 14.754/2023 por bem; refeito pelo programa",
-  "64": "alienação no exterior do GCAP: detalhe sem lugar no modelo",
   "67": "reforma no exterior do GCAP: detalhe sem lugar no modelo",
   "70": "apuração em ambas as moedas do GCAP: detalhe sem lugar no modelo",
   "71": "parcelas de imóvel alienado a prazo (GCAP)",

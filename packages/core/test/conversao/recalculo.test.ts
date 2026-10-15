@@ -40,20 +40,18 @@ const CAMPOS_FORA_DO_MODELO: readonly string[] = [
   // Transporte do GCAP para o Resumo (imposto devido e isentos), não recalculado, e indicador
   // interno de isenção do titular no header.
   "18.VR_IMPOSTO_DEVIDO_GCAP",
+  // Imposto do ganho de bens adquiridos em moeda estrangeira e da moeda em espécie.
+  "18.VR_IMPOSTO_DEVIDO_GCME",
+  "18.VR_IMPPAGARESPECIE",
   "18.VR_RENDISENTOGCTRANSPORTE",
   "18.VR_SUBTOTALISENTOTRANSPORTE",
   "IR.IN_ISENCAO_GCAP_TITULAR",
-  // GCAP: endereço do imóvel e município da sociedade, que o modelo não guarda, o indicador de
-  // pequeno valor da participação e o detalhe das reduções da apuração do imóvel (o modelo
-  // guarda só a soma das reduções).
+  // GCAP: endereço do imóvel, que o modelo não guarda, e o detalhe das reduções da apuração
+  // do imóvel (o modelo guarda só a soma das reduções).
   "61.END_CEP",
   "61.END_LOGRADOURO",
   "61.END_NUMERO",
   "61.END_TIPO_LOGRADOURO",
-  "63.CD_MUNICIPIO",
-  "63.IN_PEQUENO_VALOR",
-  "63.NM_MUNICIPIO",
-  "63.NM_UF",
   "68.FT_APLICA_UNICO_APURACAO",
   "68.FT_REDUCAO_LEI11196FR1",
   "68.FT_REDUCAO_LEI11196FR2",

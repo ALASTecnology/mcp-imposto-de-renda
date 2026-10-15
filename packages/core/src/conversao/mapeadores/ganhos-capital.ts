@@ -12,13 +12,14 @@
  * | 61, 62, 63 | alienação de imóvel, móvel e participação societária | mapeado |
  * | 65 | adquirentes | mapeado |
  * | 66 | ampliação ou reforma (data e valor; percentuais preservados) | mapeado |
- * | 68, 69 | apuração de imóvel e de móvel | mapeado (valores digitados e ganho) |
- * | 74 | operações com moeda estrangeira em espécie | mapeado |
- * | 64, 67, 70 | alienação no exterior, reforma no exterior e apuração em ambas as moedas | preservado |
+ * | 68, 69 | apuração de imóvel e de móvel (no exterior, uma por origem dos rendimentos) | mapeado (valores digitados e ganho) |
+ * | 74 | saldo inicial e operações com moeda estrangeira em espécie | mapeado |
+ * | 64 | bem adquirido no exterior: origem dos rendimentos, cotações e valores em dólar | mapeado (`cambio`) |
+ * | 67, 70 | reforma no exterior e apuração final em ambas as moedas | preservado |
  * | 71, 72 | parcelas de alienação a prazo | preservado |
  * | 73 | apuração do custo médio de participações (quantidade, custo médio e total) | mapeado |
  * | 75 | faixas de tributação de cada alienação | mapeado (derivado do ganho tributável) |
- * | 76 | totalização mensal de moedas alienadas (12 registros por demonstrativo) | mapeado |
+ * | 76 | totalização mensal de moedas alienadas (12 registros por demonstrativo) | mapeado (`moedaEspecieMensal`) |
  * | 77, 78 | totais por moeda | preservado |
  *
  * Ligações: `NR_IDENTIFICACAO` de cada demonstrativo é o dia e mês do início seguidos do dia e
@@ -31,8 +32,9 @@
  * pago) e os 12 registros 76 zerados quando não há moeda estrangeira em espécie.
  */
 
+import { apurarBemExterior } from "../../calc/ganho-capital-cambio.js";
 import type { Registro } from "../../dbk/codec.js";
-import type { AlienacaoGcap, DemonstrativoGcap } from "../../model/ganhos-capital.js";
+import type { AlienacaoGcap, CambioGcap, DemonstrativoGcap } from "../../model/ganhos-capital.js";
 import { buscarCodigo } from "../../tabelas/index.js";
 import {
   codigo,
@@ -50,9 +52,31 @@ import type { ContextoGravacao, ContextoLeitura, Mapeador } from "../contexto.js
 const TIPO_ALIENACAO = { imovel: 1n, movel: 2n, participacaoSocietaria: 3n } as const;
 const REGISTRO_ALIENACAO = { imovel: "61", movel: "62", participacaoSocietaria: "63" } as const;
 const OPERACAO_MOEDA = { saldoInicial: "1", compra: "2", venda: "3" } as const;
-const NOME_OPERACAO_MOEDA = { saldoInicial: "Saldo inicial", compra: "Compra", venda: "Venda" };
+const NOME_OPERACAO_MOEDA = { saldoInicial: "SALDO INICIAL", compra: "COMPRA", venda: "VENDA" };
+/** Origem dos rendimentos do bem no exterior (registro 64, IN_ORIGEM_REND). */
+const ORIGEM_CAMBIO = { nacional: "1", estrangeira: "2", ambas: "3" } as const;
+const NOME_ORIGEM_CAMBIO = {
+  nacional: "RENDIMENTOS AUFERIDOS EM MOEDA NACIONAL",
+  estrangeira: "RENDIMENTOS AUFERIDOS EM MOEDA ESTRANGEIRA",
+  ambas: "RENDIMENTOS AUFERIDOS EM MOEDA NACIONAL E MOEDA ESTRANGEIRA",
+} as const;
+/** Mensagem do registro 64 quando a alienação no exterior não tem imposto devido. */
+const MENSAGEM_SEM_IMPOSTO =
+  "O IMPOSTO DEVIDO E IGUAL A ZERO TENDO EM VISTA QUE, PELOS DADOS DIGITADOS,NAO FOI APURADO GANHO DE CAPITAL TRIBUTAVEL NESTA OPERACAO.";
+/** Alíquota média da moeda em espécie gravada pelo programa (15%, 6 casas no 60, 2 no 76). */
+const ALIQUOTA_MOEDA_60 = 15_000_000n;
+const ALIQUOTA_MOEDA_76 = 1_500n;
+
+/** Descrição de tabela como o programa grava: maiúsculas e sem acentos. */
+const maiusculas = (v: string) =>
+  v
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toUpperCase();
 
 const sn = (b: boolean | undefined) => (b ? "1" : "0");
+/** Data numérica zerada, como o programa grava nas datas que não se aplicam. */
+const ZERADA = "00000000";
 /** Limites das faixas de tributação do ganho de capital (Lei 8.981/1995, art. 21). */
 const TETOS_FAIXAS = [500_000_000n, 1_000_000_000n, 3_000_000_000n] as const;
 /** Descrição da espécie no registro 73; só a de quotas foi observada no programa. */
@@ -110,7 +134,34 @@ function lerAlienacao(ctx: ContextoLeitura, r: Registro, ident: bigint, cpf: str
   let ganhoBruto: bigint;
   let apuracao: Record<string, bigint>;
   const ganho = numero(r, "VR_GCAP_CI");
-  if (tipo === "participacaoSocietaria") {
+  const r64 =
+    tipo !== "participacaoSocietaria" && texto(r, "IN_BRASIL_EXTERIOR") === "0"
+      ? filho("64").find((x) => numero(x, "IN_TIPO") === TIPO_ALIENACAO[tipo])
+      : undefined;
+  let cambio: Objeto | undefined;
+  if (r64) {
+    const origem = texto(r64, "IN_ORIGEM_REND");
+    cambio = {
+      origem: origem === "1" ? "nacional" : origem === "3" ? "ambas" : "estrangeira",
+      moeda: texto(r64, "CD_MOEDA_ESTRANGEIRA") || "USA",
+      cotacaoAquisicao: numero(r64, "VR_COTACAO_AQUISICAO"),
+      cotacaoAlienacao: numero(r64, "VR_COTACAO_OP"),
+      valorAlienacaoDolar: numero(r64, "VR_OPERACAO_DOLAR"),
+      corretagemDolar: numero(r64, "VR_CORRETAGEM_DOLAR"),
+      custoNacionalDolar: numero(r64, "VR_BEM_AQUISICAO_RMN"),
+      custoEstrangeiraDolar: numero(r64, "VR_BEM_AQUISICAO_RME"),
+    };
+  }
+  if (r64) {
+    // Bem no exterior: valores em reais da alienação (registro 62) e custo da parte nacional;
+    // o detalhe em dólar fica em `cambio`.
+    ganhoBruto = ganho;
+    apuracao = {
+      valorAlienacao: numero(r, "VR_OPERACAO"),
+      custoCorretagem: numero(r, "VR_CORRETAGEM"),
+      custoAquisicao: numero(r, "VR_AQUISICAO"),
+    };
+  } else if (tipo === "participacaoSocietaria") {
     ganhoBruto = numero(r, "VR_GCAP_AP");
     apuracao = {
       valorAlienacao: numero(r, "VR_VALOR_ALIENACAO_AP"),
@@ -180,6 +231,7 @@ function lerAlienacao(ctx: ContextoLeitura, r: Registro, ident: bigint, cpf: str
         valor: numero(x, "VR_VALOR_REAIS"),
       })),
       atualizadoLei14973: texto(r, "IN_BEM_ATUALIZADO_LEI_14973") === "1",
+      cambio,
     });
   }
   if (tipo === "movel") {
@@ -187,6 +239,7 @@ function lerAlienacao(ctx: ContextoLeitura, r: Registro, ident: bigint, cpf: str
       ...comum,
       possuiRegistroPublico: texto(r, "IN_REGISTRO_PUBLICO") === "1",
       pequenoValor: texto(r, "IN_PEQUENO_VALOR") === "1",
+      cambio,
     });
   }
   const cnpj = doc(r, "NR_CNPJ", 14);
@@ -197,6 +250,9 @@ function lerAlienacao(ctx: ContextoLeitura, r: Registro, ident: bigint, cpf: str
     ...comum,
     cnpjSociedade: cnpj || undefined,
     especie: texto(r, "CD_ESPECIE") || (especie73 && especie73 !== "0" ? especie73 : undefined),
+    uf: texto(r, "NM_UF") || undefined,
+    municipio: codigoOpcional(r, "CD_MUNICIPIO", 4),
+    pequenoValor: texto(r, "IN_PEQUENO_VALOR") === "1",
     quantidadeAlienada: quantidade > 0n ? Number(quantidade) : undefined,
     impostoRetidoFonte: numero(r, "VR_IRRF_CI"),
   });
@@ -211,6 +267,7 @@ function gravarAlienacao(ctx: ContextoGravacao, a: AlienacaoGcap, ident: bigint)
   };
   const identidade = ["NR_CPF_BENEFICIARIO", "NR_IDENTIFICACAO", "NR_OPERACAO"];
   const bruto = ap.ganhoCapital + ap.reducoes;
+  const exterior = a.tipo !== "participacaoSocietaria" && a.exterior && a.cambio !== undefined;
   const v: Valores = {
     ...chaves,
     CD_OPERACAO: a.naturezaOperacao,
@@ -224,14 +281,22 @@ function gravarAlienacao(ctx: ContextoGravacao, a: AlienacaoGcap, ident: bigint)
       ? { NM_OPERACAO: NOME_NATUREZA[a.naturezaOperacao] }
       : {}),
     IN_GCAP_ANTERIOR: "0",
+    // Datas da decisão judicial, da lavratura, do trânsito em julgado, do Darf da transmissão
+    // causa mortis e da última parcela: zeradas na venda à vista (casos gcap-*).
+    DT_DECISAO_JUDICIAL: ZERADA,
+    DT_LAVRATURA: ZERADA,
+    DT_TRANSITO_JULGADO: ZERADA,
+    DT_DATA_DARF_TCM: ZERADA,
+    DT_DATA_ULTIMA_PARCELA: ZERADA,
     VR_GCAP_CI: ap.ganhoCapital,
     VR_ALIQUOTA_MEDIA_CI: aliquotaMedia(ap.ganhoCapital),
     VR_IMPOSTO_DEVIDO_CI: ap.impostoDevido,
     VR_IMPOSTO_PAGO_CI: ap.impostoPago,
-    // Consolidação do exercício: imposto do ano, total e devido iguais ao do cálculo (à vista).
-    VR_EXERCICIO_CB: ap.impostoDevido,
-    VR_TOTAL_CB: ap.impostoDevido,
-    VR_IR_DEVIDO_CB: ap.impostoDevido,
+    // Consolidação do exercício: imposto do ano, total e devido iguais ao do cálculo (à vista);
+    // o bem no exterior não entra na consolidação do Brasil (casos gcap-exterior-*).
+    VR_EXERCICIO_CB: exterior ? 0n : ap.impostoDevido,
+    VR_TOTAL_CB: exterior ? 0n : ap.impostoDevido,
+    VR_IR_DEVIDO_CB: exterior ? 0n : ap.impostoDevido,
     VR_IMPOSTO_PAGO_CB: ap.impostoPago,
     VR_DIFERIDO_POSTERIOR_CB: ap.impostoDiferidoPosterior,
     VR_ISENTO_CB: ap.rendimentoIsento,
@@ -245,6 +310,10 @@ function gravarAlienacao(ctx: ContextoGravacao, a: AlienacaoGcap, ident: bigint)
     Object.assign(v, {
       NM_SOCIEDADE: a.descricao,
       NR_CNPJ: a.cnpjSociedade ?? 0n,
+      CD_MUNICIPIO: a.municipio ?? "",
+      NM_MUNICIPIO: a.municipio ? (buscarCodigo("municipios", a.municipio)?.descricao ?? "") : "",
+      NM_UF: a.uf ?? "",
+      IN_PEQUENO_VALOR: a.pequenoValor ? "1" : "",
       // O programa deixa CD_ESPECIE vazio e grava a espécie no registro 73.
       CD_ESPECIE: "",
       VR_CUSTO_TOTAL_AQUISICAO: ap.custoAquisicao,
@@ -305,7 +374,10 @@ function gravarAlienacao(ctx: ContextoGravacao, a: AlienacaoGcap, ident: bigint)
       );
     }
   }
-  if (a.tipo !== "participacaoSocietaria") {
+  const cambio = a.tipo !== "participacaoSocietaria" && a.exterior ? a.cambio : undefined;
+  if (cambio && a.tipo !== "participacaoSocietaria") {
+    gravarCambio(ctx, a.tipo, cambio, chaves, identidade, ap.impostoDevido);
+  } else if (a.tipo !== "participacaoSocietaria") {
     ctx.adicionar(
       a.tipo === "imovel" ? "68" : "69",
       {
@@ -370,6 +442,95 @@ function gravarAlienacao(ctx: ContextoGravacao, a: AlienacaoGcap, ident: bigint)
   );
 }
 
+/**
+ * Bem adquirido no exterior: registro 64 (origem dos rendimentos, cotações e valores em dólar)
+ * e uma apuração (68 ou 69) por origem: 2 nacional, 3 estrangeira, ou 4 e 5 quando o bem foi
+ * comprado com as duas (casos gcap-exterior-*).
+ */
+function gravarCambio(
+  ctx: ContextoGravacao,
+  tipo: "imovel" | "movel",
+  c: CambioGcap,
+  chaves: Valores,
+  identidade: string[],
+  impostoDevido: bigint,
+): void {
+  const ap = apurarBemExterior(c);
+  const ambas = c.origem === "ambas";
+  const pctE = ap.percentualEstrangeira;
+  // Percentual de cada origem com 2 casas (meio para cima), a partir das 9 do rateio.
+  const duasCasas = (p: bigint) => (p + 5_000_000n) / 10_000_000n;
+  const temNacional = c.origem !== "estrangeira";
+  const temEstrangeira = c.origem !== "nacional";
+  ctx.adicionar(
+    "64",
+    {
+      ...chaves,
+      IN_TIPO: TIPO_ALIENACAO[tipo],
+      VR_COTACAO_OP: c.cotacaoAlienacao,
+      VR_OPERACAO_DOLAR: c.valorAlienacaoDolar,
+      VR_CORRETAGEM_DOLAR: c.corretagemDolar,
+      ...(ambas
+        ? {
+            VR_VALOR_ALIENACAO_AP_AMBAS: c.valorAlienacaoDolar,
+            VR_CUSTO_CORRETAGEM_AP_AMBAS: c.corretagemDolar,
+            VR_LIQUIDO_ALIENACAO_AP_AMBAS: c.valorAlienacaoDolar - c.corretagemDolar,
+            VR_GCAP_TOTAL_AP_AMBAS: ap.ganhoTotal,
+          }
+        : {}),
+      IN_ORIGEM_REND: ORIGEM_CAMBIO[c.origem],
+      NM_ORIGEM_REND_DESC: NOME_ORIGEM_CAMBIO[c.origem],
+      VR_COTACAO_AQUISICAO: temNacional ? c.cotacaoAquisicao : 0n,
+      VR_BEM_AQUISICAO_DOLAR: c.custoNacionalDolar + c.custoEstrangeiraDolar,
+      VR_BEM_AQUISICAO_RMN: temNacional ? c.custoNacionalDolar : 0n,
+      FT_BEM_AQUISICAO_RMN: temNacional ? duasCasas(100_000_000_000n - pctE) : 0n,
+      VR_BEM_AQUISICAO_RME: temEstrangeira ? c.custoEstrangeiraDolar : 0n,
+      FT_BEM_AQUISICAO_RME: temEstrangeira ? duasCasas(pctE) : 0n,
+      VR_SALDO_IMPOSTO_DEVIDO: impostoDevido,
+      NM_MENSAGEM: impostoDevido === 0n ? MENSAGEM_SEM_IMPOSTO : "",
+      NM_MOEDA_ESTRANGEIRA: maiusculas(buscarCodigo("moedas", c.moeda)?.descricao ?? ""),
+      CD_MOEDA_ESTRANGEIRA: c.moeda,
+      IN_RESIDENTE_BRASIL_APLICACAO_EXTERIOR: "0",
+    },
+    [...identidade, "IN_TIPO"],
+  );
+  const apuracoes: Valores[] = [];
+  const nacional = (tipoApuracao: bigint, valor: bigint, corretagem: bigint) => ({
+    NR_TIPO_APURACAO: tipoApuracao,
+    VR_VALOR: valor,
+    VR_CORRETAGEM: corretagem,
+    VR_LIQUIDO_APURACAO: ap.nacional.liquidoReais,
+    VR_LIQUIDO_APURACAO_DOLAR: ap.nacional.liquidoDolar,
+    VR_CUSTO_APURACAO: ap.nacional.custoReais,
+    VR_RESULTADO_1_APURACAO: ap.nacional.ganhoReais > 0n ? ap.nacional.ganhoReais : 0n,
+    VR_COTACAO_APURACAO: c.cotacaoAlienacao,
+  });
+  const estrangeira = (tipoApuracao: bigint, valor: bigint, corretagem: bigint) => ({
+    NR_TIPO_APURACAO: tipoApuracao,
+    VR_VALOR: valor,
+    VR_CORRETAGEM: corretagem,
+    VR_LIQUIDO_APURACAO_DOLAR: ap.estrangeira.liquidoDolar,
+    VR_CUSTO_APURACAO: ap.estrangeira.custoDolar,
+    VR_RESULTADO_1_APURACAO: ap.estrangeira.ganhoReais > 0n ? ap.estrangeira.ganhoReais : 0n,
+    VR_RESULTADO_1_APURACAO_DOLAR: ap.estrangeira.ganhoDolar > 0n ? ap.estrangeira.ganhoDolar : 0n,
+    VR_COTACAO_APURACAO: c.cotacaoAlienacao,
+  });
+  if (c.origem === "nacional") {
+    apuracoes.push(nacional(2n, c.valorAlienacaoDolar, c.corretagemDolar));
+  } else if (c.origem === "estrangeira") {
+    apuracoes.push(estrangeira(3n, c.valorAlienacaoDolar, c.corretagemDolar));
+  } else {
+    apuracoes.push(nacional(4n, ap.nacional.valorDolar, ap.nacional.corretagemDolar));
+    apuracoes.push(estrangeira(5n, ap.estrangeira.valorDolar, ap.estrangeira.corretagemDolar));
+  }
+  for (const x of apuracoes) {
+    ctx.adicionar(tipo === "imovel" ? "68" : "69", { ...chaves, ...x }, [
+      ...identidade,
+      "NR_TIPO_APURACAO",
+    ]);
+  }
+}
+
 function lerDemonstrativo(ctx: ContextoLeitura, r: Registro): Objeto {
   const cpf = doc(r, "NR_CPF_BENEFICIARIO", 11);
   const ident = numero(r, "NR_IDENTIFICACAO");
@@ -394,8 +555,24 @@ function lerDemonstrativo(ctx: ContextoLeitura, r: Registro): Objeto {
       quantidade: Number(numero(x, "NR_QUANTIDADE")),
       valorReais: numero(x, "VR_OPERACAO"),
       adquirente: adq === "" ? undefined : { ni: adq, nome: texto(x, "NM_ADQUIR") },
+      cotacaoDolar: numero(x, "VR_COTACAO_MOEDA_ESTRANGEIRA_DOLAR"),
+      custoMedio: numero(x, "VR_CUSTO"),
+      custoAlienacao: numero(x, "VR_CUSTOTOTAQUIS"),
+      ganhoCapital: numero(x, "VR_GANHOCAPITAL"),
+      saldoReais: numero(x, "VR_SALDO_REAIS"),
+      estoque: Number(numero(x, "VR_SALDO_ME")),
     });
   });
+  // A totalização mensal só tem conteúdo com moeda em espécie (registros com NR_MES 01 a 12).
+  const meses76 = doDemonstrativo("76").filter((x) => numero(x, "NR_MES") > 0n);
+  const moedaEspecieMensal = meses76.map((x) => ({
+    alienacaoDolar: numero(x, "VR_ALIENACAO_DOLAR"),
+    alienacaoConsolidadaDolar: numero(x, "VR_ALIENACAO_CONSOLIDADA_DOLAR"),
+    ganhoCapital: numero(x, "VR_GANHO_CAPITAL"),
+    ganhoTributavel: numero(x, "VR_GANHO_CAPITAL_TRIBUTAVEL"),
+    impostoDevido: numero(x, "VR_IMPOSTO_DEVIDO"),
+    impostoPago: numero(x, "VR_IMPOSTO_PAGO"),
+  }));
   return semIndefinidos({
     cpfBeneficiario: cpf,
     dataInicio: isoDeDdmmaaaa(texto(r, "DT_INICIO")),
@@ -403,6 +580,7 @@ function lerDemonstrativo(ctx: ContextoLeitura, r: Registro): Objeto {
     pais: codigoOpcional(r, "CD_PAIS", 3),
     alienacoes,
     moedaEspecie,
+    moedaEspecieMensal,
     totais: {
       rendimentoExclusivo: numero(r, "GC_TRANSP_VR_EXCLUSIVO"),
       isentoPequenoValor: numero(r, "GC_TRANSP_VR_PEQUENO"),
@@ -441,6 +619,7 @@ function gravarDemonstrativo(ctx: ContextoGravacao, d: DemonstrativoGcap, ident:
       GC_TRANSP_VR_IMPOSTODIFERIDOANOSPOSTERIORES: t.impostoDiferidoPosterior,
       GC_GCAP_MOEDA: t.ganhoMoedaEspecie,
       GC_IMPOSTO_DEVIDO_MOEDA: t.impostoDevidoMoedaEspecie,
+      GC_MOEDA_ALIQUOTA_MEDIA: d.moedaEspecie.length > 0 ? ALIQUOTA_MOEDA_60 : 0n,
       GC_TRANSP_VR_EXCLUSIVO_EXTERIOR: t.rendimentoExclusivoExterior,
       GC_TRANSP_VR_IMPOSTOPAGO_EXTERIOR: t.impostoPagoExterior,
       GC_TRANSP_VR_ISENTO_EXTERIOR: t.isentoExterior,
@@ -461,9 +640,9 @@ function gravarDemonstrativo(ctx: ContextoGravacao, d: DemonstrativoGcap, ident:
       {
         NR_CPF_BENEFICIARIO: d.cpfBeneficiario,
         NR_IDENTIFICACAO: ident,
-        NR_ITEM: String(i + 1),
+        NR_ITEM: String(i + 1).padStart(4, "0"),
         CD_MOEDA: m.moeda,
-        NM_MOEDA: buscarCodigo("moedas", m.moeda)?.descricao ?? "",
+        NM_MOEDA: maiusculas(buscarCodigo("moedas", m.moeda)?.descricao ?? ""),
         TIPO_OPERACAO: OPERACAO_MOEDA[m.tipoOperacao],
         NM_OPERACAO: NOME_OPERACAO_MOEDA[m.tipoOperacao],
         NM_ADQUIR: m.adquirente?.nome ?? "",
@@ -471,23 +650,44 @@ function gravarDemonstrativo(ctx: ContextoGravacao, d: DemonstrativoGcap, ident:
         DT_OPERACAO: ddmmaaaaDeIso(m.data),
         VR_OPERACAO: m.valorReais,
         NR_QUANTIDADE: BigInt(m.quantidade),
+        VR_CUSTO: m.custoMedio,
+        VR_CUSTOTOTAQUIS: m.custoAlienacao,
+        VR_GANHOCAPITAL: m.ganhoCapital,
+        VR_SALDO_REAIS: m.saldoReais,
+        VR_SALDO_ME: BigInt(m.estoque),
+        VR_COTACAO_MOEDA_ESTRANGEIRA_DOLAR: m.cotacaoDolar,
       },
       ["NR_CPF_BENEFICIARIO", "NR_IDENTIFICACAO", "NR_ITEM"],
     );
   });
-  // Totalização mensal de moedas alienadas: o programa grava sempre 12 registros (zerados sem
-  // moeda em espécie); com o arquivo base, os valores de cada um são preservados.
+  // Totalização mensal de moedas alienadas: o programa grava sempre 12 registros, zerados e
+  // sem o número do mês quando não há moeda em espécie.
   for (let i = 0; i < 12; i++) {
-    ctx.adicionar("76", { NR_CPF_BENEFICIARIO: d.cpfBeneficiario, NR_IDENTIFICACAO: ident }, [
-      "NR_CPF_BENEFICIARIO",
-      "NR_IDENTIFICACAO",
-    ]);
+    const m = d.moedaEspecieMensal[i];
+    const chaves76 = { NR_CPF_BENEFICIARIO: d.cpfBeneficiario, NR_IDENTIFICACAO: ident };
+    ctx.adicionar(
+      "76",
+      m
+        ? {
+            ...chaves76,
+            NR_MES: BigInt(i + 1),
+            VR_ALIENACAO_DOLAR: m.alienacaoDolar,
+            VR_ALIENACAO_CONSOLIDADA_DOLAR: m.alienacaoConsolidadaDolar,
+            VR_GANHO_CAPITAL: m.ganhoCapital,
+            VR_GANHO_CAPITAL_TRIBUTAVEL: m.ganhoTributavel,
+            VR_ALIQUOTA_MEDIA: ALIQUOTA_MOEDA_76,
+            VR_IMPOSTO_DEVIDO: m.impostoDevido,
+            VR_IMPOSTO_PAGO: m.impostoPago,
+          }
+        : chaves76,
+      ["NR_CPF_BENEFICIARIO", "NR_IDENTIFICACAO"],
+    );
   }
 }
 
 export const mapeadorGanhosCapital: Mapeador = {
   nome: "ganhosCapital",
-  tipos: ["60", "61", "62", "63", "65", "66", "68", "69", "73", "74", "75", "76"],
+  tipos: ["60", "61", "62", "63", "64", "65", "66", "68", "69", "73", "74", "75", "76"],
   ler(ctx, saida) {
     saida.ganhosCapital = ctx.doTipo("60").map((r) => lerDemonstrativo(ctx, r));
   },

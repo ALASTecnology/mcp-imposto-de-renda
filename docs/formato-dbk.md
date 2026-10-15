@@ -219,7 +219,8 @@ produz a DEC do programa **byte a byte**. A origem de cada campo do `DR`:
 | `VR_IMPPAGAR` | `VR_SOMA_IMPOSTO_PAGAR` do header |
 | `VR_IMPREST` | `VR_IMPREST` do registro 20 (completa) ou `VR_IMPRESTIT` do 18 (simplificada) |
 | `VR_QUOTA` | `VR_QUOTA` do registro 20 ou 18, conforme o modelo |
-| `VR_GCIMPOSTOPAGO`, `VR_VCMOEDAEST` | zerados: nenhum caso do harness tem imposto pago de ganho de capital (ver abaixo) |
+| `VR_GCIMPOSTOPAGO` | soma de `GC_TRANSP_VR_IMPOSTOPAGO` dos registros 60 (imposto pago em Darf nos demonstrativos do GCAP) |
+| `VR_VCMOEDAEST` | soma de `GC_IMPOSTO_DEVIDO_MOEDA` dos registros 60 (imposto da moeda estrangeira em espécie) |
 | `FILLER*`, `HR.FILLER`, `R9.FILLER` | em branco |
 
 `HR` e `R9` levam só o CPF do header; os controles saem de `recalcularControles`, na ordem
@@ -233,9 +234,10 @@ saldo a pagar e sem débito automático, o programa grava a conta do Resumo na c
 mas a descarta no arquivo de entrega (header e ficha 16); `ajustarParaEntrega` reproduz isso, e
 por isso a DEC de `conta-sem-debito-pagar-01` convertida de volta em DBK não traz a conta.
 
-`VR_GCIMPOSTOPAGO` e `VR_VCMOEDAEST` ficam zerados porque o harness não consegue fazer o
-programa calcular um ganho de capital: a apuração do GCAP só roda pela interface gráfica do
-programa. A origem desses dois campos continua não confirmada. Nenhum campo do recibo depende do
+A origem de `VR_GCIMPOSTOPAGO` foi confirmada com `gcap-imovel-reducao-01` (R$ 10.000,00 pagos
+em Darf) e a de `VR_VCMOEDAEST` com `gcap-especie-01` (R$ 180,00 de imposto sobre a venda de
+dólares em espécie; zerado em `gcap-especie-isento-01`, em que o ganho é isento), casos que o
+GCAP 2025 avulso calcula e exporta para o IRPF. Nenhum campo do recibo depende do
 sistema operacional ou da JVM: esses dados (`NOME_SO`, `VERSAO_SO`, `VERSAO_JVM`,
 `ENDERECO_MAC`) ficam no header, que a conversão preserva como está no DBK. Por isso uma DEC
 gerada a partir de um DBK gravado em outra máquina continua igual à que o programa gravaria

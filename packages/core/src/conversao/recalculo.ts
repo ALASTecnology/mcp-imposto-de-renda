@@ -200,8 +200,9 @@ function somas(dec: Declaracao) {
     if (e.codigo === "01" || e.codigo === "08") t.exclusivos13[p] += e.valor;
     // Ganho líquido de renda variável transportado: fora de VR_EXCLUSIVOS do registro 17.
     if (e.codigo === "05") t.exclusivosRV[p] += e.valor;
-    // Ganho de capital transportado do GCAP (02): também fora do registro 17.
-    if (e.codigo === "02") t.exclusivosGC[p] += e.valor;
+    // Ganhos de capital transportados do GCAP (02 no Brasil, 03 bens adquiridos em moeda
+    // estrangeira, 04 moeda em espécie): também fora do registro 17 (casos gcap-*).
+    if (e.codigo === "02" || e.codigo === "03" || e.codigo === "04") t.exclusivosGC[p] += e.valor;
   }
   for (const s of dec.rendimentosExigibilidadeSuspensa) {
     const p = quem(s.beneficiario);

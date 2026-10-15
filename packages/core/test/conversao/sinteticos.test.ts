@@ -462,7 +462,7 @@ describe("cobertura por tipo de registro", () => {
     const c = coberturaRegistros();
     expect(c).toHaveLength(96);
     const conta = (s: string) => c.filter((x) => x.situacao === s).length;
-    expect(conta("mapeado") + conta("totais") + conta("controle")).toBe(66);
+    expect(conta("mapeado") + conta("totais") + conta("controle")).toBe(67);
     expect(c.filter((x) => x.situacao === "preservado").every((x) => x.detalhe !== "")).toBe(true);
   });
 });

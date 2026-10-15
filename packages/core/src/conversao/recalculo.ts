@@ -157,6 +157,8 @@ function somas(dec: Declaracao) {
     exclusivos: z(),
     exclusivos13: z(),
     exclusivosRV: z(),
+    isentosGC: z(),
+    exclusivosGC: z(),
     susp: z(),
     deposito: z(),
     rra: z(),
@@ -189,6 +191,8 @@ function somas(dec: Declaracao) {
         : i.valor + ("decimoTerceiro" in i ? i.decimoTerceiro : 0n);
     t.isentos[p] += v;
     if (i.codigo === "09") t.lucros[p] += v;
+    // Isentos transportados do GCAP (05, 06 e 07): fora de VR_ISENTOS do registro 17.
+    if ("valorTransportado" in i) t.isentosGC[p] += i.valorTransportado;
   }
   for (const e of dec.rendimentosExclusivos) {
     const p = e.codigo === "08" ? "D" : quem("beneficiario" in e ? e.beneficiario : undefined);
@@ -196,6 +200,8 @@ function somas(dec: Declaracao) {
     if (e.codigo === "01" || e.codigo === "08") t.exclusivos13[p] += e.valor;
     // Ganho líquido de renda variável transportado: fora de VR_EXCLUSIVOS do registro 17.
     if (e.codigo === "05") t.exclusivosRV[p] += e.valor;
+    // Ganho de capital transportado do GCAP (02): também fora do registro 17.
+    if (e.codigo === "02") t.exclusivosGC[p] += e.valor;
   }
   for (const s of dec.rendimentosExigibilidadeSuspensa) {
     const p = quem(s.beneficiario);
@@ -333,13 +339,15 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
 
   const r17: Valores = {
     VR_LUCROSTIT: t.lucros.T,
-    VR_ISENTOS: t.isentos.T,
-    VR_EXCLUSIVOS: t.exclusivos.T - t.exclusivos13.T - t.exclusivosRV.T,
+    // Os valores transportados do GCAP ficam só no Resumo (registro 18), não no 17: casos
+    // gcap-* do GCAP 2025 (registro 17 zerado com isentos e exclusivos transportados).
+    VR_ISENTOS: t.isentos.T - t.isentosGC.T,
+    VR_EXCLUSIVOS: t.exclusivos.T - t.exclusivos13.T - t.exclusivosRV.T - t.exclusivosGC.T,
     VR_TOTAL13: t.exclusivos13.T,
     VR_TOTAL13DEPEND: t.exclusivos13.D,
     VR_LUCROSDEPEND: t.lucros.D,
-    VR_ISENTOSDEPEND: t.isentos.D,
-    VR_EXCLUSIVOSDEPEND: t.exclusivos.D - t.exclusivos13.D - t.exclusivosRV.D,
+    VR_ISENTOSDEPEND: t.isentos.D - t.isentosGC.D,
+    VR_EXCLUSIVOSDEPEND: t.exclusivos.D - t.exclusivos13.D - t.exclusivosRV.D - t.exclusivosGC.D,
     VR_RENDPFTIT: t.pf.T,
     VR_RENDPFDEPEN: t.pf.D,
     VR_RENDEXTTIT: t.ext.T,

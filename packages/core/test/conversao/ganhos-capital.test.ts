@@ -143,7 +143,25 @@ describe("Ganhos de Capital: registros 60 a 78", () => {
 
   it("grava os registros e as ligações por beneficiário e operação", () => {
     const tipos = g.registros.map((r) => r.tipo).filter((t) => /^[67]\d$/.test(t));
-    expect(tipos).toEqual(["60", "61", "62", "63", "65", "66", "68", "69", "74", "74"]);
+    // 73 (custo médio da participação), 75 (faixas de cada alienação) e os 12 registros 76
+    // que o programa grava em todo demonstrativo (casos gcap-* do GCAP 2025).
+    expect(tipos).toEqual([
+      "60",
+      "61",
+      "62",
+      "63",
+      "65",
+      "66",
+      "68",
+      "69",
+      "73",
+      "74",
+      "74",
+      "75",
+      "75",
+      "75",
+      ...Array<string>(12).fill("76"),
+    ]);
     const r68 = g.registros.find((r) => r.tipo === "68")?.campos;
     expect(r68?.VR_RESULTADO_1_APURACAO).toBe(29_000_000n);
     expect(r68?.VR_RESULTADO_5_APURACAO).toBe(15_000_000n);

@@ -14,8 +14,11 @@
  * - `VR_IMPREST` e `VR_QUOTA`: Resumo do modelo gravado (`VR_IMPREST`/`VR_QUOTA` do registro 20
  *   na completa, `VR_IMPRESTIT`/`VR_QUOTA` do registro 18 na simplificada);
  * - `NM_EMAIL` fica em branco: o programa não copia o e-mail da ficha 16 para o recibo;
- * - `VR_GCIMPOSTOPAGO` e `VR_VCMOEDAEST`: imposto pago de ganhos de capital e de moeda
- *   estrangeira em espécie, que nenhum par dos fixtures preenche (ver docs/formato-dbk.md);
+ * - `VR_GCIMPOSTOPAGO`: soma de `GC_TRANSP_VR_IMPOSTOPAGO` dos registros 60 (imposto pago
+ *   informado nos demonstrativos de ganhos de capital importados do GCAP), confirmado pelo
+ *   caso `gcap-imovel-reducao-01` (R$ 10.000,00 pagos em Darf);
+ * - `VR_VCMOEDAEST`: imposto sobre alienação de moeda estrangeira em espécie, que nenhum par
+ *   dos fixtures preenche (fica zerado; ver docs/formato-dbk.md);
  * - `HR` e `R9`: CPF do header; os controles (`NR_CONTROLE`, `NR_HASH` do `R9`) saem de
  *   `recalcularControles`.
  */
@@ -57,6 +60,17 @@ function preenchidos(valores: Record<string, ValorCampo>): Record<string, ValorC
   return Object.fromEntries(Object.entries(valores).filter(([, v]) => v !== null && v !== ""));
 }
 
+/** Soma um campo numérico dos registros 60 (demonstrativos GCAP); `null` sem registro 60. */
+function somaGcap(registros: readonly Registro[], chave: string): bigint | null {
+  let soma: bigint | null = null;
+  for (const r of registros) {
+    if (r.tipo !== "60") continue;
+    const v = r.campos[chave];
+    if (typeof v === "bigint") soma = (soma ?? 0n) + v;
+  }
+  return soma === 0n ? null : soma;
+}
+
 /**
  * Monta os registros `HR`, `DR` e `R9` da declaração, com os controles zerados (o chamador
  * recalcula com `recalcularControles(..., { tipoArquivo: "DEC" })`). Exige o header `IR` e a
@@ -86,6 +100,7 @@ export function montarRecibo(registros: readonly Registro[], leiaute: Leiaute): 
     VR_IMPPAGAR: valor(ir, "VR_SOMA_IMPOSTO_PAGAR"),
     VR_IMPREST: valor(resumo, completa ? "VR_IMPREST" : "VR_IMPRESTIT"),
     VR_QUOTA: valor(resumo, "VR_QUOTA"),
+    VR_GCIMPOSTOPAGO: somaGcap(registros, "GC_TRANSP_VR_IMPOSTOPAGO"),
   };
   for (const chave of CAMPOS_DA_FICHA_16) doRecibo[chave] = valor(ficha16.campos, chave);
 

@@ -136,7 +136,9 @@ function lerAlienacao(ctx: ContextoLeitura, r: Registro, ident: bigint, cpf: str
     tipo,
     cpfBeneficiario: cpf,
     operacao: Number(operacao),
-    exterior: r.tipo !== "63" && numero(r, "IN_BRASIL_EXTERIOR") === 1n,
+    // 1 = bem no Brasil (casos gcap-*); 0 = exterior, por analogia com a pergunta "bem
+    // adquirido no Brasil" do GCAP (sem caso de referência).
+    exterior: r.tipo !== "63" && texto(r, "IN_BRASIL_EXTERIOR") === "0",
     descricao: texto(
       r,
       tipo === "imovel"
@@ -257,7 +259,7 @@ function gravarAlienacao(ctx: ContextoGravacao, a: AlienacaoGcap, ident: bigint)
     });
   } else {
     Object.assign(v, {
-      IN_BRASIL_EXTERIOR: a.exterior ? 1n : 0n,
+      IN_BRASIL_EXTERIOR: a.exterior ? 0n : 1n,
       DT_AQUISICAO: ddmmaaaaDeIso(a.dataAquisicao),
       VR_AQUISICAO: ap.custoAquisicao,
     });

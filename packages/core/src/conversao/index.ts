@@ -50,6 +50,11 @@ export {
   type ResultadoMigracao,
 } from "./ano-anterior.js";
 export type { ContextoGravacao, ContextoLeitura, Mapeador } from "./contexto.js";
+export {
+  ExportacaoGcapInvalidaError,
+  incluirDemonstrativoGcap,
+  lerDemonstrativoGcapXml,
+} from "./gcap-exportacao.js";
 export { calcularTotais, entradaCalculoDoModelo, type TotaisCalculados } from "./recalculo.js";
 export { type ModoTotais, TIPOS_TOTAIS } from "./totais.js";
 

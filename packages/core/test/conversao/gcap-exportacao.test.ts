@@ -64,19 +64,22 @@ describe("importação do arquivo exportado pelo GCAP 2025", () => {
     expect(importado).toEqual(dec);
   });
 
-  it.each(casos)("%s: gravar o modelo importado sobre o DBK oficial devolve os mesmos bytes", (caso) => {
-    const { lido, dec } = oficial(caso);
-    const d = xml(caso);
-    const importado = zDeclaracao.parse(incluirDemonstrativoGcap(antes(dec), d));
-    const gravado = modeloParaRegistros(importado, {
-      base: lido.registros,
-      totais: "preservar",
-      controles: { controleHeader: "preservar" },
-    });
-    const bytes = new Uint8Array(readFileSync(join(DBK, `${caso}.DBK`)));
-    const saida = gravarArquivo(gravado.registros, { terminadorFinal: lido.terminadorFinal });
-    expect(Buffer.compare(Buffer.from(saida), Buffer.from(bytes))).toBe(0);
-  });
+  it.each(casos)(
+    "%s: gravar o modelo importado sobre o DBK oficial devolve os mesmos bytes",
+    (caso) => {
+      const { lido, dec } = oficial(caso);
+      const d = xml(caso);
+      const importado = zDeclaracao.parse(incluirDemonstrativoGcap(antes(dec), d));
+      const gravado = modeloParaRegistros(importado, {
+        base: lido.registros,
+        totais: "preservar",
+        controles: { controleHeader: "preservar" },
+      });
+      const bytes = new Uint8Array(readFileSync(join(DBK, `${caso}.DBK`)));
+      const saida = gravarArquivo(gravado.registros, { terminadorFinal: lido.terminadorFinal });
+      expect(Buffer.compare(Buffer.from(saida), Buffer.from(bytes))).toBe(0);
+    },
+  );
 
   it("reimportar substitui o demonstrativo do mesmo CPF e período", () => {
     const { dec } = oficial(casos[0] as string);

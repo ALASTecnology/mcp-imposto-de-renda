@@ -409,7 +409,10 @@ export function calcularGanhoCapital(e: EntradaGanhoCapital) {
     }
     // FR2: de dezembro de 2005 (ou do mês de aquisição) ao mês da alienação, inclusive.
     const inicioFr2 = mesAquisicao <= "2005-11" ? "2005-12" : mesAquisicao;
-    reduzir("fr2", percentualFator(10_035n, mesesInclusivos(inicioFr2, e.dataAlienacao.slice(0, 7))));
+    reduzir(
+      "fr2",
+      percentualFator(10_035n, mesesInclusivos(inicioFr2, e.dataAlienacao.slice(0, 7))),
+    );
     if (e.unicoImovel && e.valorAlienacao <= 44_000_000n) {
       avisos.push(
         "Isenção do único imóvel até R$ 440.000,00 sem outra alienação nos últimos 5 anos.",

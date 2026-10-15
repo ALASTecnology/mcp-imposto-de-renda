@@ -44,7 +44,8 @@ function decodificar(v: string): string {
 function lerXml(xml: string): Elemento {
   const raiz: Elemento = { nome: "", atributos: {}, filhos: [] };
   const pilha: Elemento[] = [raiz];
-  const tag = /<(\/?)([A-Za-z_][\w.:-]*)((?:\s+[\w.:-]+\s*=\s*(?:"[^"]*"|'[^']*'))*)\s*(\/?)>|<\?[^>]*\?>|<!--[\s\S]*?-->/g;
+  const tag =
+    /<(\/?)([A-Za-z_][\w.:-]*)((?:\s+[\w.:-]+\s*=\s*(?:"[^"]*"|'[^']*'))*)\s*(\/?)>|<\?[^>]*\?>|<!--[\s\S]*?-->/g;
   const atributo = /([\w.:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
   for (const m of xml.matchAll(tag)) {
     if (m[2] === undefined) continue;
@@ -70,7 +71,10 @@ function lerXml(xml: string): Elemento {
 
 // ------------------------------------------------------------------ valores
 
-type Objeto = Record<string, unknown> & { tipo: string; apuracao: ReturnType<typeof apuracaoComum>["apuracao"] };
+type Objeto = Record<string, unknown> & {
+  tipo: string;
+  apuracao: ReturnType<typeof apuracaoComum>["apuracao"];
+};
 
 const filho = (e: Elemento | undefined, nome: string) => e?.filhos.find((f) => f.nome === nome);
 const itens = (e: Elemento | undefined) => e?.filhos.filter((f) => f.nome === "item") ?? [];
@@ -193,7 +197,10 @@ function lerParticipacao(item: Elemento, cpf: string, operacao: number): Objeto 
   const ps = filho(item, "participacaoSocietaria");
   const parcelas = itens(filho(item, "colecaoParcelaAquisicaoParticipacaoSocietaria"));
   const { apuracao } = apuracaoComum(item);
-  const quantidade = parcelas.reduce((s, p) => s + BigInt(digitos(attr(p, "quantidadeQuotas")) || "0"), 0n);
+  const quantidade = parcelas.reduce(
+    (s, p) => s + BigInt(digitos(attr(p, "quantidadeQuotas")) || "0"),
+    0n,
+  );
   const especie = attr(parcelas[0], "especieAquisicao") || attr(ps, "especie");
   const cnpj = digitos(attr(ps, "cnpj"));
   return {
@@ -240,7 +247,11 @@ export function lerDemonstrativoGcapXml(xml: string): DemonstrativoGcap {
   for (const a of alienacoes) {
     const isento = a.apuracao.rendimentoIsento;
     if (a.tipo === "imovel" && a.unicoImovel === true) tot.unico += isento;
-    else if (a.apuracao.impostoDevido === 0n && a.apuracao.rendimentoExclusivo === 0n && a.apuracao.ganhoCapital > 0n)
+    else if (
+      a.apuracao.impostoDevido === 0n &&
+      a.apuracao.rendimentoExclusivo === 0n &&
+      a.apuracao.ganhoCapital > 0n
+    )
       tot.pequeno += isento;
     else tot.reducao += isento;
   }
@@ -280,7 +291,9 @@ export function lerDemonstrativoGcapXml(xml: string): DemonstrativoGcap {
  */
 export function incluirDemonstrativoGcap(dec: Declaracao, d: DemonstrativoGcap): Declaracao {
   const mesmo = (x: DemonstrativoGcap) =>
-    x.cpfBeneficiario === d.cpfBeneficiario && x.dataInicio === d.dataInicio && x.dataFim === d.dataFim;
+    x.cpfBeneficiario === d.cpfBeneficiario &&
+    x.dataInicio === d.dataInicio &&
+    x.dataFim === d.dataFim;
   const ganhosCapital = [...dec.ganhosCapital.filter((x) => !mesmo(x)), d];
   const soma = (f: (t: DemonstrativoGcap["totais"]) => bigint) =>
     ganhosCapital.reduce((s, x) => s + f(x.totais), 0n);
@@ -290,10 +303,11 @@ export function incluirDemonstrativoGcap(dec: Declaracao, d: DemonstrativoGcap):
     "07": soma((t) => t.isentoReducao),
   };
   const isentos: Record<string, unknown>[] = dec.rendimentosIsentos
-    .map((i): Record<string, unknown> =>
-      i.codigo === "05" || i.codigo === "06" || i.codigo === "07"
-        ? { ...i, valorTransportado: transportes[i.codigo] }
-        : i,
+    .map(
+      (i): Record<string, unknown> =>
+        i.codigo === "05" || i.codigo === "06" || i.codigo === "07"
+          ? { ...i, valorTransportado: transportes[i.codigo] }
+          : i,
     )
     .filter(
       (i) =>

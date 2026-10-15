@@ -16,6 +16,7 @@ import {
   zDeclaracaoJson,
   zNomeArquivo,
 } from "./comum.js";
+import { preValidarEntrega } from "./pre-validacao.js";
 import {
   documentoParaHtml,
   documentoParaPdf,
@@ -339,6 +340,84 @@ export const grupoArquivos: GrupoFerramentas = {
             variantesHashQueConferem: [...rel.variantesHashQueConferem],
             variantesTotalQueConferem: [...rel.variantesTotalQueConferem],
             controleHeaderConfereComCrc: rel.controleHeaderConfereComCrc ?? null,
+          },
+        };
+      },
+    );
+
+    r.ferramenta(
+      "pre_validar_entrega",
+      {
+        titulo: "Pré-validar o arquivo de entrega",
+        descricao:
+          "Reúne num relatório único o que o validador da Receita confere na recepção e que dá para conferir localmente: tipo e exercício do arquivo, número de controle (CRC-32) de cada linha, NR_CONTROLE do header, contagens do T9, NR_HASH do header, NR_HASH do R9 (no .DEC), pendências de erro da validação e totais do Resumo refeitos pelo motor de cálculo. Responde se o arquivo está apto. A recepção final continua no servidor da Receita, que confere também o que só ela tem (recibo, situação cadastral, entrega em duplicidade). Use antes de transmitir pelo programa oficial.",
+        entrada: { arquivo: zNomeArquivo("Arquivo .DEC (ou .DBK) a pré-validar.") },
+        saida: {
+          arquivo: z.string(),
+          exercicio: z.number(),
+          tipoArquivo: z.enum(["DBK", "DEC"]),
+          apto: z.boolean().describe("Nenhuma conferência local falhou."),
+          verificacoes: z.array(
+            z.object({
+              id: z.string(),
+              titulo: z.string(),
+              situacao: z.enum(["ok", "falha", "aviso", "nao_se_aplica"]),
+              detalhe: z.string(),
+            }),
+          ),
+          totalDivergenciasControle: z.number(),
+          divergenciasControle: z.array(
+            z.object({
+              linha: z.number(),
+              tipo: z.string(),
+              campo: z.string(),
+              esperado: z.string(),
+              encontrado: z.string(),
+            }),
+          ),
+          totalErros: z.number(),
+          totalAvisos: z.number(),
+          erros: z.array(z.object({ codigo: z.string(), mensagem: z.string() })),
+          totaisDivergentes: z.array(
+            z.object({
+              registro: z.string(),
+              campo: z.string(),
+              gravado: z.string(),
+              recalculado: z.string(),
+            }),
+          ),
+          avisoRecepcao: z.string(),
+        },
+      },
+      async ({ arquivo }) => {
+        const { registros, exercicio } = await lerDeclaracaoArquivo(r.ctx, arquivo);
+        const rel = preValidarEntrega(registros, exercicio, arquivo);
+        const marca = { ok: "ok", falha: "FALHA", aviso: "aviso", nao_se_aplica: "não se aplica" };
+        const avisoRecepcao =
+          "A recepção final é feita pelo servidor da Receita Federal ao transmitir pelo programa oficial; esta pré-validação não garante o recibo.";
+        const texto = [
+          rel.apto
+            ? `${arquivo}: apto pelas conferências locais do validador.`
+            : `${arquivo}: não está apto; corrija as falhas abaixo antes de transmitir.`,
+          ...rel.verificacoes.map((v) => `- [${marca[v.situacao]}] ${v.titulo}: ${v.detalhe}`),
+          ...rel.erros.slice(0, 10).map((e) => `  - erro ${e.codigo}: ${e.mensagem}`),
+          avisoRecepcao,
+        ].join("\n");
+        return {
+          texto,
+          dados: {
+            arquivo,
+            exercicio,
+            tipoArquivo: rel.tipoArquivo,
+            apto: rel.apto,
+            verificacoes: rel.verificacoes.map((v) => ({ ...v })),
+            totalDivergenciasControle: rel.totalDivergenciasControle,
+            divergenciasControle: rel.divergenciasControle.map((d) => ({ ...d })),
+            totalErros: rel.totalErros,
+            totalAvisos: rel.totalAvisos,
+            erros: rel.erros.map((e) => ({ ...e })),
+            totaisDivergentes: rel.totaisDivergentes.map((d) => ({ ...d })),
+            avisoRecepcao,
           },
         };
       },

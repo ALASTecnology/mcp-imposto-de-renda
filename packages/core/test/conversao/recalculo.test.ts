@@ -44,7 +44,6 @@ const CAMPOS_FORA_DO_MODELO: readonly string[] = [
   "18.VR_IMPOSTO_DEVIDO_GCME",
   "18.VR_IMPPAGARESPECIE",
   "18.VR_RENDISENTOGCTRANSPORTE",
-  "18.VR_SUBTOTALISENTOTRANSPORTE",
   "IR.IN_ISENCAO_GCAP_TITULAR",
   // GCAP: endereço do imóvel, que o modelo não guarda, e o detalhe das reduções da apuração
   // do imóvel (o modelo guarda só a soma das reduções).

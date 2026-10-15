@@ -108,6 +108,67 @@ function lerAba(ctx: ContextoLeitura, exterior: boolean): Objeto {
   return { imoveis, apuracao, rebanho, dividas, receitasDespesas };
 }
 
+/**
+ * Apuração do resultado de uma aba (Brasil ou Exterior), como o registro 52: receita e despesa
+ * totais, resultado I, limite de 20%, resultado tributável, saldo de prejuízo, compensação e
+ * resultado não tributável (transportado para o isento 15).
+ */
+export function apurarAbaRural(aba: Aba, exterior: boolean) {
+  let receita = 0n;
+  let despesa = 0n;
+  let resultadoDolar = 0n;
+  if (exterior) {
+    for (const r of aba.receitasDespesas as NonNullable<
+      Declaracao["atividadeRural"]
+    >["exterior"]["receitasDespesas"]) {
+      resultadoDolar += r.resultadoDolar;
+    }
+  } else {
+    for (const m of aba.receitasDespesas as NonNullable<
+      Declaracao["atividadeRural"]
+    >["brasil"]["receitasDespesas"]) {
+      receita += m.receitaBruta;
+      despesa += m.despesa;
+    }
+  }
+  const ap = aba.apuracao;
+  const resultado = exterior
+    ? (ap.resultadoTotalReaisInformado ?? (resultadoDolar * COTACAO_DOLAR_RURAL_10000) / 10000n)
+    : receita - despesa;
+  const limite = exterior ? (ap.limite20Reais ?? 0n) : (receita * 20n) / 100n;
+  let tributavel: bigint;
+  let saldo: bigint;
+  let compensado = 0n;
+  if (ap.opcao === "limite20") {
+    tributavel = limite;
+    saldo = 0n;
+  } else if (ap.opcao === "naoInformada") {
+    tributavel = 0n;
+    saldo = resultado >= 0n ? ap.prejuizoAnterior : ap.prejuizoAnterior - resultado;
+  } else {
+    compensado =
+      resultado > 0n
+        ? ap.compensacaoPrejuizo < resultado
+          ? ap.compensacaoPrejuizo
+          : resultado
+        : 0n;
+    tributavel = pos(resultado - compensado);
+    saldo =
+      resultado >= 0n ? pos(ap.prejuizoAnterior - compensado) : ap.prejuizoAnterior - resultado;
+  }
+  return {
+    receita,
+    despesa,
+    resultado,
+    resultadoDolar,
+    limite,
+    tributavel,
+    saldo,
+    compensado,
+    naoTributavel: pos(resultado - tributavel - compensado),
+  };
+}
+
 function abaVazia(a: Aba): boolean {
   const ap = a.apuracao;
   return (
@@ -163,14 +224,10 @@ function gravarAba(ctx: ContextoGravacao, aba: Aba, exterior: boolean, chave: { 
     }
   }
 
-  let receita = 0n;
-  let despesa = 0n;
-  let resultadoDolar = 0n;
   if (exterior) {
     for (const r of aba.receitasDespesas as NonNullable<
       Declaracao["atividadeRural"]
     >["exterior"]["receitasDespesas"]) {
-      resultadoDolar += r.resultadoDolar;
       ctx.adicionar(
         "56",
         {
@@ -190,8 +247,6 @@ function gravarAba(ctx: ContextoGravacao, aba: Aba, exterior: boolean, chave: { 
       >["brasil"]["receitasDespesas"]),
     ].sort((a, b) => a.mes - b.mes);
     for (const m of meses) {
-      receita += m.receitaBruta;
-      despesa += m.despesa;
       ctx.adicionar(
         "51",
         { IN_EXTERIOR: 0n, NR_MES: BigInt(m.mes), VR_DESP: m.despesa, VR_REC: m.receitaBruta },
@@ -201,53 +256,34 @@ function gravarAba(ctx: ContextoGravacao, aba: Aba, exterior: boolean, chave: { 
   }
 
   const ap = aba.apuracao;
-  const resultado = exterior
-    ? (ap.resultadoTotalReaisInformado ?? (resultadoDolar * COTACAO_DOLAR_RURAL_10000) / 10000n)
-    : receita - despesa;
   if (ap.resultadoTotalReaisInformado !== undefined) {
     ctx.aviso(
       "O resultado total em reais informado (Final de Espólio ou Saída) é gravado como resultado; ao reler, ele volta como calculado.",
     );
   }
-  const limite = exterior ? (ap.limite20Reais ?? 0n) : (receita * 20n) / 100n;
-  let tributavel: bigint;
-  let saldo: bigint;
-  let compensado = 0n;
-  if (ap.opcao === "limite20") {
-    tributavel = limite;
-    saldo = 0n;
-  } else if (ap.opcao === "naoInformada") {
-    tributavel = 0n;
-    saldo = resultado >= 0n ? ap.prejuizoAnterior : ap.prejuizoAnterior - resultado;
-  } else {
-    compensado =
-      resultado > 0n
-        ? ap.compensacaoPrejuizo < resultado
-          ? ap.compensacaoPrejuizo
-          : resultado
-        : 0n;
-    tributavel = pos(resultado - compensado);
-    saldo =
-      resultado >= 0n ? pos(ap.prejuizoAnterior - compensado) : ap.prejuizoAnterior - resultado;
+  const x = apurarAbaRural(aba, exterior);
+  const valores52 = {
+    VR_RECTOTAL: exterior ? 0n : x.receita,
+    VR_DESPTOTAL: exterior ? 0n : x.despesa,
+    VR_RES1REAL: x.resultado,
+    VR_PREJEXERCANT: ap.prejuizoAnterior,
+    VR_COMP_PREJ_EXERC_ANT: ap.compensacaoPrejuizo,
+    VR_OPCAO: x.limite,
+    VR_RESTRIB: x.tributavel,
+    VR_PREJUIZO: x.saldo,
+    VR_RECVENDAFUTURA: ap.adiantamentosRecebidos,
+    VR_ADIANT: ap.adiantamentosAnterioresEntregues,
+    VR_RESNAOTRIBAR: x.naoTributavel,
+    VR_RES1DOLAR: exterior ? x.resultadoDolar : 0n,
+  };
+  // Na aba Exterior sem nenhum valor apurado (resultado em dólar ainda não informado), o
+  // programa não grava a apuração (caso ar-livro-caixa-exterior-01).
+  if (exterior && ap.opcao === "naoInformada" && Object.values(valores52).every((v) => v === 0n)) {
+    return;
   }
   ctx.adicionar(
     "52",
-    {
-      IN_EXTERIOR: ind,
-      VR_RECTOTAL: exterior ? 0n : receita,
-      VR_DESPTOTAL: exterior ? 0n : despesa,
-      VR_RES1REAL: resultado,
-      VR_PREJEXERCANT: ap.prejuizoAnterior,
-      VR_COMP_PREJ_EXERC_ANT: ap.compensacaoPrejuizo,
-      VR_OPCAO: limite,
-      VR_RESTRIB: tributavel,
-      VR_PREJUIZO: saldo,
-      VR_RECVENDAFUTURA: ap.adiantamentosRecebidos,
-      VR_ADIANT: ap.adiantamentosAnterioresEntregues,
-      VR_RESNAOTRIBAR: pos(resultado - tributavel - compensado),
-      VR_RES1DOLAR: exterior ? resultadoDolar : 0n,
-      IN_OPC_APURRESTRIB: OPCAO_NO_ARQUIVO[ap.opcao],
-    },
+    { IN_EXTERIOR: ind, ...valores52, IN_OPC_APURRESTRIB: OPCAO_NO_ARQUIVO[ap.opcao] },
     ["IN_EXTERIOR"],
   );
 

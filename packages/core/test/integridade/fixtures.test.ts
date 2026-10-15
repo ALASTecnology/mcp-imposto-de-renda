@@ -35,10 +35,10 @@ function detectada(bytes: Uint8Array, nome: string): boolean {
 }
 
 describe.skipIf(arquivos.length === 0)("integridade com as fixtures do programa oficial", () => {
-  it("há 122 fixtures (61 pares DBK e DEC)", () => {
-    expect(arquivos).toHaveLength(122);
+  it("há 130 fixtures (65 pares DBK e DEC)", () => {
+    expect(arquivos).toHaveLength(130);
     const bases = new Set(arquivos.map((n) => n.replace(/\.(dbk|dec)$/i, "")));
-    expect(bases.size).toBe(61);
+    expect(bases.size).toBe(65);
   });
 
   it("ida e volta de todas as fixtures é idêntica byte a byte e os controles conferem", () => {
@@ -54,7 +54,7 @@ describe.skipIf(arquivos.length === 0)("integridade com as fixtures do programa 
 
   it("cada DEC convertida em DBK é idêntica ao DBK gravado pelo programa", () => {
     const decs = arquivos.filter((n) => /\.dec$/i.test(n));
-    expect(decs).toHaveLength(61);
+    expect(decs).toHaveLength(65);
     // O programa descarta só na DEC a conta sem débito automático com saldo a pagar.
     for (const nome of decs.filter((n) => n !== "conta-sem-debito-pagar-01.DEC")) {
       const dec = lerArquivo(lerFixture(nome));

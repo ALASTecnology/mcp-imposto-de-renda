@@ -153,6 +153,7 @@ function somas(dec: Declaracao) {
     carne: z(),
     livro: z(),
     isentos: z(),
+    isentosAR: z(),
     lucros: z(),
     exclusivos: z(),
     exclusivos13: z(),
@@ -191,8 +192,13 @@ function somas(dec: Declaracao) {
         : i.valor + ("decimoTerceiro" in i ? i.decimoTerceiro : 0n);
     t.isentos[p] += v;
     if (i.codigo === "09") t.lucros[p] += v;
-    // Isentos transportados do GCAP (05, 06 e 07): fora de VR_ISENTOS do registro 17.
+    // Isentos transportados do GCAP (05, 06 e 07) e da Apuração da atividade rural (15): fora
+    // de VR_ISENTOS do registro 17 (casos gcap-* e ar-livro-caixa-substitui-01).
     if ("valorTransportado" in i) t.isentosGC[p] += i.valorTransportado;
+    if (i.codigo === "15") {
+      t.isentosGC[p] += v;
+      t.isentosAR[p] += v;
+    }
   }
   for (const e of dec.rendimentosExclusivos) {
     const p = e.codigo === "08" ? "D" : quem("beneficiario" in e ? e.beneficiario : undefined);
@@ -245,11 +251,9 @@ function ddmmaaaaOuVazio(iso: string | undefined): string {
 export const CAMPOS_NAO_RECALCULADOS: Readonly<Record<string, readonly string[]>> = {
   "17": [],
   "18": [
-    "VR_RESNAOTRIB_AR",
     "VR_IMPPAGARESPECIE",
     "VR_GANHOLIQUIDORVTRANSPORTE",
     "VR_RENDISENTOGCTRANSPORTE",
-    "VR_SUBTOTALISENTOTRANSPORTE",
     "VR_SUBTOTALEXCLUSIVOTRANSPORTE",
     "VR_TOT_IMPOSTO_RRA_TIT",
     "VR_TOT_IMPOSTO_RRA_DEP",
@@ -381,6 +385,10 @@ export function calcularTotais(dec: Declaracao): TotaisCalculados {
     ...comuns18e20,
     VR_RENDTRIB: s.rendimentosTributaveis,
     VR_RENDTRIBARURAL: rural,
+    // Isentos transportados de outras fichas: resultado não tributável da atividade rural
+    // (isento 15) e o subtotal dos transportes do GCAP e da Apuração rural.
+    VR_RESNAOTRIB_AR: soma(t.isentosAR),
+    VR_SUBTOTALISENTOTRANSPORTE: soma(t.isentosGC),
     VR_DESCSIMP: s.desconto,
     VR_BASECALC: s.baseCalculo,
     VR_IMPDEVIDO: s.impostoDevido,

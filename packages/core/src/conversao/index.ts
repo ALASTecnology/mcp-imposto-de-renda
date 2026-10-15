@@ -55,6 +55,14 @@ export {
   incluirDemonstrativoGcap,
   lerDemonstrativoGcapXml,
 } from "./gcap-exportacao.js";
+export {
+  type DemonstrativoLivroCaixaRural,
+  type ExportacaoLivroCaixaRural,
+  ExportacaoLivroCaixaRuralInvalidaError,
+  incluirLivroCaixaRural,
+  lerExportacaoLivroCaixaRural,
+  type MesLivroCaixaRural,
+} from "./livro-caixa-rural.js";
 export { calcularTotais, entradaCalculoDoModelo, type TotaisCalculados } from "./recalculo.js";
 export { type ModoTotais, TIPOS_TOTAIS } from "./totais.js";
 

@@ -46,6 +46,7 @@ Chamada (`tools/call`, campo `arguments`):
 Resposta em texto:
 
 ```text
+- 10234522275-0101-3112-GCAP-2025.DEC (2538 bytes, 2026-04-10T12:00:00.000Z)
 - 10234522275-IRPF-A-2025-2024-ORIGI.DEC (14447 bytes, 2026-04-10T12:00:00.000Z)
 - 10234522275-IRPF-A-2026-2025-ORIGI.DBK (14476 bytes, 2026-04-10T12:00:00.000Z)
 - 10459818260-IRPF-A-2026-2025-ORIGI.DBK (8704 bytes, 2026-04-10T12:00:00.000Z)
@@ -58,16 +59,16 @@ Resposta em texto:
 {
   "arquivos": [
     {
+      "nome": "10234522275-0101-3112-GCAP-2025.DEC",
+      "tamanho": 2538,
+      "modificadoEm": "2026-04-10T12:00:00.000Z"
+    },
+    {
       "nome": "10234522275-IRPF-A-2025-2024-ORIGI.DEC",
       "tamanho": 14447,
       "modificadoEm": "2026-04-10T12:00:00.000Z"
     },
-    {
-      "nome": "10234522275-IRPF-A-2026-2025-ORIGI.DBK",
-      "tamanho": 14476,
-      "modificadoEm": "2026-04-10T12:00:00.000Z"
-    },
-    "(+1 itens omitidos)"
+    "(+2 itens omitidos)"
   ]
 }
 ```

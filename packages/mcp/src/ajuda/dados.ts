@@ -8412,10 +8412,11 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "funcao": "Menu Importações",
   "status": "parcial",
   "ferramentas": [
-   "abrir_declaracao",
    "calcular_carne_leao",
+   "calcular_ganho_capital",
    "definir_receitas_despesas_rurais",
    "definir_rendimentos_pf_exterior",
+   "importar_gcap",
    "importar_informe_plano_saude",
    "importar_informe_rendimentos",
    "listar_ganhos_capital",
@@ -8828,11 +8829,11 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+Shift+G",
   "id": "M-IMP-GCAP",
   "funcao": "Importar Ganhos de Capital 2025",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
-   "abrir_declaracao",
-   "listar_ganhos_capital",
-   "orientar_servico_externo"
+   "calcular_ganho_capital",
+   "importar_gcap",
+   "listar_ganhos_capital"
   ]
  },
  {

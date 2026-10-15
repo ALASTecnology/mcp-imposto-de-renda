@@ -14,11 +14,17 @@ export const ARQ = "10234522275-IRPF-A-2026-2025-ORIGI.DBK";
 export const ARQ_PF = "10459818260-IRPF-A-2026-2025-ORIGI.DBK";
 /** Declaração de 2025 da família, no leiaute de 2025 (sintética, de `tools/docs/dados/`). */
 export const ARQ_2025 = "10234522275-IRPF-A-2025-2024-ORIGI.DEC";
+/**
+ * Arquivo que o GCAP 2025 exporta para o IRPF 2026, do titular da família (sintético, gerado com
+ * o harness de `tools/referencia` e o GCAP 2025; de `tools/docs/dados/`).
+ */
+export const ARQ_GCAP = "10234522275-0101-3112-GCAP-2025.DEC";
 /** Arquivos copiados para a pasta de cada cenário (caminhos relativos a `exemplos/`). */
 export const BASE: Record<string, string> = {
   [ARQ]: `02-familia-dependentes/${ARQ}`,
   [ARQ_PF]: `04-autonomo-carne-leao/${ARQ_PF}`,
   [ARQ_2025]: `../tools/docs/dados/${ARQ_2025}`,
+  [ARQ_GCAP]: `../tools/docs/dados/${ARQ_GCAP}`,
 };
 
 const TITULAR = "10234522275";
@@ -131,6 +137,10 @@ export const CENARIOS: readonly Cenario[] = [
     { ferramenta: "listar_tabela", argumentos: { tabela: "dependentes", limite: 4 } },
     { ferramenta: "buscar_codigo", argumentos: { tabela: "bens-direitos", codigo: "01-11" } },
     { ferramenta: "gerar_arquivo_entrega", argumentos: { arquivo: ARQ } },
+    {
+      ferramenta: "importar_gcap",
+      argumentos: { arquivo: ARQ, arquivo_gcap: ARQ_GCAP, arquivo_destino: "com-gcap.DBK" },
+    },
   ],
   [
     {

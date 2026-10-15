@@ -81,7 +81,7 @@ Trazer: O arquivo .DBK gravado pelo programa.
 
 ### Funções do programa oficial
 
-Aparece em 35 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 21 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
 - `M-INICIAL-NOVA` Aba "Nova" (tela "O que você deseja fazer?") (P0, parcial)
@@ -91,7 +91,7 @@ Aparece em 35 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `M-IMP-PREPREENCHIDA` Importar Declaração Pré-Preenchida (P1, parcial)
 - `M-IMP-CARNE-LEAO` Importar Carnê-Leão 2025 (P1, parcial)
 - `M-IMP-AR` Importar Atividade Rural 2025 (P1, parcial)
-- e mais 27 linhas na matriz.
+- e mais 13 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

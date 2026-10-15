@@ -76,17 +76,11 @@ Controles (CRC e T9): conferem.
 
 ### Funções do programa oficial
 
-Aparece em 18 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-DECLARACAO` Menu Declaração (P0, implementada)
-- `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
 - `M-INICIAL-EMPREENCH` Aba "Em Preenchimento" (P1, implementada)
 - `M-DECL-ABRIR` Declaração > Abrir (P0, implementada)
-- `M-IMP-GCAP` Importar Ganhos de Capital 2025 (P1, parcial)
-- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
-- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
-- `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, parcial)
-- e mais 10 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

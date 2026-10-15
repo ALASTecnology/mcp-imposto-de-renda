@@ -418,7 +418,7 @@ Aparece em 2 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Simular ganho de capital**. Não grava nada.
 
-Simulador de orientação para alienação de imóvel, móvel ou participação: ganho = valor de alienação menos corretagem e custo; reduções da Lei 7.713/1988 (aquisição até 1988) e fatores FR1/FR2 da Lei 11.196/2005 para imóveis; isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor; alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. O demonstrativo oficial é o GCAP.
+Simulador de orientação para alienação de imóvel, móvel ou participação, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. O demonstrativo oficial é o GCAP.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -437,6 +437,7 @@ Simulador de orientação para alienação de imóvel, móvel ou participação:
 | `unico_imovel` | booleano | não |   |
 | `valor_aplicado_outro_imovel` | valor monetário | não | Valor aplicado em outro imóvel residencial em 180 dias. |
 | `total_alienado_no_mes` | valor monetário | não | Total de alienações de bens da mesma natureza no mês. |
+| `imposto_pago` | valor monetário | não | Imposto já pago em Darf 4600 sobre esta alienação. |
 
 ### Resposta estruturada
 
@@ -444,9 +445,13 @@ Simulador de orientação para alienação de imóvel, móvel ou participação:
 | --- | --- | --- |
 | `ganhoBruto` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `reducoes` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
+| `reducoesDetalhadas` | objeto |   |
+| `percentuaisReducao` | objeto | Percentuais de redução com 6 casas, como no GCAP ("56,157121"). |
 | `ganhoTributavel` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `isento` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `imposto` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
+| `impostoPago` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
+| `rendimentoExclusivo` | texto ou inteiro | Ganho tributável menos o imposto pago: o valor que o GCAP transporta para Rendimentos de Tributação Exclusiva. |
 | `codigoDarf` | texto |   |
 | `vencimento` | texto |   |
 | `avisos` | lista de texto |   |
@@ -469,7 +474,7 @@ Chamada (`tools/call`, campo `arguments`):
 Resposta em texto:
 
 ```text
-Ganho bruto R$ 250.500,00, reduções R$ 107.272,17, tributável R$ 143.227,83, imposto R$ 21.484,17 (Darf 4600 até 31/10/2025).  Cálculo de orientação do MCP Imposto de Renda; confira no programa oficial, no GCAP ou no Carnê-Leão Web.
+Ganho bruto R$ 250.500,00, reduções R$ 107.771,71, tributável R$ 142.728,29, imposto R$ 21.409,24 (Darf 4600 até 31/10/2025).  Cálculo de orientação do MCP Imposto de Renda; confira no programa oficial, no GCAP ou no Carnê-Leão Web.
 ```
 
 <details>
@@ -478,10 +483,25 @@ Ganho bruto R$ 250.500,00, reduções R$ 107.272,17, tributável R$ 143.227,83, 
 ```json
 {
   "ganhoBruto": 25050000,
-  "reducoes": 10727217,
-  "ganhoTributavel": 14322783,
-  "isento": 10727217,
-  "imposto": 2148417,
+  "reducoes": 10777171,
+  "reducoesDetalhadas": {
+    "lei7713": 0,
+    "fr1": 0,
+    "fr2": 10777171,
+    "outroImovel": 0,
+    "unicoImovel": 0,
+    "pequenoValor": 0
+  },
+  "percentuaisReducao": {
+    "lei7713": "0,000000",
+    "fr1": "0,000000",
+    "fr2": "43,022639"
+  },
+  "ganhoTributavel": 14272829,
+  "isento": 10777171,
+  "imposto": 2140924,
+  "impostoPago": 0,
+  "rendimentoExclusivo": 14272829,
   "avisos": [
     "Vencimentos calculados como último dia útil considerando só sábados e domingos; se cair em feriado nacional, o prazo é o dia útil anterior.",
     "Cálculo de orientação do MCP Imposto de Renda; confira no programa oficial, no GCAP ou no Carnê-Leão Web."
@@ -495,13 +515,17 @@ Ganho bruto R$ 250.500,00, reduções R$ 107.272,17, tributável R$ 143.227,83, 
 
 ### Funções do programa oficial
 
-Aparece em 5 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+Aparece em 16 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
+- `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
+- `M-IMP-GCAP` Importar Ganhos de Capital 2025 (P1, implementada)
 - `M-DEMO-ACOES` Novo, Abrir, Fechar, Excluir e Retificar Demonstrativo (inferido) (P2, parcial)
-- `D-GCAP-IMOVEIS` Ganhos de Capital - Bens Imóveis (P1, parcial)
-- `D-GCAP-MOVEIS` Ganhos de Capital - Direitos/Bens Móveis (P1, parcial)
-- `D-GCAP-PARTICIP` Ganhos de Capital - Participações Societárias (P1, parcial)
-- `D-GCAP-MOEDA` Ganhos de Capital - Moedas em Espécie (P1, parcial)
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
+- `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, implementada)
+- `F-EXCL-02` Ganhos de capital na alienação de bens e/ou direitos (P1, implementada)
+- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, parcial)
+- e mais 8 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

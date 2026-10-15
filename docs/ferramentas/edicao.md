@@ -1460,8 +1460,8 @@ Aparece em 31 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `F-ISENTO-02` Bolsas de estudo e de pesquisa de médico-residente e servidor da rede pública de educação profissional (Pronatec) (P1, implementada)
 - `F-ISENTO-03` Capital de apólices de seguro ou pecúlio pago por morte do segurado, prêmio de seguro restituído e pecúlio de previdência privada por morte ou invalidez permanente (P1, implementada)
 - `F-ISENTO-04` Indenizações por rescisão de contrato de trabalho, inclusive PDV, e por acidente de trabalho; e FGTS (P0, implementada)
-- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
-- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - e mais 23 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -1584,8 +1584,8 @@ Aparece em 31 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `F-ISENTO-02` Bolsas de estudo e de pesquisa de médico-residente e servidor da rede pública de educação profissional (Pronatec) (P1, implementada)
 - `F-ISENTO-03` Capital de apólices de seguro ou pecúlio pago por morte do segurado, prêmio de seguro restituído e pecúlio de previdência privada por morte ou invalidez permanente (P1, implementada)
 - `F-ISENTO-04` Indenizações por rescisão de contrato de trabalho, inclusive PDV, e por acidente de trabalho; e FGTS (P0, implementada)
-- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
-- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - e mais 23 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -1686,8 +1686,8 @@ Aparece em 31 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `F-ISENTO-02` Bolsas de estudo e de pesquisa de médico-residente e servidor da rede pública de educação profissional (Pronatec) (P1, implementada)
 - `F-ISENTO-03` Capital de apólices de seguro ou pecúlio pago por morte do segurado, prêmio de seguro restituído e pecúlio de previdência privada por morte ou invalidez permanente (P1, implementada)
 - `F-ISENTO-04` Indenizações por rescisão de contrato de trabalho, inclusive PDV, e por acidente de trabalho; e FGTS (P0, implementada)
-- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
-- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - e mais 23 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -1766,8 +1766,8 @@ Aparece em 31 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `F-ISENTO-02` Bolsas de estudo e de pesquisa de médico-residente e servidor da rede pública de educação profissional (Pronatec) (P1, implementada)
 - `F-ISENTO-03` Capital de apólices de seguro ou pecúlio pago por morte do segurado, prêmio de seguro restituído e pecúlio de previdência privada por morte ou invalidez permanente (P1, implementada)
 - `F-ISENTO-04` Indenizações por rescisão de contrato de trabalho, inclusive PDV, e por acidente de trabalho; e FGTS (P0, implementada)
-- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
-- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - e mais 23 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -5825,7 +5825,7 @@ Chamada (`tools/call`, campo `arguments`):
 Resposta em texto:
 
 ```text
-Demonstrativo de Ganhos de Capital: item 1 incluído. Gravado 10234522275-IRPF-A-2026-2025-ORIGI.DBK (22 registros).
+Demonstrativo de Ganhos de Capital: item 1 incluído. Gravado 10234522275-IRPF-A-2026-2025-ORIGI.DBK (34 registros).
 Cópia do conteúdo anterior: .mcp-imposto-de-renda-backups/10234522275-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak.
 Controles: conferem.
 Sem erros impeditivos; 0 aviso(s).
@@ -5837,9 +5837,9 @@ Sem erros impeditivos; 0 aviso(s).
 ```json
 {
   "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DBK",
-  "bytes": 14777,
+  "bytes": 16421,
   "backup": ".mcp-imposto-de-renda-backups/10234522275-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z.bak",
-  "registros": 22,
+  "registros": 34,
   "controlesValidos": true,
   "podeEntregar": true,
   "totalErros": 0,
@@ -5938,7 +5938,7 @@ Chamada (`tools/call`, campo `arguments`):
 Resposta em texto:
 
 ```text
-Demonstrativo de Ganhos de Capital: item 1 alterado. Gravado 10234522275-IRPF-A-2026-2025-ORIGI.DBK (22 registros).
+Demonstrativo de Ganhos de Capital: item 1 alterado. Gravado 10234522275-IRPF-A-2026-2025-ORIGI.DBK (34 registros).
 Cópia do conteúdo anterior: .mcp-imposto-de-renda-backups/10234522275-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z-1.bak.
 Controles: conferem.
 Sem erros impeditivos; 0 aviso(s).
@@ -5950,9 +5950,9 @@ Sem erros impeditivos; 0 aviso(s).
 ```json
 {
   "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DBK",
-  "bytes": 14777,
+  "bytes": 16421,
   "backup": ".mcp-imposto-de-renda-backups/10234522275-IRPF-A-2026-2025-ORIGI.DBK.20260410T120000Z-1.bak",
-  "registros": 22,
+  "registros": 34,
   "controlesValidos": true,
   "podeEntregar": true,
   "totalErros": 0,
@@ -6148,7 +6148,7 @@ Demonstrativo de Ganhos de Capital: 1 item(ns).
         "impostoDevidoMoedaEspecie": 0,
         "rendimentoExclusivoExterior": 0,
         "impostoPagoExterior": 0,
-(... mais 6 linhas)
+(... mais 228 linhas)
 ```
 
 ### Funções do programa oficial
@@ -6156,11 +6156,11 @@ Demonstrativo de Ganhos de Capital: 1 item(ns).
 Aparece em 15 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
-- `M-IMP-GCAP` Importar Ganhos de Capital 2025 (P1, parcial)
-- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, parcial)
-- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, parcial)
-- `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, parcial)
-- `F-EXCL-02` Ganhos de capital na alienação de bens e/ou direitos (P1, parcial)
+- `M-IMP-GCAP` Importar Ganhos de Capital 2025 (P1, implementada)
+- `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
+- `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
+- `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, implementada)
+- `F-EXCL-02` Ganhos de capital na alienação de bens e/ou direitos (P1, implementada)
 - `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, parcial)
 - `F-EXCL-04` Ganhos de capital na alienação de moeda estrangeira em espécie (P1, parcial)
 - e mais 7 linhas na matriz.
@@ -9169,7 +9169,7 @@ Aparece em 6 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 - `F-PAG` Pagamentos Efetuados (ficha) (P0, implementada)
 - `F-BENS` Bens e Direitos (ficha, Declaração de Ajuste Anual) (P0, implementada)
 - `F-DIV` Dívidas e Ônus Reais (P0, implementada)
-- `D-GCAP-GERAL` Demonstrativo de Ganhos de Capital (GCAP 2025) (P1, parcial)
+- `D-GCAP-GERAL` Demonstrativo de Ganhos de Capital (GCAP 2025) (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

@@ -9,6 +9,7 @@ import { z } from "zod";
 import { ATALHOS_PROGRAMA, buscarAjuda, TOPICOS_AJUDA } from "../ajuda/index.js";
 import { EntradaInvalidaError } from "../erros.js";
 import { avaliarExpressao, ExpressaoInvalidaError } from "./expressao.js";
+import { registrarSuporte } from "./suporte.js";
 import type { GrupoFerramentas } from "./tipos.js";
 
 /** Versão do programa oficial de que as tabelas embarcadas foram extraídas. */
@@ -343,5 +344,7 @@ export const grupoOrientacao: GrupoFerramentas = {
         };
       },
     );
+
+    registrarSuporte(r);
   },
 };

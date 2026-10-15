@@ -19,8 +19,10 @@ import {
 import { criarRegistroFerramentas } from "./ferramentas/registrador.js";
 import { GRUPOS } from "./ferramentas/registro.js";
 import type {
+  AmbienteProcesso,
   ContextoFerramentas,
   GrupoFerramentas,
+  NomeGrupo,
   RegistroFerramentas,
 } from "./ferramentas/tipos.js";
 import { registrarPrompts } from "./prompts.js";
@@ -52,6 +54,19 @@ export interface OpcoesServidor {
   readonly perfil?: NomePerfil;
   /** Observa falhas das ferramentas (recebe o nome da ferramenta e o erro; não registre conteúdo). */
   readonly registrarErro?: (ferramenta: string, erro: unknown) => void;
+  /** Memória e versões do processo mostradas por `diagnosticar_servidor`. Padrão: `process`. */
+  readonly ambiente?: () => AmbienteProcesso;
+}
+
+/** Ambiente real do processo do servidor. */
+export function ambienteDoProcesso(): AmbienteProcesso {
+  const m = process.memoryUsage();
+  return {
+    memoria: { rss: m.rss, heapTotal: m.heapTotal, heapUsed: m.heapUsed, external: m.external },
+    node: process.version,
+    plataforma: process.platform,
+    arquitetura: process.arch,
+  };
 }
 
 /**
@@ -115,16 +130,25 @@ export function createServer(opcoes: OpcoesServidor = {}): McpServer {
           ...(opcoes.limiteBytes === undefined ? {} : { limiteBytes: opcoes.limiteBytes }),
           ...(opcoes.maxBackups === undefined ? {} : { maxBackups: opcoes.maxBackups }),
         });
+  const grupos: { nome: NomeGrupo; ferramentas: number }[] = [];
   const ctx: ContextoFerramentas = {
     pasta,
     somenteLeitura: opcoes.somenteLeitura ?? false,
     relogio,
     ...(opcoes.registrarErro ? { registrarErro: opcoes.registrarErro } : {}),
+    servidor: {
+      versao: VERSAO_SERVIDOR,
+      perfil: perfil.nome,
+      grupos,
+      ambiente: opcoes.ambiente ?? ambienteDoProcesso,
+    },
   };
   const nomes: string[] = [];
   for (const grupo of opcoes.grupos ?? GRUPOS) {
     if (grupo.exigePasta && !pasta) continue;
+    const antes = nomes.length;
     grupo.registrar(criarRegistroFerramentas(server, ctx, nomes, grupo.nome, perfil));
+    if (nomes.length > antes) grupos.push({ nome: grupo.nome, ferramentas: nomes.length - antes });
   }
   registrarPrompts(server);
   registrarRecursos(server);

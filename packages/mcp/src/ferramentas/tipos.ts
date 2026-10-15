@@ -25,6 +25,28 @@ export type NomeGrupo =
   | "calculadoras"
   | "orientacao";
 
+/** Uso de memória e versões do processo, lidos a cada chamada de `diagnosticar_servidor`. */
+export interface AmbienteProcesso {
+  readonly memoria: {
+    readonly rss: number;
+    readonly heapTotal: number;
+    readonly heapUsed: number;
+    readonly external: number;
+  };
+  readonly node: string;
+  readonly plataforma: string;
+  readonly arquitetura: string;
+}
+
+/** O que o servidor sabe de si: versão, perfil, grupos registrados e ambiente do processo. */
+export interface InfoServidor {
+  readonly versao: string;
+  readonly perfil: string;
+  /** Preenchida durante o registro: cada grupo com a quantidade de ferramentas registradas. */
+  readonly grupos: readonly { readonly nome: NomeGrupo; readonly ferramentas: number }[];
+  readonly ambiente: () => AmbienteProcesso;
+}
+
 /** O que as ferramentas recebem do servidor. */
 export interface ContextoFerramentas {
   /** Pasta autorizada; `undefined` quando o servidor foi criado sem `diretorioAutorizado`. */
@@ -33,6 +55,8 @@ export interface ContextoFerramentas {
   readonly relogio: () => Date;
   /** Recebe só o nome da ferramenta e a classe do erro (nunca conteúdo). */
   readonly registrarErro?: (ferramenta: string, erro: unknown) => void;
+  /** Informações do próprio servidor; ausente fora de `createServer` (catálogo, testes). */
+  readonly servidor?: InfoServidor;
 }
 
 /** Resultado de uma ferramenta: texto legível e dados estruturados (validados pelo outputSchema). */

@@ -43,10 +43,12 @@ export {
 export { ANOTACOES_ESCRITA, ANOTACOES_LEITURA } from "./ferramentas/registrador.js";
 export { GRUPOS } from "./ferramentas/registro.js";
 export type {
+  AmbienteProcesso,
   ContextoFerramentas,
   DefinicaoFerramenta,
   Executor,
   GrupoFerramentas,
+  InfoServidor,
   NomeGrupo,
   RegistroFerramentas,
   ResultadoFerramenta,
@@ -54,6 +56,7 @@ export type {
 export { AVISO_LEGAL, URI_AVISO_LEGAL } from "./recursos.js";
 export { type Json, objetoJson, paraJson } from "./serializacao.js";
 export {
+  ambienteDoProcesso,
   catalogoFerramentas,
   createServer,
   ferramentasRegistradas,

@@ -34,35 +34,111 @@ function decodificar(v: string): string {
   return v.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e: string) => {
     if (e[0] === "#") {
       const n = e[1] === "x" || e[1] === "X" ? Number.parseInt(e.slice(2), 16) : Number(e.slice(1));
-      return Number.isFinite(n) ? String.fromCodePoint(n) : m;
+      return Number.isInteger(n) && n >= 0 && n <= 0x10ffff ? String.fromCodePoint(n) : m;
     }
     return ENTIDADES[e] ?? m;
   });
 }
 
-/** Leitor mínimo de XML só com elementos e atributos (o formato que o GCAP grava). */
+const NOME_INICIO = /[A-Za-z_]/;
+const NOME_RESTO = /[\w.:-]/;
+const ESPACO = /\s/;
+
+function ehNomeInicio(c: string | undefined): boolean {
+  return c !== undefined && NOME_INICIO.test(c);
+}
+
+function ehNomeResto(c: string | undefined): boolean {
+  return c !== undefined && NOME_RESTO.test(c);
+}
+
+function ehEspaco(c: string | undefined): boolean {
+  return c !== undefined && ESPACO.test(c);
+}
+
+/**
+ * Leitor mínimo de XML só com elementos e atributos (o formato que o GCAP grava). Varre o texto
+ * uma vez, sem expressões regulares sobre a entrada inteira, para que nenhum arquivo hostil
+ * (aberturas repetidas de `<?`, `<!--` ou atributos sem fim) custe mais que tempo linear.
+ */
 function lerXml(xml: string): Elemento {
   const raiz: Elemento = { nome: "", atributos: {}, filhos: [] };
   const pilha: Elemento[] = [raiz];
-  const tag =
-    /<(\/?)([A-Za-z_][\w.:-]*)((?:\s+[\w.:-]+\s*=\s*(?:"[^"]*"|'[^']*'))*)\s*(\/?)>|<\?[^>]*\?>|<!--[\s\S]*?-->/g;
-  const atributo = /([\w.:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
-  for (const m of xml.matchAll(tag)) {
-    if (m[2] === undefined) continue;
-    const atual = pilha.at(-1) as Elemento;
-    if (m[1] === "/") {
-      if (pilha.length <= 1 || atual.nome !== m[2]) {
-        throw new ExportacaoGcapInvalidaError(`XML do GCAP malformado perto de </${m[2]}>.`);
-      }
-      pilha.pop();
+  const malformado = (onde: number): never => {
+    throw new ExportacaoGcapInvalidaError(`XML do GCAP malformado perto da posição ${onde}.`);
+  };
+  const lerNome = (inicio: number): number => {
+    if (!ehNomeInicio(xml[inicio])) malformado(inicio);
+    let k = inicio + 1;
+    while (ehNomeResto(xml[k])) k++;
+    return k;
+  };
+  const pularEspacos = (k: number): number => {
+    let p = k;
+    while (ehEspaco(xml[p])) p++;
+    return p;
+  };
+  let i = 0;
+  while (i < xml.length) {
+    const lt = xml.indexOf("<", i);
+    if (lt < 0) break;
+    if (xml.startsWith("<?", lt)) {
+      const fim = xml.indexOf("?>", lt + 2);
+      if (fim < 0) malformado(lt);
+      i = fim + 2;
       continue;
     }
-    const e: Elemento = { nome: m[2], atributos: {}, filhos: [] };
-    for (const a of (m[3] ?? "").matchAll(atributo)) {
-      e.atributos[a[1] as string] = decodificar(a[2] ?? a[3] ?? "");
+    if (xml.startsWith("<!--", lt)) {
+      const fim = xml.indexOf("-->", lt + 4);
+      if (fim < 0) malformado(lt);
+      i = fim + 3;
+      continue;
+    }
+    const atual = pilha.at(-1) as Elemento;
+    if (xml[lt + 1] === "/") {
+      const fimNome = lerNome(lt + 2);
+      const nome = xml.slice(lt + 2, fimNome);
+      const k = pularEspacos(fimNome);
+      if (xml[k] !== ">") malformado(k);
+      if (pilha.length <= 1 || atual.nome !== nome) {
+        throw new ExportacaoGcapInvalidaError(`XML do GCAP malformado perto de </${nome}>.`);
+      }
+      pilha.pop();
+      i = k + 1;
+      continue;
+    }
+    const fimNome = lerNome(lt + 1);
+    const e: Elemento = { nome: xml.slice(lt + 1, fimNome), atributos: {}, filhos: [] };
+    let k = fimNome;
+    let fechado = false;
+    for (;;) {
+      const antes = k;
+      k = pularEspacos(k);
+      if (xml.startsWith("/>", k)) {
+        fechado = true;
+        k += 2;
+        break;
+      }
+      if (xml[k] === ">") {
+        k += 1;
+        break;
+      }
+      if (k === antes) malformado(k);
+      const fimAtributo = lerNome(k);
+      const nomeAtributo = xml.slice(k, fimAtributo);
+      k = pularEspacos(fimAtributo);
+      if (xml[k] !== "=") malformado(k);
+      k = pularEspacos(k + 1);
+      const aspa = xml[k];
+      if (aspa !== '"' && aspa !== "'") malformado(k);
+      const fimValor = xml.indexOf(aspa as string, k + 1);
+      if (fimValor < 0) malformado(k);
+      e.atributos[nomeAtributo] = decodificar(xml.slice(k + 1, fimValor));
+      k = fimValor + 1;
     }
     atual.filhos.push(e);
-    if (m[4] !== "/") pilha.push(e);
+    if (!fechado) pilha.push(e);
+    i = k;
   }
   const doc = raiz.filhos[0];
   if (!doc || pilha.length !== 1) throw new ExportacaoGcapInvalidaError("XML do GCAP incompleto.");

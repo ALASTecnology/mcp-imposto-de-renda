@@ -74,7 +74,13 @@ export function problemaNome(nome: string): string | undefined {
 
 /** Formato básico de e-mail (usuário@domínio.tld), sem espaços. */
 export function emailValido(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  // Sem expressão regular sobre a entrada: tempo linear mesmo com texto hostil.
+  if (email.length > 254 || /\s/.test(email)) return false;
+  const arroba = email.indexOf("@");
+  if (arroba <= 0 || arroba !== email.lastIndexOf("@")) return false;
+  const dominio = email.slice(arroba + 1);
+  const ponto = dominio.lastIndexOf(".");
+  return ponto > 0 && ponto < dominio.length - 1;
 }
 
 /** Índices auxiliares da declaração usados por várias regras. */

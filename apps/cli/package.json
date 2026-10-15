@@ -1,8 +1,16 @@
 {
   "name": "mcp-imposto-de-renda",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Executável stdio do servidor MCP Imposto de Renda.",
+  "version": "0.1.0",
+  "description": "Servidor MCP local para a declaração do Imposto de Renda Pessoa Física (IRPF 2026).",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "imposto-de-renda",
+    "irpf",
+    "dirpf",
+    "receita-federal",
+    "declaracao"
+  ],
   "license": "AGPL-3.0-only",
   "homepage": "https://github.com/ALASTecnology/mcp-imposto-de-renda#readme",
   "bugs": {
@@ -21,8 +29,13 @@
     "mcp-imposto-de-renda": "./dist/index.js"
   },
   "files": [
-    "dist/index.js"
+    "dist/index.js",
+    "README.md",
+    "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc -p tsconfig.json"

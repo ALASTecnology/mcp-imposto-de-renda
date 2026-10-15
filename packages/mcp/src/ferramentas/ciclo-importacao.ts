@@ -14,16 +14,24 @@
  *   e o inclui na declaração com `incluirDemonstrativoGcap` do core, conferido com os pares de
  *   arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/gcap/2026`),
  *   inclusive bens no exterior e moeda estrangeira em espécie.
+ * - `importar_livro_caixa_rural`: "Importar dados da Atividade Rural". Lê o arquivo que o Livro
+ *   Caixa da Atividade Rural 2025 grava em "Exportar para o IRPF"
+ *   (`<CPF>-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC`) e o aplica com `incluirLivroCaixaRural` do
+ *   core, conferido byte a byte com os pares de arquivo exportado e DBK gravado pelo programa
+ *   (`packages/core/test/fixtures/atividade-rural/2026`).
  */
 import { inflateRawSync } from "node:zlib";
 import {
   type Declaracao,
   ExportacaoGcapInvalidaError,
+  ExportacaoLivroCaixaRuralInvalidaError,
   FICHAS,
   type Ficha,
   incluirDemonstrativoGcap,
+  incluirLivroCaixaRural,
   lerArquivo,
   lerDemonstrativoGcapXml,
+  lerExportacaoLivroCaixaRural,
   migrarDeclaracaoAnterior,
 } from "@mcp-imposto-de-renda/core";
 import { z } from "zod";
@@ -312,6 +320,89 @@ export function registrarImportacoesDeclaracao(r: RegistroFerramentas): void {
           rendimentoExclusivoExterior: t.rendimentoExclusivoExterior,
           ganhoMoedaEspecie: t.ganhoMoedaEspecie,
           operacoesMoedaEspecie: vendasMoeda.length,
+        }),
+      };
+    },
+  );
+
+  r.ferramenta(
+    "importar_livro_caixa_rural",
+    {
+      titulo: "Importar o Livro Caixa da Atividade Rural",
+      descricao:
+        'Importa na declaração o arquivo que o programa Livro Caixa da Atividade Rural 2025 grava em "Exportar para o IRPF" (<CPF>-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC), como "Importar dados da Atividade Rural" do programa: confere o exercício e o controle do arquivo, substitui as receitas e despesas mensais da aba Brasil (as despesas não dedutíveis não entram), grava na Apuração os adiantamentos recebidos e a receita de produtos entregues por adiantamentos anteriores, substitui a linha de cada país da aba Exterior (moeda original) e refaz o isento 15 (resultado não tributável). Imóveis, forma de apuração, prejuízo, rebanho, bens e dívidas são mantidos. O arquivo do programa Atividade Rural 2026 é do IRPF 2027 e é recusado. O CPF do arquivo precisa ser o do titular. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança).',
+      escreve: true,
+      entrada: {
+        arquivo: zArquivoEdicao,
+        arquivo_livro_caixa: zNomeArquivo(
+          'Arquivo exportado pelo Livro Caixa da Atividade Rural 2025 (ex.: "12345678909-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC").',
+        ),
+        arquivo_destino: zArquivoDestino,
+      },
+      saida: {
+        ...SAIDA_GRAVACAO,
+        cpf: z.string(),
+        mesesBrasil: z.number().int(),
+        receitaBrasil: z.union([z.number().int(), z.string()]),
+        despesaBrasil: z.union([z.number().int(), z.string()]),
+        adiantamentosRecebidos: z.union([z.number().int(), z.string()]),
+        produtosEntregues: z.union([z.number().int(), z.string()]),
+        paisesExterior: z.array(z.string()),
+        isentoAtividadeRural: z.union([z.number().int(), z.string()]),
+      },
+    },
+    async (a) => {
+      const bytes = await exigirPasta(r.ctx).ler(a.arquivo_livro_caixa, [".DEC"]);
+      let livro: ReturnType<typeof lerExportacaoLivroCaixaRural>;
+      try {
+        livro = lerExportacaoLivroCaixaRural(bytes);
+      } catch (e) {
+        if (e instanceof ExportacaoLivroCaixaRuralInvalidaError)
+          throw new EntradaInvalidaError(e.message);
+        throw e;
+      }
+      const res = await editarDeclaracao(r.ctx, a, (dec) => {
+        if (dec.identificacao.tipoDeclaracao.tipo !== "ajusteAnual") {
+          // O programa só importa os meses do período da declaração de saída ou de espólio;
+          // sem caso de referência, a importação fica restrita ao ajuste anual.
+          throw new EntradaInvalidaError(
+            "A importação do Livro Caixa foi conferida só na declaração de ajuste anual: na de saída definitiva ou de espólio, importe-o no programa oficial e abra o DBK gravado, ou informe os meses com definir_receitas_despesas_rurais.",
+          );
+        }
+        try {
+          return incluirLivroCaixaRural(dec, livro);
+        } catch (e) {
+          if (e instanceof ExportacaoLivroCaixaRuralInvalidaError)
+            throw new EntradaInvalidaError(e.message);
+          throw e;
+        }
+      });
+      const ar = res.declaracao.atividadeRural;
+      const meses = ar?.brasil.receitasDespesas ?? [];
+      const receita = meses.reduce((s, m) => s + m.receitaBruta, 0n);
+      const despesa = meses.reduce((s, m) => s + m.despesa, 0n);
+      const paises = livro.demonstrativos.filter((d) => d.pais !== "105").map((d) => d.pais);
+      const isento =
+        res.declaracao.rendimentosIsentos
+          .filter((i) => i.codigo === "15")
+          .reduce((s, i) => s + ("valor" in i ? i.valor : 0n), 0n) ?? 0n;
+      const resumo = [
+        `Livro Caixa da Atividade Rural do CPF ${livro.cpf} importado de ${a.arquivo_livro_caixa}: ${meses.length} mês(es) no Brasil, receita ${receita} e despesa ${despesa} centavos${paises.length > 0 ? `; exterior: ${paises.join(", ")} (informe o resultado em dólar na aba Exterior)` : ""}.`,
+        "Confira na Apuração a forma de tributação do resultado (resultado ou 20% da receita bruta) e o prejuízo de anos anteriores.",
+      ].join("\n");
+      const { declaracao: _gravada, ...gravacao } = res;
+      return {
+        texto: textoGravacao(res, resumo),
+        dados: objetoJson({
+          ...gravacao,
+          cpf: livro.cpf,
+          mesesBrasil: meses.length,
+          receitaBrasil: receita,
+          despesaBrasil: despesa,
+          adiantamentosRecebidos: ar?.brasil.apuracao.adiantamentosRecebidos ?? 0n,
+          produtosEntregues: ar?.brasil.apuracao.adiantamentosAnterioresEntregues ?? 0n,
+          paisesExterior: paises,
+          isentoAtividadeRural: isento,
         }),
       };
     },

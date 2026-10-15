@@ -101,22 +101,24 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
     titulo: "Programa de Apuração dos Ganhos de Capital (GCAP)",
     onde: "Programa GCAP 2025, instalado separadamente.",
     passos: [
-      "Preencha a alienação no GCAP e pague o Darf 4600 até o último dia útil do mês seguinte.",
+      "Preencha a alienação no GCAP e pague o Darf (4600, ou 8523 para bens adquiridos e moeda estrangeira) até o último dia útil do mês seguinte.",
       "No GCAP 2025, use Exportar para o IRPF2026 (não a cópia de segurança do GCAP) para cada CPF, do titular e dos dependentes.",
-      "No programa da declaração, use Importações > Ganhos de Capital (Ctrl+Shift+G); importar de novo o mesmo CPF substitui os dados dele. Grave a cópia de segurança.",
-      "Traga o .DBK para a pasta autorizada e confira o demonstrativo inteiro com listar_ganhos_capital.",
+      "Traga o arquivo exportado (<CPF>-0101-3112-GCAP-2025.DEC) para a pasta autorizada e importe-o com importar_gcap; importar de novo o mesmo CPF substitui os dados dele.",
+      "Confira o demonstrativo inteiro com listar_ganhos_capital.",
     ],
     trazer:
-      "O .DBK com o demonstrativo importado (a conversão do MCP Imposto de Renda preserva o detalhe do GCAP).",
+      "O arquivo exportado pelo GCAP 2025, ou o .DBK com o demonstrativo já importado no programa oficial.",
   },
   livro_caixa_rural: {
     titulo: "Livro Caixa da Atividade Rural (LCDPR e programa LCAR)",
-    onde: "Programa do Livro Caixa da Atividade Rural.",
+    onde: "Programa Livro Caixa da Atividade Rural 2025, instalado separadamente.",
     passos: [
-      "Escriture receitas e despesas e exporte para a declaração pelo menu de importação do programa IRPF.",
-      "Ou informe os totais mensais com definir_receitas_despesas_rurais.",
+      "Escriture receitas e despesas no Livro Caixa da Atividade Rural 2025 (o de 2026 exporta para o IRPF 2027).",
+      'Use "Exportar para o IRPF" do programa e traga o arquivo <CPF>-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC para a pasta autorizada.',
+      "Importe-o com importar_livro_caixa_rural, ou informe os totais mensais com definir_receitas_despesas_rurais.",
     ],
-    trazer: "O .DBK com o demonstrativo ou os totais mensais.",
+    trazer:
+      "O arquivo exportado pelo Livro Caixa, o .DBK com o demonstrativo ou os totais mensais.",
   },
   restituicao: {
     titulo: "Consulta da restituição",

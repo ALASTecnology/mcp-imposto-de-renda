@@ -258,7 +258,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: menu, Alt+F4; pág. 387
 - Exige do MCP: não se aplica
-- Cobertura no MCP Imposto de Renda: não se aplica; módulo nenhum; prioridade P2; status não se aplica (ver matriz)
+- Cobertura no MCP Imposto de Renda: `fechar_declaracao`; módulo cli; prioridade P2; status implementada (`fechar_declaracao`, `listar_copias_seguranca`) (ver matriz)
 
 #### M-DECL-CONVERTER Converter declaração (inferido)
 

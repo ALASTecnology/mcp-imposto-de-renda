@@ -50,8 +50,8 @@ adota o [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/). Enquan
 - Harness de referência com o GCAP 2025 para bens no exterior e moeda em espécie e com o
   programa da Atividade Rural 2025 para o Livro Caixa: 65 casos, todos reproduzidos ao centavo.
 - Totais: **166 ferramentas MCP** em 11 grupos (100 gravam; 66 no modo `--somente-leitura`;
-  perfis `essencial` com 90 e `consulta` com 44). Matriz de cobertura: 407 funções atendidas, 7
-  parciais (com justificativa e alternativa) e 2 sem equivalente.
+  perfis `essencial` com 90 e `consulta` com 44). Matriz de cobertura: 408 funções atendidas, 7
+  parciais (com justificativa e alternativa) e 1 sem equivalente (o captcha dos serviços online).
 
 ### Alterado
 

@@ -205,7 +205,7 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 | Tipos de registro do `.DBK` convertidos para o modelo | **57**, em 26 fichas | [formato do DBK](docs/formato-dbk.md) |
 | Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
 | Tabelas de códigos do exercício | **31** | [tabelas](docs/mapeamento/tabelas/README.md) |
-| Funções do programa oficial mapeadas | **416**: 407 atendidas, 7 parciais, 2 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
+| Funções do programa oficial mapeadas | **416**: 408 atendidas, 7 parciais, 1 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
 | Testes automatizados | **mais de 1.100 testes**, em Vitest (o total exato sai de `pnpm test`) | [estratégia de testes](docs/testes.md) |
 | Declarações de exemplo regeneradas a cada teste | **4** | [exemplos](exemplos/README.md) |
 | Chamadas de rede | **nenhuma** (verificado por teste) | [segurança](docs/seguranca.md) |

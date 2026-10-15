@@ -418,7 +418,7 @@ regra(r"M-DECL-PENDENCIAS", T("listar_pendencias"), "validate", "P0", "Catálogo
 regra(r"M-DECL-ENTREGAR", T("gerar_dbk", "listar_pendencias", "instruir_transmissao"), "dbk", "P0", IMP_TRANSMISSAO)
 regra(r"M-DECL-SALVAR-ONLINE", T("gravar_copia_seguranca", "orientar_servico_externo"), "model", "P2", IMP_GOVBR)
 regra(r"M-DECL-RECUPERAR-ONLINE", T("restaurar_copia_seguranca", "orientar_servico_externo"), "model", "P2", IMP_GOVBR)
-regra(r"M-DECL-SAIR", NA, "nenhum", "P2", "Mantida como não se aplica: encerrar o programa é ação da janela; o servidor MCP é encerrado pelo cliente e não guarda estado entre chamadas, então não há nada a salvar nem a liberar ao sair. Para conferir um arquivo antes de encerrar, use `fechar_declaracao`.")
+regra(r"M-DECL-SAIR", T("fechar_declaracao"), "cli", "P2", "Sair do programa corresponde a encerrar a sessão do servidor: quando o cliente MCP fecha a conexão (fim do stdin, SIGINT ou SIGTERM), o CLI espera as gravações em andamento, descarta as canceladas sem gravar e remove os temporários antes de sair (testado em `apps/cli/test/stdio.test.ts` e `cancelamento.test.ts`). Antes de encerrar, `fechar_declaracao` confere o que ficou no disco e informa a última cópia de segurança.")
 regra(r"M-DECL-CONVERTER", T("definir_identificacao"), "model", "P2", "Função inferida; confirmar no programa.")
 regra(r"M-IMPR-DECLARACAO", T("gerar_relatorio_declaracao"), "model", "P1", "Layout próprio, toda ou por partes, em Markdown, HTML ou PDF (`gravar_relatorio`).")
 regra(r"M-IMPR-REND-PF", T("gerar_relatorio_declaracao"), "model", "P2", "Parte `rendimentos_pf`.")

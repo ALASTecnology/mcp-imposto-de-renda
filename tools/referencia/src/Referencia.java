@@ -102,6 +102,10 @@ public final class Referencia {
         if (gcapDec != null) {
             ImportacaoGcap.importar(d, new File(gcapDec));
         }
+        String arArquivo = System.getProperty("ar.arquivo");
+        if (arArquivo != null) {
+            ImportacaoAr.importar(d, new File(arArquivo));
+        }
         d.recalcularDeclaracao();
 
         Map<String, Object> esperado = Resultado.extrair(d);
@@ -152,6 +156,12 @@ public final class Referencia {
                     StandardCharsets.UTF_8)));
             copiados += ImportacaoGcap.copiarExportado(new File(gcapDec), idCaso);
         }
+        String arResultado = System.getProperty("ar.resultado");
+        if (arResultado != null) {
+            golden.put("esperadoLivroCaixaRural", Json.ler(new String(Files.readAllBytes(new File(arResultado).toPath()),
+                    StandardCharsets.UTF_8)));
+            copiados += ImportacaoAr.copiarExportado(new File(arArquivo), idCaso);
+        }
         arqGolden.getParentFile().mkdirs();
         Files.write(arqGolden.toPath(), Json.escrever(golden).getBytes(StandardCharsets.UTF_8));
 
@@ -164,7 +174,7 @@ public final class Referencia {
         for (String a : avisos) {
             System.out.println("  aviso: " + a);
         }
-        return copiados == (gcapResultado != null ? 4 : 2) ? 0 : 3;
+        return copiados == 2 + (gcapResultado != null ? 2 : 0) + (arResultado != null ? 1 : 0) ? 0 : 3;
     }
 
     // -------------------------------------------------------------- verificar

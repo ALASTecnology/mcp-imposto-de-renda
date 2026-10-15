@@ -1,0 +1,194 @@
+{
+  "id": "ar-livro-caixa-01",
+  "descricao": "Livro Caixa da Atividade Rural 2025 importado no IRPF 2026: receitas e despesas de custeio em quatro meses e uma despesa não dedutível, com o imóvel já cadastrado e apuração pelo resultado.",
+  "entrada": {
+    "titular": {
+      "cpf": "16058036690",
+      "nome": "KARINA FICTICIA RURAL",
+      "nascimento": "20051975"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "84830442000155",
+        "nome": "EMPRESA FICTICIA RURAL LTDA",
+        "rendimento": "4800000",
+        "previdenciaOficial": "520000",
+        "irrf": "210000",
+        "beneficiario": "T"
+      }
+    ],
+    "atividadeRural": {
+      "opcao": "resultado"
+    },
+    "livroCaixaRural": {
+      "lancamentos": [
+        {
+          "data": "15012025",
+          "conta": "1.01.010",
+          "valor": "4500000",
+          "historico": "VENDA DE SOJA FICTICIA"
+        },
+        {
+          "data": "20012025",
+          "conta": "2.01.010",
+          "valor": "1250000",
+          "historico": "ADUBO FICTICIO"
+        },
+        {
+          "data": "10032025",
+          "conta": "1.01.009",
+          "valor": "2230055",
+          "historico": "VENDA DE MILHO FICTICIA"
+        },
+        {
+          "data": "28032025",
+          "conta": "2.01.009",
+          "valor": "730012",
+          "historico": "SEMENTES FICTICIAS"
+        },
+        {
+          "data": "05072025",
+          "conta": "2.03.002",
+          "valor": "1500000",
+          "historico": "TRATOR FICTICIO"
+        },
+        {
+          "data": "18072025",
+          "conta": "3.00.002",
+          "valor": "90000",
+          "historico": "DESPESA PESSOAL FICTICIA"
+        },
+        {
+          "data": "11112025",
+          "conta": "1.01.010",
+          "valor": "1800099",
+          "historico": "VENDA DE SOJA FICTICIA"
+        },
+        {
+          "data": "29112025",
+          "conta": "2.01.010",
+          "valor": "400000",
+          "historico": "DEFENSIVO FICTICIO"
+        }
+      ]
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "9450142",
+    "deducoesCompleto": "520000",
+    "baseCalculoCompleto": "8930142",
+    "impostoDevidoCompleto": "1370411",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "7774708",
+    "impostoDevidoSimplificado": "1052666",
+    "impostoRetidoTotal": "210000",
+    "saldoPagarCompleto": "1160411",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "842666",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "1113"
+  },
+  "esperadoLivroCaixaRural": {
+    "programa": "Atividade Rural 2025 (exportação para o IRPF 2026)",
+    "arquivo": "16058036690-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC",
+    "meses": [
+      {
+        "mes": "1",
+        "receitas": "4500000",
+        "despesas": "1250000",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "2",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "3",
+        "receitas": "2230055",
+        "despesas": "730012",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "4",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "5",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "6",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "7",
+        "receitas": "0",
+        "despesas": "1500000",
+        "despesasNaoDedutiveis": "90000",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "8",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "9",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "10",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "11",
+        "receitas": "1800099",
+        "despesas": "400000",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "12",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      }
+    ]
+  }
+}

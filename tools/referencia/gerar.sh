@@ -19,9 +19,11 @@ JAVA="${JAVA:-java}"
 JAVAC="${JAVAC:-javac}"
 TEMPO_MAXIMO="${TEMPO_MAXIMO:-300}"
 GCAP_ZIP="${GCAP_ZIP:-$RAIZ/vendor/rfb/gcap/GCAP2025v1.6.zip}"
+AR_ZIP="${AR_ZIP:-$RAIZ/vendor/rfb/atividade-rural/AR2025v1.0.zip}"
 GOLDEN_DIR="${GOLDEN_DIR:-$RAIZ/packages/core/test/golden/2026}"
 FIXTURES_DIR="${FIXTURES_DIR:-$RAIZ/packages/core/test/fixtures/dbk/2026}"
 GCAP_FIXTURES_DIR="${GCAP_FIXTURES_DIR:-$RAIZ/packages/core/test/fixtures/gcap/2026}"
+AR_FIXTURES_DIR="${AR_FIXTURES_DIR:-$RAIZ/packages/core/test/fixtures/atividade-rural/2026}"
 
 erro() { echo "gerar.sh: $*" >&2; exit 1; }
 
@@ -142,6 +144,72 @@ executar_gcap() {
   return "$rc"
 }
 
+# Atividade Rural 2025 avulso (o "Exportar para o IRPF" dele é o que o IRPF 2026 importa), só
+# para casos com livroCaixaRural.
+preparar_ar() {
+  if [[ -n "${AR_DIR:-}" ]]; then
+    [[ -f "$AR_DIR/PgdAtividadeRural.jar" ]] || erro "AR_DIR=$AR_DIR não contém PgdAtividadeRural.jar"
+  else
+    AR_DIR="$CACHE/AR2025"
+    if [[ ! -f "$AR_DIR/PgdAtividadeRural.jar" ]]; then
+      [[ -f "$AR_ZIP" ]] || erro "Atividade Rural não encontrada: defina AR_DIR ou coloque o zip em $AR_ZIP"
+      mkdir -p "$CACHE/extracao-ar"
+      unzip -q -o "$AR_ZIP" -d "$CACHE/extracao-ar"
+      local jar
+      jar="$(find "$CACHE/extracao-ar" -maxdepth 3 -name PgdAtividadeRural.jar | head -n 1)"
+      [[ -n "$jar" ]] || erro "PgdAtividadeRural.jar não encontrado dentro de $AR_ZIP"
+      rm -rf "$AR_DIR"
+      mv "$(dirname "$jar")" "$AR_DIR"
+      rm -rf "$CACHE/extracao-ar"
+    fi
+  fi
+  local cp="$AR_DIR/PgdAtividadeRural.jar" j
+  for j in "$AR_DIR"/lib/*.jar; do
+    [[ -f "$j" ]] && cp="$cp:$j"
+  done
+  CLASSPATH_AR="$cp"
+  CLASSES_AR="$CACHE/classes-ar"
+  local fontes=("$AQUI"/ar/*.java "$AQUI"/src/Json.java)
+  local carimbo="$CLASSES_AR/.compilado" precisa=1 f
+  if [[ -f "$carimbo" ]]; then
+    precisa=0
+    for f in "${fontes[@]}"; do
+      [[ "$f" -nt "$carimbo" ]] && precisa=1
+    done
+  fi
+  if [[ "$precisa" == 1 ]]; then
+    rm -rf "$CLASSES_AR"
+    mkdir -p "$CLASSES_AR"
+    "$JAVAC" -nowarn -encoding UTF-8 -cp "$CLASSPATH_AR" -d "$CLASSES_AR" "${fontes[@]}"
+    touch "$carimbo"
+  fi
+}
+
+# Roda o programa da Atividade Rural numa JVM isolada e grava o arquivo exportado e o resultado
+# em $2/. O programa lê tabelas de lib/ relativo ao diretório de trabalho.
+executar_ar() {
+  local caso="$1" saida="$2" casa rc=0
+  casa="$(mktemp -d "$CACHE/execucao-ar.XXXXXX")"
+  ln -s "$AR_DIR/lib" "$casa/lib"
+  (
+    cd "$casa"
+    timeout "$TEMPO_MAXIMO" "$JAVA" \
+      -Djava.awt.headless=true \
+      -Dfile.encoding=UTF-8 \
+      -Duser.language=pt -Duser.country=BR \
+      -Duser.home="$casa" \
+      -Duser.dir="$casa" \
+      -Djava.io.tmpdir="$casa" \
+      -cp "$CLASSES_AR:$CLASSPATH_AR" \
+      Ar gerar "$caso" "$saida" "$saida/ar.json" 2> "$casa/stderr.log"
+  ) || rc=$?
+  if [[ "$rc" != 0 ]]; then
+    grep -vE 'charToByteConverter|^\s+at ' "$casa/stderr.log" >&2 || true
+  fi
+  rm -rf "$casa"
+  return "$rc"
+}
+
 # Executa o harness numa JVM isolada: diretório de trabalho e user.home temporários,
 # para que o programa oficial grave aplicacao/dados/<CPF>/ fora do repositório.
 executar() {
@@ -223,11 +291,25 @@ case "$comando" in
         fi
         PROPRIEDADES_EXTRAS="-Dgcap.dec=$(ls "$saida_gcap"/*.DEC) -Dgcap.resultado=$saida_gcap/gcap.json -Dgcap.fixtures=$GCAP_FIXTURES_DIR"
       fi
+      saida_ar=""
+      if grep -q '"livroCaixaRural"' "$caso"; then
+        [[ -n "${CLASSES_AR:-}" ]] || preparar_ar
+        saida_ar="$(mktemp -d "$CACHE/saida-ar.XXXXXX")"
+        if ! executar_ar "$(absoluto "$caso")" "$saida_ar"; then
+          echo "FALHOU (Atividade Rural): $id" >&2
+          falhas=$((falhas + 1))
+          rm -rf "$saida_ar"
+          [[ -n "$saida_gcap" ]] && rm -rf "$saida_gcap"
+          continue
+        fi
+        PROPRIEDADES_EXTRAS="$PROPRIEDADES_EXTRAS -Dar.arquivo=$(ls "$saida_ar"/*.DEC) -Dar.resultado=$saida_ar/ar.json -Dar.fixtures=$AR_FIXTURES_DIR"
+      fi
       if ! executar gerar "$(absoluto "$caso")" "$GOLDEN_DIR/$id.json" "$FIXTURES_DIR"; then
         echo "FALHOU: $id" >&2
         falhas=$((falhas + 1))
       fi
       [[ -n "$saida_gcap" ]] && rm -rf "$saida_gcap"
+      [[ -n "$saida_ar" ]] && rm -rf "$saida_ar"
     done
     echo "casos: ${#casos[@]}, falhas: $falhas"
     [[ "$falhas" == 0 ]]

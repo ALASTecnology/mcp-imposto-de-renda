@@ -31,6 +31,9 @@ pelo próprio desenvolvedor, como **biblioteca** para:
   `vendor/rfb/gcap/GCAP2025v1.6.zip` (ou `GCAP_DIR` com `GCAP.jar` e `lib/`). É o GCAP 2025, e não
   o 2026, que exporta para o IRPF 2026: o GCAP 2026 abre "Exportar para o IRPF2027" e o IRPF 2026
   só aceita arquivos `<CPF>-DDMM-DDMM-GCAP-2025.DEC`.
+- Só para os casos com `livroCaixaRural`: o programa da Atividade Rural 2025 em
+  `vendor/rfb/atividade-rural/AR2025v1.0.zip` (ou `AR_DIR`), pelo mesmo motivo: o de 2026 exporta
+  para o IRPF 2027.
 
 ## Uso
 
@@ -57,6 +60,9 @@ Variáveis de ambiente:
 | `GCAP_DIR` | (vazio) | pasta já extraída do GCAP 2025; se vazia, o zip é extraído no cache |
 | `GCAP_ZIP` | `vendor/rfb/gcap/GCAP2025v1.6.zip` | zip do GCAP 2025 |
 | `GCAP_FIXTURES_DIR` | `packages/core/test/fixtures/gcap/2026` | destino dos arquivos exportados pelo GCAP |
+| `AR_DIR` | (vazio) | pasta já extraída do programa da Atividade Rural 2025; se vazia, o zip é extraído no cache |
+| `AR_ZIP` | `vendor/rfb/atividade-rural/AR2025v1.0.zip` | zip do programa da Atividade Rural 2025 |
+| `AR_FIXTURES_DIR` | `packages/core/test/fixtures/atividade-rural/2026` | destino dos arquivos exportados pelo Livro Caixa |
 
 Cada caso roda numa JVM própria, headless (`-Djava.awt.headless=true`), com `user.home`,
 `user.dir` e `java.io.tmpdir` apontando para uma pasta temporária dentro do cache, apagada ao fim.
@@ -199,12 +205,45 @@ do GCAP pelo MCP Imposto de Renda. O `config.properties` traz data, hora, versã
 sistema operacional, e o XML a data do último acesso; dois `gerar` seguidos não dão bytes iguais
 nesses arquivos (os DBK/DEC continuam determinísticos).
 
-**Atividade Rural (não gerado ainda).** O mesmo caminho serve ao programa da Atividade Rural:
-pelo mesmo raciocínio do GCAP, quem exporta para o IRPF 2026 é o AR 2025
-(`vendor/rfb/atividade-rural/AR2025v1.0.zip`), e a gravação do arquivo de exportação fica em
-`serpro.atividaderural.txt.ExportarIRPF.gravaDeclaracao(File, IdDeclaracaoAtividadeRural)`,
-público e sem interface (assinatura vista com `javap -p`). Falta montar a declaração rural no AR
-por reflexão, importar no IRPF e gravar o par, como foi feito para o GCAP.
+### Livro Caixa da Atividade Rural (`livroCaixaRural`)
+
+Os lançamentos do Livro Caixa são escriturados no **programa da Atividade Rural 2025 avulso**
+(`vendor/rfb/atividade-rural/AR2025v1.0.zip`, ou `AR_DIR` com `PgdAtividadeRural.jar` e `lib/`) e o
+arquivo exportado é importado na declaração, como faz o contribuinte:
+
+```json
+"livroCaixaRural": {"pais": "105", "lancamentos": [{"data": "DDMMAAAA", "conta": "1.01.010",
+  "historico": "...", "valor": "..."}]}
+```
+
+`conta` é o código do plano de contas básico do programa (grupo 1 receitas, 2 despesas de custeio
+e investimento, 3 despesas não dedutíveis, 4 receita de produtos entregues no ano por
+adiantamentos de anos anteriores, 5 adiantamentos recebidos para entrega futura); `pais` diferente
+de 105 escritura a atividade no exterior, em moeda local. O fluxo, em `ar/Ar.java` e
+`src/ImportacaoAr.java`:
+
+1. uma JVM com o programa da Atividade Rural cria a declaração do livro caixa do titular e
+   escritura cada lançamento no mês da data; o programa soma os lançamentos no mês e no
+   demonstrativo pelos observadores das entidades. Fora da interface gráfica, essa soma consulta a
+   janela principal para habilitar menus: o harness registra uma janela alocada sem construtor,
+   que nunca é exibida e cujo único método chamado não faz nada;
+2. grava o arquivo com `ExportarIRPF.gravaDeclaracao(pasta, id)`, o método da ação "Exportar para
+   o IRPF" (`<CPF>-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC`), e o demonstrativo mensal em `ar.json`;
+3. a JVM do IRPF importa o arquivo com `RepositorioTxtDadosAtividadeRural.importaDados`, o mesmo
+   repositório da ação "Importar Atividade Rural" (confere versão e CRC), e grava o golden com o
+   bloco `esperadoLivroCaixaRural` e os DBK/DEC.
+
+É o programa de 2025, e não o de 2026, que exporta para o IRPF 2026: o AR 2026 grava
+`...-ARURAL-2026-2026-EXPORTA-IRPF2027.DEC` (header com exercício 2027 e ano-base 2026) e o IRPF
+2026 o recusa ("Este arquivo de exportação do Atividade Rural 2025 foi gerado numa versão
+desatualizada do aplicativo"). O arquivo exportado vai para
+`packages/core/test/fixtures/atividade-rural/2026/<id>.DEC`; com o DBK/DEC gravado depois da
+importação, forma o par para conferir `importar_livro_caixa_rural`. Diferente do GCAP, o arquivo
+não traz data nem versão da JVM: dois `gerar` seguidos dão bytes iguais.
+
+Bloco `esperadoLivroCaixaRural`: `arquivo` (nome gravado pelo programa) e `meses[]` com
+`receitas`, `despesas`, `despesasNaoDedutiveis`, `produtoEntregueAdiantamento` e
+`adiantamentoRecebido` de cada mês, em centavos, como o demonstrativo do programa.
 
 Bloco `esperadoGcap` (valores em centavos; percentuais como o programa mostra, 6 casas):
 
@@ -253,8 +292,8 @@ O `.DBK`/`.DEC` é gravado com o modelo mais vantajoso selecionado, como faria o
 
 ## Casos gerados
 
-61 casos em `casos/`, todos com golden e fixtures (61 `.DBK` e 61 `.DEC`, 122 arquivos). O motor
-do MCP Imposto de Renda reproduz os 61 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
+65 casos em `casos/`, todos com golden e fixtures (65 `.DBK` e 65 `.DEC`, 130 arquivos). O motor
+do MCP Imposto de Renda reproduz os 65 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
 cada DBK em DEC reproduz a DEC do programa byte a byte.
 
 Os 31 casos iniciais cobrem: isento, cada faixa da tabela anual (isenção, 7,5%, 15%, 22,5%,
@@ -313,6 +352,17 @@ Os 13 casos de ganho de capital, gerados com o GCAP 2025 e importados no IRPF (o
 | `gcap-exterior-pequeno-valor-01` | bem no exterior de R$ 27.500,00: isento, transportado para o isento 05 |
 | `gcap-especie-01` | venda de US$ 6.000,00 em espécie: custo médio ponderado, 15% (registros 74 e 76, exclusivo 04, `VR_VCMOEDAEST` do recibo) |
 | `gcap-especie-isento-01` | venda de US$ 2.586,20 em espécie: isenta no GCAP, mas o IRPF transporta o ganho para o exclusivo 04 |
+
+Os 4 casos do Livro Caixa da Atividade Rural, escriturados no programa da Atividade Rural 2025 e
+importados no IRPF (`importar_livro_caixa_rural` os reproduz byte a byte em
+`packages/core/test/conversao/livro-caixa-rural.test.ts`):
+
+| Caso | O que confere |
+|---|---|
+| `ar-livro-caixa-01` | receitas e despesas de custeio e investimento em quatro meses; a despesa não dedutível não entra (registro 51) |
+| `ar-livro-caixa-adiantamentos-01` | produtos entregues por adiantamentos anteriores e adiantamentos recebidos: somados na Apuração (`VR_ADIANT`, `VR_RECVENDAFUTURA` do 52), fora dos meses |
+| `ar-livro-caixa-substitui-01` | meses já digitados são substituídos; com o limite de 20%, o resultado não tributável vai para o isento 15 e fica fora do registro 17 |
+| `ar-livro-caixa-exterior-01` | atividade nos Estados Unidos: receita e despesa do ano em moeda original na aba Exterior (registro 56), sem apuração enquanto o resultado em dólar não é informado |
 
 Limitações observadas:
 
@@ -379,4 +429,6 @@ pendência (o usuário confirma de novo no PGD). É o caso de `pensao-alimentici
 | `src/Json.java` | leitor e escritor JSON mínimo, sem dependências |
 | `src/ImportacaoGcap.java` | importa no IRPF o arquivo exportado pelo GCAP e copia o par para as fixtures |
 | `gcap/Gcap.java` | JVM do GCAP 2025: preenche as alienações, confere pendências e exporta para o IRPF |
+| `ar/Ar.java` | JVM da Atividade Rural 2025: escritura o Livro Caixa e exporta para o IRPF |
+| `src/ImportacaoAr.java` | importa no IRPF o arquivo exportado pelo Livro Caixa e copia o arquivo para as fixtures |
 | `casos/*.json` | entradas dos casos de referência |

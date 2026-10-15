@@ -1,0 +1,162 @@
+{
+  "id": "ar-livro-caixa-exterior-01",
+  "descricao": "Livro Caixa da atividade rural explorada no exterior (Estados Unidos), em moeda local: o IRPF importa os totais do ano na aba Exterior.",
+  "entrada": {
+    "titular": {
+      "cpf": "16091831003",
+      "nome": "NADIA FICTICIA RURAL",
+      "nascimento": "20051975"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "84830442000155",
+        "nome": "EMPRESA FICTICIA RURAL LTDA",
+        "rendimento": "4800000",
+        "previdenciaOficial": "520000",
+        "irrf": "210000",
+        "beneficiario": "T"
+      }
+    ],
+    "livroCaixaRural": {
+      "pais": "249",
+      "lancamentos": [
+        {
+          "data": "14032025",
+          "conta": "1.01.009",
+          "valor": "2000000",
+          "historico": "VENDA DE MILHO FICTICIA"
+        },
+        {
+          "data": "20032025",
+          "conta": "2.01.009",
+          "valor": "500000",
+          "historico": "SEMENTES FICTICIAS"
+        },
+        {
+          "data": "10102025",
+          "conta": "1.01.009",
+          "valor": "1000000",
+          "historico": "VENDA DE MILHO FICTICIA"
+        }
+      ]
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "4800000",
+    "deducoesCompleto": "520000",
+    "baseCalculoCompleto": "4280000",
+    "impostoDevidoCompleto": "174097",
+    "descontoSimplificado": "960000",
+    "baseCalculoSimplificado": "3840000",
+    "impostoDevidoSimplificado": "108097",
+    "impostoRetidoTotal": "210000",
+    "saldoPagarCompleto": "0",
+    "restituirCompleto": "35903",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "101903",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "225"
+  },
+  "esperadoLivroCaixaRural": {
+    "programa": "Atividade Rural 2025 (exportação para o IRPF 2026)",
+    "arquivo": "16091831003-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC",
+    "meses": [
+      {
+        "mes": "1",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "2",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "3",
+        "receitas": "2000000",
+        "despesas": "500000",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "4",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "5",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "6",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "7",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "8",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "9",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "10",
+        "receitas": "1000000",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "11",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "12",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      }
+    ]
+  }
+}

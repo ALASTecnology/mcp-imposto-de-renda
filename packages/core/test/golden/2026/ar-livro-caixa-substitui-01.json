@@ -1,0 +1,182 @@
+{
+  "id": "ar-livro-caixa-substitui-01",
+  "descricao": "Declaração que já tinha receitas e despesas da atividade rural digitadas em fevereiro e março: a importação do Livro Caixa refaz os meses.",
+  "entrada": {
+    "titular": {
+      "cpf": "16080566273",
+      "nome": "MARCOS FICTICIO RURAL",
+      "nascimento": "20051975"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "84830442000155",
+        "nome": "EMPRESA FICTICIA RURAL LTDA",
+        "rendimento": "4800000",
+        "previdenciaOficial": "520000",
+        "irrf": "210000",
+        "beneficiario": "T"
+      }
+    ],
+    "atividadeRural": {
+      "opcao": "limite20",
+      "meses": [
+        {
+          "mes": "2",
+          "receita": "1000000",
+          "despesa": "300000"
+        },
+        {
+          "mes": "3",
+          "receita": "700000",
+          "despesa": "200000"
+        }
+      ]
+    },
+    "livroCaixaRural": {
+      "lancamentos": [
+        {
+          "data": "10032025",
+          "conta": "1.01.009",
+          "valor": "2500000",
+          "historico": "VENDA DE MILHO FICTICIA"
+        },
+        {
+          "data": "12032025",
+          "conta": "2.01.009",
+          "valor": "1100000",
+          "historico": "CORRECAO DE SOLO FICTICIA"
+        },
+        {
+          "data": "08052025",
+          "conta": "1.01.009",
+          "valor": "3300000",
+          "historico": "VENDA DE MILHO FICTICIA"
+        },
+        {
+          "data": "19052025",
+          "conta": "2.01.009",
+          "valor": "1400000",
+          "historico": "COLHEITA FICTICIA"
+        }
+      ]
+    }
+  },
+  "esperado": {
+    "rendimentosTributaveis": "5960000",
+    "deducoesCompleto": "520000",
+    "baseCalculoCompleto": "5440000",
+    "impostoDevidoCompleto": "418503",
+    "descontoSimplificado": "1192000",
+    "baseCalculoSimplificado": "4768000",
+    "impostoDevidoSimplificado": "267303",
+    "impostoRetidoTotal": "210000",
+    "saldoPagarCompleto": "208503",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "57303",
+    "restituirSimplificado": "0",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "448"
+  },
+  "esperadoLivroCaixaRural": {
+    "programa": "Atividade Rural 2025 (exportação para o IRPF 2026)",
+    "arquivo": "16080566273-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC",
+    "meses": [
+      {
+        "mes": "1",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "2",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "3",
+        "receitas": "2500000",
+        "despesas": "1100000",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "4",
+        "receitas": "3300000",
+        "despesas": "1400000",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "5",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "6",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "7",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "8",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "9",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "10",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "11",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      },
+      {
+        "mes": "12",
+        "receitas": "0",
+        "despesas": "0",
+        "despesasNaoDedutiveis": "0",
+        "produtoEntregueAdiantamento": "0",
+        "adiantamentoRecebido": "0"
+      }
+    ]
+  }
+}

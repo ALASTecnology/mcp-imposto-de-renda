@@ -1,0 +1,44 @@
+{
+  "id": "ar-livro-caixa-exterior-01",
+  "descricao": "Livro Caixa da atividade rural explorada no exterior (Estados Unidos), em moeda local: o IRPF importa os totais do ano na aba Exterior.",
+  "entrada": {
+    "titular": {
+      "cpf": "16091831003",
+      "nome": "NADIA FICTICIA RURAL",
+      "nascimento": "20051975"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "84830442000155",
+        "nome": "EMPRESA FICTICIA RURAL LTDA",
+        "rendimento": "4800000",
+        "previdenciaOficial": "520000",
+        "irrf": "210000",
+        "beneficiario": "T"
+      }
+    ],
+    "livroCaixaRural": {
+      "pais": "249",
+      "lancamentos": [
+        {
+          "data": "14032025",
+          "conta": "1.01.009",
+          "valor": "2000000",
+          "historico": "VENDA DE MILHO FICTICIA"
+        },
+        {
+          "data": "20032025",
+          "conta": "2.01.009",
+          "valor": "500000",
+          "historico": "SEMENTES FICTICIAS"
+        },
+        {
+          "data": "10102025",
+          "conta": "1.01.009",
+          "valor": "1000000",
+          "historico": "VENDA DE MILHO FICTICIA"
+        }
+      ]
+    }
+  }
+}

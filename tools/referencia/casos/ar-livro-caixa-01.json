@@ -1,0 +1,76 @@
+{
+  "id": "ar-livro-caixa-01",
+  "descricao": "Livro Caixa da Atividade Rural 2025 importado no IRPF 2026: receitas e despesas de custeio em quatro meses e uma despesa não dedutível, com o imóvel já cadastrado e apuração pelo resultado.",
+  "entrada": {
+    "titular": {
+      "cpf": "16058036690",
+      "nome": "KARINA FICTICIA RURAL",
+      "nascimento": "20051975"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "84830442000155",
+        "nome": "EMPRESA FICTICIA RURAL LTDA",
+        "rendimento": "4800000",
+        "previdenciaOficial": "520000",
+        "irrf": "210000",
+        "beneficiario": "T"
+      }
+    ],
+    "atividadeRural": {
+      "opcao": "resultado"
+    },
+    "livroCaixaRural": {
+      "lancamentos": [
+        {
+          "data": "15012025",
+          "conta": "1.01.010",
+          "valor": "4500000",
+          "historico": "VENDA DE SOJA FICTICIA"
+        },
+        {
+          "data": "20012025",
+          "conta": "2.01.010",
+          "valor": "1250000",
+          "historico": "ADUBO FICTICIO"
+        },
+        {
+          "data": "10032025",
+          "conta": "1.01.009",
+          "valor": "2230055",
+          "historico": "VENDA DE MILHO FICTICIA"
+        },
+        {
+          "data": "28032025",
+          "conta": "2.01.009",
+          "valor": "730012",
+          "historico": "SEMENTES FICTICIAS"
+        },
+        {
+          "data": "05072025",
+          "conta": "2.03.002",
+          "valor": "1500000",
+          "historico": "TRATOR FICTICIO"
+        },
+        {
+          "data": "18072025",
+          "conta": "3.00.002",
+          "valor": "90000",
+          "historico": "DESPESA PESSOAL FICTICIA"
+        },
+        {
+          "data": "11112025",
+          "conta": "1.01.010",
+          "valor": "1800099",
+          "historico": "VENDA DE SOJA FICTICIA"
+        },
+        {
+          "data": "29112025",
+          "conta": "2.01.010",
+          "valor": "400000",
+          "historico": "DEFENSIVO FICTICIO"
+        }
+      ]
+    }
+  }
+}

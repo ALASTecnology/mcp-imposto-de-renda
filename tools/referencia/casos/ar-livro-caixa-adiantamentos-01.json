@@ -1,0 +1,64 @@
+{
+  "id": "ar-livro-caixa-adiantamentos-01",
+  "descricao": "Livro Caixa com produtos entregues no ano por adiantamentos recebidos até o ano anterior e adiantamentos recebidos no ano para entrega futura.",
+  "entrada": {
+    "titular": {
+      "cpf": "16069301412",
+      "nome": "LUCAS FICTICIO RURAL",
+      "nascimento": "20051975"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "84830442000155",
+        "nome": "EMPRESA FICTICIA RURAL LTDA",
+        "rendimento": "4800000",
+        "previdenciaOficial": "520000",
+        "irrf": "210000",
+        "beneficiario": "T"
+      }
+    ],
+    "atividadeRural": {
+      "opcao": "resultado"
+    },
+    "livroCaixaRural": {
+      "lancamentos": [
+        {
+          "data": "12022025",
+          "conta": "1.01.002",
+          "valor": "3000000",
+          "historico": "VENDA DE CAFE FICTICIA"
+        },
+        {
+          "data": "14022025",
+          "conta": "2.01.002",
+          "valor": "900000",
+          "historico": "COLHEITA FICTICIA"
+        },
+        {
+          "data": "15042025",
+          "conta": "4.00.001",
+          "valor": "800000",
+          "historico": "ENTREGA DE CAFE ADIANTADO"
+        },
+        {
+          "data": "20062025",
+          "conta": "5.00.001",
+          "valor": "650000",
+          "historico": "ADIANTAMENTO DE VENDA FUTURA"
+        },
+        {
+          "data": "22062025",
+          "conta": "1.01.002",
+          "valor": "1200000",
+          "historico": "VENDA DE CAFE FICTICIA"
+        },
+        {
+          "data": "30092025",
+          "conta": "2.01.002",
+          "valor": "350000",
+          "historico": "SECAGEM FICTICIA"
+        }
+      ]
+    }
+  }
+}

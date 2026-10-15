@@ -1,0 +1,48 @@
+{
+  "id": "gcap-especie-isento-01",
+  "descricao": "Venda de dólares em espécie até US$ 5.000,00 no ano: ganho isento.",
+  "entrada": {
+    "titular": {
+      "cpf": "15922859021",
+      "nome": "IRIS FICTICIA CAMBIO",
+      "nascimento": "12031978"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "75113182000106",
+        "nome": "EMPRESA FICTICIA CAMBIO LTDA",
+        "rendimento": "8400000",
+        "previdenciaOficial": "860000",
+        "irrf": "780000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "moeda",
+        "moeda": "USA",
+        "estoqueInicial": "100000",
+        "saldoInicial": "500000",
+        "operacoes": [
+          {
+            "tipo": "compra",
+            "data": "10022025",
+            "quantidade": "200000",
+            "valor": "1100000"
+          },
+          {
+            "tipo": "venda",
+            "data": "11082025",
+            "quantidade": "250000",
+            "valor": "1500000",
+            "cotacaoDolar": "5,8000",
+            "adquirente": {
+              "cpf": "15934123807",
+              "nome": "COMPRADOR FICTICIO CAMBIO CINCO"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

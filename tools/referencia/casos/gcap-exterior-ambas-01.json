@@ -1,0 +1,42 @@
+{
+  "id": "gcap-exterior-ambas-01",
+  "descricao": "Venda de bem móvel adquirido no exterior metade com reais e metade com moeda estrangeira: parte nacional pela cotação da aquisição, parte estrangeira em dólar (exclusivo 03).",
+  "entrada": {
+    "titular": {
+      "cpf": "15855270254",
+      "nome": "FABIO FICTICIO CAMBIO",
+      "nascimento": "12031978"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "75113182000106",
+        "nome": "EMPRESA FICTICIA CAMBIO LTDA",
+        "rendimento": "8400000",
+        "previdenciaOficial": "860000",
+        "irrf": "780000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "exterior": true,
+        "origem": "ambas",
+        "moeda": "USA",
+        "descricao": "VEICULO FICTICIO NO EXTERIOR",
+        "dataAquisicao": "10032015",
+        "dataAlienacao": "16062025",
+        "custoAquisicaoNacionalDolar": "1000000",
+        "cotacaoAquisicao": "2,9000",
+        "custoAquisicaoDolar": "1000000",
+        "valorAlienacaoDolar": "3000000",
+        "custoCorretagemDolar": "60000",
+        "cotacaoAlienacao": "5,5000",
+        "adquirente": {
+          "cpf": "15866535041",
+          "nome": "COMPRADOR FICTICIO CAMBIO DOIS"
+        }
+      }
+    ]
+  }
+}

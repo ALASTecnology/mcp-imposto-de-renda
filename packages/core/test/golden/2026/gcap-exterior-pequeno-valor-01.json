@@ -1,0 +1,107 @@
+{
+  "id": "gcap-exterior-pequeno-valor-01",
+  "descricao": "Venda de bem móvel adquirido no exterior por até R$ 35.000,00 no mês: ganho isento (consolidação do exterior).",
+  "entrada": {
+    "titular": {
+      "cpf": "15945388670",
+      "nome": "JULIA FICTICIA CAMBIO",
+      "nascimento": "12031978"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "75113182000106",
+        "nome": "EMPRESA FICTICIA CAMBIO LTDA",
+        "rendimento": "8400000",
+        "previdenciaOficial": "860000",
+        "irrf": "780000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "exterior": true,
+        "origem": "estrangeira",
+        "moeda": "USA",
+        "descricao": "RELOGIO FICTICIO NO EXTERIOR",
+        "dataAquisicao": "10032015",
+        "dataAlienacao": "16062025",
+        "custoAquisicaoDolar": "100000",
+        "valorAlienacaoDolar": "500000",
+        "custoCorretagemDolar": "0",
+        "cotacaoAlienacao": "5,5000",
+        "adquirente": {
+          "cpf": "15956653400",
+          "nome": "COMPRADOR FICTICIO CAMBIO SEIS"
+        }
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "8400000",
+    "deducoesCompleto": "860000",
+    "baseCalculoCompleto": "7540000",
+    "impostoDevidoCompleto": "988122",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "6724566",
+    "impostoDevidoSimplificado": "763877",
+    "impostoRetidoTotal": "780000",
+    "saldoPagarCompleto": "208122",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "16123",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "909"
+  },
+  "esperadoGcap": {
+    "programa": "GCAP 2025 (exportação para o IRPF 2026)",
+    "alienacoes": [
+      {
+        "tipo": "movel",
+        "exterior": {
+          "valorLiquidoDolar": "500000",
+          "custoNacionalReal": "0",
+          "ganhoNacionalReal": "0",
+          "ganhoEstrangeiraDolar": "400000",
+          "ganhoEstrangeiraReal": "2200000",
+          "ganhoTotal": "2200000",
+          "percentualEstrangeira": "100,000000000"
+        },
+        "valorLiquido": "0",
+        "custoAquisicao": "0",
+        "ganhoBruto": "0",
+        "reducoes": {
+          "lei7713": "0",
+          "fr1": "0",
+          "fr2": "0",
+          "outroImovel": "0",
+          "unicoImovel": "0",
+          "pequenoValor": "0"
+        },
+        "percentuaisReducao": {
+          "lei7713": "",
+          "fr1": "",
+          "fr2": ""
+        },
+        "ganhoTributavel": "2200000",
+        "impostoDevido": "0",
+        "aliquotaMedia": "15,000000",
+        "rendimentoIsento": "2200000",
+        "rendimentoTributavel": "0"
+      }
+    ],
+    "consolidacao": {
+      "rendimentosIsentos": "0",
+      "rendimentosTributaveis": "0",
+      "impostoDevido": "0",
+      "impostoPago": "0"
+    },
+    "consolidacaoExterior": {
+      "rendimentosIsentos": "2200000",
+      "rendimentosTributaveis": "0",
+      "impostoDevido": "0",
+      "impostoPago": "0"
+    },
+    "pendencias": []
+  }
+}

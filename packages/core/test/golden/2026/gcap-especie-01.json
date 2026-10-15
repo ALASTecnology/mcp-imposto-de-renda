@@ -1,0 +1,110 @@
+{
+  "id": "gcap-especie-01",
+  "descricao": "Venda de dólares em espécie acima de US$ 5.000,00 no ano: ganho pelo custo médio ponderado, tributado a 15% (exclusivo 04).",
+  "entrada": {
+    "titular": {
+      "cpf": "15900329429",
+      "nome": "HUGO FICTICIO CAMBIO",
+      "nascimento": "12031978"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "75113182000106",
+        "nome": "EMPRESA FICTICIA CAMBIO LTDA",
+        "rendimento": "8400000",
+        "previdenciaOficial": "860000",
+        "irrf": "780000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "moeda",
+        "moeda": "USA",
+        "estoqueInicial": "100000",
+        "saldoInicial": "500000",
+        "operacoes": [
+          {
+            "tipo": "compra",
+            "data": "10022025",
+            "quantidade": "600000",
+            "valor": "3420000"
+          },
+          {
+            "tipo": "venda",
+            "data": "11082025",
+            "quantidade": "600000",
+            "valor": "3480000",
+            "cotacaoDolar": "5,8000",
+            "adquirente": {
+              "cpf": "15911594234",
+              "nome": "COMPRADOR FICTICIO CAMBIO QUATRO"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "esperado": {
+    "rendimentosTributaveis": "8400000",
+    "deducoesCompleto": "860000",
+    "baseCalculoCompleto": "7540000",
+    "impostoDevidoCompleto": "988122",
+    "descontoSimplificado": "1675434",
+    "baseCalculoSimplificado": "6724566",
+    "impostoDevidoSimplificado": "763877",
+    "impostoRetidoTotal": "780000",
+    "saldoPagarCompleto": "208122",
+    "restituirCompleto": "0",
+    "saldoPagarSimplificado": "0",
+    "restituirSimplificado": "16123",
+    "modeloMaisVantajoso": "simplificado",
+    "aliquotaEfetiva": "909"
+  },
+  "esperadoGcap": {
+    "programa": "GCAP 2025 (exportação para o IRPF 2026)",
+    "alienacoes": [
+      {
+        "tipo": "moeda",
+        "custoMedioInicial": "5,000000",
+        "operacoes": [
+          {
+            "estoque": "700000",
+            "saldo": "3920000",
+            "custoMedio": "5,600000",
+            "custoAlienacao": "0",
+            "ganhoCapital": "0"
+          },
+          {
+            "estoque": "100000",
+            "saldo": "560000",
+            "custoMedio": "5,600000",
+            "custoAlienacao": "3360000",
+            "ganhoCapital": "120000"
+          }
+        ],
+        "ganhoCapital": "120000"
+      }
+    ],
+    "consolidacao": {
+      "rendimentosIsentos": "0",
+      "rendimentosTributaveis": "0",
+      "impostoDevido": "0",
+      "impostoPago": "0"
+    },
+    "consolidacaoExterior": {
+      "rendimentosIsentos": "0",
+      "rendimentosTributaveis": "0",
+      "impostoDevido": "0",
+      "impostoPago": "0"
+    },
+    "moedaEspecie": {
+      "totalAlienacoesDolar": "3000000",
+      "ganhoCapital": "120000",
+      "ganhoTributavel": "120000",
+      "impostoDevido": "18000",
+      "impostoPago": "0"
+    },
+    "pendencias": []
+  }
+}

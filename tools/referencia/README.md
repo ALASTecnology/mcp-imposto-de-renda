@@ -152,7 +152,32 @@ o contribuinte ("Exportar para o IRPF2026" no GCAP e importação no IRPF):
 ```
 
 `cnpj` e `quantidade` (quotas) valem só para participação; `campos` aplica operações extras na
-alienação, depois das demais. O fluxo, em `gcap/Gcap.java` e `src/ImportacaoGcap.java`:
+alienação, depois das demais.
+
+Bem móvel adquirido no exterior: `"exterior": true` e os valores em dólar (centavos de dólar),
+com as cotações no formato do programa (4 casas):
+
+```json
+{"tipo": "movel", "exterior": true, "origem": "nacional|estrangeira|ambas", "moeda": "USA",
+  "dataAquisicao": "DDMMAAAA", "dataAlienacao": "DDMMAAAA", "valorAlienacaoDolar": "...",
+  "custoCorretagemDolar": "...", "cotacaoAlienacao": "5,5000", "cotacaoAquisicao": "2,9000",
+  "custoAquisicaoNacionalDolar": "...", "custoAquisicaoDolar": "...", "adquirente": {...}}
+```
+
+`origem` diz com que rendimentos o bem foi comprado (códigos 1, 2 e 3 do GCAP); a parte nacional
+do custo (`custoAquisicaoNacionalDolar`, convertida por `cotacaoAquisicao`) vale para `nacional`
+e `ambas`, a estrangeira (`custoAquisicaoDolar`) para `estrangeira` e `ambas`.
+
+Moeda estrangeira em espécie: `"tipo": "moeda"`, com o estoque (centésimos da moeda) e o saldo
+em reais de 1º de janeiro e as operações do ano em ordem; a venda traz a cotação do dólar
+(até 7 casas, como no programa) e o adquirente:
+
+```json
+{"tipo": "moeda", "moeda": "USA", "estoqueInicial": "100000", "saldoInicial": "500000",
+  "operacoes": [{"tipo": "compra", "data": "DDMMAAAA", "quantidade": "...", "valor": "..."},
+    {"tipo": "venda", "data": "DDMMAAAA", "quantidade": "...", "valor": "...",
+     "cotacaoDolar": "5,8000", "adquirente": {"cpf": "...", "nome": "..."}}]}
+``` O fluxo, em `gcap/Gcap.java` e `src/ImportacaoGcap.java`:
 
 1. uma JVM com o GCAP (locale `pt_BR`, exigido para quantidades) cria o demonstrativo do titular
    (01/01 a 31/12/2025, residente) e preenche cada alienação **na ordem da interface**: os
@@ -191,6 +216,10 @@ Bloco `esperadoGcap` (valores em centavos; percentuais como o programa mostra, 6
 | `alienacoes[].ganhoTributavel`, `impostoDevido`, `aliquotaMedia` | cálculo do imposto |
 | `alienacoes[].rendimentoIsento`, `rendimentoTributavel` | consolidação: isento e valor transportado para tributação exclusiva |
 | `consolidacao.*` | consolidação do demonstrativo (isentos, tributáveis, imposto devido e pago) |
+| `consolidacaoExterior.*` | idem, dos bens adquiridos no exterior |
+| `alienacoes[].exterior.*` | bem no exterior: líquido em dólar, custo e ganho da parte nacional em reais, ganho da parte estrangeira em dólar e em reais, ganho total e percentual do custo pago com moeda estrangeira |
+| `alienacoes[].operacoes[]` (moeda) | estoque, saldo, custo médio, custo da venda e ganho depois de cada operação |
+| `moedaEspecie.*` | totalização das moedas em espécie: alienações em dólar (soma dos acumulados de cada mês, como o programa grava), ganho, ganho tributável, imposto devido e pago |
 
 Itens de isentos e exclusivos aceitam, opcionalmente, `beneficiario` (`T|D`), `cpfDependente`,
 `cnpj` e `nome` da fonte; sem eles o harness usa titular e uma fonte fictícia. Códigos fora das
@@ -224,8 +253,8 @@ O `.DBK`/`.DEC` é gravado com o modelo mais vantajoso selecionado, como faria o
 
 ## Casos gerados
 
-55 casos em `casos/`, todos com golden e fixtures (55 `.DBK` e 55 `.DEC`, 110 arquivos). O motor
-do MCP Imposto de Renda reproduz os 55 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
+61 casos em `casos/`, todos com golden e fixtures (61 `.DBK` e 61 `.DEC`, 122 arquivos). O motor
+do MCP Imposto de Renda reproduz os 61 ao centavo (`packages/core/test/calc/golden.test.ts`) e a conversão de
 cada DBK em DEC reproduz a DEC do programa byte a byte.
 
 Os 31 casos iniciais cobrem: isento, cada faixa da tabela anual (isenção, 7,5%, 15%, 22,5%,
@@ -266,7 +295,7 @@ Os 11 casos seguintes conferem o leiaute de campos que os anteriores não preenc
 | `renda-variavel-comum-01` | lucro em operação comum de ações, com imposto pago |
 | `isentos-detalhados-01` | registros 83, 85, 86 e 89 (isentos 11, 19, 20, 21, 26; exclusivos outros e apostas) |
 
-Os 7 casos de ganho de capital, gerados com o GCAP 2025 e importados no IRPF (o simulador
+Os 13 casos de ganho de capital, gerados com o GCAP 2025 e importados no IRPF (o simulador
 `calcular_ganho_capital` os reproduz ao centavo em `packages/mcp/test/calculadoras-gcap-golden.test.ts`):
 
 | Caso | O que confere |
@@ -278,6 +307,12 @@ Os 7 casos de ganho de capital, gerados com o GCAP 2025 e importados no IRPF (o 
 | `gcap-movel-pequeno-valor-01` | bem móvel até R$ 35.000,00 no mês: isento (registro 87, código 05) |
 | `gcap-participacao-01` | quotas fora de bolsa tributadas a 15% (registro 73) |
 | `gcap-participacao-pequeno-valor-01` | quotas de R$ 30.000,00: isentas, o limite é R$ 35.000,00 |
+| `gcap-exterior-estrangeira-01` | bem móvel no exterior comprado com moeda estrangeira: ganho em dólar pela cotação da alienação (registros 64 e 69 tipo 3, exclusivo 03) |
+| `gcap-exterior-nacional-01` | bem móvel no exterior comprado com reais: custo pela cotação da aquisição (69 tipo 2) |
+| `gcap-exterior-ambas-01` | bem móvel no exterior comprado com as duas origens: rateio pelo custo em dólar (69 tipos 4 e 5) |
+| `gcap-exterior-pequeno-valor-01` | bem no exterior de R$ 27.500,00: isento, transportado para o isento 05 |
+| `gcap-especie-01` | venda de US$ 6.000,00 em espécie: custo médio ponderado, 15% (registros 74 e 76, exclusivo 04, `VR_VCMOEDAEST` do recibo) |
+| `gcap-especie-isento-01` | venda de US$ 2.586,20 em espécie: isenta no GCAP, mas o IRPF transporta o ganho para o exclusivo 04 |
 
 Limitações observadas:
 

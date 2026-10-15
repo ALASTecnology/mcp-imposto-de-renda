@@ -11,6 +11,8 @@ import java.util.Map;
 import br.gov.serpro.gcap.acoes.VerificarPendenciasAction;
 import br.gov.serpro.gcap.entidades.DemonstrativoGCAP;
 import br.gov.serpro.gcap.entidades.IdDemonstrativoGCAP;
+import br.gov.serpro.gcap.entidades.especie.ColecaoOperacaoEspecie;
+import br.gov.serpro.gcap.entidades.especie.MoedaAlienada;
 import br.gov.serpro.gcap.gui.ControladorGui;
 import br.gov.serpro.gcap.negocio.GCAPFacade;
 import br.gov.serpro.gcap.txt.gravacaorestauracao.GravadorCopiaSeguranca;
@@ -90,6 +92,10 @@ public final class Gcap {
                     alienacao = novo(d.getParticipacoesSocietarias());
                     participacao(alienacao, a);
                     break;
+                case "moeda":
+                    alienacao = novo(d.getMoedasAlienadas());
+                    moeda((MoedaAlienada) alienacao, a);
+                    break;
                 default:
                     throw new IllegalArgumentException("tipo de alienação não suportado: " + tipo);
             }
@@ -97,7 +103,8 @@ public final class Gcap {
                 List<Object> par = (List<Object>) op;
                 def(alienacao, par.get(0).toString(), par.get(1).toString());
             }
-            resultados.add(resultado(tipo, alienacao));
+            resultados.add("moeda".equals(tipo) ? resultadoMoeda((MoedaAlienada) alienacao)
+                    : resultado(tipo, alienacao, Boolean.TRUE.equals(a.get("exterior"))));
         }
 
         VerificarPendenciasAction.PendenciasDemonstrativo pd = new VerificarPendenciasAction().obterPendencias(d);
@@ -122,6 +129,22 @@ public final class Gcap {
         cons.put("impostoDevido", centavos(d.getConsolidacaoBrasil(), "getImpostoDevidoAnoAtual"));
         cons.put("impostoPago", centavos(d.getConsolidacaoBrasil(), "getTotalImpostoPago"));
         r.put("consolidacao", cons);
+        Map<String, Object> ext = new LinkedHashMap<>();
+        ext.put("rendimentosIsentos", centavos(d.getConsolidacaoExterior(), "getTotalRendIsentosNaoTributaveis"));
+        ext.put("rendimentosTributaveis", centavos(d.getConsolidacaoExterior(), "getTotalRendSujeitosTributacao"));
+        ext.put("impostoDevido", centavos(d.getConsolidacaoExterior(), "getImpostoDevidoAnoAtual"));
+        ext.put("impostoPago", centavos(d.getConsolidacaoExterior(), "getTotalImpostoPago"));
+        r.put("consolidacaoExterior", ext);
+        if (!d.getMoedasAlienadas().itens().isEmpty()) {
+            Map<String, Object> esp = new LinkedHashMap<>();
+            Object t = d.getTotalizacaoMoedasAlienadas();
+            esp.put("totalAlienacoesDolar", centavos(t, "getTotalAlienacoesDolarConsolidado"));
+            esp.put("ganhoCapital", centavos(t, "getTotalGanhosCapital"));
+            esp.put("ganhoTributavel", centavos(t, "getTotalGanhosCapitalTributavel"));
+            esp.put("impostoDevido", centavos(t, "getTotalImpostoDevido"));
+            esp.put("impostoPago", centavos(t, "getTotalImpostoPago"));
+            r.put("moedaEspecie", esp);
+        }
         r.put("pendencias", pendencias);
         Files.write(arqResultado.toPath(), Json.escrever(r).getBytes(StandardCharsets.UTF_8));
         System.out.println("gcap: " + resultados.size() + " alienação(ões), imposto devido " + cons.get("impostoDevido"));
@@ -198,11 +221,84 @@ public final class Gcap {
         inicio(al, a);
         def(al, "getBemMovel.getEspecificacao", padrao(texto(a, "descricao"), "BEM MOVEL FICTICIO"));
         def(al, "getBemMovel.getSujeitoRegistroPublico", "0");
-        def(al, "getAquisicao.getDataAquisicao", texto(a, "dataAquisicao"));
-        def(al, "getAquisicao.getOrigemRendimentos", "1");
-        def(al, "getAquisicao.getCustoAquisicao", pgd(texto(a, "custoAquisicao")));
-        operacao(al, a);
+        if (Boolean.TRUE.equals(a.get("exterior"))) {
+            def(al, "getBemMovel.getBemAdquiridoNoBrasil", "0");
+            exterior(al, a);
+        } else {
+            def(al, "getAquisicao.getDataAquisicao", texto(a, "dataAquisicao"));
+            def(al, "getAquisicao.getOrigemRendimentos", "1");
+            def(al, "getAquisicao.getCustoAquisicao", pgd(texto(a, "custoAquisicao")));
+            operacao(al, a);
+        }
         adquirente(obter(al, "getBemMovel"), a);
+    }
+
+    /**
+     * Bem adquirido no exterior: valores em dólar e cotações informadas, na ordem da interface.
+     * `origem` diz com que rendimentos o bem foi comprado (nacional, estrangeira ou ambas, códigos
+     * 1, 2 e 3 do programa); a parte de origem nacional é informada em dólar e convertida pela
+     * cotação da data de aquisição, a de origem estrangeira fica em dólar.
+     */
+    private static void exterior(Object al, Map<String, Object> a) throws Exception {
+        String origem = padrao(texto(a, "origem"), "estrangeira");
+        String codigo;
+        switch (origem) {
+            case "nacional": codigo = "1"; break;
+            case "estrangeira": codigo = "2"; break;
+            case "ambas": codigo = "3"; break;
+            default: throw new IllegalArgumentException("origem desconhecida: " + origem);
+        }
+        def(al, "getAquisicao.getDataAquisicao", texto(a, "dataAquisicao"));
+        def(al, "getAquisicao.getOrigemRendimentos", codigo);
+        def(al, "getAquisicao.getMoedaEstrangeira", padrao(texto(a, "moeda"), "USA"));
+        if (!"2".equals(codigo)) {
+            def(al, "getAquisicao.getCotacaoDolarDataAquisicao", texto(a, "cotacaoAquisicao"));
+            def(al, "getAquisicao.getCustoAquisicaoOrigemNacionalDolar", pgd(texto(a, "custoAquisicaoNacionalDolar")));
+        }
+        if (!"1".equals(codigo)) {
+            def(al, "getAquisicao.getCustoAquisicaoOrigemMEDolar", pgd(texto(a, "custoAquisicaoDolar")));
+        }
+        def(al, "getAlienacaoAPrazo", "0");
+        def(al, "getValorAlienacaoDolar", pgd(texto(a, "valorAlienacaoDolar")));
+        def(al, "getValorCorretagemDolar", pgd(texto(a, "custoCorretagemDolar")));
+        def(al, "getCotacaoDolarDataAlienacao", texto(a, "cotacaoAlienacao"));
+        // Valor em reais até R$ 35.000,00: a mesma pergunta do conjunto alienado no mês.
+        long cotacao = Long.parseLong(padrao(digitos(texto(a, "cotacaoAlienacao")), "0"));
+        long reais = Long.parseLong(padrao(digitos(texto(a, "valorAlienacaoDolar")), "0")) * cotacao / 10000L;
+        if (reais <= 3500000L) {
+            def(al, "getBemGrandeValor", Boolean.TRUE.equals(a.get("conjuntoMesAcimaLimite")) ? "1" : "0");
+        }
+        if (temValor(texto(a, "impostoPago"))) {
+            def(al, "getCalculoImposto.getImpostoPago", pgd(texto(a, "impostoPago")));
+        }
+    }
+
+    /**
+     * Moeda estrangeira em espécie: estoque e saldo em reais de 1º de janeiro e as operações do
+     * ano em ordem (compras e vendas; a venda traz a cotação do dólar e o adquirente). O custo
+     * médio, o estoque e o ganho de cada venda são calculados pelo programa.
+     */
+    @SuppressWarnings("unchecked")
+    private static void moeda(MoedaAlienada m, Map<String, Object> a) throws Exception {
+        def(m, "getMoeda", padrao(texto(a, "moeda"), "USA"));
+        def(m, "getEstoqueInicial", pgd(texto(a, "estoqueInicial")));
+        def(m, "getSaldoInicial", pgd(texto(a, "saldoInicial")));
+        ColecaoOperacaoEspecie ops = m.getOperacoesEspecie();
+        for (Object o : lista(a, "operacoes")) {
+            Map<String, Object> op = (Map<String, Object>) o;
+            boolean venda = "venda".equals(texto(op, "tipo"));
+            int i = venda ? ops.inserirNovaOperacaoVenda() : ops.inserirNovaOperacaoCompra();
+            Object item = ops.itens().get(i);
+            def(item, "getData", texto(op, "data"));
+            def(item, "getQuantidade", pgd(texto(op, "quantidade")));
+            def(item, "getValor", pgd(texto(op, "valor")));
+            if (venda) {
+                def(item, "getCotacaoDolar", texto(op, "cotacaoDolar"));
+                Map<String, Object> adq = mapa(op, "adquirente");
+                def(item, "getNiAdquirente", padrao(digitos(texto(adq, "cpf")), Documentos.cpf(9102)));
+                def(item, "getNomeAdquirente", padrao(texto(adq, "nome"), "ADQUIRENTE FICTICIO"));
+            }
+        }
     }
 
     private static void participacao(Object al, Map<String, Object> a) throws Exception {
@@ -230,9 +326,39 @@ public final class Gcap {
 
     // ------------------------------------------------------------- resultado
 
-    private static Map<String, Object> resultado(String tipo, Object al) {
+    private static Map<String, Object> resultadoMoeda(MoedaAlienada m) {
+        Map<String, Object> r = new LinkedHashMap<>();
+        r.put("tipo", "moeda");
+        r.put("custoMedioInicial", formatado(m, "getCustoMedioInicial"));
+        List<Object> ops = new ArrayList<>();
+        for (Object o : m.getOperacoesEspecie().itens()) {
+            Map<String, Object> x = new LinkedHashMap<>();
+            x.put("estoque", centavos(o, "getEstoque"));
+            x.put("saldo", centavos(o, "getSaldo"));
+            x.put("custoMedio", formatado(o, "getCustoMedio"));
+            x.put("custoAlienacao", centavos(o, "getCustoAlienacao"));
+            x.put("ganhoCapital", centavos(o, "getGanhoCapital"));
+            ops.add(x);
+        }
+        r.put("operacoes", ops);
+        r.put("ganhoCapital", centavos(m, "getOperacoesEspecie.getTotalGanhoCapital"));
+        return r;
+    }
+
+    private static Map<String, Object> resultado(String tipo, Object al, boolean exterior) {
         Map<String, Object> r = new LinkedHashMap<>();
         r.put("tipo", tipo);
+        if (exterior) {
+            Map<String, Object> ex = new LinkedHashMap<>();
+            ex.put("valorLiquidoDolar", centavos(al, "getApuracao.getValorLiquidoAlienacaoDolar"));
+            ex.put("custoNacionalReal", centavos(al, "getApuracao.getCustoAquisicaoOrigemNacionalReal"));
+            ex.put("ganhoNacionalReal", centavos(al, "getApuracao.getGanhoCapital1OrigemNacionalReal"));
+            ex.put("ganhoEstrangeiraDolar", centavos(al, "getApuracao.getGanhoCapital1OrigemMEDolar"));
+            ex.put("ganhoEstrangeiraReal", centavos(al, "getApuracao.getGanhoCapital1OrigemMEReal"));
+            ex.put("ganhoTotal", centavos(al, "getApuracao.getGanhoCapitalTotalExterior"));
+            ex.put("percentualEstrangeira", formatado(al, "getApuracao.getPercentualCustoAquisicaoOrigemME"));
+            r.put("exterior", ex);
+        }
         r.put("valorLiquido", centavos(al, "getApuracao.getValorLiquidoAlienacao"));
         r.put("custoAquisicao", centavos(al, "getApuracao.getCustoAquisicao"));
         r.put("ganhoBruto", centavos(al, "getApuracao.getGanhoCapital1"));

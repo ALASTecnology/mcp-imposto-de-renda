@@ -1,0 +1,40 @@
+{
+  "id": "gcap-exterior-estrangeira-01",
+  "descricao": "Venda de bem móvel adquirido no exterior com rendimentos em moeda estrangeira: ganho apurado em dólar e convertido pela cotação da alienação, tributado a 15% (exclusivo 03).",
+  "entrada": {
+    "titular": {
+      "cpf": "15832740653",
+      "nome": "ELISA FICTICIA CAMBIO",
+      "nascimento": "12031978"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "75113182000106",
+        "nome": "EMPRESA FICTICIA CAMBIO LTDA",
+        "rendimento": "8400000",
+        "previdenciaOficial": "860000",
+        "irrf": "780000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "exterior": true,
+        "origem": "estrangeira",
+        "moeda": "USA",
+        "descricao": "OBRA DE ARTE FICTICIA NO EXTERIOR",
+        "dataAquisicao": "10032015",
+        "dataAlienacao": "16062025",
+        "custoAquisicaoDolar": "1000000",
+        "valorAlienacaoDolar": "3000000",
+        "custoCorretagemDolar": "60000",
+        "cotacaoAlienacao": "5,5000",
+        "adquirente": {
+          "cpf": "15844005449",
+          "nome": "COMPRADOR FICTICIO CAMBIO UM"
+        }
+      }
+    ]
+  }
+}

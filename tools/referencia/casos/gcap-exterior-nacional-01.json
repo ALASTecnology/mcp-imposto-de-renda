@@ -1,0 +1,40 @@
+{
+  "id": "gcap-exterior-nacional-01",
+  "descricao": "Venda de bem móvel adquirido no exterior com rendimentos em reais: custo e valor convertidos pelas cotações das datas de aquisição e alienação.",
+  "entrada": {
+    "titular": {
+      "cpf": "15877799860",
+      "nome": "GABRIELA FICTICIA CAMBIO",
+      "nascimento": "12031978"
+    },
+    "rendimentosPJ": [
+      {
+        "cnpj": "75113182000106",
+        "nome": "EMPRESA FICTICIA CAMBIO LTDA",
+        "rendimento": "8400000",
+        "previdenciaOficial": "860000",
+        "irrf": "780000",
+        "beneficiario": "T"
+      }
+    ],
+    "ganhosCapital": [
+      {
+        "tipo": "movel",
+        "exterior": true,
+        "origem": "nacional",
+        "descricao": "JOIA FICTICIA NO EXTERIOR",
+        "dataAquisicao": "20072019",
+        "dataAlienacao": "12092025",
+        "custoAquisicaoNacionalDolar": "1200000",
+        "cotacaoAquisicao": "3,8000",
+        "valorAlienacaoDolar": "2000000",
+        "custoCorretagemDolar": "0",
+        "cotacaoAlienacao": "5,4000",
+        "adquirente": {
+          "cpf": "15889064690",
+          "nome": "COMPRADOR FICTICIO CAMBIO TRES"
+        }
+      }
+    ]
+  }
+}

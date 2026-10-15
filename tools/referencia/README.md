@@ -174,6 +174,13 @@ do GCAP pelo MCP Imposto de Renda. O `config.properties` traz data, hora, versã
 sistema operacional, e o XML a data do último acesso; dois `gerar` seguidos não dão bytes iguais
 nesses arquivos (os DBK/DEC continuam determinísticos).
 
+**Atividade Rural (não gerado ainda).** O mesmo caminho serve ao programa da Atividade Rural:
+pelo mesmo raciocínio do GCAP, quem exporta para o IRPF 2026 é o AR 2025
+(`vendor/rfb/atividade-rural/AR2025v1.0.zip`), e a gravação do arquivo de exportação fica em
+`serpro.atividaderural.txt.ExportarIRPF.gravaDeclaracao(File, IdDeclaracaoAtividadeRural)`,
+público e sem interface (assinatura vista com `javap -p`). Falta montar a declaração rural no AR
+por reflexão, importar no IRPF e gravar o par, como foi feito para o GCAP.
+
 Bloco `esperadoGcap` (valores em centavos; percentuais como o programa mostra, 6 casas):
 
 | Campo | Valor no GCAP |

@@ -61,7 +61,7 @@ A partir do código:
 ```
 
 Os exemplos já trazem `--perfil essencial` por causa do limite de ferramentas explicado abaixo. Esse
-perfil preenche e grava a declaração inteira com 84 ferramentas.
+perfil preenche e grava a declaração inteira com 86 ferramentas.
 
 Pela linha de comando, o mesmo servidor entra no perfil com:
 
@@ -89,12 +89,12 @@ code --add-mcp '{"name":"mcp-imposto-de-renda","command":"npx","args":["-y","mcp
 
 O chat do VS Code aceita no máximo **128 ferramentas ativas por pedido** e devolve o erro
 "Cannot have more than 128 tools per request" acima disso. O MCP Imposto de Renda completo registra
-160 ferramentas. Por isso os exemplos usam `--perfil essencial`:
+162 ferramentas. Por isso os exemplos usam `--perfil essencial`:
 
 | Perfil | Ferramentas | Para quê |
 | --- | --- | --- |
-| `completo` (padrão) | 160 | Tudo. Passa do limite do VS Code. |
-| `essencial` | 84 | Cria, preenche qualquer ficha, valida, calcula e grava. Tira só os atalhos repetidos por ficha (`editar_bem`, `listar_dependentes` e afins, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as calculadoras avulsas. |
+| `completo` (padrão) | 162 | Tudo. Passa do limite do VS Code. |
+| `essencial` | 86 | Cria, preenche qualquer ficha, valida, calcula e grava. Tira só os atalhos repetidos por ficha (`editar_bem`, `listar_dependentes` e afins, cobertos por `editar_lancamento`, `remover_lancamento` e `listar_lancamentos`) e as calculadoras avulsas. |
 | `consulta` | 40 | Só leitura e cálculo, nada grava. |
 
 O limite vale para a soma de todas as ferramentas ativas no pedido, incluindo as embutidas do

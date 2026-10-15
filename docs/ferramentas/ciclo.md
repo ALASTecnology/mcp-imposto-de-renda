@@ -6,13 +6,14 @@
 
 Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. Cria, retifica, copia, restaura e exclui declarações, define as opções do Resumo e importa informes colados como texto.
 
-**18 ferramentas**, 16 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
+**19 ferramentas**, 17 delas gravam na pasta autorizada. O grupo só é registrado quando o servidor recebe `--dir`.
 
 | Ferramenta | Título | Grava? |
 | --- | --- | --- |
 | [`importar_declaracao_anterior`](#importar_declaracao_anterior) | Importar dados da declaração de 2025 | **sim** |
 | [`importar_pre_preenchida`](#importar_pre_preenchida) | Importar a declaração pré-preenchida | **sim** |
 | [`importar_gcap`](#importar_gcap) | Importar o demonstrativo do GCAP | **sim** |
+| [`importar_livro_caixa_rural`](#importar_livro_caixa_rural) | Importar o Livro Caixa da Atividade Rural | **sim** |
 | [`criar_declaracao`](#criar_declaracao) | Criar uma declaração nova | **sim** |
 | [`criar_retificadora`](#criar_retificadora) | Criar declaração retificadora | **sim** |
 | [`registrar_recibo`](#registrar_recibo) | Registrar o recibo da declaração transmitida | **sim** |
@@ -152,7 +153,7 @@ Aparece em 6 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 - `M-IMP-ANO-ANTERIOR` Importar dados da Declaração de 2025 (P0, implementada)
 - `M-IMP-SUGESTAO` Sugestão de importação (inferido) (P2, implementada)
 - `M-FERR-COPIA-RESTAURAR` Restaurar Cópia de Segurança (P1, implementada)
-- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, parcial)
+- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, implementada)
 - `S-ARQ-GERAL` Estrutura do arquivo de declaração (P0, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -254,7 +255,7 @@ Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Importar o demonstrativo do GCAP**. Grava na pasta autorizada. Exige `--dir`.
 
-Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital), mantendo o que foi digitado nesses isentos. O CPF do demonstrativo precisa ser o do titular ou de um dependente. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança). Demonstrativos com moeda estrangeira em espécie ainda não são convertidos: importe-os no programa oficial.
+Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital, 03 bens adquiridos em moeda estrangeira, 04 moeda estrangeira em espécie), mantendo o que foi digitado nesses isentos. Aceita bens adquiridos no exterior (com rendimentos em reais, em moeda estrangeira ou ambos) e moeda estrangeira em espécie. O CPF do demonstrativo precisa ser o do titular ou de um dependente. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança).
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -289,6 +290,9 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `impostoDevido` | texto ou inteiro |   |
 | `rendimentoIsento` | texto ou inteiro |   |
 | `rendimentoExclusivo` | texto ou inteiro |   |
+| `rendimentoExclusivoExterior` | texto ou inteiro |   |
+| `ganhoMoedaEspecie` | texto ou inteiro |   |
+| `operacoesMoedaEspecie` | inteiro |   |
 
 ### Exemplo
 
@@ -306,7 +310,7 @@ Resposta em texto:
 
 ```text
 Demonstrativo do GCAP do CPF 10234522275 importado de 10234522275-0101-3112-GCAP-2025.DEC: 1 alienação(ões).
-Imposto devido 450000 centavos, rendimento isento transportado 0, exclusivo 3000000.
+Imposto devido 450000 centavos, rendimento isento transportado 0, exclusivo 3000000 (02), 0 (03, bens em moeda estrangeira) e 0 (04, moeda em espécie).
 O imposto do ganho de capital é pago em Darf (código 4600) até o último dia útil do mês seguinte à alienação; a declaração só informa. Gravado com-gcap.DBK (39 registros).
 Arquivo novo (sem backup).
 Controles: conferem.
@@ -332,7 +336,10 @@ Sem erros impeditivos; 0 aviso(s).
   "alienacoes": 1,
   "impostoDevido": 450000,
   "rendimentoIsento": 0,
-  "rendimentoExclusivo": 3000000
+  "rendimentoExclusivo": 3000000,
+  "rendimentoExclusivoExterior": 0,
+  "ganhoMoedaEspecie": 0,
+  "operacoesMoedaEspecie": 0
 }
 ```
 
@@ -348,9 +355,112 @@ Aparece em 15 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, implementada)
 - `F-EXCL-02` Ganhos de capital na alienação de bens e/ou direitos (P1, implementada)
-- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, parcial)
-- `F-EXCL-04` Ganhos de capital na alienação de moeda estrangeira em espécie (P1, parcial)
+- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, implementada)
+- `F-EXCL-04` Ganhos de capital na alienação de moeda estrangeira em espécie (P1, implementada)
 - e mais 7 linhas na matriz.
+
+[Voltar ao início](#topo) · [Índice das ferramentas](README.md)
+
+## `importar_livro_caixa_rural`
+
+**Importar o Livro Caixa da Atividade Rural**. Grava na pasta autorizada. Exige `--dir`.
+
+Importa na declaração o arquivo que o programa Livro Caixa da Atividade Rural 2025 grava em "Exportar para o IRPF" (<CPF>-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC), como "Importar dados da Atividade Rural" do programa: confere o exercício e o controle do arquivo, substitui as receitas e despesas mensais da aba Brasil (as despesas não dedutíveis não entram), grava na Apuração os adiantamentos recebidos e a receita de produtos entregues por adiantamentos anteriores, substitui a linha de cada país da aba Exterior (moeda original) e refaz o isento 15 (resultado não tributável). Imóveis, forma de apuração, prejuízo, rebanho, bens e dívidas são mantidos. O arquivo do programa Atividade Rural 2026 é do IRPF 2027 e é recusado. O CPF do arquivo precisa ser o do titular. Grava o DBK (padrão: o próprio arquivo, com cópia de segurança).
+
+| Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
+| --- | --- | --- | --- |
+| não | sim | não | não |
+
+Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o conteúdo anterior em `.mcp-imposto-de-renda-backups`.
+
+### Parâmetros
+
+| Parâmetro | Tipo | Obrigatório | Descrição |
+| --- | --- | --- | --- |
+| `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
+| `arquivo_livro_caixa` | texto | **sim** | Arquivo exportado pelo Livro Caixa da Atividade Rural 2025 (ex.: "12345678909-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC"). Nome relativo à pasta autorizada (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"); use listar_arquivos. (até 255 caracteres) |
+| `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
+
+### Resposta estruturada
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `arquivo` | texto | DBK gravado (nome relativo à pasta autorizada). |
+| `bytes` | número |   |
+| `backup` | texto ou nulo | Cópia do conteúdo anterior em .mcp-imposto-de-renda-backups. |
+| `registros` | número |   |
+| `controlesValidos` | booleano |   |
+| `podeEntregar` | booleano | Falso se houver pendência do tipo erro. |
+| `totalErros` | número |   |
+| `totalAvisos` | número |   |
+| `pendencias` | lista de objeto |   |
+| `avisos` | lista de texto |   |
+| `cpf` | texto |   |
+| `mesesBrasil` | inteiro |   |
+| `receitaBrasil` | texto ou inteiro |   |
+| `despesaBrasil` | texto ou inteiro |   |
+| `adiantamentosRecebidos` | texto ou inteiro |   |
+| `produtosEntregues` | texto ou inteiro |   |
+| `paisesExterior` | lista de texto |   |
+| `isentoAtividadeRural` | texto ou inteiro |   |
+
+### Exemplo
+
+Chamada (`tools/call`, campo `arguments`):
+
+```json
+{
+  "arquivo": "10234522275-IRPF-A-2026-2025-ORIGI.DBK",
+  "arquivo_livro_caixa": "10234522275-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC",
+  "arquivo_destino": "com-rural.DBK"
+}
+```
+
+Resposta em texto:
+
+```text
+Livro Caixa da Atividade Rural do CPF 10234522275 importado de 10234522275-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC: 2 mês(es) no Brasil, receita 4300000 e despesa 1500000 centavos.
+Confira na Apuração a forma de tributação do resultado (resultado ou 20% da receita bruta) e o prejuízo de anos anteriores. Gravado com-rural.DBK (25 registros).
+Arquivo novo (sem backup).
+Controles: conferem.
+Sem erros impeditivos; 0 aviso(s).
+```
+
+<details>
+<summary>Resposta estruturada (<code>structuredContent</code>)</summary>
+
+```json
+{
+  "arquivo": "com-rural.DBK",
+  "bytes": 14809,
+  "backup": null,
+  "registros": 25,
+  "controlesValidos": true,
+  "podeEntregar": true,
+  "totalErros": 0,
+  "totalAvisos": 0,
+  "pendencias": [],
+  "avisos": [],
+  "cpf": "10234522275",
+  "mesesBrasil": 2,
+  "receitaBrasil": 4300000,
+  "despesaBrasil": 1500000,
+  "adiantamentosRecebidos": 0,
+  "produtosEntregues": 0,
+  "paisesExterior": [],
+  "isentoAtividadeRural": 2800000
+}
+```
+
+</details>
+
+### Funções do programa oficial
+
+Aparece em 3 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
+
+- `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
+- `M-IMP-AR` Importar Atividade Rural 2025 (P1, implementada)
+- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

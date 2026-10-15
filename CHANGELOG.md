@@ -27,12 +27,26 @@ adota o [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/). Enquan
 - `listar_ganhos_capital` mostra os registros 64, 67, 70 a 73 e 75 a 78 do GCAP decodificados.
 - `calcular_expressao` (calculadora com aritmética decimal exata) e `consultar_atalhos` (atalhos e
   botões do programa oficial com a ferramenta equivalente).
-- Totais: **160 ferramentas MCP** em 11 grupos (98 gravam; 62 no modo `--somente-leitura`; perfis
-  `essencial` com 84 e `consulta` com 40). Matriz de cobertura: 386 funções atendidas, 24 parciais
-  (com justificativa e alternativa) e 6 sem equivalente.
+- `importar_gcap` importa também bens adquiridos no exterior (com rendimentos em reais, em moeda
+  estrangeira ou ambos) e moeda estrangeira em espécie, transportando os exclusivos 03 e 04,
+  conferido com 13 pares de arquivo exportado pelo GCAP 2025 e DBK gravado pelo IRPF 2026.
+- `calcular_ganho_capital` simula bem móvel no exterior (apuração em dólar por origem dos
+  rendimentos) e moeda estrangeira em espécie (custo médio ponderado, alienações do mês em dólar
+  e isenção até US$ 5.000,00), ao centavo com o GCAP 2025 nos 13 casos de referência.
+- `importar_livro_caixa_rural`: importa o arquivo que o Livro Caixa da Atividade Rural 2025
+  exporta para o IRPF 2026 (meses da aba Brasil, adiantamentos, aba Exterior e isento 15),
+  conferido byte a byte com 4 pares do programa oficial.
+- Harness de referência com o GCAP 2025 para bens no exterior e moeda em espécie e com o
+  programa da Atividade Rural 2025 para o Livro Caixa: 65 casos, todos reproduzidos ao centavo.
+- Totais: **162 ferramentas MCP** em 11 grupos (100 gravam; 62 no modo `--somente-leitura`;
+  perfis `essencial` com 86 e `consulta` com 40). Matriz de cobertura: 403 funções atendidas, 7
+  parciais (com justificativa e alternativa) e 6 sem equivalente.
 
 ### Alterado
 
+- O recibo do arquivo de entrega leva o imposto da moeda estrangeira em espécie
+  (`VR_VCMOEDAEST`) e o Resumo refaz o resultado não tributável da atividade rural e o subtotal
+  de isentos transportados.
 - **Novo nome do projeto: MCP Imposto de Renda** (antes AutoIR), com repositório em
   <https://github.com/ALASTecnology/mcp-imposto-de-renda>. O que muda para quem já usava:
   - pacote npm e executável: `mcp-imposto-de-renda` (antes `autoir-mcp`); a configuração dos

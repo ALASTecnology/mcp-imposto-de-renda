@@ -5786,7 +5786,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | --- | --- | --- | --- |
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
-| `item` | objeto livre | **sim** | Item no formato do modelo. Campos (? = opcional; valor = valor monetário): { cpfBeneficiario: texto, dataInicio?: texto, dataFim?: texto, pais?: texto, alienacoes?: [{ tipo: "imovel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, uf?: texto, municipio?: texto, residencial?: booleano, unicoImovel?: booleano, outraAlienacaoCincoAnos?: booleano, valorAplicadoOutroImovel?: valor, reformas?: [{...}], atualizadoLei14973?: booleano } OU { tipo: "movel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, possuiRegistroPublico?: booleano, pequenoValor?: booleano } OU { tipo: "participacaoSocietaria", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, cnpjSociedade?: texto, especie?: texto, quantidadeAlienada?: número, impostoRetidoFonte?: valor }], moedaEspecie?: [{ moeda: texto, tipoOperacao: "saldoInicial"\|"compra"\|"venda", data: texto, quantidade: número, valorReais?: valor, adquirente?: { ni: texto, nome: texto } }], totais?: { rendimentoExclusivo?: valor, isentoPequenoValor?: valor, isentoUnicoImovel?: valor, isentoReducao?: valor, impostoPago?: valor, impostoDevido?: valor, impostoDiferidoPosterior?: valor, ganhoMoedaEspecie?: valor, impostoDevidoMoedaEspecie?: valor, rendimentoExclusivoExterior?: valor, impostoPagoExterior?: valor, isentoExterior?: valor } } |
+| `item` | objeto livre | **sim** | Item no formato do modelo. Campos (? = opcional; valor = valor monetário): { cpfBeneficiario: texto, dataInicio?: texto, dataFim?: texto, pais?: texto, alienacoes?: [{ tipo: "imovel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, uf?: texto, municipio?: texto, residencial?: booleano, unicoImovel?: booleano, outraAlienacaoCincoAnos?: booleano, valorAplicadoOutroImovel?: valor, reformas?: [{...}], atualizadoLei14973?: booleano, cambio?: {...} } OU { tipo: "movel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, possuiRegistroPublico?: booleano, pequenoValor?: booleano, cambio?: {...} } OU { tipo: "participacaoSocietaria", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, cnpjSociedade?: texto, especie?: texto, quantidadeAlienada?: número, impostoRetidoFonte?: valor, uf?: texto, municipio?: texto, pequenoValor?: booleano }], moedaEspecie?: [{ moeda: texto, tipoOperacao: "saldoInicial"\|"compra"\|"venda", data: texto, quantidade: número, valorReais?: valor, adquirente?: { ni: texto, nome: texto }, cotacaoDolar?: valor, custoMedio?: valor, custoAlienacao?: valor, ganhoCapital?: valor, saldoReais?: valor, estoque?: número }], moedaEspecieMensal?: [{ alienacaoDolar?: valor, alienacaoConsolidadaDolar?: valor, ganhoCapital?: valor, ganhoTributavel?: valor, impostoDevido?: valor, impostoPago?: valor }], totais?: { rendimentoExclusivo?: valor, isentoPequenoValor?: valor, isentoUnicoImovel?: valor, isentoReducao?: valor, impostoPago?: valor, impostoDevido?: valor, impostoDiferidoPosterior?: valor, ganhoMoedaEspecie?: valor, impostoDevidoMoedaEspecie?: valor, rendimentoExclusivoExterior?: valor, impostoPagoExterior?: valor, isentoExterior?: valor } } |
 
 ### Resposta estruturada
 
@@ -5854,6 +5854,7 @@ Sem erros impeditivos; 0 aviso(s).
     "dataFim": "2025-03-31",
     "alienacoes": [],
     "moedaEspecie": [],
+    "moedaEspecieMensal": [],
     "totais": {
       "rendimentoExclusivo": 0,
       "isentoPequenoValor": 0,
@@ -5900,7 +5901,7 @@ Some do servidor com `--somente-leitura`. Grava de forma atômica e guarda o con
 | `arquivo` | texto | **sim** | DBK ou DEC da pasta autorizada a alterar (ex.: "12345678909-IRPF-A-2026-2025-ORIGI.DBK"). Se for DEC, informe arquivo_destino .DBK. (até 255 caracteres) |
 | `arquivo_destino` | texto | não | DBK a gravar (padrão: o próprio arquivo, com cópia de segurança do anterior). (até 255 caracteres) |
 | `indice` | inteiro (1 a 10000) | **sim** | Posição do item, a partir de 1, como em listar_*. |
-| `alteracoes` | objeto livre | **sim** | Campos a alterar. Campos (? = opcional; valor = valor monetário): { cpfBeneficiario: texto, dataInicio?: texto, dataFim?: texto, pais?: texto, alienacoes?: [{ tipo: "imovel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, uf?: texto, municipio?: texto, residencial?: booleano, unicoImovel?: booleano, outraAlienacaoCincoAnos?: booleano, valorAplicadoOutroImovel?: valor, reformas?: [{...}], atualizadoLei14973?: booleano } OU { tipo: "movel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, possuiRegistroPublico?: booleano, pequenoValor?: booleano } OU { tipo: "participacaoSocietaria", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, cnpjSociedade?: texto, especie?: texto, quantidadeAlienada?: número, impostoRetidoFonte?: valor }], moedaEspecie?: [{ moeda: texto, tipoOperacao: "saldoInicial"\|"compra"\|"venda", data: texto, quantidade: número, valorReais?: valor, adquirente?: { ni: texto, nome: texto } }], totais?: { rendimentoExclusivo?: valor, isentoPequenoValor?: valor, isentoUnicoImovel?: valor, isentoReducao?: valor, impostoPago?: valor, impostoDevido?: valor, impostoDiferidoPosterior?: valor, ganhoMoedaEspecie?: valor, impostoDevidoMoedaEspecie?: valor, rendimentoExclusivoExterior?: valor, impostoPagoExterior?: valor, isentoExterior?: valor } } |
+| `alteracoes` | objeto livre | **sim** | Campos a alterar. Campos (? = opcional; valor = valor monetário): { cpfBeneficiario: texto, dataInicio?: texto, dataFim?: texto, pais?: texto, alienacoes?: [{ tipo: "imovel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, uf?: texto, municipio?: texto, residencial?: booleano, unicoImovel?: booleano, outraAlienacaoCincoAnos?: booleano, valorAplicadoOutroImovel?: valor, reformas?: [{...}], atualizadoLei14973?: booleano, cambio?: {...} } OU { tipo: "movel", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, possuiRegistroPublico?: booleano, pequenoValor?: booleano, cambio?: {...} } OU { tipo: "participacaoSocietaria", cpfBeneficiario: texto, operacao: número, exterior?: booleano, descricao: texto, naturezaOperacao: texto, dataAlienacao: texto, dataAquisicao?: texto, valorOperacao?: valor, aPrazo?: booleano, paisParaisoFiscal?: texto, adquirentes?: [{...}], apuracao?: {...}, cnpjSociedade?: texto, especie?: texto, quantidadeAlienada?: número, impostoRetidoFonte?: valor, uf?: texto, municipio?: texto, pequenoValor?: booleano }], moedaEspecie?: [{ moeda: texto, tipoOperacao: "saldoInicial"\|"compra"\|"venda", data: texto, quantidade: número, valorReais?: valor, adquirente?: { ni: texto, nome: texto }, cotacaoDolar?: valor, custoMedio?: valor, custoAlienacao?: valor, ganhoCapital?: valor, saldoReais?: valor, estoque?: número }], moedaEspecieMensal?: [{ alienacaoDolar?: valor, alienacaoConsolidadaDolar?: valor, ganhoCapital?: valor, ganhoTributavel?: valor, impostoDevido?: valor, impostoPago?: valor }], totais?: { rendimentoExclusivo?: valor, isentoPequenoValor?: valor, isentoUnicoImovel?: valor, isentoReducao?: valor, impostoPago?: valor, impostoDevido?: valor, impostoDiferidoPosterior?: valor, ganhoMoedaEspecie?: valor, impostoDevidoMoedaEspecie?: valor, rendimentoExclusivoExterior?: valor, impostoPagoExterior?: valor, isentoExterior?: valor } } |
 
 ### Resposta estruturada
 
@@ -5967,6 +5968,7 @@ Sem erros impeditivos; 0 aviso(s).
     "dataFim": "2025-04-30",
     "alienacoes": [],
     "moedaEspecie": [],
+    "moedaEspecieMensal": [],
     "totais": {
       "rendimentoExclusivo": 0,
       "isentoPequenoValor": 0,
@@ -6136,6 +6138,7 @@ Demonstrativo de Ganhos de Capital: 1 item(ns).
       "dataFim": "2025-03-31",
       "alienacoes": [],
       "moedaEspecie": [],
+      "moedaEspecieMensal": [],
       "totais": {
         "rendimentoExclusivo": 0,
         "isentoPequenoValor": 0,
@@ -6147,8 +6150,7 @@ Demonstrativo de Ganhos de Capital: 1 item(ns).
         "ganhoMoedaEspecie": 0,
         "impostoDevidoMoedaEspecie": 0,
         "rendimentoExclusivoExterior": 0,
-        "impostoPagoExterior": 0,
-(... mais 228 linhas)
+(... mais 229 linhas)
 ```
 
 ### Funções do programa oficial
@@ -6161,8 +6163,8 @@ Aparece em 15 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 - `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, implementada)
 - `F-EXCL-02` Ganhos de capital na alienação de bens e/ou direitos (P1, implementada)
-- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, parcial)
-- `F-EXCL-04` Ganhos de capital na alienação de moeda estrangeira em espécie (P1, parcial)
+- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, implementada)
+- `F-EXCL-04` Ganhos de capital na alienação de moeda estrangeira em espécie (P1, implementada)
 - e mais 7 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
@@ -9980,11 +9982,11 @@ Sem erros impeditivos; 0 aviso(s).
 Aparece em 6 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#matriz):
 
 - `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
-- `M-IMP-AR` Importar Atividade Rural 2025 (P1, parcial)
+- `M-IMP-AR` Importar Atividade Rural 2025 (P1, implementada)
 - `F-DFE-BENS-AR` Bens da Atividade Rural no espólio (P2, implementada)
 - `D-AR-RD-BRASIL` Receitas e Despesas - Brasil (P1, implementada)
 - `D-AR-RD-EXTERIOR` Receitas e Despesas - Exterior (P1, implementada)
-- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, parcial)
+- `D-AR-IMPORT` Importação AR2025 (Livro Caixa da Atividade Rural 2025 e IRPF2025) (P1, implementada)
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)
 

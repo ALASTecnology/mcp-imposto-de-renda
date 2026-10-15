@@ -19,12 +19,18 @@ export const ARQ_2025 = "10234522275-IRPF-A-2025-2024-ORIGI.DEC";
  * o harness de `tools/referencia` e o GCAP 2025; de `tools/docs/dados/`).
  */
 export const ARQ_GCAP = "10234522275-0101-3112-GCAP-2025.DEC";
+/**
+ * Arquivo que o Livro Caixa da Atividade Rural 2025 exporta para o IRPF 2026, do titular da
+ * família (sintético, gerado com o harness de `tools/referencia`; de `tools/docs/dados/`).
+ */
+export const ARQ_AR = "10234522275-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC";
 /** Arquivos copiados para a pasta de cada cenário (caminhos relativos a `exemplos/`). */
 export const BASE: Record<string, string> = {
   [ARQ]: `02-familia-dependentes/${ARQ}`,
   [ARQ_PF]: `04-autonomo-carne-leao/${ARQ_PF}`,
   [ARQ_2025]: `../tools/docs/dados/${ARQ_2025}`,
   [ARQ_GCAP]: `../tools/docs/dados/${ARQ_GCAP}`,
+  [ARQ_AR]: `../tools/docs/dados/${ARQ_AR}`,
 };
 
 const TITULAR = "10234522275";
@@ -140,6 +146,10 @@ export const CENARIOS: readonly Cenario[] = [
     {
       ferramenta: "importar_gcap",
       argumentos: { arquivo: ARQ, arquivo_gcap: ARQ_GCAP, arquivo_destino: "com-gcap.DBK" },
+    },
+    {
+      ferramenta: "importar_livro_caixa_rural",
+      argumentos: { arquivo: ARQ, arquivo_livro_caixa: ARQ_AR, arquivo_destino: "com-rural.DBK" },
     },
   ],
   [

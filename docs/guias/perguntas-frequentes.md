@@ -73,7 +73,7 @@ use ponto como separador decimal: `"1234.56"` é recusado.
 
 ### O cálculo bate com o do programa oficial?
 
-O motor reproduz ao centavo os 48 casos de referência gerados com o programa oficial (veja
+O motor reproduz ao centavo os 65 casos de referência gerados com o programa oficial (veja
 [como funciona a precisão](../../README.md#como-funciona-a-precisão)). Casos fora dessa cobertura,
 como demonstrativos de ganho de capital, renda variável e atividade rural, não entram no cálculo.
 Divergências conhecidas e regras ainda não confirmadas estão em

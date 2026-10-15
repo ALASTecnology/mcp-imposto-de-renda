@@ -220,7 +220,7 @@ Modelo de ameaças completo em [seguranca.md](seguranca.md).
 
 ![Mapa dos 11 grupos de ferramentas](assets/grupos-ferramentas.svg)
 
-As 160 ferramentas estão em 11 grupos. Cada grupo é um módulo em `ferramentas/` que exporta um
+As 162 ferramentas estão em 11 grupos. Cada grupo é um módulo em `ferramentas/` que exporta um
 `GrupoFerramentas` e entra na lista `GRUPOS` de `ferramentas/registro.ts`; a ordem da lista é a
 ordem do `tools/list`.
 
@@ -326,7 +326,7 @@ As [declarações de exemplo](../exemplos/README.md) percorrem esse ciclo de pon
 
 | Garantia | Evidência |
 | --- | --- |
-| O motor reproduz o programa oficial ao centavo | 48 casos de referência (golden) em `packages/core/test/golden/2026` |
+| O motor reproduz o programa oficial ao centavo | 65 casos de referência (golden) em `packages/core/test/golden/2026` |
 | O codec relê e regrava os arquivos do programa byte a byte | 96 arquivos em `packages/core/test/fixtures/dbk/2026`, e cada `.DBK` vira o mesmo `.DEC` que o programa grava |
 | O codec resiste a entradas aleatórias e hostis | testes de propriedades e de integridade em `packages/core/test` |
 | O servidor não acessa a rede e não sai da pasta | `packages/mcp/test/seguranca.test.ts` e `arquivos.test.ts` |

@@ -2,9 +2,9 @@
 
 # Referência das ferramentas
 
-Referência completa das **161 ferramentas** do servidor, em **11 grupos**, gerada a partir do `tools/list` real: nome, descrição, parâmetros com tipo e obrigatoriedade tirados do JSON Schema, anotações MCP, campos da resposta estruturada, um exemplo de chamada executado contra o servidor com dados fictícios e as funções correspondentes do programa oficial.
+Referência completa das **162 ferramentas** do servidor, em **11 grupos**, gerada a partir do `tools/list` real: nome, descrição, parâmetros com tipo e obrigatoriedade tirados do JSON Schema, anotações MCP, campos da resposta estruturada, um exemplo de chamada executado contra o servidor com dados fictícios e as funções correspondentes do programa oficial.
 
-99 ferramentas gravam na pasta autorizada e somem com `--somente-leitura` (que deixa 62). Sem `--dir`, os grupos que exigem pasta não são registrados e restam 29.
+100 ferramentas gravam na pasta autorizada e somem com `--somente-leitura` (que deixa 62). Sem `--dir`, os grupos que exigem pasta não são registrados e restam 29.
 
 ## Convenções
 
@@ -24,14 +24,14 @@ Referência completa das **161 ferramentas** do servidor, em **11 grupos**, gera
 | [`declaracao`](declaracao.md) | 4 | 2 | sim | Abrir, converter e gravar o arquivo da declaração (DBK/DEC). |
 | [`fichas`](fichas.md) | 1 | 0 | sim | Consulta de fichas da declaração. |
 | [`edicao`](edicao.md) | 105 | 80 | sim | Inclusão, edição, remoção e listagem de lançamentos de cada ficha da declaração. |
-| [`ciclo`](ciclo.md) | 18 | 16 | sim | Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. |
+| [`ciclo`](ciclo.md) | 19 | 17 | sim | Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e importações. |
 | [`validacao`](validacao.md) | 2 | 0 | não | Validação de CPF, CNPJ, recibo, CEP, contatos, Renavam, conta bancária e pendências da declaração. |
 | [`tabelas`](tabelas.md) | 2 | 0 | não | Tabelas de códigos do programa (dependentes, pagamentos, bens, municípios...). |
 | [`arquivos`](arquivos.md) | 4 | 1 | sim | Arquivos da pasta autorizada. |
 | [`saidas`](saidas.md) | 4 | 0 | não | Etapa final: dados do Darf e passo a passo para transmitir pelo programa oficial. |
 | [`calculadoras`](calculadoras.md) | 10 | 0 | não | Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, RRA, ganho de capital e acréscimos. |
 | [`orientacao`](orientacao.md) | 5 | 0 | não | Orientação sobre serviços que só existem fora do MCP Imposto de Renda (sem acesso à rede). |
-| **Total** | **161** | **99** | | |
+| **Total** | **162** | **100** | | |
 
 ## Todas as ferramentas
 
@@ -131,6 +131,7 @@ Referência completa das **161 ferramentas** do servidor, em **11 grupos**, gera
 | [`importar_gcap`](ciclo.md#importar_gcap) | `ciclo` | Importar o demonstrativo do GCAP | **sim** |
 | [`importar_informe_plano_saude`](ciclo.md#importar_informe_plano_saude) | `ciclo` | Importar informe de plano de saúde | **sim** |
 | [`importar_informe_rendimentos`](ciclo.md#importar_informe_rendimentos) | `ciclo` | Importar informe de rendimentos | **sim** |
+| [`importar_livro_caixa_rural`](ciclo.md#importar_livro_caixa_rural) | `ciclo` | Importar o Livro Caixa da Atividade Rural | **sim** |
 | [`importar_pre_preenchida`](ciclo.md#importar_pre_preenchida) | `ciclo` | Importar a declaração pré-preenchida | **sim** |
 | [`instruir_transmissao`](saidas.md#instruir_transmissao) | `saidas` | Passo a passo para transmitir | não |
 | [`ler_ficha`](fichas.md#ler_ficha) | `fichas` | Ler uma ficha da declaração | não |

@@ -79,8 +79,8 @@ Acrescente `"--somente-leitura"` ao fim de `args`.
 
 ## Limitações
 
-- O Cline envia as descrições das ferramentas ao modelo; com 160 ferramentas, modelos de contexto
-  pequeno (sobretudo locais) se perdem. Use `"--perfil", "essencial"` (84 ferramentas, ainda grava a
+- O Cline envia as descrições das ferramentas ao modelo; com 162 ferramentas, modelos de contexto
+  pequeno (sobretudo locais) se perdem. Use `"--perfil", "essencial"` (86 ferramentas, ainda grava a
   declaração inteira) ou `"--perfil", "consulta"` (40, só leitura). Veja os
   [perfis](../clientes-mcp.md#quantidade-de-ferramentas).
 - O que as ferramentas devolvem vai para o provedor de modelo configurado.

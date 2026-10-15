@@ -8419,6 +8419,7 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
    "importar_gcap",
    "importar_informe_plano_saude",
    "importar_informe_rendimentos",
+   "importar_livro_caixa_rural",
    "listar_ganhos_capital",
    "orientar_servico_externo"
   ]
@@ -8819,10 +8820,10 @@ export const ATALHOS_PROGRAMA: readonly AtalhoPrograma[] = [
   "tecla": "Ctrl+Shift+A",
   "id": "M-IMP-AR",
   "funcao": "Importar Atividade Rural 2025",
-  "status": "parcial",
+  "status": "implementada",
   "ferramentas": [
    "definir_receitas_despesas_rurais",
-   "orientar_servico_externo"
+   "importar_livro_caixa_rural"
   ]
  },
  {

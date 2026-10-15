@@ -72,7 +72,7 @@ lá.
 - **Arquivo do programa oficial, não um formato paralelo.** O resultado é um `.DBK` que o programa
   da Receita restaura com **Ferramentas > Cópia de Segurança > Restaurar**. Dá para começar do zero
   ou partir de uma declaração já iniciada no programa.
-- **Conferido contra o programa oficial.** O motor reproduz ao centavo 48 casos de referência
+- **Conferido contra o programa oficial.** O motor reproduz ao centavo 65 casos de referência
   gerados pelo próprio programa, e o codec regrava byte a byte os arquivos que ele grava.
 - **Seus arquivos ficam com você.** Sem servidor, conta, telemetria ou conexão de rede. O processo
   só enxerga a pasta que você autorizar e guarda cópia de cada versão antes de gravar.
@@ -159,7 +159,7 @@ Depois da publicação no npm, o comando vira `npx -y mcp-imposto-de-renda --dir
 
 | Opção | Efeito |
 | --- | --- |
-| `--perfil essencial` | 85 ferramentas: a declaração inteira, sem os atalhos repetidos por ficha. Use em clientes com limite de ferramentas (VS Code: 128; Windsurf: 100). |
+| `--perfil essencial` | 86 ferramentas: a declaração inteira, sem os atalhos repetidos por ficha. Use em clientes com limite de ferramentas (VS Code: 128; Windsurf: 100). |
 | `--perfil consulta` | 40 ferramentas: só leitura e cálculo, nada grava. |
 | `--grupos` e `--sem-grupos` | Expõem ou tiram grupos inteiros, por nome. |
 | `--somente-leitura` | Desliga todas as ferramentas que gravam arquivos. |
@@ -199,13 +199,13 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 
 | Indicador | Valor | Onde conferir |
 | --- | --- | --- |
-| Ferramentas MCP | **161** em 11 grupos; 99 gravam, 62 com `--somente-leitura`; perfis `essencial` (85) e `consulta` (40) | [referência das ferramentas](docs/ferramentas/README.md) |
-| Casos de referência (golden) reproduzidos ao centavo | **48 de 48** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [regras do IRPF 2026](docs/regras/irpf-2026.md) |
+| Ferramentas MCP | **162** em 11 grupos; 100 gravam, 62 com `--somente-leitura`; perfis `essencial` (86) e `consulta` (40) | [referência das ferramentas](docs/ferramentas/README.md) |
+| Casos de referência (golden) reproduzidos ao centavo | **65 de 65** | [`packages/core/test/golden/2026`](packages/core/test/golden/2026), [regras do IRPF 2026](docs/regras/irpf-2026.md) |
 | Arquivos do programa oficial relidos e regravados byte a byte | **96** (48 `.DBK` e 48 `.DEC`) | [`packages/core/test/fixtures/dbk/2026`](packages/core/test/fixtures/dbk/2026) |
 | Tipos de registro do `.DBK` convertidos para o modelo | **57**, em 26 fichas | [formato do DBK](docs/formato-dbk.md) |
 | Regras de validação | **108** (81 erros e 27 avisos) | [`packages/core/src/validate`](packages/core/src/validate) |
 | Tabelas de códigos do exercício | **31** | [tabelas](docs/mapeamento/tabelas/README.md) |
-| Funções do programa oficial mapeadas | **416**: 386 atendidas, 24 parciais, 6 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
+| Funções do programa oficial mapeadas | **416**: 403 atendidas, 7 parciais, 6 sem equivalente | [matriz de cobertura](docs/mapeamento/matriz-cobertura.md) |
 | Testes automatizados | **mais de 1.100 testes**, em Vitest (o total exato sai de `pnpm test`) | [estratégia de testes](docs/testes.md) |
 | Declarações de exemplo regeneradas a cada teste | **4** | [exemplos](exemplos/README.md) |
 | Chamadas de rede | **nenhuma** (verificado por teste) | [segurança](docs/seguranca.md) |
@@ -216,7 +216,7 @@ Números conferidos no código desta versão (`pnpm docs:catalogo` e `pnpm test`
 
 | Grupo | Ferramentas | O que cobre |
 | --- | --- | --- |
-| [`ciclo`](docs/ferramentas/ciclo.md) | 18 | Criar, retificar, copiar, restaurar e excluir; importar a declaração de 2025, a pré-preenchida e o demonstrativo do GCAP; opção de tributação, conta e quotas; importação de informes colados |
+| [`ciclo`](docs/ferramentas/ciclo.md) | 19 | Criar, retificar, copiar, restaurar e excluir; importar a declaração de 2025, a pré-preenchida, o demonstrativo do GCAP e o Livro Caixa da Atividade Rural; opção de tributação, conta e quotas; importação de informes colados |
 | [`declaracao`](docs/ferramentas/declaracao.md) | 4 | Abrir o `.DBK`/`.DEC`, converter para o modelo JSON e de volta, gerar o `.DEC` de conferência |
 | [`arquivos`](docs/ferramentas/arquivos.md) | 4 | Listar a pasta e as declarações (em preenchimento e transmitidas), gravar relatório em PDF ou HTML e conferir os controles de integridade |
 | [`fichas`](docs/ferramentas/fichas.md) | 1 | Ler uma ficha isolada |
@@ -244,10 +244,10 @@ declaração, os valores são inteiros em centavos, as datas em `AAAA-MM-DD` e C
 | Recurso | `mcp-imposto-de-renda://aviso-legal` | Limites do servidor: não é serviço oficial, dados vão ao provedor de LLM, revisar e transmitir pelo programa oficial. |
 
 <details>
-<summary><strong>Catálogo resumido das 161 ferramentas</strong> (gerado a partir do <code>tools/list</code>)</summary>
+<summary><strong>Catálogo resumido das 162 ferramentas</strong> (gerado a partir do <code>tools/list</code>)</summary>
 
 <!-- catalogo:inicio -->
-Gerado a partir de `tools/list` do servidor: **161 ferramentas** em 11 grupos, 99 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 62).
+Gerado a partir de `tools/list` do servidor: **162 ferramentas** em 11 grupos, 100 delas gravam na pasta autorizada (e somem com `--somente-leitura`, que deixa 62).
 
 ### calculo
 
@@ -342,7 +342,8 @@ Ciclo de vida da declaração (criar, retificar, excluir), opções do Resumo e 
 | --- | --- | --- |
 | `importar_declaracao_anterior` | Começa a declaração de 2026 com os dados do arquivo de 2025 (DEC gravado para entrega, transmitido ou DBK de cópia de segurança, lido com o leiaute de 2025), como "Importar dados da Declaração de 2025" do programa: Identificação; dependentes e alimentandos; fontes pagadoras de PJ e beneficiários de pagamentos (sem valores); bens e dívidas com situação em 31/12/2024 diferente de zero (o valor passa para a coluna de 31/12/2024); imóveis, bens, rebanho (estoque final como inicial) e dívidas da atividade rural; e o recibo de 2025. | **sim** |
 | `importar_pre_preenchida` | Cria a declaração de 2026 a partir do arquivo da pré-preenchida trazido pelo usuário (o DBK ou DEC que o programa oficial grava depois de "Iniciar a partir da Pré-Preenchida" com a conta gov.br Ouro ou Prata). | **sim** |
-| `importar_gcap` | Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital), mantendo o que foi digitado nesses isentos. | **sim** |
+| `importar_gcap` | Importa na declaração o arquivo que o GCAP 2025 grava em "Exportar para o IRPF2026" (<CPF>-DDMM-DDMM-GCAP-2025.DEC, um zip com o XML do demonstrativo), como "Importar dados de Ganhos de Capital" do programa: substitui o demonstrativo do mesmo CPF e período e refaz os valores transportados para Rendimentos Isentos (05 pequeno valor, 06 único imóvel, 07 demais reduções, no campo transportado) e Tributação Exclusiva (02 ganho de capital, 03 bens adquiridos em moeda estrangeira, 04 moeda estrangeira em espécie), mantendo o que foi digitado nesses isentos. | **sim** |
+| `importar_livro_caixa_rural` | Importa na declaração o arquivo que o programa Livro Caixa da Atividade Rural 2025 grava em "Exportar para o IRPF" (<CPF>-ARURAL-2025-2025-EXPORTA-IRPF2026.DEC), como "Importar dados da Atividade Rural" do programa: confere o exercício e o controle do arquivo, substitui as receitas e despesas mensais da aba Brasil (as despesas não dedutíveis não entram), grava na Apuração os adiantamentos recebidos e a receita de produtos entregues por adiantamentos anteriores, substitui a linha de cada país da aba Exterior (moeda original) e refaz o isento 15 (resultado não tributável). | **sim** |
 | `criar_declaracao` | Cria um DBK novo na pasta autorizada a partir da identificação do contribuinte (formato do modelo) e da opção de tributação. | **sim** |
 | `criar_retificadora` | Marca a declaração como retificadora com o número do recibo (12 dígitos) da declaração a retificar e grava em um novo DBK (padrão: CPF-IRPF-A-2026-2025-RETIF.DBK), preservando o restante. | **sim** |
 | `registrar_recibo` | Guarda o número do recibo (12 dígitos) que o programa oficial mostrou ao transmitir a declaração, num arquivo <declaração>.recibo.json ao lado do DBK/DEC, para preencher uma futura retificadora (criar_retificadora sem 'recibo'). | **sim** |
@@ -409,7 +410,7 @@ Calculadoras auxiliares offline: renda variável, preço médio, carnê-leão, R
 | `calcular_rra` | Calcula o imposto do RRA pela tabela progressiva acumulada (tabela mensal do mês do recebimento vezes o número de meses, art. | não |
 | `calcular_preco_medio` | Calcula o custo médio ponderado por ativo e o resultado de cada venda a partir das notas de corretagem (compras e vendas com custos), separando day-trade (compra e venda do mesmo ativo no mesmo dia), para preencher a Renda Variável. | não |
 | `apurar_renda_variavel` | Apura o imposto mensal sobre ganhos líquidos: operações comuns 15%, day-trade 20%, FII e Fiagro 20%, com compensação de prejuízos separada por tipo, compensação de IR na fonte (day-trade e Lei 11.033/2004), isenção de ganhos com ações à vista quando as vendas do mês não passam de R$ 20.000,00 e Darf 6015 com vencimento no último dia útil do mês seguinte. | não |
-| `calcular_ganho_capital` | Simulador de orientação para alienação de imóvel, móvel ou participação, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. | não |
+| `calcular_ganho_capital` | Simulador de orientação para alienação de imóvel, móvel, participação ou moeda estrangeira em espécie, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. | não |
 | `atualizar_custo_bem` | Orientação e cálculo da atualização do custo de bem ou direito com os valores informados pelo usuário: 'ufir' (bens adquiridos até 31/12/1995, quantidade de UFIR vezes R$ 0,8287, Lei 9.249/1995, art. | não |
 | `calcular_acrescimos_moratorios` | Calcula a multa de mora (0,33% por dia de atraso, limitada a 20%) e os juros (Selic acumulada informada mais 1% no mês do pagamento) de qualquer débito federal vencido. | não |
 | `calcular_condicao_residencia` | Determina a data em que a pessoa passa a residente ou não residente no Brasil (IN SRF 208/2002): saída definitiva (não residente na data da saída), ausência temporária (não residente no dia seguinte ao que completar 12 meses fora), retorno de brasileiro ou visto permanente (residente na chegada) e visto temporário (residente ao completar 184 dias no país em 12 meses). | não |
@@ -450,7 +451,7 @@ programa oficial. A suíte de testes regenera os quatro exemplos e falha se algu
 
 ```
 apps/cli        mcp-imposto-de-renda          executável stdio: argumentos, pasta, logs em stderr
-packages/mcp    @mcp-imposto-de-renda/mcp     createServer(): 161 ferramentas, prompts, recursos, PastaAutorizada
+packages/mcp    @mcp-imposto-de-renda/mcp     createServer(): 162 ferramentas, prompts, recursos, PastaAutorizada
 packages/core   @mcp-imposto-de-renda/core    codec DBK, modelo, conversão, motor de cálculo, validação, tabelas (sem I/O)
 exemplos/                                     declarações fictícias geradas pelo servidor
 tools/                                        leiaute, harness de referência, mapeamento e geradores de documentação
@@ -551,10 +552,10 @@ T9, hash e controle do header), está em [docs/formato-dbk.md](docs/formato-dbk.
 
 - **Só o exercício 2026** (ano-calendário 2025). Leiaute, tabelas e motor são versionados por
   exercício.
-- **Arquivo de entrega sem ganho de capital conferido.** `gerar_arquivo_entrega` grava o `.DEC`
-  igual ao do programa nos 48 casos de referência, mas os campos de imposto pago de ganho de
-  capital e de moeda estrangeira do recibo não têm caso (o GCAP só calcula pela interface do
-  programa). A transmissão continua sendo feita pelo programa oficial.
+- **Arquivo de entrega conferido nos casos de referência.** `gerar_arquivo_entrega` grava o `.DEC`
+  igual ao do programa nos 65 casos de referência, inclusive o imposto pago de ganho de capital e
+  o imposto da moeda estrangeira em espécie do recibo. A transmissão continua sendo feita pelo
+  programa oficial.
 - **Serviços on-line da Receita Federal estão fora de escopo**: transmissão, certificado digital,
   login gov.br, declaração pré-preenchida, Carnê-Leão Web, Darf com código de barras e recibo.
 - **Sem leitura de PDF.** Informes de rendimentos e de plano de saúde entram como texto ou JSON
@@ -563,8 +564,8 @@ T9, hash e controle do header), está em [docs/formato-dbk.md](docs/formato-dbk.
   RRA pela opção do ajuste, prejuízo rural a compensar, atividade rural no exterior e a Lei 14.754
   ficam com os valores do arquivo. Ganho de capital e renda variável são de tributação definitiva e
   não mudam o ajuste.
-- **Limite de ferramentas de alguns clientes.** Clientes que aceitam menos de 161 ferramentas
-  precisam de `--perfil essencial` (85) ou de `--grupos`; o guia de cada cliente explica como.
+- **Limite de ferramentas de alguns clientes.** Clientes que aceitam menos de 162 ferramentas
+  precisam de `--perfil essencial` (86) ou de `--grupos`; o guia de cada cliente explica como.
 - Pendências documentadas em [`docs/regras/irpf-2026.md`](docs/regras/irpf-2026.md), como a
   contribuição do ente patrocinador no código 37 e os limites de 6%, 7% e 1% das doações, ainda não
   confirmados por caso de referência.
@@ -585,7 +586,7 @@ que o servidor não descreve no modelo é preservado byte a byte na regravação
 `listar_copias_seguranca` e `restaurar_copia_seguranca` desfazem a alteração, e `editar_*` ou
 `remover_*` corrigem o lançamento.
 
-**O cálculo é igual ao do programa?** Nos 48 casos de referência, sim, ao centavo. Fora deles pode
+**O cálculo é igual ao do programa?** Nos 65 casos de referência, sim, ao centavo. Fora deles pode
 haver divergência; o programa oficial é sempre a palavra final.
 
 Mais respostas em [docs/guias/perguntas-frequentes.md](docs/guias/perguntas-frequentes.md).
@@ -601,8 +602,7 @@ Mais respostas em [docs/guias/perguntas-frequentes.md](docs/guias/perguntas-freq
 - As funções do programa oficial ainda parciais na
   [matriz de cobertura](docs/mapeamento/matriz-cobertura.md), cada uma com a justificativa e a
   alternativa em uso: a importação do Carnê-Leão Web e da pré-preenchida (serviços autenticados da
-  Receita) e a leitura dos arquivos exportados pelo GCAP e pelo programa da Atividade Rural.
-- Caso de referência de ganho de capital para confirmar os dois campos do recibo ainda sem caso.
+  Receita).
 
 ## Documentação
 

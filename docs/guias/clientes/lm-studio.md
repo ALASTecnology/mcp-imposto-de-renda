@@ -72,8 +72,8 @@ troque por `--perfil essencial` e confirme cada chamada.
 ## Limitações
 
 - A própria documentação do LM Studio avisa que servidores pensados para modelos de nuvem podem
-  gastar muitos tokens e estourar o contexto de modelos locais. Com 160 ferramentas, o servidor
-  completo dificilmente cabe; o perfil `consulta` tem 40 e o `essencial`, 84 (veja os
+  gastar muitos tokens e estourar o contexto de modelos locais. Com 162 ferramentas, o servidor
+  completo dificilmente cabe; o perfil `consulta` tem 40 e o `essencial`, 86 (veja os
   [perfis](../clientes-mcp.md#quantidade-de-ferramentas)).
 - Modelos pequenos erram mais argumentos de ferramenta. Confira os valores antes de aprovar uma
   gravação e simule sempre antes de gravar.

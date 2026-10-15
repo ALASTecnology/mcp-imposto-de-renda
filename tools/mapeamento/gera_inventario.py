@@ -322,7 +322,7 @@ STATUS.update({
     "transferir_excedente_isencao_65": ("implementada", ["transferir_excedente_isencao_65"], ""),
     "converter_moeda": ("implementada", ["converter_moeda", "listar_tabela"], "tabela oficial do dólar de 2025 (Ajuda, pág. 356: compra, venda e atividade rural) embarcada como `dolar-2025`; bens e aplicações usam a cotação da data informada pelo usuário"),
     "calcular_condicao_residencia": ("implementada", ["calcular_condicao_residencia"], ""),
-    "calcular_ganho_capital": ("parcial", ["calcular_ganho_capital"], "simulador de orientação; o demonstrativo oficial é o GCAP"),
+    "calcular_ganho_capital": ("implementada", ["calcular_ganho_capital"], "conferido ao centavo com os 13 casos do GCAP 2025 (imóveis com reduções e isenções, móveis, quotas, bem móvel no exterior por origem dos rendimentos e moeda estrangeira em espécie); o demonstrativo oficial continua sendo o do GCAP"),
     "calcular_preco_medio": ("implementada", ["calcular_preco_medio", "apurar_renda_variavel"], ""),
     "calcular_carne_leao": ("implementada", ["calcular_carne_leao"], "tabelas mensais de 2025"),
     "validar_documento": ("implementada", ["validar_documento"], "CPF, CNPJ, NIT/PIS, recibo, CEP, telefone, e-mail, nome, data, Renavam e conta bancária (rede autorizada e DV público do banco)"),
@@ -342,8 +342,8 @@ STATUS.update({
     "listar_ganhos_capital": ("implementada", ["listar_ganhos_capital"], "demonstrativos tipados (60 a 63, 65, 66, 68, 69, 73 a 76) e os registros 64, 67, 70 a 72, 77 e 78 decodificados campo a campo pelo leiaute; os não tipados são preservados na gravação"),
     "importar_pre_preenchida": ("parcial", ["importar_pre_preenchida", "orientar_servico_externo"], "baixar a pré-preenchida exige login gov.br (Ouro ou Prata) em serviço autenticado da Receita, impossível num servidor local sem credenciais; alternativa implementada: `orientar_servico_externo` dá o passo a passo para obtê-la no programa oficial ou no Meu Imposto de Renda e `importar_pre_preenchida` cria a declaração a partir do arquivo trazido, sem apagar a existente e com a lista de fichas para conferir"),
     "importar_carne_leao": ("parcial", ["definir_rendimentos_pf_exterior", "calcular_carne_leao", "orientar_servico_externo"], "o programa traz o Carnê-Leão Web direto do serviço autenticado da Receita (login gov.br ou código de acesso), impossível num servidor local sem credenciais, e o formato dos dados não é público; alternativa implementada: `orientar_servico_externo` (serviço carne_leao_web) explica como consultar o demonstrativo anual no e-CAC ou importar no programa e trazer o DBK, `definir_rendimentos_pf_exterior` grava os totais mensais na ficha e `calcular_carne_leao` confere o imposto de cada mês"),
-    "importar_gcap": ("implementada", ["importar_gcap", "listar_ganhos_capital", "calcular_ganho_capital"], "lê o .DEC que o GCAP 2025 grava em \"Exportar para o IRPF2026\" (zip com o XML do demonstrativo), substitui o demonstrativo do mesmo CPF e período e refaz os isentos 05, 06 e 07 (valor transportado) e o exclusivo 02; conferida por ida e volta com os 7 pares de arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/gcap/2026`); demonstrativo com moeda estrangeira em espécie ainda é recusado, com orientação para importar no programa oficial"),
-    "importar_livro_caixa_rural": ("parcial", ["definir_receitas_despesas_rurais", "orientar_servico_externo"], "o leiaute do arquivo exportado pelo programa da Atividade Rural 2025 e a forma como o PGD o distribui pelo demonstrativo só existem no código do programa, que as regras do projeto proíbem descompilar, e sem pares reais de referência a conversão seria palpite; alternativa implementada: `orientar_servico_externo` (serviço livro_caixa_rural) explica como importar no programa oficial e trazer o DBK, e `definir_receitas_despesas_rurais` grava os totais mensais de receitas e despesas"),
+    "importar_gcap": ("implementada", ["importar_gcap", "listar_ganhos_capital", "calcular_ganho_capital"], "lê o .DEC que o GCAP 2025 grava em \"Exportar para o IRPF2026\" (zip com o XML do demonstrativo), substitui o demonstrativo do mesmo CPF e período e refaz os isentos 05, 06 e 07 (valor transportado) e os exclusivos 02, 03 e 04, inclusive bens adquiridos no exterior e moeda estrangeira em espécie; conferida por ida e volta com os 13 pares de arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/gcap/2026`)"),
+    "importar_livro_caixa_rural": ("implementada", ["importar_livro_caixa_rural", "definir_receitas_despesas_rurais"], "lê o .DEC que o Livro Caixa da Atividade Rural 2025 grava em \"Exportar para o IRPF\" (o de 2026 exporta para o IRPF 2027), confere exercício e CRC, substitui os meses da aba Brasil, soma os adiantamentos na Apuração, substitui o país da aba Exterior e refaz o isento 15; conferida byte a byte com os 4 pares de arquivo exportado e DBK gravado pelo programa (`packages/core/test/fixtures/atividade-rural/2026`); na saída definitiva e no espólio, orienta a importar no programa oficial"),
 })
 for _n in STATUS:
     assert _n in F, _n
@@ -501,7 +501,7 @@ regra(r"F-EXCL", T("adicionar_rendimento_exclusivo", "listar_lancamentos"), "mod
 regra(r"F-EXCL-(01|08)", T("calcular_imposto"), "calc", "P0", "Transportado do campo 13º da ficha Rendimentos PJ.")
 regra(r"F-EXCL-(06|10|11)", T("adicionar_rendimento_exclusivo"), "model", "P0")
 regra(r"F-EXCL-02", T("importar_gcap"), "importacao", "P1", "Transportado do GCAP.")
-regra(r"F-EXCL-(03|04)", T("importar_gcap", "calcular_ganho_capital"), "importacao", "P1", "Transportado do GCAP; bens em moeda estrangeira e moeda em espécie sem par de referência, e a importação recusa demonstrativo com moeda em espécie.")
+regra(r"F-EXCL-(03|04)", T("importar_gcap", "calcular_ganho_capital"), "importacao", "P1", "Transportado do GCAP; conferido com os pares gcap-exterior-* (03) e gcap-especie-* (04).")
 regra(r"F-EXCL-05", T("calcular_imposto"), "calc", "P1", "Transportado da Renda Variável e FII/Fiagro.")
 regra(r"F-EXCL-(07|09)", T("calcular_imposto"), "calc", "P1", "Transportado da ficha RRA (opção exclusiva).")
 regra(r"F-EXCL-12", T("calcular_imposto", "adicionar_bem"), "calc", "P1", "Transportado de Bens e Direitos (Lei 14.754/2023).")
@@ -574,7 +574,7 @@ regra(r"D-AR-BENS", T("adicionar_bem_rural", "repetir_valores_bens"), "model", "
 regra(r"D-AR-DIVIDAS", T("adicionar_divida_rural"), "model", "P1")
 regra(r"D-AR-IMPORT", T("importar_livro_caixa_rural", "importar_declaracao_anterior"), "importacao", "P1")
 regra(r"D-GCAP-GERAL", T("importar_gcap", "listar_ganhos_capital", "remover_lancamento"), "importacao", "P1", "Demonstrativo só por importação, como no PGD.")
-regra(r"D-GCAP-(IMOVEIS|MOVEIS|PARTICIP|MOEDA)", T("importar_gcap", "listar_ganhos_capital", "calcular_ganho_capital"), "importacao", "P1", "Simulador próprio é P2 e só orienta.")
+regra(r"D-GCAP-(IMOVEIS|MOVEIS|PARTICIP|MOEDA)", T("importar_gcap", "listar_ganhos_capital", "calcular_ganho_capital"), "importacao", "P1", "Demonstrativo por importação; o simulador confere ao centavo com o GCAP, mas o demonstrativo oficial é o do GCAP.")
 regra(r"D-RV-(GERAL|TIPOS|L02|L07|L10|L12)", T("definir_renda_variavel"), "model", "P1")
 regra(r"D-RV-PROC", T("calcular_preco_medio"), "calc", "P2")
 regra(r"D-RV-L(01|03|04|05|06|08|09)", T("calcular_imposto"), "calc", "P1", "Linha calculada.")

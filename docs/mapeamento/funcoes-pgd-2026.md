@@ -92,7 +92,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: barra de menu (Alt+P) e seção "Importações" da barra lateral
 - Itens: Carnê-Leão 2025, Atividade Rural 2025, Ganhos de Capital 2025, Informe de Rendimentos, Informe de Plano de Saúde (pág. 389)
 - Exige do MCP: ferramentas `importar_*`
-- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `importar_livro_caixa_rural`, `importar_gcap`, `importar_informe_rendimentos`, `importar_informe_plano_saude`; módulo importacao; prioridade P1; status parcial (`calcular_carne_leao`, `calcular_ganho_capital`, `definir_receitas_despesas_rurais`, `definir_rendimentos_pf_exterior`, `importar_gcap`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_carne_leao`, `importar_livro_caixa_rural`, `importar_gcap`, `importar_informe_rendimentos`, `importar_informe_plano_saude`; módulo importacao; prioridade P1; status parcial (`calcular_carne_leao`, `calcular_ganho_capital`, `definir_receitas_despesas_rurais`, `definir_rendimentos_pf_exterior`, `importar_gcap`, `importar_informe_plano_saude`, `importar_informe_rendimentos`, `importar_livro_caixa_rural`, `listar_ganhos_capital`, `orientar_servico_externo`) (ver matriz)
 
 #### M-MENU-FICHAS Menu Fichas e navegação
 
@@ -429,7 +429,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Origem: notas/08-menus-operacoes-sistema.md
 - Onde: Importações (Ctrl+Shift+A); botão Importar em Receitas e Despesas; ação ImportarAtividadeRuralAction
 - Exige do MCP: `importar_livro_caixa_rural` (ver D-AR-IMPORT)
-- Cobertura no MCP Imposto de Renda: `importar_livro_caixa_rural`; módulo importacao; prioridade P1; status parcial (`definir_receitas_despesas_rurais`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_livro_caixa_rural`; módulo importacao; prioridade P1; status implementada (`definir_receitas_despesas_rurais`, `importar_livro_caixa_rural`) (ver matriz)
 
 #### M-IMP-GCAP Importar Ganhos de Capital 2025
 
@@ -578,7 +578,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Regras: provável ciclo de vida de demonstrativos de apuração de ganhos de capital (GCAP 2026, do ano corrente, com Darf de código de barras) dentro do PGD, além da importação do GCAP 2025 (inferido; a Ajuda 2026 só descreve a importação)
 - Exige do MCP: `calcular_ganho_capital` (simulador próprio) e orientação de Darf 4600, 8523, 8960; P2
 - Observações: confirmar no programa
-- Cobertura no MCP Imposto de Renda: `calcular_ganho_capital`, `orientar_servico_externo`; módulo calc; prioridade P2; status parcial (`calcular_ganho_capital`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `calcular_ganho_capital`, `orientar_servico_externo`; módulo calc; prioridade P2; status implementada (`calcular_ganho_capital`, `orientar_servico_externo`) (ver matriz)
 
 ## 2 Tipos de declaração e regras gerais
 
@@ -1631,7 +1631,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Importações: GCAP 2025
 - Exige do MCP: cálculo GCAP moeda estrangeira e transporte
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status parcial (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status implementada (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
 
 #### F-EXCL-04 Ganhos de capital na alienação de moeda estrangeira em espécie
 
@@ -1639,7 +1639,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Campos: transportado
 - Importações: GCAP 2025
 - Exige do MCP: cálculo GCAP espécie e transporte
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status parcial (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status implementada (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
 
 #### F-EXCL-05 Ganhos líquidos em renda variável (bolsa, mercadorias, futuros, FII e Fiagro)
 
@@ -3691,7 +3691,7 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Itens a preencher manualmente: imóveis adquiridos em 2025; saldo de prejuízo de exercícios anteriores; limite de 20% em R$ no exterior; rebanho (aquisições, nascimentos, consumo e perdas, vendas); bens adquiridos e alienações de 2025; dívidas (situação 31/12/2025 e dívidas de 2025).
 - Exige do MCP: importador do arquivo exportado pelo LCAR 2025 (formato a mapear, ver layout); importador da declaração anterior; relatório do que falta preencher após importação.
 - Observações: LCAR é programa separado da RFB (download no gov.br).
-- Cobertura no MCP Imposto de Renda: `importar_livro_caixa_rural`, `importar_declaracao_anterior`; módulo importacao; prioridade P1; status parcial (`definir_receitas_despesas_rurais`, `importar_declaracao_anterior`, `listar_declaracoes`, `orientar_servico_externo`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_livro_caixa_rural`, `importar_declaracao_anterior`; módulo importacao; prioridade P1; status implementada (`definir_receitas_despesas_rurais`, `importar_declaracao_anterior`, `importar_livro_caixa_rural`, `listar_declaracoes`) (ver matriz)
 
 ### 4.2 Ganhos de Capital
 
@@ -3718,28 +3718,28 @@ Fontes: texto da Ajuda oficial (AjudaIRPF.pdf, 425 páginas), guia de atalhos (A
 - Onde: Demonstrativo Ganhos de Capital > Bens Imóveis; botão Importar; pág. 297
 - Campos/regras: não detalhados na Ajuda (preenchimento no GCAP). (inferido: alienação, custo, reduções, isenções de imóvel único até R$ 440 mil, 180 dias)
 - Exige do MCP: importação e exibição; cálculo próprio opcional.
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status parcial (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status implementada (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
 
 #### D-GCAP-MOVEIS Ganhos de Capital - Direitos/Bens Móveis
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: Demonstrativo Ganhos de Capital > Direitos/Bens Móveis; botão Importar; pág. 297
 - Exige do MCP: importação e exibição; inclui alienação de FII/Fiagro fora de bolsa (pág. 299).
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status parcial (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status implementada (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
 
 #### D-GCAP-PARTICIP Ganhos de Capital - Participações Societárias
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: Demonstrativo Ganhos de Capital > Participações Societárias; botão Importar; pág. 297
 - Exige do MCP: importação e exibição.
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status parcial (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status implementada (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
 
 #### D-GCAP-MOEDA Ganhos de Capital - Moedas em Espécie
 
 - Origem: notas/06-ar-gcap-rv-espolio.md
 - Onde: Demonstrativo Ganhos de Capital > Moedas em Espécie; botão Importar; pág. 297
 - Exige do MCP: importação e exibição; Darf 8960.
-- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status parcial (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
+- Cobertura no MCP Imposto de Renda: `importar_gcap`, `listar_ganhos_capital`, `calcular_ganho_capital`; módulo importacao; prioridade P1; status implementada (`calcular_ganho_capital`, `importar_gcap`, `listar_ganhos_capital`) (ver matriz)
 
 ### 4.3 Renda Variável, operações comuns e day-trade
 

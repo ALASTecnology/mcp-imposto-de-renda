@@ -418,7 +418,7 @@ Aparece em 2 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#m
 
 **Simular ganho de capital**. Não grava nada.
 
-Simulador de orientação para alienação de imóvel, móvel ou participação, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. O demonstrativo oficial é o GCAP.
+Simulador de orientação para alienação de imóvel, móvel, participação ou moeda estrangeira em espécie, conferido ao centavo com o GCAP 2025: ganho = valor de alienação menos corretagem e custo; para imóveis, reduções em cascata da Lei 7.713/1988 (aquisição até 1988) e dos fatores FR1/FR2 da Lei 11.196/2005 (meses contados inclusive, percentual com 6 casas, cada redução truncada no centavo); isenções do único imóvel até R$ 440.000,00, da reaplicação em outro imóvel residencial e de pequeno valor (alienações do mês até R$ 35.000,00, inclusive quotas fora de bolsa); alíquotas de 15%, 17,5%, 20% e 22,5% por faixa. Bem móvel adquirido no exterior (`exterior`): valores em dólar, parte comprada com reais pela cotação da aquisição e parte comprada com moeda estrangeira com o ganho apurado em dólar (exclusivo 03). Moeda em espécie (`tipo` moeda_especie): custo médio ponderado, ganho de cada venda e isenção até US$ 5.000,00 de alienações no ano (exclusivo 04). O demonstrativo oficial é o GCAP.
 
 | Só leitura (`readOnlyHint`) | Destrutiva (`destructiveHint`) | Idempotente (`idempotentHint`) | Rede (`openWorldHint`) |
 | --- | --- | --- | --- |
@@ -428,16 +428,33 @@ Simulador de orientação para alienação de imóvel, móvel ou participação,
 
 | Parâmetro | Tipo | Obrigatório | Descrição |
 | --- | --- | --- | --- |
-| `tipo` | `"imovel"` \| `"movel"` \| `"participacao"` | **sim** |   |
-| `valor_alienacao` | valor monetário | **sim** | Valor de alienação. |
+| `tipo` | `"imovel"` \| `"movel"` \| `"participacao"` \| `"moeda_especie"` | **sim** |   |
+| `valor_alienacao` | valor monetário | não | Valor de alienação (obrigatório, exceto bem no exterior e moeda). |
 | `custo_corretagem` | valor monetário | não | Corretagem paga pelo vendedor. |
-| `custo_aquisicao` | valor monetário | **sim** | Custo de aquisição (com reformas). |
-| `data_aquisicao` | texto | **sim** | (formato `^\d{4}-\d{2}-\d{2}$`) |
-| `data_alienacao` | texto | **sim** | (formato `^\d{4}-\d{2}-\d{2}$`) |
+| `custo_aquisicao` | valor monetário | não | Custo de aquisição com reformas (obrigatório, exceto bem no exterior e moeda). |
+| `data_aquisicao` | texto | não | (formato `^\d{4}-\d{2}-\d{2}$`) |
+| `data_alienacao` | texto | não | (formato `^\d{4}-\d{2}-\d{2}$`) |
 | `unico_imovel` | booleano | não |   |
 | `valor_aplicado_outro_imovel` | valor monetário | não | Valor aplicado em outro imóvel residencial em 180 dias. |
 | `total_alienado_no_mes` | valor monetário | não | Total de alienações de bens da mesma natureza no mês. |
-| `imposto_pago` | valor monetário | não | Imposto já pago em Darf 4600 sobre esta alienação. |
+| `imposto_pago` | valor monetário | não | Imposto já pago em Darf sobre esta alienação. |
+| `exterior` | objeto | não | Bem móvel adquirido no exterior (só com tipo movel). |
+| `exterior.origem` | `"nacional"` \| `"estrangeira"` \| `"ambas"` | não | Rendimentos com que o bem foi comprado: reais, moeda estrangeira ou ambos. |
+| `exterior.cotacao_aquisicao` | texto | não | Cotação do dólar na aquisição, até 4 casas ("2,9000"); exigida com origem nacional ou ambas. (até 16 caracteres) |
+| `exterior.cotacao_alienacao` | texto | não | Cotação do dólar na alienação, até 4 casas ("5,5000"). (até 16 caracteres) |
+| `exterior.valor_alienacao_dolar` | valor monetário | não | Valor de alienação em dólares (centavos de dólar). |
+| `exterior.corretagem_dolar` | valor monetário | não | Corretagem em dólares (centavos de dólar). |
+| `exterior.custo_nacional_dolar` | valor monetário | não | Parte do custo paga com rendimentos em reais, em dólares (centavos de dólar). |
+| `exterior.custo_estrangeira_dolar` | valor monetário | não | Parte do custo paga com moeda estrangeira, em dólares (centavos de dólar). |
+| `moeda_especie` | objeto | não | Moeda estrangeira em espécie (só com tipo moeda_especie), operações em ordem de data. |
+| `moeda_especie.estoque_inicial` | texto | não | Quantidade de moeda em 1º de janeiro, em centésimos ("100000" = 1.000,00). (padrão: `"0"`; formato `^\d{1,15}$`) |
+| `moeda_especie.saldo_inicial` | valor monetário | não | Custo em reais do estoque de 1º de janeiro. |
+| `moeda_especie.operacoes` | lista de objeto | não | (até 500 itens) |
+| `moeda_especie.operacoes[].tipo` | `"compra"` \| `"venda"` | não |   |
+| `moeda_especie.operacoes[].data` | texto | não | (formato `^\d{4}-\d{2}-\d{2}$`) |
+| `moeda_especie.operacoes[].quantidade` | texto | não | Quantidade em centésimos da moeda. (formato `^\d{1,15}$`) |
+| `moeda_especie.operacoes[].valor` | valor monetário | não | Valor da operação em reais. |
+| `moeda_especie.operacoes[].cotacao_dolar` | texto | não | Cotação do dólar na venda, até 7 casas ("5,8000000"). (até 16 caracteres) |
 
 ### Resposta estruturada
 
@@ -451,7 +468,9 @@ Simulador de orientação para alienação de imóvel, móvel ou participação,
 | `isento` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `imposto` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
 | `impostoPago` | texto ou inteiro | Centavos (número inteiro; texto de dígitos se passar de 2^53). |
-| `rendimentoExclusivo` | texto ou inteiro | Ganho tributável menos o imposto pago: o valor que o GCAP transporta para Rendimentos de Tributação Exclusiva. |
+| `rendimentoExclusivo` | texto ou inteiro | Valor que o GCAP transporta para Rendimentos de Tributação Exclusiva (02 no Brasil, 03 bem no exterior, 04 moeda em espécie). |
+| `exterior` | objeto livre | Apuração em dólar do bem no exterior, por origem dos rendimentos. |
+| `moedaEspecie` | objeto livre | Custo médio, ganho de cada venda e totalização mensal da moeda em espécie. |
 | `codigoDarf` | texto |   |
 | `vencimento` | texto |   |
 | `avisos` | lista de texto |   |
@@ -519,12 +538,12 @@ Aparece em 16 linhas da [matriz de cobertura](../mapeamento/matriz-cobertura.md#
 
 - `M-MENU-IMPORTACOES` Menu Importações (P1, parcial)
 - `M-IMP-GCAP` Importar Ganhos de Capital 2025 (P1, implementada)
-- `M-DEMO-ACOES` Novo, Abrir, Fechar, Excluir e Retificar Demonstrativo (inferido) (P2, parcial)
+- `M-DEMO-ACOES` Novo, Abrir, Fechar, Excluir e Retificar Demonstrativo (inferido) (P2, implementada)
 - `F-ISENTO-05` Ganho de capital em alienação de bens de pequeno valor (até R$ 20.000,00 ações em mercado de balcão; R$ 35.000,00 demais casos, por mês) (P1, implementada)
 - `F-ISENTO-06` Ganho de capital na alienação do único imóvel por até R$ 440.000,00, sem outra alienação de imóvel nos últimos 5 anos (P1, implementada)
 - `F-ISENTO-07` Ganho de capital na venda de imóveis residenciais para aquisição em 180 dias de imóveis residenciais no Brasil e redução sobre o ganho de capital (P1, implementada)
 - `F-EXCL-02` Ganhos de capital na alienação de bens e/ou direitos (P1, implementada)
-- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, parcial)
+- `F-EXCL-03` Ganhos de capital na alienação de bens, direitos e aplicações financeiras adquiridos em moeda estrangeira (P1, implementada)
 - e mais 8 linhas na matriz.
 
 [Voltar ao início](#topo) · [Índice das ferramentas](README.md)

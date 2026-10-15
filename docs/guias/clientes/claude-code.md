@@ -107,7 +107,7 @@ estiver gravando é uma boa prática.
 
 - O Claude Code avisa quando a saída de uma ferramenta passa de 10.000 tokens e corta em 25.000 por
   padrão. Declarações grandes cabem, mas `MAX_MCP_OUTPUT_TOKENS=50000 claude` aumenta o limite.
-- Com 160 ferramentas, o Claude Code usa a busca de ferramentas (ativa por padrão) para não carregar
+- Com 162 ferramentas, o Claude Code usa a busca de ferramentas (ativa por padrão) para não carregar
   todas no contexto de uma vez.
 - Não use o modo de permissões que aprova tudo automaticamente enquanto o servidor completo estiver
   ligado: as ferramentas de gravação devem ser confirmadas uma a uma.

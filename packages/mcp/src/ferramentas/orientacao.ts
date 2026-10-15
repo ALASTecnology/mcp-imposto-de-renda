@@ -101,7 +101,7 @@ export const SERVICOS: Readonly<Record<string, Orientacao>> = {
     titulo: "Programa de Apuração dos Ganhos de Capital (GCAP)",
     onde: "Programa GCAP 2025, instalado separadamente.",
     passos: [
-      "Preencha a alienação no GCAP e pague o Darf (4600, ou 8523 para bens adquiridos e moeda estrangeira) até o último dia útil do mês seguinte.",
+      "Preencha a alienação no GCAP e pague o Darf (4600 para bens no Brasil, 8523 para bens no exterior, 8960 para moeda estrangeira em espécie) até o último dia útil do mês seguinte.",
       "No GCAP 2025, use Exportar para o IRPF2026 (não a cópia de segurança do GCAP) para cada CPF, do titular e dos dependentes.",
       "Traga o arquivo exportado (<CPF>-0101-3112-GCAP-2025.DEC) para a pasta autorizada e importe-o com importar_gcap; importar de novo o mesmo CPF substitui os dados dele.",
       "Confira o demonstrativo inteiro com listar_ganhos_capital.",

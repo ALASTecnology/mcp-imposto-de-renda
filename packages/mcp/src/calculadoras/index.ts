@@ -510,7 +510,7 @@ export function calcularGanhoMoedaEspecie(e: EntradaMoedaEspecie) {
   const avisos = [
     r.isento
       ? `Alienações do ano somam US$ ${formatarDolar(r.totalAlienadoDolar)}, até US$ 5.000,00: o GCAP considera o ganho isento, mas o IRPF 2026 o transporta para Rendimentos de Tributação Exclusiva (código 04).`
-      : `Alienações do ano somam US$ ${formatarDolar(r.totalAlienadoDolar)}, acima de US$ 5.000,00: ganho tributado a partir de 15% (Darf 8523 até o último dia útil do mês seguinte).`,
+      : `Alienações do ano somam US$ ${formatarDolar(r.totalAlienadoDolar)}, acima de US$ 5.000,00: ganho tributado a partir de 15% (Darf 8960 até o último dia útil do mês seguinte).`,
   ];
   return { ...r, rendimentoExclusivo: r.ganhoCapital, avisos };
 }

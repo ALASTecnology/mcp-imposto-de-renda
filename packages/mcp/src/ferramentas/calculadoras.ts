@@ -126,7 +126,7 @@ function moedaEspecie(m: EntradaMoedaFerramenta) {
   const vencimento = vencimentoMesSeguinte(fim.ano, fim.mes);
   const isento = c.ganhoCapital - c.ganhoTributavel;
   return {
-    texto: `Ganho na moeda em espécie ${brl(c.ganhoCapital)}, tributável ${brl(c.ganhoTributavel)}, imposto ${brl(c.impostoDevido)} (Darf 8523 até o último dia útil do mês seguinte a cada venda). ${c.avisos.join(" ")} ${AVISO}`,
+    texto: `Ganho na moeda em espécie ${brl(c.ganhoCapital)}, tributável ${brl(c.ganhoTributavel)}, imposto ${brl(c.impostoDevido)} (Darf 8960 até o último dia útil do mês seguinte a cada venda). ${c.avisos.join(" ")} ${AVISO}`,
     dados: objetoJson({
       ganhoBruto: c.ganhoCapital,
       reducoes: 0n,
@@ -144,7 +144,7 @@ function moedaEspecie(m: EntradaMoedaFerramenta) {
         totalAlienadoDolar: c.totalAlienadoDolar,
         isento: c.isento,
       },
-      codigoDarf: "8523",
+      codigoDarf: "8960",
       vencimento,
       avisos: [...c.avisos, AVISO_FERIADOS, AVISO],
     }),
@@ -593,8 +593,8 @@ export const grupoCalculadoras: GrupoFerramentas = {
             : {}),
         });
         const vencimento = vencimentoMesSeguinte(alienacao.ano, alienacao.mes);
-        // Bens comprados com moeda estrangeira: Darf 8523; demais ganhos de capital: 4600.
-        const codigoDarf = ex && ex.origem !== "nacional" ? "8523" : "4600";
+        // Darf 8523 para bens no exterior e 4600 para os do Brasil (Ajuda do PGD, notas 06).
+        const codigoDarf = ex ? "8523" : "4600";
         return {
           texto: `Ganho bruto ${brl(c.ganhoBruto)}, reduções ${brl(c.reducoes)}, tributável ${brl(c.ganhoTributavel)}, imposto ${brl(c.imposto)} (Darf ${codigoDarf} até ${dataBr(vencimento)}). ${c.avisos.join(" ")} ${AVISO}`,
           dados: objetoJson({

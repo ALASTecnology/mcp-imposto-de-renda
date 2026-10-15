@@ -394,7 +394,12 @@ describe("calcular_ganho_capital", () => {
         ],
       },
     });
-    expect(s).toMatchObject({ ganhoBruto: 120_000, imposto: 18_000, rendimentoExclusivo: 120_000 });
+    expect(s).toMatchObject({
+      ganhoBruto: 120_000,
+      imposto: 18_000,
+      rendimentoExclusivo: 120_000,
+      codigoDarf: "8960",
+    });
   });
 
   it("recusa venda de moeda maior que o estoque", async () => {
